@@ -99,7 +99,7 @@ The sample libraries are optional. Without them, every sample instrument plays i
 | Karoryfer x bigcat cello | 133 MB | CC0 |
 | National Gugak Center recordings (gayageum, haegeum, daegeum, janggu, ajaeng, jing) | 490 MB | KOGL Type 1 |
 
-Start a song with File > New song (⌘N), which offers 13 genre templates, or open one of the songs in `songs/`. The
+Start a song with File > New song (⌘N), which offers 13 genre templates, or open an example from `engine/examples/`. The
 [manual](docs/manual.md) explains the screen and the keys.
 
 ## Song format
