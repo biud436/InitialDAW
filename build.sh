@@ -5,6 +5,8 @@
 #   ./build.sh --no-test    # 빌드만
 #   ./build.sh --fetch      # 의존 소스(JUCE, sfizz, LAME, 악보 글꼴 Bravura, Signalsmith Stretch, FLAC, Ogg Vorbis)만 받는다
 #   ./build.sh --samples    # VSCO 2 CE, Sonatina Symphonic Orchestra 일부, FreePats, Karoryfer 첼로도 받는다
+#   ./build.sh --gugak      # 국악기 녹음(국립국악원, 대금)도 받는다. 국립국악원 사이트가 요구하는 사용 목적을 받는 사람이 정한다
+#                           # (GUGAK_USE_TYPE, GUGAK_USE_PURPOSE, GUGAK_AFFILIATION, 없으면 묻는다)
 #   ./build.sh --plugins    # 무료 VSTi Dexed 도 받는다 (macOS, external/plugins/dexed)
 #
 # 결과: build/app/InitialDAW_artefacts/Release/InitialDAW.app (DAW), build/engine/music-render (명령행 엔진).
@@ -59,12 +61,14 @@ RUN_TESTS=1
 FETCH_ONLY=0
 FETCH_SAMPLES=0
 FETCH_PLUGINS=0
+FETCH_GUGAK=0
 for a in "$@"; do
   case "$a" in
     --no-test) RUN_TESTS=0 ;;
     --fetch) FETCH_ONLY=1 ;;
     --samples) FETCH_SAMPLES=1 ;;
     --plugins) FETCH_PLUGINS=1 ;;
+    --gugak) FETCH_GUGAK=1 ;;
     *) echo "모르는 인자: $a" >&2; exit 2 ;;
   esac
 done
@@ -236,7 +240,20 @@ if [ "$FETCH_SAMPLES" = 1 ]; then
   fi
   echo "[InitialDAW] Karoryfer x bigcat 첼로를 external/karoryfer 에 받습니다"
   fetch_karoryfer_cello
-  echo "[InitialDAW] 국악기 (가야금, 해금, 대금, 장구, 아쟁, 징) 녹음을 external/gugak 에 받습니다 (파일마다 SHA-256 고정, 국립국악원 사이트에는 사용 목적 양식을 함께 보낸다)"
+fi
+# 국악기 녹음은 --gugak 으로만 받는다. 국립국악원 사이트가 받을 때마다 요구하는 사용 목적 양식을 받는 사람이 정한다
+GUGAK_FORM=()
+if [ "$FETCH_GUGAK" = 1 ]; then
+  echo "[InitialDAW] 국악기 (가야금, 해금, 대금, 장구, 아쟁, 징) 녹음을 external/gugak 에 받습니다 (파일마다 SHA-256 고정, 약 490MB)"
+  echo "[InitialDAW] 국립국악원 「국악기 디지털 음원」(공공누리 제1유형)은 받을 때마다 사용 목적 양식을 요구합니다. 입력한 값을 파일마다 그대로 보냅니다."
+  if [ -z "${GUGAK_USE_TYPE:-}" ] && [ -t 0 ]; then read -r -p "  상업용도 구분 (상업용 / 비상업용): " GUGAK_USE_TYPE; fi
+  if [ -z "${GUGAK_USE_PURPOSE:-}" ] && [ -t 0 ]; then read -r -p "  사용용도 (예: 음악 제작): " GUGAK_USE_PURPOSE; fi
+  if [ -z "${GUGAK_AFFILIATION:-}" ] && [ -t 0 ]; then read -r -p "  소속 (예: 개인, 회사 이름): " GUGAK_AFFILIATION; fi
+  if [ -z "${GUGAK_USE_TYPE:-}" ] || [ -z "${GUGAK_USE_PURPOSE:-}" ] || [ -z "${GUGAK_AFFILIATION:-}" ]; then
+    echo "[InitialDAW] 사용 목적 세 값(GUGAK_USE_TYPE, GUGAK_USE_PURPOSE, GUGAK_AFFILIATION)이 없어 국악기 녹음을 받지 않습니다" >&2
+    exit 2
+  fi
+  GUGAK_FORM=(--use-type "$GUGAK_USE_TYPE" --use-purpose "$GUGAK_USE_PURPOSE" --affiliation "$GUGAK_AFFILIATION")
   mkdir -p "$REPO/external/gugak"
 fi
 # 받은 첼로 샘플 곁에 우리 SFZ 를 쓴다 (루프 지점, 조율, 크기 보정은 tools/make-cello-sfz.py 의 표)
@@ -245,7 +262,13 @@ if [ -d "$REPO/external/karoryfer/Karoryfer_Bigcat_cello/Samples/sus" ]; then
 fi
 # 국악기 녹음 곁에 우리 SFZ 를 쓴다 (없는 녹음은 받는다, 뜯음과 음의 자리, 조율, 크기는 tools/make-gugak-sfz.py 의 표)
 if [ -d "$REPO/external/gugak" ]; then
-  python3 -I "$REPO/tools/make-gugak-sfz.py" "$REPO/external/gugak"
+  rc=0
+  python3 -I "$REPO/tools/make-gugak-sfz.py" "$REPO/external/gugak" ${GUGAK_FORM[@]+"${GUGAK_FORM[@]}"} || rc=$?
+  if [ "$rc" = 3 ]; then
+    echo "[InitialDAW] 국악기 SFZ 를 쓰지 않고 빌드를 계속합니다 (국악기는 대체 악기로 연주합니다)" >&2
+  elif [ "$rc" != 0 ]; then
+    exit "$rc"
+  fi
 fi
 # 릴리스 zip 을 받아 체크섬을 확인하고 푼다. 이미 풀려 있으면 받지 않는다.
 fetch_dexed() {

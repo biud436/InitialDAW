@@ -4042,6 +4042,7 @@ private:
         explicit PluginEffectTest (const juce::StringArray& args)
         {
             const auto plugin = juce::File::getCurrentWorkingDirectory().getChildFile (args[args.indexOf ("--plugin-effect-test") + 1]);
+            mr::PluginHost::get().allowLocation (plugin.getFullPathName().toStdString());   // 명령줄에 직접 준 플러그인
             dir_ = juce::File::getSpecialLocation (juce::File::tempDirectory).getChildFile ("initialdaw-plugin-effect-test");
             dir_.deleteRecursively();
             dir_.createDirectory();
@@ -4201,6 +4202,7 @@ private:
         explicit PluginTest (const juce::StringArray& args)
         {
             const auto plugin = juce::File::getCurrentWorkingDirectory().getChildFile (args[args.indexOf ("--plugin-test") + 1]);
+            mr::PluginHost::get().allowLocation (plugin.getFullPathName().toStdString());   // 명령줄에 직접 준 플러그인
             dir_ = juce::File::getSpecialLocation (juce::File::tempDirectory).getChildFile ("initialdaw-plugin-test");
             dir_.deleteRecursively();
             dir_.createDirectory();
@@ -4397,7 +4399,10 @@ private:
         {
             const int at = args.indexOf ("--export-test");
             if (at + 1 < args.size() && ! args[at + 1].startsWith ("--"))
+            {
                 plugin_ = juce::File::getCurrentWorkingDirectory().getChildFile (args[at + 1]);
+                mr::PluginHost::get().allowLocation (plugin_.getFullPathName().toStdString());   // 명령줄에 직접 준 플러그인
+            }
             if (const int png = args.indexOf ("--png"); png >= 0 && png + 1 < args.size())
                 png_ = juce::File::getCurrentWorkingDirectory().getChildFile (args[png + 1]);
             dir_ = juce::File::getSpecialLocation (juce::File::tempDirectory).getChildFile ("initialdaw-export-test");

@@ -2467,6 +2467,7 @@ int cmdPlugins (const Args& a)
             throw UsageError ("plugins " + sub + " needs exactly one plugin (a .vst3 path or an AudioUnit identifier)");
         const auto format = pluginFormatFor (a, rest[0]);
         const auto plugin = pluginPathArg (format, rest[0]);
+        host.allowLocation (plugin);   // 명령줄에 직접 준 플러그인
         juce::PluginDescription chosen;
         std::string error;
         auto instance = host.load (format, plugin, a.value ("--name").value_or (""), 48000.0, 512, chosen, error);

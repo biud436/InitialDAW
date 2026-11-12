@@ -75,6 +75,7 @@ git clone https://github.com/biud436/InitialDAW.git
 cd InitialDAW
 ./build.sh               # 라이브러리를 external/에 내려받고, 앱과 엔진을 빌드하고, 테스트를 실행합니다
 ./build.sh --samples     # 샘플 라이브러리(아래 표)도 내려받습니다
+./build.sh --gugak       # 국악기 녹음도 내려받습니다 (국립국악원이 요구하는 사용 목적을 입력받습니다)
 ./build.sh --plugins     # 무료 FM 신스 Dexed(VST3, AU)도 내려받습니다. 악기 이름은 dexed입니다
 ./build.sh --no-test     # 빌드만 합니다
 open build/app/InitialDAW_artefacts/Release/InitialDAW.app
@@ -85,6 +86,8 @@ SHA-256으로 내려받으며 저장소에는 포함하지 않습니다. PATH에
 설치한 cmake를 찾아 사용합니다.
 
 샘플 라이브러리는 선택 사항입니다. 내려받지 않으면 샘플 악기는 각각 대체 내장 신스로 재생됩니다.
+국립국악원 사이트는 내려받을 때마다 사용 목적 양식(상업용도 구분, 사용용도, 소속)을 요구합니다. 그래서 `--gugak`은 이 값을 입력받거나
+`GUGAK_USE_TYPE`, `GUGAK_USE_PURPOSE`, `GUGAK_AFFILIATION`에서 읽으며, 값이 없으면 아무것도 보내지 않습니다.
 
 | 라이브러리 | 크기 | 라이선스 |
 | :--- | ---: | :--- |
@@ -92,7 +95,7 @@ SHA-256으로 내려받으며 저장소에는 포함하지 않습니다. PATH에
 | Sonatina Symphonic Orchestra 일부 (현악, 목관, 금관, 합창, 그랜드 피아노) | 560MB | CC Sampling Plus 1.0 |
 | FreePats: 스페인 클래식 기타, MuldjordKit 드럼, 일렉트릭 베이스, 일렉트릭 기타, 테너 색소폰 | 774MB | CC0, MuldjordKit은 CC BY 4.0 |
 | Karoryfer x bigcat 첼로 | 133MB | CC0 |
-| 국립국악원 녹음 (가야금, 해금, 대금, 장구, 아쟁, 징) | 490MB | 공공누리 제1유형 |
+| 국립국악원 녹음 (가야금, 해금, 대금, 장구, 아쟁, 징), `--gugak`으로만 | 490MB | 공공누리 제1유형 |
 
 파일 > 새 곡(⌘N)에서 13개 장르 템플릿 중 하나로 곡을 시작하거나, `engine/examples/`의 예제 곡을 엽니다. 화면 구성과 단축키는
 [사용 설명서](docs/manual.ko.md)에 있습니다.

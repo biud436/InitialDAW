@@ -8,6 +8,12 @@
 int main (int argc, char** argv)
 {
     mr::HostSession session;   // 플러그인 테스트용 JUCE 런타임. main 이 끝나기 전에 정리된다
+#ifdef MUSIC_RENDER_TEST_PLUGIN_VST3
+    mr::PluginHost::get().allowLocation (MUSIC_RENDER_TEST_PLUGIN_VST3);   // 빌드 폴더의 시험용 플러그인
+#endif
+#ifdef MUSIC_RENDER_TEST_EFFECT_VST3
+    mr::PluginHost::get().allowLocation (MUSIC_RENDER_TEST_EFFECT_VST3);
+#endif
     const char* filter = argc > 1 ? argv[1] : nullptr;
     int run = 0;
     for (const auto& c : mrtest::cases())

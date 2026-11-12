@@ -7,7 +7,9 @@
 #include <juce_events/juce_events.h>
 #include <juce_gui_basics/juce_gui_basics.h>
 
+#include <climits>
 #include <cmath>
+#include <cstdlib>
 
 namespace mr
 {
@@ -25,6 +27,56 @@ std::unique_ptr<PluginHost>& hostInstance()
 {
     static std::unique_ptr<PluginHost> h;
     return h;
+}
+
+// 링크와 .. 을 푼 실제 경로. 없으면 빈 문자열
+std::string realPath (const juce::File& f)
+{
+#if JUCE_WINDOWS
+    return f.exists() ? f.getFullPathName().toStdString() : std::string();
+#else
+    char buffer[PATH_MAX];
+    if (::realpath (f.getFullPathName().toRawUTF8(), buffer) == nullptr)
+        return {};
+    return buffer;
+#endif
+}
+
+bool insideFolder (const std::string& path, const std::string& root)
+{
+    if (path.empty() || root.empty())
+        return false;
+    if (root == "/")
+        return true;
+    return path == root || (path.size() > root.size() && path.compare (0, root.size(), root) == 0 && path[root.size()] == '/');
+}
+
+std::vector<juce::File> pluginFolders()
+{
+    std::vector<juce::File> roots;
+    const auto cwd = juce::File::getCurrentWorkingDirectory();
+#if JUCE_MAC
+    roots.push_back (juce::File ("/Library/Audio/Plug-Ins"));
+    roots.push_back (juce::File::getSpecialLocation (juce::File::userHomeDirectory).getChildFile ("Library/Audio/Plug-Ins"));
+#endif
+#if JUCE_PLUGINHOST_VST3
+    {
+        juce::VST3PluginFormat vst3;
+        const auto search = vst3.getDefaultLocationsToSearch();
+        for (int i = 0; i < search.getNumPaths(); ++i)
+            roots.push_back (search[i]);
+    }
+#endif
+#ifdef MUSIC_RENDER_DEFAULT_REGISTRY
+    roots.push_back (juce::File (MUSIC_RENDER_DEFAULT_REGISTRY).getParentDirectory().getChildFile ("../../external/plugins"));
+#endif
+    if (const char* p = std::getenv ("MUSIC_RENDER_PLUGINS"); p != nullptr && *p != 0)
+        roots.push_back (cwd.getChildFile (juce::String::fromUTF8 (p)));
+    if (const char* p = std::getenv ("MUSIC_RENDER_PLUGIN_PATH"); p != nullptr)
+        for (const auto& part : juce::StringArray::fromTokens (juce::String::fromUTF8 (p), ":", ""))
+            if (part.isNotEmpty())
+                roots.push_back (cwd.getChildFile (part));
+    return roots;
 }
 
 } // namespace
@@ -131,10 +183,21 @@ std::unique_ptr<juce::AudioPluginInstance> PluginHost::load (const std::string& 
         error = "plugin format '" + format + "' is not supported by this build";
         return nullptr;
     }
-    if (format == "vst3" && ! juce::File (juce::String::fromUTF8 (fileOrIdentifier.c_str())).exists())
+    if (format == "vst3")
     {
-        error = "plugin not found: " + fileOrIdentifier;
-        return nullptr;
+        const juce::File file (juce::String::fromUTF8 (fileOrIdentifier.c_str()));
+        if (! file.exists())
+        {
+            error = "plugin not found: " + fileOrIdentifier;
+            return nullptr;
+        }
+        if (! locationAllowed (file))
+        {
+            error = "plugin " + fileOrIdentifier + " is outside the installed plugin folders and was not loaded"
+                    " (a plugin file that comes with a song could run any code). Install it under /Library/Audio/Plug-Ins or"
+                    " ~/Library/Audio/Plug-Ins, find it with `music-render plugins scan`, or add its folder to MUSIC_RENDER_PLUGIN_PATH";
+            return nullptr;
+        }
     }
     juce::OwnedArray<juce::PluginDescription> found;
     f->findAllTypesForFile (found, juce::String::fromUTF8 (fileOrIdentifier.c_str()));
@@ -466,6 +529,45 @@ std::unique_ptr<Instrument> makePluginInstrument (const std::string& format, con
         return nullptr;
     }
     return inst;
+}
+
+void PluginHost::allowLocation (const std::string& path)
+{
+    const auto real = realPath (juce::File::getCurrentWorkingDirectory().getChildFile (juce::String::fromUTF8 (path.c_str())));
+    if (! real.empty())
+        allowed_.push_back (real);
+}
+
+bool PluginHost::locationAllowed (const juce::File& plugin) const
+{
+    const auto path = realPath (plugin);
+    for (const auto& a : allowed_)
+        if (insideFolder (path, a))
+            return true;
+    return pluginLocationAllowed (plugin, defaultPluginCache());
+}
+
+bool pluginLocationAllowed (const juce::File& plugin, const juce::File& cache)
+{
+    const auto path = realPath (plugin);
+    if (path.empty())
+        return false;
+    for (const auto& root : pluginFolders())
+        if (insideFolder (path, realPath (root)))
+            return true;
+    if (cache.existsAsFile())
+    {
+        const auto root = juce::JSON::parse (cache);
+        if (auto* list = root.getProperty ("plugins", juce::var()).getArray())
+            for (const auto& e : *list)
+            {
+                const auto location = e.getProperty ("plugin", "").toString();
+                if (e.getProperty ("format", "").toString() == "vst3" && juce::File::isAbsolutePath (location)
+                    && realPath (juce::File (location)) == path)
+                    return true;
+            }
+    }
+    return false;
 }
 
 juce::File defaultPluginCache()

@@ -84,6 +84,52 @@ TEST (plugin_scan_finds_the_test_synth)
     CHECK (cached->fileOrIdentifier == found[0].fileOrIdentifier);
 }
 
+TEST (plugin_outside_the_installed_folders_is_refused)
+{
+    // 곡 폴더에 딸려 온 플러그인 파일 (시험용 신스의 사본)
+    const auto folder = mrtest::outputDir().getChildFile ("song_with_plugin");
+    folder.deleteRecursively();
+    const auto copy = folder.getChildFile ("fx/Bundled.vst3");
+    REQUIRE (copy.getParentDirectory().createDirectory());
+    REQUIRE (juce::File (testPluginPath()).copyDirectoryTo (copy));
+    const auto emptyCache = mrtest::outputDir().getChildFile ("no_plugin_cache.json");
+    emptyCache.deleteFile();
+
+    juce::PluginDescription chosen;
+    std::string error;
+    auto refused = PluginHost::get().load ("vst3", copy.getFullPathName().toStdString(), "", 48000.0, 512, chosen, error);
+    CHECK (refused == nullptr);
+    CHECK (error.find ("outside the installed plugin folders") != std::string::npos);
+    CHECK (! pluginLocationAllowed (copy, emptyCache));
+    // .. 으로 설치 폴더를 지나는 경로도 실제 경로로 견준다
+    const auto dotted = juce::File ("/Library/Audio/Plug-Ins/../../../" + copy.getFullPathName().substring (1));
+    CHECK (! pluginLocationAllowed (dotted, emptyCache));
+    // 곡의 악기도 같다: 레지스트리 항목이 사본을 가리키면 렌더링하지 않는다
+    const auto registry = writeFile ("bundled_registry.json", R"({ "instruments": {
+        "bundled": { "type": "vst3", "plugin": ")" + copy.getFullPathName().toStdString() + R"(" } } })");
+    bool threw = false;
+    try
+    {
+        renderWith (toneOn ("bundled"), registry, "bundled_tone.wav");
+    }
+    catch (const std::exception& e)
+    {
+        threw = std::string (e.what()).find ("outside the installed plugin folders") != std::string::npos;
+    }
+    CHECK (threw);
+
+    // 플러그인 찾기로 캐시에 들어간 것, 사용자가 직접 지정한 것은 불러온다
+    const auto cache = mrtest::outputDir().getChildFile ("bundled_plugin_cache.json");
+    std::vector<Diagnostic> problems;
+    PluginHost::get().allowLocation (folder.getFullPathName().toStdString());
+    auto found = PluginHost::get().scan ("vst3", { copy.getFullPathName().toStdString() }, problems);
+    REQUIRE (found.size() == 1);
+    writePluginCache (cache, found);
+    CHECK (pluginLocationAllowed (copy, cache));
+    auto allowed = PluginHost::get().load ("vst3", copy.getFullPathName().toStdString(), "", 48000.0, 512, chosen, error);
+    CHECK (allowed != nullptr);
+}
+
 TEST (plugin_renders_the_composition_with_exact_timing)
 {
     const auto buffer = renderWith (toneOn ("testsynth"), testRegistry(), "plugin_tone.wav");

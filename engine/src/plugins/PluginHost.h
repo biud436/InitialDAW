@@ -44,13 +44,22 @@ public:
                                                      juce::PluginDescription& chosen, std::string& error);
 
     bool supports (const std::string& format) const;
+    // 사용자가 직접 지정한 플러그인(명령줄 인자, 시험): 설치된 플러그인 폴더 밖이어도 불러온다. 파일이나 폴더
+    void allowLocation (const std::string& path);
 
 private:
     PluginHost();
     juce::AudioPluginFormat* formatFor (const std::string& format) const;
 
+    bool locationAllowed (const juce::File& plugin) const;
     juce::AudioPluginFormatManager manager_;
+    std::vector<std::string> allowed_;   // allowLocation 의 실제 경로
 };
+
+// 곡과 레지스트리가 가리키는 VST3 를 불러와도 되는가: 설치된 플러그인 폴더(VST3 의 기본 검색 위치, /Library/Audio/Plug-Ins,
+// ~/Library/Audio/Plug-Ins), external/plugins (MUSIC_RENDER_PLUGINS), MUSIC_RENDER_PLUGIN_PATH 의 폴더(콜론으로 나눈다) 안이거나 cache 에 있는 플러그인.
+// 곡 폴더에 딸려 온 플러그인이 곡을 열 때 실행되지 않게 한다. 링크와 .. 을 푼 실제 경로로 견준다
+bool pluginLocationAllowed (const juce::File& plugin, const juce::File& cache);
 
 juce::var describeEntry (const juce::PluginDescription& d);
 juce::var describeInstance (juce::AudioPluginInstance& instance, const juce::PluginDescription& d);

@@ -80,6 +80,7 @@ git clone https://github.com/biud436/InitialDAW.git
 cd InitialDAW
 ./build.sh               # fetch the libraries into external/, build the app and the engine, run the tests
 ./build.sh --samples     # also fetch the sample libraries (below)
+./build.sh --gugak       # also fetch the Korean instrument recordings (asks for the usage purpose the archive requires)
 ./build.sh --plugins     # also fetch the free Dexed FM synth (VST3 and AU) for the `dexed` instrument
 ./build.sh --no-test     # build only
 open build/app/InitialDAW_artefacts/Release/InitialDAW.app
@@ -90,6 +91,9 @@ font, pinned to a tag, a commit or a SHA-256, and never commits them. If the `cm
 looks for one installed with `python3 -m pip install --user 'cmake<4'`.
 
 The sample libraries are optional. Without them, every sample instrument plays its built-in synth fallback.
+The National Gugak Center's site asks for a usage form (commercial or not, purpose, affiliation) with every download, so
+`--gugak` asks you for those values, or reads `GUGAK_USE_TYPE`, `GUGAK_USE_PURPOSE` and `GUGAK_AFFILIATION`, and sends
+nothing without them.
 
 | Library | Size | License |
 | :--- | ---: | :--- |
@@ -97,7 +101,7 @@ The sample libraries are optional. Without them, every sample instrument plays i
 | Sonatina Symphonic Orchestra, part (strings, winds, brass, choir, grand piano) | 560 MB | CC Sampling Plus 1.0 |
 | FreePats: Spanish classical guitar, MuldjordKit drums, electric bass, electric guitars, tenor saxophone | 774 MB | CC0, MuldjordKit CC BY 4.0 |
 | Karoryfer x bigcat cello | 133 MB | CC0 |
-| National Gugak Center recordings (gayageum, haegeum, daegeum, janggu, ajaeng, jing) | 490 MB | KOGL Type 1 |
+| National Gugak Center recordings (gayageum, haegeum, daegeum, janggu, ajaeng, jing), `--gugak` only | 490 MB | KOGL Type 1 |
 
 Start a song with File > New song (⌘N), which offers 13 genre templates, or open an example from `engine/examples/`. The
 [manual](docs/manual.md) explains the screen and the keys.

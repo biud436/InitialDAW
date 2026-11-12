@@ -28,8 +28,8 @@ def check(name, cond, detail=""):
         FAILS.append(name)
 
 
-def run(*args, code=0):
-    p = subprocess.run([EXE, *args], capture_output=True, text=True, cwd=ROOT)
+def run(*args, code=0, env=None):
+    p = subprocess.run([EXE, *args], capture_output=True, text=True, cwd=ROOT, env=None if env is None else {**os.environ, **env})
     try:
         data = json.loads(p.stdout)
     except json.JSONDecodeError:
@@ -811,11 +811,24 @@ def main():
 
         reg = os.path.join(OUT, "plugin_registry.json")
         json.dump({"instruments": {"piano": {"type": "vst3", "plugin": PLUGIN, "stateFile": state}}}, open(reg, "w"))
+        # 빌드 폴더의 플러그인은 설치된 플러그인 폴더 밖이라, 곡과 레지스트리로는 MUSIC_RENDER_PLUGIN_PATH 에 그 폴더를 줄 때만 불러온다
+        outside, _ = run("render", demo, "--output", os.path.join(OUT, "x.wav"), "--registry", reg, "--quiet", code=1)
+        check("a plugin outside the installed folders is refused", "outside the installed plugin folders" in json.dumps(outside), outside)
+        bundled = os.path.join(OUT, "bundled")
+        shutil.rmtree(bundled, ignore_errors=True)
+        shutil.copytree(PLUGIN, os.path.join(bundled, "fx", "Bundled.vst3"))
+        bsong = os.path.join(bundled, "song.json")
+        json.dump({"tempo": 120, "tracks": [{"name": "Keys", "instrument": "synth.piano",
+                   "effects": [{"type": "plugin", "format": "vst3", "plugin": "fx/Bundled.vst3"}],
+                   "notes": [{"pitch": "C4", "startBeat": 0, "durationBeat": 1, "velocity": 90}]}]}, open(bsong, "w"))
+        bo, _ = run("render", bsong, "--output", os.path.join(OUT, "x.wav"), "--quiet", code=1)
+        check("a plugin that comes with a song is not loaded", "outside the installed plugin folders" in json.dumps(bo), bo)
+        allow = {"MUSIC_RENDER_PLUGIN_PATH": os.path.dirname(PLUGIN)}
         pw = os.path.join(OUT, "demo_plugin.wav")
-        pr, _ = run("render", demo, "--output", pw, "--registry", reg, "--quiet")
+        pr, _ = run("render", demo, "--output", pw, "--registry", reg, "--quiet", env=allow)
         check("the same composition renders through the plugin", all(t["engine"] == "vst3:MusicRender Test Synth" for t in pr.get("tracks", [])), pr.get("tracks"))
         check("plugin render has the same length", pr.get("master", {}).get("samples") == m.get("samples"), (pr.get("master"), m))
-        pr2, _ = run("render", demo, "--output", os.path.join(OUT, "demo_plugin2.wav"), "--registry", reg, "--quiet")
+        pr2, _ = run("render", demo, "--output", os.path.join(OUT, "demo_plugin2.wav"), "--registry", reg, "--quiet", env=allow)
         check("plugin rendering is deterministic", sha(pw) == sha(os.path.join(OUT, "demo_plugin2.wav")))
 
     print(f"\n{CHECKS} checks, {len(FAILS)} failures")

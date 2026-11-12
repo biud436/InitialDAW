@@ -36,7 +36,8 @@
 
 ```bash
 ./build.sh                    # JUCE 8.0.10, sfizz(고정 커밋), LAME 4.0(SHA-256 고정, MP3 인코더), Bravura 1.482(SHA-256 고정, 악보 글꼴), libFLAC 1.4.3, libogg 1.3.5, libvorbis 1.3.7(SHA-256 고정)을 받고 빌드, CTest (music_ir, unit, cli, app_snapshot, app_score_snapshot, app_mixer_snapshot, app_synth_snapshot, app_plugin, app_plugin_effect, app_export, app_new, app_edit)
-./build.sh --samples          # 샘플 라이브러리(VSCO 2 CE, Sonatina Symphonic Orchestra, FreePats, Karoryfer 첼로, 국악기 녹음)도 받는다
+./build.sh --samples          # 샘플 라이브러리(VSCO 2 CE, Sonatina Symphonic Orchestra, FreePats, Karoryfer 첼로)도 받는다
+./build.sh --gugak            # 국악기 녹음도 받는다 (국립국악원 사이트의 사용 목적 양식 값은 받는 사람이 정한다: GUGAK_USE_TYPE, GUGAK_USE_PURPOSE, GUGAK_AFFILIATION, 없으면 묻는다)
 ./build.sh --plugins          # 무료 VSTi Dexed 1.0.1 (SHA-256 고정)을 external/plugins/dexed 에 받는다
 APP=build/app/InitialDAW_artefacts/Release/InitialDAW.app/Contents/MacOS/InitialDAW
 $APP --snapshot out.png --size 1440x900 --track 3 --at 40 --bars 9-16 --lane cc1 song.json   # 창 없이 화면을 PNG 로
@@ -98,6 +99,9 @@ build/engine/music-render video-info promo.mp4; build/engine/music-render video-
 - 플러그인 효과는 효과 객체 `{ "type": "plugin", "format", "plugin", "name", "state", "program", "parameters" }` 다 (`plugins/PluginEffect`). 메시지 스레드에서 만들고,
   곡의 박과 템포를 플레이헤드로 알린다. 설정만 바뀐 편집은 `apply` 가 같은 플러그인에 넣고(창이 계속 본다), 그 밖의 바뀜은 사슬을 바꿔 새 플러그인이 된다.
   재생기는 효과 칸의 플러그인을 메시지 스레드 쪽 표(`effectPlugin`)로 내놓는다 (오디오 스레드의 사슬을 읽지 않는다).
+- 곡과 레지스트리가 가리키는 VST3 는 `PluginHost::load` 가 설치된 플러그인 폴더, `external/plugins`, `MUSIC_RENDER_PLUGIN_PATH`, 플러그인 캐시 안의 것만
+  불러온다 (`pluginLocationAllowed`, 링크와 .. 을 푼 실제 경로로 견준다). 명령줄 인자와 시험이 직접 준 플러그인은 `allowLocation` 으로 허용한다.
+  곡 폴더에 딸려 온 플러그인이 곡을 열 때 실행되면 안 된다.
 - 내보내기는 엔진의 `OfflineRender` 다: 만들기(악기와 트랙 사슬, 버스와 마스터 효과 사슬, 플러그인은 메시지 스레드에서)와 돌리기(뒤 스레드)를 나눈다. 형식 쓰기는 엔진의 `writeAudioFile`
   (WAV smpl, Ogg 와 FLAC 의 Vorbis 주석, MP3 는 LAME). 앱의 내보내기 결과는 `renderComposition` 과 바이트까지 같아야 한다 (`--export-test`).
 - 녹음도 엔진이 맡는다: `RealtimePlayer` 의 반복 재생(끝 샘플에서 되돌아가며 울리는 음을 끄고 컨트롤러를 다시 보낸다), 메트로놈(리미터와 모니터 게인 뒤, 내보내기에는 없다),

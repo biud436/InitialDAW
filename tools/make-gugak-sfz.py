@@ -2,8 +2,9 @@
 """국악기 (가야금, 해금, 대금, 장구, 아쟁, 징) 의 녹음을 받아 InitialDAW 의 SFZ 를 쓴다 (레지스트리의 gayageum, haegeum, daegeum, janggu, ajaeng, jing).
 
 받는 곳과 라이선스 (파일마다 SHA-256 으로 고정한다):
-  가야금, 해금, 장구  국립국악원 「국악기 디지털 음원」 (공공누리 제1유형, 출처 표시). 받을 때마다 사이트의 사용 목적 양식을 함께 보낸다
-          (상업용도 구분 '비상업용', 사용용도 '음악 제작', 소속 '개인': 2026-10-26 저자가 정했다. 계정은 없다).
+  가야금, 해금, 장구  국립국악원 「국악기 디지털 음원」 (공공누리 제1유형, 출처 표시). 사이트는 받을 때마다 사용 목적 양식(상업용도 구분,
+          사용용도, 소속)을 요구한다. 이 도구는 값을 대신 정하지 않는다: 받을 파일이 있으면 --use-type, --use-purpose, --affiliation 으로
+          받는 사람이 정한 값을 보내고, 값이 없으면 아무것도 받지 않고 끝낸다 (종료 코드 3). 계정은 없다.
           가야금: 확장 > 가야금의 단음 42개 (윤다영, Eb2~Ab5 의 반음마다, 한 파일에 약, 중, 강으로 세 번 뜯는다, 48 kHz 24비트).
           해금: 단음 > 해금의 기본음계 셋 (약, 중, 강, 44.1 kHz). 음계는 Ab3 Bb3 C4 Db4 Eb4 F4 G4 Ab4 Bb4 C5 Db5 Eb5 F5 G5 의 14음이고
           음마다 1.6~3.5초다 (음 사이가 조용해 크기로 나눈다. 음높이는 배음이 강해 YIN 이 옥타브를 틀리므로 이 순서로 이름을 정하고 배음의 합으로 잰다).
@@ -38,7 +39,8 @@ import wave
 
 NGC_EXTEND = "https://www.gugak.go.kr/digitaleum/cmmn/file/extend/download.do"
 NGC_MONOTONE = "https://www.gugak.go.kr/digitaleum/cmmn/file/monotone/download.do"
-NGC_FORM = {"usePurposeGb": "비상업용", "usePurpose": "음악 제작", "usePurposeDtl": "", "companyName": "개인"}
+NGC_FORM = {}   # main 이 받는 사람이 정한 값으로 채운다 (usePurposeGb, usePurpose, usePurposeDtl, companyName)
+NEEDS_FORM = []   # 양식이 없어 받지 못한 파일
 DAEGEUM_COMMIT = "34eb0fd5c4cd35bda1615333eaf92c40c142c7b8"
 DAEGEUM = "https://raw.githubusercontent.com/jonijonii/Daegeum-Sanjo-Sampler/" + DAEGEUM_COMMIT + "/Daegeum_Final_Samples/Daegeum_{name}.wav"
 LAYERS = {"p": (1, 56), "m": (57, 96), "f": (97, 127)}
@@ -261,6 +263,9 @@ def fetch(path, digest, url, form=None):
     """없거나 체크섬이 다르면 curl 로 받는다. form 이 있으면 그 값을 POST 로 보낸다 (국립국악원의 사용 목적 양식)"""
     if os.path.exists(path) and sha256(path) == digest:
         return False
+    if form is not None and not form.get("usePurposeGb"):
+        NEEDS_FORM.append(path)
+        return False
     os.makedirs(os.path.dirname(path), exist_ok=True)
     cmd = ["curl", "-fsSL", "--retry", "3", "-A", "InitialDAW build", "-o", path + ".part"]
     for key, value in (form or {}).items():
@@ -418,8 +423,15 @@ def make_daegeum(root, out):
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("root", help="external/gugak")
+    ap.add_argument("--use-type", help="국립국악원 양식의 상업용도 구분 (사이트의 '상업용' 이나 '비상업용')")
+    ap.add_argument("--use-purpose", help="국립국악원 양식의 사용용도 (예: 음악 제작)")
+    ap.add_argument("--affiliation", help="국립국악원 양식의 소속 (예: 개인, 회사 이름)")
     args = ap.parse_args()
     root = os.path.abspath(args.root)
+    if args.use_type and args.use_purpose and args.affiliation:
+        NGC_FORM.update({"usePurposeGb": args.use_type, "usePurpose": args.use_purpose, "usePurposeDtl": "", "companyName": args.affiliation})
+        print(f"[InitialDAW] 국립국악원에 받을 파일마다 보내는 사용 목적: 상업용도 구분 '{args.use_type}', 사용용도 '{args.use_purpose}', "
+              f"소속 '{args.affiliation}'", file=sys.stderr)
     got = 0
     for number, _, _, _, _, digest in GAYAGEUM:
         url, form = ngc("extend", number)
@@ -439,6 +451,12 @@ def main():
         got += fetch(os.path.join(root, "ngc", "jing" if kind == "monotone" else "ajaeng", f"{number}.wav"), digest, url, form)
     for name, _, digest in DAEGEUM_FILES:
         got += fetch(os.path.join(root, "daegeum", f"Daegeum_{name}.wav"), digest, DAEGEUM.format(name=name.replace("#", "%23")))
+    if NEEDS_FORM:
+        print(f"[InitialDAW] 국립국악원 녹음 {len(NEEDS_FORM)}개를 받지 않았습니다. 사이트는 받을 때마다 사용 목적(상업용도 구분, 사용용도, 소속)을\n"
+              "  요구하고, 이 도구는 그 값을 대신 정하지 않습니다. 직접 정해서 다시 실행하십시오:\n"
+              "  ./build.sh --gugak   (값을 묻습니다)\n"
+              "  GUGAK_USE_TYPE=비상업용 GUGAK_USE_PURPOSE='음악 제작' GUGAK_AFFILIATION=개인 ./build.sh --gugak", file=sys.stderr)
+        sys.exit(3)
     out = os.path.join(root, "InitialDAW")
     os.makedirs(out, exist_ok=True)
     makers = (("gayageum", make_gayageum), ("haegeum", make_haegeum), ("janggu", make_janggu), ("ajaeng", make_ajaeng), ("jing", make_jing),
