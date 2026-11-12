@@ -1,0 +1,546 @@
+{
+ "title": "",
+ "metadata": {
+  "template": {
+   "id": "song-form",
+   "name": "노래 형식",
+   "description": "독주 클라리넷이 노래하고 그랜드 피아노와 나일론 기타가 받칩니다. 현악, 합창, 글로켄슈필, 타악기.",
+   "order": 9
+  }
+ },
+ "tempo": 92.0,
+ "timeSignature": [
+  4,
+  4
+ ],
+ "performance": {
+  "humanizeSeed": 20261007
+ },
+ "render": {
+  "tailSeconds": 6.0
+ },
+ "tracks": [
+  {
+   "name": "Voice (Clarinet)",
+   "instrument": "clarinet-solo",
+   "mixer": {
+    "gainDb": 5.0
+   },
+   "sends": [
+    {
+     "bus": "room",
+     "levelDb": -16
+    },
+    {
+     "bus": "hall",
+     "levelDb": -9
+    }
+   ],
+   "performance": {
+    "timingHumanizeMs": 6,
+    "velocityHumanize": 3,
+    "legatoOverlapMs": 60
+   },
+   "effects": [
+    {
+     "type": "eq",
+     "lowCutHz": 120,
+     "bands": [
+      {
+       "type": "peak",
+       "freqHz": 380,
+       "gainDb": -1.5,
+       "q": 0.9
+      },
+      {
+       "type": "highShelf",
+       "freqHz": 4500,
+       "gainDb": 1.5
+      }
+     ]
+    },
+    {
+     "type": "stereo",
+     "pan": 0.0,
+     "width": 0.5
+    }
+   ],
+   "cc1": [
+    {
+     "beat": 0,
+     "value": 67.2
+    }
+   ],
+   "cc11": [
+    {
+     "beat": 0,
+     "value": 106.86
+    }
+   ],
+   "notes": []
+  },
+  {
+   "name": "Piano",
+   "instrument": "grand-piano",
+   "mixer": {
+    "gainDb": -1.0
+   },
+   "sends": [
+    {
+     "bus": "room",
+     "levelDb": -14
+    },
+    {
+     "bus": "hall",
+     "levelDb": -10
+    }
+   ],
+   "performance": {
+    "timingHumanizeMs": 7,
+    "velocityHumanize": 3,
+    "noteLengthHumanize": 0.02
+   },
+   "effects": [
+    {
+     "type": "eq",
+     "lowCutHz": 40,
+     "bands": [
+      {
+       "type": "peak",
+       "freqHz": 300,
+       "gainDb": -2.5,
+       "q": 0.9
+      },
+      {
+       "type": "highShelf",
+       "freqHz": 5000,
+       "gainDb": 1.5
+      }
+     ]
+    },
+    {
+     "type": "stereo",
+     "pan": -0.15,
+     "width": 0.9
+    }
+   ],
+   "notes": []
+  },
+  {
+   "name": "Guitar",
+   "instrument": "guitar",
+   "mixer": {
+    "gainDb": -2.0,
+    "pan": 0.25
+   },
+   "sends": [
+    {
+     "bus": "room",
+     "levelDb": -12
+    },
+    {
+     "bus": "hall",
+     "levelDb": -14
+    }
+   ],
+   "performance": {
+    "timingHumanizeMs": 8,
+    "velocityHumanize": 4
+   },
+   "effects": [
+    {
+     "type": "eq",
+     "lowCutHz": 70,
+     "bands": [
+      {
+       "type": "peak",
+       "freqHz": 280,
+       "gainDb": -3.0,
+       "q": 0.9
+      },
+      {
+       "type": "highShelf",
+       "freqHz": 5000,
+       "gainDb": 2.0
+      }
+     ]
+    }
+   ],
+   "notes": []
+  },
+  {
+   "name": "Violins",
+   "instrument": "violins",
+   "mixer": {
+    "gainDb": -5.0,
+    "pan": -0.3
+   },
+   "sends": [
+    {
+     "bus": "room",
+     "levelDb": -16
+    },
+    {
+     "bus": "hall",
+     "levelDb": -8
+    }
+   ],
+   "performance": {
+    "timingHumanizeMs": 10,
+    "velocityHumanize": 4
+   },
+   "effects": [
+    {
+     "type": "eq",
+     "lowCutHz": 150,
+     "bands": [
+      {
+       "type": "peak",
+       "freqHz": 400,
+       "gainDb": -2.0,
+       "q": 0.9
+      },
+      {
+       "type": "highShelf",
+       "freqHz": 7000,
+       "gainDb": 1.5
+      }
+     ]
+    }
+   ],
+   "cc1": [
+    {
+     "beat": 0,
+     "value": 76
+    }
+   ],
+   "notes": []
+  },
+  {
+   "name": "Violas",
+   "instrument": "violas",
+   "mixer": {
+    "gainDb": -5.0,
+    "pan": 0.1
+   },
+   "sends": [
+    {
+     "bus": "room",
+     "levelDb": -16
+    },
+    {
+     "bus": "hall",
+     "levelDb": -8
+    }
+   ],
+   "performance": {
+    "timingHumanizeMs": 10,
+    "velocityHumanize": 4
+   },
+   "effects": [
+    {
+     "type": "eq",
+     "lowCutHz": 110,
+     "bands": [
+      {
+       "type": "peak",
+       "freqHz": 350,
+       "gainDb": -2.5,
+       "q": 0.9
+      },
+      {
+       "type": "highShelf",
+       "freqHz": 7000,
+       "gainDb": 1.0
+      }
+     ]
+    }
+   ],
+   "cc1": [
+    {
+     "beat": 0,
+     "value": 62
+    }
+   ],
+   "notes": []
+  },
+  {
+   "name": "Celli",
+   "instrument": "celli",
+   "mixer": {
+    "gainDb": -4.0,
+    "pan": 0.3
+   },
+   "sends": [
+    {
+     "bus": "room",
+     "levelDb": -16
+    },
+    {
+     "bus": "hall",
+     "levelDb": -9
+    }
+   ],
+   "performance": {
+    "timingHumanizeMs": 10,
+    "velocityHumanize": 4
+   },
+   "effects": [
+    {
+     "type": "eq",
+     "lowCutHz": 50,
+     "bands": [
+      {
+       "type": "peak",
+       "freqHz": 300,
+       "gainDb": -2.5,
+       "q": 0.9
+      },
+      {
+       "type": "highShelf",
+       "freqHz": 6000,
+       "gainDb": 0.5
+      }
+     ]
+    }
+   ],
+   "cc1": [
+    {
+     "beat": 0,
+     "value": 56
+    }
+   ],
+   "notes": []
+  },
+  {
+   "name": "Basses",
+   "instrument": "basses",
+   "mixer": {
+    "gainDb": -5.0
+   },
+   "sends": [
+    {
+     "bus": "room",
+     "levelDb": -18
+    },
+    {
+     "bus": "hall",
+     "levelDb": -10
+    }
+   ],
+   "performance": {
+    "timingHumanizeMs": 10,
+    "velocityHumanize": 4
+   },
+   "effects": [
+    {
+     "type": "eq",
+     "lowCutHz": 30,
+     "bands": [
+      {
+       "type": "peak",
+       "freqHz": 250,
+       "gainDb": -2.0,
+       "q": 0.9
+      },
+      {
+       "type": "highShelf",
+       "freqHz": 6000,
+       "gainDb": 0.0
+      }
+     ]
+    }
+   ],
+   "cc1": [
+    {
+     "beat": 0,
+     "value": 77
+    }
+   ],
+   "notes": []
+  },
+  {
+   "name": "Choir",
+   "instrument": "choir",
+   "mixer": {
+    "gainDb": -9.5
+   },
+   "sends": [
+    {
+     "bus": "room",
+     "levelDb": -18
+    },
+    {
+     "bus": "hall",
+     "levelDb": -6
+    }
+   ],
+   "performance": {
+    "timingHumanizeMs": 12
+   },
+   "effects": [
+    {
+     "type": "eq",
+     "lowCutHz": 140,
+     "bands": [
+      {
+       "type": "peak",
+       "freqHz": 400,
+       "gainDb": -4.0,
+       "q": 0.9
+      },
+      {
+       "type": "highShelf",
+       "freqHz": 6500,
+       "gainDb": 1.0
+      }
+     ]
+    },
+    {
+     "type": "stereo",
+     "width": 1.0
+    }
+   ],
+   "cc1": [
+    {
+     "beat": 0,
+     "value": 56
+    }
+   ],
+   "notes": []
+  },
+  {
+   "name": "Glockenspiel",
+   "instrument": "glockenspiel",
+   "mixer": {
+    "gainDb": 8.0,
+    "pan": 0.35
+   },
+   "sends": [
+    {
+     "bus": "room",
+     "levelDb": -14
+    },
+    {
+     "bus": "hall",
+     "levelDb": -6
+    }
+   ],
+   "performance": {
+    "timingHumanizeMs": 6
+   },
+   "notes": []
+  },
+  {
+   "name": "Percussion",
+   "instrument": "percussion",
+   "mixer": {
+    "gainDb": -14.0
+   },
+   "sends": [
+    {
+     "bus": "room",
+     "levelDb": -16
+    },
+    {
+     "bus": "hall",
+     "levelDb": -8
+    }
+   ],
+   "notes": []
+  },
+  {
+   "name": "Timpani",
+   "instrument": "timpani",
+   "mixer": {
+    "gainDb": 4.0
+   },
+   "sends": [
+    {
+     "bus": "room",
+     "levelDb": -16
+    },
+    {
+     "bus": "hall",
+     "levelDb": -9
+    }
+   ],
+   "cc11": [
+    {
+     "beat": 0,
+     "value": 120
+    }
+   ],
+   "notes": []
+  }
+ ],
+ "buses": [
+  {
+   "name": "room",
+   "effects": [
+    {
+     "type": "reverb",
+     "mix": 1.0,
+     "decaySeconds": 1.3,
+     "preDelayMs": 8,
+     "damping": 0.5,
+     "width": 0.9,
+     "lowCutHz": 220,
+     "highCutHz": 8000
+    }
+   ]
+  },
+  {
+   "name": "hall",
+   "effects": [
+    {
+     "type": "reverb",
+     "mix": 1.0,
+     "decaySeconds": 2.9,
+     "preDelayMs": 28,
+     "damping": 0.45,
+     "width": 1.0,
+     "lowCutHz": 260,
+     "highCutHz": 9000
+    }
+   ]
+  }
+ ],
+ "master": {
+  "targetLufs": -16.0,
+  "effects": [
+   {
+    "type": "eq",
+    "lowCutHz": 28,
+    "bands": [
+     {
+      "type": "peak",
+      "freqHz": 300,
+      "gainDb": -1.0,
+      "q": 0.8
+     },
+     {
+      "type": "highShelf",
+      "freqHz": 8000,
+      "gainDb": 1.5
+     }
+    ]
+   },
+   {
+    "type": "compressor",
+    "thresholdDb": -20,
+    "ratio": 1.8,
+    "attackMs": 25,
+    "releaseMs": 220,
+    "kneeDb": 8
+   },
+   {
+    "type": "limiter",
+    "ceilingDb": -1.0,
+    "releaseMs": 80,
+    "lookaheadMs": 5,
+    "truePeak": 1
+   }
+  ]
+ }
+}

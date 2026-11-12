@@ -1,0 +1,248 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/biud436/InitialDAW/engine/schemas/instrument.schema.json",
+  "title": "music-render instrument registry",
+  "description": "Maps instrument names used by compositions to concrete instruments. Later files override earlier ones.",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "comment": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "instruments": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/$defs/instrument"
+      }
+    }
+  },
+  "$defs": {
+    "instrument": {
+      "type": "object",
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "type": {
+          "enum": [
+            "synth",
+            "sfz",
+            "vst3",
+            "au"
+          ],
+          "description": "synth is built in; sfz uses sfizz; vst3 and au are plugins"
+        },
+        "preset": {
+          "enum": [
+            "sine",
+            "piano",
+            "pad",
+            "strings",
+            "bass",
+            "pluck",
+            "drums"
+          ],
+          "description": "synth preset"
+        },
+        "gainDb": {
+          "type": "number",
+          "minimum": -60,
+          "maximum": 24
+        },
+        "transpose": {
+          "type": "integer",
+          "minimum": -48,
+          "maximum": 48
+        },
+        "keyNames": {
+          "description": "names of keys shown in the piano roll (played key -> name), e.g. drums",
+          "type": "object",
+          "propertyNames": { "pattern": "^[0-9]{1,3}$" },
+          "additionalProperties": { "type": "string" }
+        },
+        "keymap": {
+          "description": "keys sent to the instrument: played key (after transpose) -> instrument key, e.g. a drum kit on GM keys",
+          "type": "object",
+          "propertyNames": { "pattern": "^[0-9]{1,3}$" },
+          "additionalProperties": { "type": "integer", "minimum": 0, "maximum": 127 }
+        },
+        "fallback": {
+          "type": "string",
+          "description": "instrument name to use when this one cannot be created (missing files, plugins)"
+        },
+        "description": {
+          "type": "string"
+        },
+        "comment": {
+          "type": "string"
+        },
+        "file": {
+          "type": "string",
+          "description": "sfz: default SFZ file, relative to the registry file; ${VAR} and ${VAR:-default} expand from the environment"
+        },
+        "plugin": {
+          "type": "string",
+          "description": "vst3: path to the .vst3 bundle; au: JUCE identifier such as AudioUnit:Synths/aumu,dls ,appl"
+        },
+        "pluginName": {
+          "type": "string",
+          "description": "pick one plugin in a shell bundle, or look the plugin up in the scan cache when plugin is empty"
+        },
+        "parameters": {
+          "type": "object",
+          "additionalProperties": {
+            "oneOf": [
+              {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              },
+              {
+                "type": "string"
+              }
+            ]
+          },
+          "description": "by parameter name or id; numbers are normalised 0..1, strings use the plugin's text"
+        },
+        "program": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "state": {
+          "type": "string",
+          "description": "base64 plugin state"
+        },
+        "stateFile": {
+          "type": "string",
+          "description": "plugin state file written by `music-render plugins save-state`"
+        },
+        "defaultArticulation": {
+          "type": "string"
+        },
+        "articulations": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "keyswitch": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 127,
+                "description": "sent only when the articulation changes"
+              },
+              "keyswitchVelocity": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 127
+              },
+              "file": {
+                "type": "string",
+                "description": "sfz only: this articulation's SFZ file"
+              },
+              "program": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 127
+              },
+              "cc": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 127
+                },
+                "description": "controllers sent before the note, e.g. {\"cc32\": 3}"
+              },
+              "lengthFactor": {
+                "type": "number",
+                "minimum": 0.05,
+                "maximum": 4
+              },
+              "velocityOffset": {
+                "type": "integer",
+                "minimum": -64,
+                "maximum": 64
+              },
+              "legato": {
+                "type": "boolean"
+              },
+              "comment": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "controllers": {
+          "type": "object",
+          "additionalProperties": {
+            "enum": [
+              "native",
+              "engine",
+              "both",
+              "ignore"
+            ]
+          },
+          "description": "who handles each controller. Defaults: cc7 and cc10 engine; for sfz the dynamics controller is both and cc11 engine; everything else native. The engine handles cc7 (volume), cc10 (pan), cc11 (expression) and the dynamics controller"
+        },
+        "dynamics": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "controller": {
+              "oneOf": [
+                {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 127
+                },
+                {
+                  "type": "string",
+                  "pattern": "^cc[0-9]+$"
+                }
+              ],
+              "default": "cc1"
+            },
+            "gainDb": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              },
+              "minItems": 2,
+              "maxItems": 2,
+              "description": "engine gain at value 0 and 127"
+            },
+            "brightnessHz": {
+              "type": "array",
+              "items": {
+                "type": "number",
+                "minimum": 20,
+                "maximum": 24000
+              },
+              "minItems": 2,
+              "maxItems": 2,
+              "description": "engine low-pass cutoff at value 0 and 127"
+            },
+            "layers": {
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 127
+              },
+              "description": "sfz: play each note at these velocities and crossfade by the dynamics value (only when the track automates it)"
+            },
+            "comment": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}

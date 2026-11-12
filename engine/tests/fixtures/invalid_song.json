@@ -1,0 +1,14 @@
+{
+  "tempo": 92,
+  "tracks": [
+    {
+      "name": "Melody",
+      "instrument": "piano",
+      "notes": [
+        { "pitch": 128, "startBeat": 0, "durationBeat": 1, "velocity": 72 },
+        { "pitch": 64, "startBeat": 1, "durationBeat": 1, "velocty": 72, "velocity": 70 }
+      ]
+    },
+    { "name": "Strings", "instrument": "pinao", "notes": [ { "pitch": 52, "startBeat": 0, "durationBeat": 4, "velocity": 60 } ] }
+  ]
+}

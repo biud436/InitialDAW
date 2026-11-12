@@ -1,0 +1,2917 @@
+{
+ "$schema": "../schemas/composition.schema.json",
+ "title": "Orchestral demo",
+ "comment": "tools/promo/compose_strings.py 가 만든 홍보 영상 음악의 64초판을 예제로 둔다. VSCO 2 CE 현악, 피아노, 하프, 팀파니 (샘플이 없으면 내장 신스로 대신한다). 휴머나이즈, 레가토, CC1 다이내믹스, 홀 버스 리버브, 목표 LUFS 를 모두 쓴다.",
+ "tempo": 60,
+ "timeSignature": [
+  4,
+  4
+ ],
+ "performance": {
+  "humanizeSeed": 20261005
+ },
+ "buses": [
+  {
+   "name": "hall",
+   "effects": [
+    {
+     "type": "reverb",
+     "mix": 1.0,
+     "decaySeconds": 2.9,
+     "preDelayMs": 24,
+     "damping": 0.55,
+     "width": 1.0,
+     "lowCutHz": 170,
+     "highCutHz": 8000
+    }
+   ]
+  }
+ ],
+ "master": {
+  "targetLufs": -15.0,
+  "effects": [
+   {
+    "type": "eq",
+    "lowCutHz": 28,
+    "bands": [
+     {
+      "type": "lowShelf",
+      "freqHz": 180,
+      "gainDb": -2.5
+     },
+     {
+      "type": "highShelf",
+      "freqHz": 7000,
+      "gainDb": 3.0
+     }
+    ]
+   },
+   {
+    "type": "compressor",
+    "thresholdDb": -20,
+    "ratio": 1.6,
+    "attackMs": 30,
+    "releaseMs": 250,
+    "kneeDb": 8
+   },
+   {
+    "type": "limiter",
+    "ceilingDb": -1.0,
+    "releaseMs": 80
+   }
+  ]
+ },
+ "render": {
+  "tailSeconds": 0.0,
+  "fadeOutSeconds": 1.2,
+  "endBeat": 64
+ },
+ "tracks": [
+  {
+   "name": "Piano",
+   "instrument": "piano",
+   "mixer": {
+    "gainDb": -2.0,
+    "pan": 0.05
+   },
+   "sends": [
+    {
+     "bus": "hall",
+     "levelDb": -11
+    }
+   ],
+   "performance": {
+    "timingHumanizeMs": 9,
+    "velocityHumanize": 7,
+    "noteLengthHumanize": 0.02
+   },
+   "effects": [
+    {
+     "type": "eq",
+     "lowCutHz": 85,
+     "bands": [
+      {
+       "type": "peak",
+       "freqHz": 280,
+       "gainDb": -3,
+       "q": 0.9
+      },
+      {
+       "type": "highShelf",
+       "freqHz": 3500,
+       "gainDb": 3
+      }
+     ]
+    }
+   ],
+   "cc64": [
+    {
+     "beat": 0.03,
+     "value": 127,
+     "curve": "step"
+    },
+    {
+     "beat": 3.92,
+     "value": 0,
+     "curve": "step"
+    },
+    {
+     "beat": 4.03,
+     "value": 127,
+     "curve": "step"
+    },
+    {
+     "beat": 7.92,
+     "value": 0,
+     "curve": "step"
+    },
+    {
+     "beat": 8.03,
+     "value": 127,
+     "curve": "step"
+    },
+    {
+     "beat": 11.92,
+     "value": 0,
+     "curve": "step"
+    },
+    {
+     "beat": 12.03,
+     "value": 127,
+     "curve": "step"
+    },
+    {
+     "beat": 15.92,
+     "value": 0,
+     "curve": "step"
+    },
+    {
+     "beat": 16.03,
+     "value": 127,
+     "curve": "step"
+    },
+    {
+     "beat": 19.92,
+     "value": 0,
+     "curve": "step"
+    },
+    {
+     "beat": 20.03,
+     "value": 127,
+     "curve": "step"
+    },
+    {
+     "beat": 23.92,
+     "value": 0,
+     "curve": "step"
+    },
+    {
+     "beat": 24.03,
+     "value": 127,
+     "curve": "step"
+    },
+    {
+     "beat": 27.92,
+     "value": 0,
+     "curve": "step"
+    },
+    {
+     "beat": 28.03,
+     "value": 127,
+     "curve": "step"
+    },
+    {
+     "beat": 31.92,
+     "value": 0,
+     "curve": "step"
+    },
+    {
+     "beat": 32.03,
+     "value": 127,
+     "curve": "step"
+    },
+    {
+     "beat": 35.92,
+     "value": 0,
+     "curve": "step"
+    },
+    {
+     "beat": 36.03,
+     "value": 127,
+     "curve": "step"
+    },
+    {
+     "beat": 39.92,
+     "value": 0,
+     "curve": "step"
+    },
+    {
+     "beat": 40.03,
+     "value": 127,
+     "curve": "step"
+    },
+    {
+     "beat": 43.92,
+     "value": 0,
+     "curve": "step"
+    },
+    {
+     "beat": 44.03,
+     "value": 127,
+     "curve": "step"
+    },
+    {
+     "beat": 47.92,
+     "value": 0,
+     "curve": "step"
+    },
+    {
+     "beat": 48.03,
+     "value": 127,
+     "curve": "step"
+    },
+    {
+     "beat": 51.92,
+     "value": 0,
+     "curve": "step"
+    },
+    {
+     "beat": 52.03,
+     "value": 127,
+     "curve": "step"
+    },
+    {
+     "beat": 55.92,
+     "value": 0,
+     "curve": "step"
+    },
+    {
+     "beat": 56.03,
+     "value": 127,
+     "curve": "step"
+    },
+    {
+     "beat": 59.92,
+     "value": 0,
+     "curve": "step"
+    },
+    {
+     "beat": 60.03,
+     "value": 127,
+     "curve": "step"
+    }
+   ],
+   "notes": [
+    {
+     "pitch": 40,
+     "startBeat": 0.0,
+     "durationBeat": 3.9,
+     "velocity": 50
+    },
+    {
+     "pitch": 52,
+     "startBeat": 0.0,
+     "durationBeat": 3.9,
+     "velocity": 58
+    },
+    {
+     "pitch": 59,
+     "startBeat": 0.5,
+     "durationBeat": 3.4,
+     "velocity": 52
+    },
+    {
+     "pitch": 64,
+     "startBeat": 1.0,
+     "durationBeat": 2.9,
+     "velocity": 54
+    },
+    {
+     "pitch": 67,
+     "startBeat": 1.5,
+     "durationBeat": 2.4,
+     "velocity": 52
+    },
+    {
+     "pitch": 71,
+     "startBeat": 2.0,
+     "durationBeat": 1.9,
+     "velocity": 58
+    },
+    {
+     "pitch": 67,
+     "startBeat": 2.5,
+     "durationBeat": 1.4,
+     "velocity": 52
+    },
+    {
+     "pitch": 64,
+     "startBeat": 3.0,
+     "durationBeat": 0.9,
+     "velocity": 54
+    },
+    {
+     "pitch": 59,
+     "startBeat": 3.5,
+     "durationBeat": 0.4,
+     "velocity": 52
+    },
+    {
+     "pitch": 36,
+     "startBeat": 4.0,
+     "durationBeat": 3.9,
+     "velocity": 50
+    },
+    {
+     "pitch": 48,
+     "startBeat": 4.0,
+     "durationBeat": 3.9,
+     "velocity": 58
+    },
+    {
+     "pitch": 55,
+     "startBeat": 4.5,
+     "durationBeat": 3.4,
+     "velocity": 52
+    },
+    {
+     "pitch": 60,
+     "startBeat": 5.0,
+     "durationBeat": 2.9,
+     "velocity": 54
+    },
+    {
+     "pitch": 64,
+     "startBeat": 5.5,
+     "durationBeat": 2.4,
+     "velocity": 52
+    },
+    {
+     "pitch": 67,
+     "startBeat": 6.0,
+     "durationBeat": 1.9,
+     "velocity": 58
+    },
+    {
+     "pitch": 64,
+     "startBeat": 6.5,
+     "durationBeat": 1.4,
+     "velocity": 52
+    },
+    {
+     "pitch": 60,
+     "startBeat": 7.0,
+     "durationBeat": 0.9,
+     "velocity": 54
+    },
+    {
+     "pitch": 55,
+     "startBeat": 7.5,
+     "durationBeat": 0.4,
+     "velocity": 52
+    },
+    {
+     "pitch": 43,
+     "startBeat": 8.0,
+     "durationBeat": 3.9,
+     "velocity": 50
+    },
+    {
+     "pitch": 55,
+     "startBeat": 8.0,
+     "durationBeat": 3.9,
+     "velocity": 58
+    },
+    {
+     "pitch": 62,
+     "startBeat": 8.5,
+     "durationBeat": 3.4,
+     "velocity": 52
+    },
+    {
+     "pitch": 67,
+     "startBeat": 9.0,
+     "durationBeat": 2.9,
+     "velocity": 54
+    },
+    {
+     "pitch": 71,
+     "startBeat": 9.5,
+     "durationBeat": 2.4,
+     "velocity": 52
+    },
+    {
+     "pitch": 74,
+     "startBeat": 10.0,
+     "durationBeat": 1.9,
+     "velocity": 58
+    },
+    {
+     "pitch": 71,
+     "startBeat": 10.5,
+     "durationBeat": 1.4,
+     "velocity": 52
+    },
+    {
+     "pitch": 67,
+     "startBeat": 11.0,
+     "durationBeat": 0.9,
+     "velocity": 54
+    },
+    {
+     "pitch": 62,
+     "startBeat": 11.5,
+     "durationBeat": 0.4,
+     "velocity": 52
+    },
+    {
+     "pitch": 38,
+     "startBeat": 12.0,
+     "durationBeat": 3.9,
+     "velocity": 50
+    },
+    {
+     "pitch": 50,
+     "startBeat": 12.0,
+     "durationBeat": 3.9,
+     "velocity": 58
+    },
+    {
+     "pitch": 57,
+     "startBeat": 12.5,
+     "durationBeat": 3.4,
+     "velocity": 52
+    },
+    {
+     "pitch": 62,
+     "startBeat": 13.0,
+     "durationBeat": 2.9,
+     "velocity": 54
+    },
+    {
+     "pitch": 66,
+     "startBeat": 13.5,
+     "durationBeat": 2.4,
+     "velocity": 52
+    },
+    {
+     "pitch": 69,
+     "startBeat": 14.0,
+     "durationBeat": 1.9,
+     "velocity": 58
+    },
+    {
+     "pitch": 66,
+     "startBeat": 14.5,
+     "durationBeat": 1.4,
+     "velocity": 52
+    },
+    {
+     "pitch": 62,
+     "startBeat": 15.0,
+     "durationBeat": 0.9,
+     "velocity": 54
+    },
+    {
+     "pitch": 57,
+     "startBeat": 15.5,
+     "durationBeat": 0.4,
+     "velocity": 52
+    },
+    {
+     "pitch": 40,
+     "startBeat": 16.0,
+     "durationBeat": 3.9,
+     "velocity": 42
+    },
+    {
+     "pitch": 52,
+     "startBeat": 16.0,
+     "durationBeat": 3.9,
+     "velocity": 50
+    },
+    {
+     "pitch": 59,
+     "startBeat": 16.5,
+     "durationBeat": 3.4,
+     "velocity": 44
+    },
+    {
+     "pitch": 64,
+     "startBeat": 17.0,
+     "durationBeat": 2.9,
+     "velocity": 46
+    },
+    {
+     "pitch": 67,
+     "startBeat": 17.5,
+     "durationBeat": 2.4,
+     "velocity": 44
+    },
+    {
+     "pitch": 71,
+     "startBeat": 18.0,
+     "durationBeat": 1.9,
+     "velocity": 50
+    },
+    {
+     "pitch": 67,
+     "startBeat": 18.5,
+     "durationBeat": 1.4,
+     "velocity": 44
+    },
+    {
+     "pitch": 64,
+     "startBeat": 19.0,
+     "durationBeat": 0.9,
+     "velocity": 46
+    },
+    {
+     "pitch": 59,
+     "startBeat": 19.5,
+     "durationBeat": 0.4,
+     "velocity": 44
+    },
+    {
+     "pitch": 36,
+     "startBeat": 20.0,
+     "durationBeat": 3.9,
+     "velocity": 42
+    },
+    {
+     "pitch": 48,
+     "startBeat": 20.0,
+     "durationBeat": 3.9,
+     "velocity": 50
+    },
+    {
+     "pitch": 55,
+     "startBeat": 20.5,
+     "durationBeat": 3.4,
+     "velocity": 44
+    },
+    {
+     "pitch": 60,
+     "startBeat": 21.0,
+     "durationBeat": 2.9,
+     "velocity": 46
+    },
+    {
+     "pitch": 64,
+     "startBeat": 21.5,
+     "durationBeat": 2.4,
+     "velocity": 44
+    },
+    {
+     "pitch": 67,
+     "startBeat": 22.0,
+     "durationBeat": 1.9,
+     "velocity": 50
+    },
+    {
+     "pitch": 64,
+     "startBeat": 22.5,
+     "durationBeat": 1.4,
+     "velocity": 44
+    },
+    {
+     "pitch": 60,
+     "startBeat": 23.0,
+     "durationBeat": 0.9,
+     "velocity": 46
+    },
+    {
+     "pitch": 55,
+     "startBeat": 23.5,
+     "durationBeat": 0.4,
+     "velocity": 44
+    },
+    {
+     "pitch": 43,
+     "startBeat": 24.0,
+     "durationBeat": 3.9,
+     "velocity": 42
+    },
+    {
+     "pitch": 55,
+     "startBeat": 24.0,
+     "durationBeat": 3.9,
+     "velocity": 50
+    },
+    {
+     "pitch": 62,
+     "startBeat": 24.5,
+     "durationBeat": 3.4,
+     "velocity": 44
+    },
+    {
+     "pitch": 67,
+     "startBeat": 25.0,
+     "durationBeat": 2.9,
+     "velocity": 46
+    },
+    {
+     "pitch": 71,
+     "startBeat": 25.5,
+     "durationBeat": 2.4,
+     "velocity": 44
+    },
+    {
+     "pitch": 74,
+     "startBeat": 26.0,
+     "durationBeat": 1.9,
+     "velocity": 50
+    },
+    {
+     "pitch": 71,
+     "startBeat": 26.5,
+     "durationBeat": 1.4,
+     "velocity": 44
+    },
+    {
+     "pitch": 67,
+     "startBeat": 27.0,
+     "durationBeat": 0.9,
+     "velocity": 46
+    },
+    {
+     "pitch": 62,
+     "startBeat": 27.5,
+     "durationBeat": 0.4,
+     "velocity": 44
+    },
+    {
+     "pitch": 38,
+     "startBeat": 28.0,
+     "durationBeat": 3.9,
+     "velocity": 42
+    },
+    {
+     "pitch": 50,
+     "startBeat": 28.0,
+     "durationBeat": 3.9,
+     "velocity": 50
+    },
+    {
+     "pitch": 57,
+     "startBeat": 28.5,
+     "durationBeat": 3.4,
+     "velocity": 44
+    },
+    {
+     "pitch": 62,
+     "startBeat": 29.0,
+     "durationBeat": 2.9,
+     "velocity": 46
+    },
+    {
+     "pitch": 66,
+     "startBeat": 29.5,
+     "durationBeat": 2.4,
+     "velocity": 44
+    },
+    {
+     "pitch": 69,
+     "startBeat": 30.0,
+     "durationBeat": 1.9,
+     "velocity": 50
+    },
+    {
+     "pitch": 66,
+     "startBeat": 30.5,
+     "durationBeat": 1.4,
+     "velocity": 44
+    },
+    {
+     "pitch": 62,
+     "startBeat": 31.0,
+     "durationBeat": 0.9,
+     "velocity": 46
+    },
+    {
+     "pitch": 57,
+     "startBeat": 31.5,
+     "durationBeat": 0.4,
+     "velocity": 44
+    },
+    {
+     "pitch": 40,
+     "startBeat": 32.0,
+     "durationBeat": 3.9,
+     "velocity": 42
+    },
+    {
+     "pitch": 52,
+     "startBeat": 32.0,
+     "durationBeat": 3.9,
+     "velocity": 50
+    },
+    {
+     "pitch": 59,
+     "startBeat": 32.5,
+     "durationBeat": 3.4,
+     "velocity": 44
+    },
+    {
+     "pitch": 64,
+     "startBeat": 33.0,
+     "durationBeat": 2.9,
+     "velocity": 46
+    },
+    {
+     "pitch": 67,
+     "startBeat": 33.5,
+     "durationBeat": 2.4,
+     "velocity": 44
+    },
+    {
+     "pitch": 71,
+     "startBeat": 34.0,
+     "durationBeat": 1.9,
+     "velocity": 50
+    },
+    {
+     "pitch": 67,
+     "startBeat": 34.5,
+     "durationBeat": 1.4,
+     "velocity": 44
+    },
+    {
+     "pitch": 64,
+     "startBeat": 35.0,
+     "durationBeat": 0.9,
+     "velocity": 46
+    },
+    {
+     "pitch": 59,
+     "startBeat": 35.5,
+     "durationBeat": 0.4,
+     "velocity": 44
+    },
+    {
+     "pitch": 36,
+     "startBeat": 36.0,
+     "durationBeat": 3.9,
+     "velocity": 42
+    },
+    {
+     "pitch": 48,
+     "startBeat": 36.0,
+     "durationBeat": 3.9,
+     "velocity": 50
+    },
+    {
+     "pitch": 55,
+     "startBeat": 36.5,
+     "durationBeat": 3.4,
+     "velocity": 44
+    },
+    {
+     "pitch": 60,
+     "startBeat": 37.0,
+     "durationBeat": 2.9,
+     "velocity": 46
+    },
+    {
+     "pitch": 64,
+     "startBeat": 37.5,
+     "durationBeat": 2.4,
+     "velocity": 44
+    },
+    {
+     "pitch": 67,
+     "startBeat": 38.0,
+     "durationBeat": 1.9,
+     "velocity": 50
+    },
+    {
+     "pitch": 64,
+     "startBeat": 38.5,
+     "durationBeat": 1.4,
+     "velocity": 44
+    },
+    {
+     "pitch": 60,
+     "startBeat": 39.0,
+     "durationBeat": 0.9,
+     "velocity": 46
+    },
+    {
+     "pitch": 55,
+     "startBeat": 39.5,
+     "durationBeat": 0.4,
+     "velocity": 44
+    },
+    {
+     "pitch": 43,
+     "startBeat": 40.0,
+     "durationBeat": 3.9,
+     "velocity": 42
+    },
+    {
+     "pitch": 55,
+     "startBeat": 40.0,
+     "durationBeat": 3.9,
+     "velocity": 50
+    },
+    {
+     "pitch": 62,
+     "startBeat": 40.5,
+     "durationBeat": 3.4,
+     "velocity": 44
+    },
+    {
+     "pitch": 67,
+     "startBeat": 41.0,
+     "durationBeat": 2.9,
+     "velocity": 46
+    },
+    {
+     "pitch": 71,
+     "startBeat": 41.5,
+     "durationBeat": 2.4,
+     "velocity": 44
+    },
+    {
+     "pitch": 74,
+     "startBeat": 42.0,
+     "durationBeat": 1.9,
+     "velocity": 50
+    },
+    {
+     "pitch": 71,
+     "startBeat": 42.5,
+     "durationBeat": 1.4,
+     "velocity": 44
+    },
+    {
+     "pitch": 67,
+     "startBeat": 43.0,
+     "durationBeat": 0.9,
+     "velocity": 46
+    },
+    {
+     "pitch": 62,
+     "startBeat": 43.5,
+     "durationBeat": 0.4,
+     "velocity": 44
+    },
+    {
+     "pitch": 42,
+     "startBeat": 44.0,
+     "durationBeat": 3.9,
+     "velocity": 42
+    },
+    {
+     "pitch": 50,
+     "startBeat": 44.0,
+     "durationBeat": 3.9,
+     "velocity": 50
+    },
+    {
+     "pitch": 57,
+     "startBeat": 44.5,
+     "durationBeat": 3.4,
+     "velocity": 44
+    },
+    {
+     "pitch": 62,
+     "startBeat": 45.0,
+     "durationBeat": 2.9,
+     "velocity": 46
+    },
+    {
+     "pitch": 66,
+     "startBeat": 45.5,
+     "durationBeat": 2.4,
+     "velocity": 44
+    },
+    {
+     "pitch": 69,
+     "startBeat": 46.0,
+     "durationBeat": 1.9,
+     "velocity": 50
+    },
+    {
+     "pitch": 66,
+     "startBeat": 46.5,
+     "durationBeat": 1.4,
+     "velocity": 44
+    },
+    {
+     "pitch": 62,
+     "startBeat": 47.0,
+     "durationBeat": 0.9,
+     "velocity": 46
+    },
+    {
+     "pitch": 57,
+     "startBeat": 47.5,
+     "durationBeat": 0.4,
+     "velocity": 44
+    },
+    {
+     "pitch": 36,
+     "startBeat": 48.0,
+     "durationBeat": 3.9,
+     "velocity": 60
+    },
+    {
+     "pitch": 48,
+     "startBeat": 48.0,
+     "durationBeat": 3.9,
+     "velocity": 68
+    },
+    {
+     "pitch": 55,
+     "startBeat": 48.5,
+     "durationBeat": 3.4,
+     "velocity": 62
+    },
+    {
+     "pitch": 60,
+     "startBeat": 49.0,
+     "durationBeat": 2.9,
+     "velocity": 64
+    },
+    {
+     "pitch": 64,
+     "startBeat": 49.5,
+     "durationBeat": 2.4,
+     "velocity": 62
+    },
+    {
+     "pitch": 67,
+     "startBeat": 50.0,
+     "durationBeat": 1.9,
+     "velocity": 68
+    },
+    {
+     "pitch": 64,
+     "startBeat": 50.5,
+     "durationBeat": 1.4,
+     "velocity": 62
+    },
+    {
+     "pitch": 60,
+     "startBeat": 51.0,
+     "durationBeat": 0.9,
+     "velocity": 64
+    },
+    {
+     "pitch": 55,
+     "startBeat": 51.5,
+     "durationBeat": 0.4,
+     "velocity": 62
+    },
+    {
+     "pitch": 38,
+     "startBeat": 52.0,
+     "durationBeat": 3.9,
+     "velocity": 60
+    },
+    {
+     "pitch": 50,
+     "startBeat": 52.0,
+     "durationBeat": 3.9,
+     "velocity": 68
+    },
+    {
+     "pitch": 57,
+     "startBeat": 52.5,
+     "durationBeat": 3.4,
+     "velocity": 62
+    },
+    {
+     "pitch": 62,
+     "startBeat": 53.0,
+     "durationBeat": 2.9,
+     "velocity": 64
+    },
+    {
+     "pitch": 66,
+     "startBeat": 53.5,
+     "durationBeat": 2.4,
+     "velocity": 62
+    },
+    {
+     "pitch": 69,
+     "startBeat": 54.0,
+     "durationBeat": 1.9,
+     "velocity": 68
+    },
+    {
+     "pitch": 66,
+     "startBeat": 54.5,
+     "durationBeat": 1.4,
+     "velocity": 62
+    },
+    {
+     "pitch": 62,
+     "startBeat": 55.0,
+     "durationBeat": 0.9,
+     "velocity": 64
+    },
+    {
+     "pitch": 57,
+     "startBeat": 55.5,
+     "durationBeat": 0.4,
+     "velocity": 62
+    },
+    {
+     "pitch": 36,
+     "startBeat": 56.0,
+     "durationBeat": 3.9,
+     "velocity": 76
+    },
+    {
+     "pitch": 48,
+     "startBeat": 56.0,
+     "durationBeat": 3.9,
+     "velocity": 70
+    },
+    {
+     "pitch": 60,
+     "startBeat": 56.0,
+     "durationBeat": 0.9,
+     "velocity": 70
+    },
+    {
+     "pitch": 64,
+     "startBeat": 56.0,
+     "durationBeat": 0.9,
+     "velocity": 70
+    },
+    {
+     "pitch": 67,
+     "startBeat": 56.0,
+     "durationBeat": 0.9,
+     "velocity": 70
+    },
+    {
+     "pitch": 60,
+     "startBeat": 57.0,
+     "durationBeat": 0.9,
+     "velocity": 64
+    },
+    {
+     "pitch": 64,
+     "startBeat": 57.0,
+     "durationBeat": 0.9,
+     "velocity": 64
+    },
+    {
+     "pitch": 67,
+     "startBeat": 57.0,
+     "durationBeat": 0.9,
+     "velocity": 64
+    },
+    {
+     "pitch": 60,
+     "startBeat": 58.0,
+     "durationBeat": 0.9,
+     "velocity": 64
+    },
+    {
+     "pitch": 64,
+     "startBeat": 58.0,
+     "durationBeat": 0.9,
+     "velocity": 64
+    },
+    {
+     "pitch": 67,
+     "startBeat": 58.0,
+     "durationBeat": 0.9,
+     "velocity": 64
+    },
+    {
+     "pitch": 60,
+     "startBeat": 59.0,
+     "durationBeat": 0.9,
+     "velocity": 64
+    },
+    {
+     "pitch": 64,
+     "startBeat": 59.0,
+     "durationBeat": 0.9,
+     "velocity": 64
+    },
+    {
+     "pitch": 67,
+     "startBeat": 59.0,
+     "durationBeat": 0.9,
+     "velocity": 64
+    },
+    {
+     "pitch": 40,
+     "startBeat": 60.0,
+     "durationBeat": 8.0,
+     "velocity": 60
+    },
+    {
+     "pitch": 52,
+     "startBeat": 60.09,
+     "durationBeat": 7.91,
+     "velocity": 58
+    },
+    {
+     "pitch": 59,
+     "startBeat": 60.18,
+     "durationBeat": 7.82,
+     "velocity": 56
+    },
+    {
+     "pitch": 64,
+     "startBeat": 60.27,
+     "durationBeat": 7.73,
+     "velocity": 54
+    },
+    {
+     "pitch": 67,
+     "startBeat": 60.36,
+     "durationBeat": 7.64,
+     "velocity": 52
+    },
+    {
+     "pitch": 71,
+     "startBeat": 60.45,
+     "durationBeat": 7.55,
+     "velocity": 50
+    }
+   ]
+  },
+  {
+   "name": "Violins I",
+   "instrument": "violins",
+   "mixer": {
+    "gainDb": 2.0,
+    "pan": -0.35
+   },
+   "sends": [
+    {
+     "bus": "hall",
+     "levelDb": -8
+    }
+   ],
+   "performance": {
+    "timingHumanizeMs": 16,
+    "velocityHumanize": 5,
+    "noteLengthHumanize": 0.03,
+    "legatoOverlapMs": 70
+   },
+   "effects": [
+    {
+     "type": "eq",
+     "lowCutHz": 160
+    }
+   ],
+   "cc1": [
+    {
+     "beat": 32.0,
+     "value": 66,
+     "curve": "smooth"
+    },
+    {
+     "beat": 36.0,
+     "value": 80,
+     "curve": "smooth"
+    },
+    {
+     "beat": 40.0,
+     "value": 76,
+     "curve": "smooth"
+    },
+    {
+     "beat": 47.9,
+     "value": 84
+    },
+    {
+     "beat": 48.0,
+     "value": 94,
+     "curve": "smooth"
+    },
+    {
+     "beat": 54.0,
+     "value": 124,
+     "curve": "smooth"
+    },
+    {
+     "beat": 59.9,
+     "value": 116
+    },
+    {
+     "beat": 60.0,
+     "value": 110,
+     "curve": "smooth"
+    },
+    {
+     "beat": 64.0,
+     "value": 62
+    }
+   ],
+   "cc11": [
+    {
+     "beat": 61.5,
+     "value": 127,
+     "curve": "smooth"
+    },
+    {
+     "beat": 64.0,
+     "value": 40
+    }
+   ],
+   "notes": [
+    {
+     "pitch": 67,
+     "startBeat": 32.0,
+     "durationBeat": 2,
+     "velocity": 86,
+     "articulation": "legato"
+    },
+    {
+     "pitch": 71,
+     "startBeat": 34.0,
+     "durationBeat": 1,
+     "velocity": 86,
+     "articulation": "legato"
+    },
+    {
+     "pitch": 76,
+     "startBeat": 35.0,
+     "durationBeat": 1,
+     "velocity": 86,
+     "articulation": "legato"
+    },
+    {
+     "pitch": 76,
+     "startBeat": 36.0,
+     "durationBeat": 2,
+     "velocity": 86,
+     "articulation": "legato"
+    },
+    {
+     "pitch": 74,
+     "startBeat": 40.0,
+     "durationBeat": 2,
+     "velocity": 88,
+     "articulation": "legato"
+    },
+    {
+     "pitch": 71,
+     "startBeat": 42.0,
+     "durationBeat": 1,
+     "velocity": 88,
+     "articulation": "legato"
+    },
+    {
+     "pitch": 69,
+     "startBeat": 44.0,
+     "durationBeat": 2,
+     "velocity": 88,
+     "articulation": "legato"
+    },
+    {
+     "pitch": 66,
+     "startBeat": 46.0,
+     "durationBeat": 2,
+     "velocity": 88,
+     "articulation": "legato"
+    },
+    {
+     "pitch": 76,
+     "startBeat": 48.0,
+     "durationBeat": 2,
+     "velocity": 96,
+     "articulation": "legato"
+    },
+    {
+     "pitch": 79,
+     "startBeat": 50.0,
+     "durationBeat": 2,
+     "velocity": 96,
+     "articulation": "legato"
+    },
+    {
+     "pitch": 78,
+     "startBeat": 52.0,
+     "durationBeat": 2,
+     "velocity": 100,
+     "articulation": "legato"
+    },
+    {
+     "pitch": 81,
+     "startBeat": 54.0,
+     "durationBeat": 2,
+     "velocity": 100,
+     "articulation": "legato"
+    },
+    {
+     "pitch": 79,
+     "startBeat": 56.0,
+     "durationBeat": 2,
+     "velocity": 100,
+     "articulation": "legato"
+    },
+    {
+     "pitch": 78,
+     "startBeat": 58.0,
+     "durationBeat": 2,
+     "velocity": 100,
+     "articulation": "legato"
+    },
+    {
+     "pitch": 76,
+     "startBeat": 60.0,
+     "durationBeat": 4.0,
+     "velocity": 90,
+     "articulation": "sustain"
+    }
+   ]
+  },
+  {
+   "name": "Violins II",
+   "instrument": "violins",
+   "mixer": {
+    "gainDb": -3.0,
+    "pan": -0.15
+   },
+   "sends": [
+    {
+     "bus": "hall",
+     "levelDb": -8
+    }
+   ],
+   "performance": {
+    "timingHumanizeMs": 16,
+    "velocityHumanize": 5,
+    "noteLengthHumanize": 0.03,
+    "legatoOverlapMs": 70
+   },
+   "effects": [
+    {
+     "type": "eq",
+     "lowCutHz": 160
+    }
+   ],
+   "cc1": [
+    {
+     "beat": 8.0,
+     "value": 4,
+     "curve": "smooth"
+    },
+    {
+     "beat": 10.5,
+     "value": 26,
+     "curve": "smooth"
+    },
+    {
+     "beat": 16.0,
+     "value": 40,
+     "curve": "smooth"
+    },
+    {
+     "beat": 32.0,
+     "value": 46,
+     "curve": "smooth"
+    },
+    {
+     "beat": 47.9,
+     "value": 58
+    },
+    {
+     "beat": 48.0,
+     "value": 90,
+     "curve": "smooth"
+    },
+    {
+     "beat": 59.9,
+     "value": 118
+    },
+    {
+     "beat": 60.0,
+     "value": 108,
+     "curve": "smooth"
+    },
+    {
+     "beat": 64.0,
+     "value": 62
+    }
+   ],
+   "cc11": [
+    {
+     "beat": 61.5,
+     "value": 127,
+     "curve": "smooth"
+    },
+    {
+     "beat": 64.0,
+     "value": 40
+    }
+   ],
+   "notes": [
+    {
+     "pitch": 67,
+     "startBeat": 8.0,
+     "durationBeat": 4.0,
+     "velocity": 64,
+     "articulation": "sustain"
+    },
+    {
+     "pitch": 71,
+     "startBeat": 8.0,
+     "durationBeat": 4.0,
+     "velocity": 64,
+     "articulation": "sustain"
+    },
+    {
+     "pitch": 66,
+     "startBeat": 12.0,
+     "durationBeat": 4.0,
+     "velocity": 64,
+     "articulation": "sustain"
+    },
+    {
+     "pitch": 69,
+     "startBeat": 12.0,
+     "durationBeat": 4.0,
+     "velocity": 64,
+     "articulation": "sustain"
+    },
+    {
+     "pitch": 67,
+     "startBeat": 16.0,
+     "durationBeat": 4.0,
+     "velocity": 64,
+     "articulation": "sustain"
+    },
+    {
+     "pitch": 71,
+     "startBeat": 16.0,
+     "durationBeat": 4.0,
+     "velocity": 64,
+     "articulation": "sustain"
+    },
+    {
+     "pitch": 67,
+     "startBeat": 20.0,
+     "durationBeat": 4.0,
+     "velocity": 64,
+     "articulation": "sustain"
+    },
+    {
+     "pitch": 72,
+     "startBeat": 20.0,
+     "durationBeat": 4.0,
+     "velocity": 64,
+     "articulation": "sustain"
+    },
+    {
+     "pitch": 67,
+     "startBeat": 24.0,
+     "durationBeat": 4.0,
+     "velocity": 64,
+     "articulation": "sustain"
+    },
+    {
+     "pitch": 71,
+     "startBeat": 24.0,
+     "durationBeat": 4.0,
+     "velocity": 64,
+     "articulation": "sustain"
+    },
+    {
+     "pitch": 66,
+     "startBeat": 28.0,
+     "durationBeat": 4.0,
+     "velocity": 64,
+     "articulation": "sustain"
+    },
+    {
+     "pitch": 69,
+     "startBeat": 28.0,
+     "durationBeat": 4.0,
+     "velocity": 64,
+     "articulation": "sustain"
+    },
+    {
+     "pitch": 67,
+     "startBeat": 32.0,
+     "durationBeat": 4.0,
+     "velocity": 60,
+     "articulation": "sustain"
+    },
+    {
+     "pitch": 71,
+     "startBeat": 32.0,
+     "durationBeat": 4.0,
+     "velocity": 60,
+     "articulation": "sustain"
+    },
+    {
+     "pitch": 67,
+     "startBeat": 36.0,
+     "durationBeat": 4.0,
+     "velocity": 60,
+     "articulation": "sustain"
+    },
+    {
+     "pitch": 72,
+     "startBeat": 36.0,
+     "durationBeat": 4.0,
+     "velocity": 60,
+     "articulation": "sustain"
+    },
+    {
+     "pitch": 67,
+     "startBeat": 40.0,
+     "durationBeat": 4.0,
+     "velocity": 60,
+     "articulation": "sustain"
+    },
+    {
+     "pitch": 71,
+     "startBeat": 40.0,
+     "durationBeat": 4.0,
+     "velocity": 60,
+     "articulation": "sustain"
+    },
+    {
+     "pitch": 66,
+     "startBeat": 44.0,
+     "durationBeat": 4.0,
+     "velocity": 60,
+     "articulation": "sustain"
+    },
+    {
+     "pitch": 69,
+     "startBeat": 44.0,
+     "durationBeat": 4.0,
+     "velocity": 60,
+     "articulation": "sustain"
+    },
+    {
+     "pitch": 72,
+     "startBeat": 48.0,
+     "durationBeat": 2,
+     "velocity": 90,
+     "articulation": "legato"
+    },
+    {
+     "pitch": 76,
+     "startBeat": 50.0,
+     "durationBeat": 2,
+     "velocity": 90,
+     "articulation": "legato"
+    },
+    {
+     "pitch": 74,
+     "startBeat": 52.0,
+     "durationBeat": 2,
+     "velocity": 90,
+     "articulation": "legato"
+    },
+    {
+     "pitch": 78,
+     "startBeat": 54.0,
+     "durationBeat": 2,
+     "velocity": 90,
+     "articulation": "legato"
+    },
+    {
+     "pitch": 76,
+     "startBeat": 56.0,
+     "durationBeat": 2,
+     "velocity": 90,
+     "articulation": "legato"
+    },
+    {
+     "pitch": 74,
+     "startBeat": 58.0,
+     "durationBeat": 2,
+     "velocity": 90,
+     "articulation": "legato"
+    },
+    {
+     "pitch": 71,
+     "startBeat": 60.0,
+     "durationBeat": 4.0,
+     "velocity": 84,
+     "articulation": "sustain"
+    }
+   ]
+  },
+  {
+   "name": "Violas",
+   "instrument": "violas",
+   "mixer": {
+    "gainDb": -3.0,
+    "pan": 0.15
+   },
+   "sends": [
+    {
+     "bus": "hall",
+     "levelDb": -8
+    }
+   ],
+   "performance": {
+    "timingHumanizeMs": 16,
+    "velocityHumanize": 5,
+    "noteLengthHumanize": 0.03,
+    "legatoOverlapMs": 70
+   },
+   "effects": [
+    {
+     "type": "eq",
+     "lowCutHz": 110
+    }
+   ],
+   "cc1": [
+    {
+     "beat": 4.0,
+     "value": 4,
+     "curve": "smooth"
+    },
+    {
+     "beat": 6.5,
+     "value": 26,
+     "curve": "smooth"
+    },
+    {
+     "beat": 16.0,
+     "value": 48,
+     "curve": "smooth"
+    },
+    {
+     "beat": 32.0,
+     "value": 52,
+     "curve": "smooth"
+    },
+    {
+     "beat": 47.9,
+     "value": 64
+    },
+    {
+     "beat": 48.0,
+     "value": 84,
+     "curve": "smooth"
+    },
+    {
+     "beat": 59.9,
+     "value": 116
+    },
+    {
+     "beat": 60.0,
+     "value": 108,
+     "curve": "smooth"
+    },
+    {
+     "beat": 64.0,
+     "value": 64
+    }
+   ],
+   "cc11": [
+    {
+     "beat": 61.5,
+     "value": 127,
+     "curve": "smooth"
+    },
+    {
+     "beat": 64.0,
+     "value": 40
+    }
+   ],
+   "notes": [
+    {
+     "pitch": 60,
+     "startBeat": 4.0,
+     "durationBeat": 4.0,
+     "velocity": 64,
+     "articulation": "sustain"
+    },
+    {
+     "pitch": 64,
+     "startBeat": 4.0,
+     "durationBeat": 4.0,
+     "velocity": 64,
+     "articulation": "sustain"
+    },
+    {
+     "pitch": 59,
+     "startBeat": 8.0,
+     "durationBeat": 4.0,
+     "velocity": 64,
+     "articulation": "sustain"
+    },
+    {
+     "pitch": 62,
+     "startBeat": 8.0,
+     "durationBeat": 4.0,
+     "velocity": 64,
+     "articulation": "sustain"
+    },
+    {
+     "pitch": 57,
+     "startBeat": 12.0,
+     "durationBeat": 4.0,
+     "velocity": 64,
+     "articulation": "sustain"
+    },
+    {
+     "pitch": 62,
+     "startBeat": 12.0,
+     "durationBeat": 4.0,
+     "velocity": 64,
+     "articulation": "sustain"
+    },
+    {
+     "pitch": 59,
+     "startBeat": 16.0,
+     "durationBeat": 4.0,
+     "velocity": 64,
+     "articulation": "sustain"
+    },
+    {
+     "pitch": 64,
+     "startBeat": 16.0,
+     "durationBeat": 4.0,
+     "velocity": 64,
+     "articulation": "sustain"
+    },
+    {
+     "pitch": 60,
+     "startBeat": 20.0,
+     "durationBeat": 4.0,
+     "velocity": 64,
+     "articulation": "sustain"
+    },
+    {
+     "pitch": 64,
+     "startBeat": 20.0,
+     "durationBeat": 4.0,
+     "velocity": 64,
+     "articulation": "sustain"
+    },
+    {
+     "pitch": 59,
+     "startBeat": 24.0,
+     "durationBeat": 4.0,
+     "velocity": 64,
+     "articulation": "sustain"
+    },
+    {
+     "pitch": 62,
+     "startBeat": 24.0,
+     "durationBeat": 4.0,
+     "velocity": 64,
+     "articulation": "sustain"
+    },
+    {
+     "pitch": 57,
+     "startBeat": 28.0,
+     "durationBeat": 4.0,
+     "velocity": 64,
+     "articulation": "sustain"
+    },
+    {
+     "pitch": 62,
+     "startBeat": 28.0,
+     "durationBeat": 4.0,
+     "velocity": 64,
+     "articulation": "sustain"
+    },
+    {
+     "pitch": 59,
+     "startBeat": 32.0,
+     "durationBeat": 4.0,
+     "velocity": 64,
+     "articulation": "sustain"
+    },
+    {
+     "pitch": 64,
+     "startBeat": 32.0,
+     "durationBeat": 4.0,
+     "velocity": 64,
+     "articulation": "sustain"
+    },
+    {
+     "pitch": 60,
+     "startBeat": 36.0,
+     "durationBeat": 4.0,
+     "velocity": 64,
+     "articulation": "sustain"
+    },
+    {
+     "pitch": 64,
+     "startBeat": 36.0,
+     "durationBeat": 4.0,
+     "velocity": 64,
+     "articulation": "sustain"
+    },
+    {
+     "pitch": 59,
+     "startBeat": 40.0,
+     "durationBeat": 4.0,
+     "velocity": 64,
+     "articulation": "sustain"
+    },
+    {
+     "pitch": 62,
+     "startBeat": 40.0,
+     "durationBeat": 4.0,
+     "velocity": 64,
+     "articulation": "sustain"
+    },
+    {
+     "pitch": 57,
+     "startBeat": 44.0,
+     "durationBeat": 4.0,
+     "velocity": 64,
+     "articulation": "sustain"
+    },
+    {
+     "pitch": 62,
+     "startBeat": 44.0,
+     "durationBeat": 4.0,
+     "velocity": 64,
+     "articulation": "sustain"
+    },
+    {
+     "pitch": 60,
+     "startBeat": 48.0,
+     "durationBeat": 0.45,
+     "velocity": 92,
+     "articulation": "spiccato"
+    },
+    {
+     "pitch": 64,
+     "startBeat": 48.5,
+     "durationBeat": 0.45,
+     "velocity": 84,
+     "articulation": "spiccato"
+    },
+    {
+     "pitch": 60,
+     "startBeat": 49.0,
+     "durationBeat": 0.45,
+     "velocity": 84,
+     "articulation": "spiccato"
+    },
+    {
+     "pitch": 64,
+     "startBeat": 49.5,
+     "durationBeat": 0.45,
+     "velocity": 84,
+     "articulation": "spiccato"
+    },
+    {
+     "pitch": 60,
+     "startBeat": 50.0,
+     "durationBeat": 0.45,
+     "velocity": 92,
+     "articulation": "spiccato"
+    },
+    {
+     "pitch": 64,
+     "startBeat": 50.5,
+     "durationBeat": 0.45,
+     "velocity": 84,
+     "articulation": "spiccato"
+    },
+    {
+     "pitch": 60,
+     "startBeat": 51.0,
+     "durationBeat": 0.45,
+     "velocity": 84,
+     "articulation": "spiccato"
+    },
+    {
+     "pitch": 64,
+     "startBeat": 51.5,
+     "durationBeat": 0.45,
+     "velocity": 84,
+     "articulation": "spiccato"
+    },
+    {
+     "pitch": 57,
+     "startBeat": 52.0,
+     "durationBeat": 0.45,
+     "velocity": 92,
+     "articulation": "spiccato"
+    },
+    {
+     "pitch": 62,
+     "startBeat": 52.5,
+     "durationBeat": 0.45,
+     "velocity": 84,
+     "articulation": "spiccato"
+    },
+    {
+     "pitch": 57,
+     "startBeat": 53.0,
+     "durationBeat": 0.45,
+     "velocity": 84,
+     "articulation": "spiccato"
+    },
+    {
+     "pitch": 62,
+     "startBeat": 53.5,
+     "durationBeat": 0.45,
+     "velocity": 84,
+     "articulation": "spiccato"
+    },
+    {
+     "pitch": 57,
+     "startBeat": 54.0,
+     "durationBeat": 0.45,
+     "velocity": 92,
+     "articulation": "spiccato"
+    },
+    {
+     "pitch": 62,
+     "startBeat": 54.5,
+     "durationBeat": 0.45,
+     "velocity": 84,
+     "articulation": "spiccato"
+    },
+    {
+     "pitch": 57,
+     "startBeat": 55.0,
+     "durationBeat": 0.45,
+     "velocity": 84,
+     "articulation": "spiccato"
+    },
+    {
+     "pitch": 62,
+     "startBeat": 55.5,
+     "durationBeat": 0.45,
+     "velocity": 84,
+     "articulation": "spiccato"
+    },
+    {
+     "pitch": 60,
+     "startBeat": 56.0,
+     "durationBeat": 2.0,
+     "velocity": 90,
+     "articulation": "sustain"
+    },
+    {
+     "pitch": 64,
+     "startBeat": 56.0,
+     "durationBeat": 2.0,
+     "velocity": 90,
+     "articulation": "sustain"
+    },
+    {
+     "pitch": 57,
+     "startBeat": 58.0,
+     "durationBeat": 2.0,
+     "velocity": 90,
+     "articulation": "sustain"
+    },
+    {
+     "pitch": 62,
+     "startBeat": 58.0,
+     "durationBeat": 2.0,
+     "velocity": 90,
+     "articulation": "sustain"
+    },
+    {
+     "pitch": 55,
+     "startBeat": 60.0,
+     "durationBeat": 4.0,
+     "velocity": 80,
+     "articulation": "sustain"
+    },
+    {
+     "pitch": 59,
+     "startBeat": 60.0,
+     "durationBeat": 4.0,
+     "velocity": 80,
+     "articulation": "sustain"
+    }
+   ]
+  },
+  {
+   "name": "Celli",
+   "instrument": "celli",
+   "mixer": {
+    "gainDb": -1.0,
+    "pan": 0.3
+   },
+   "sends": [
+    {
+     "bus": "hall",
+     "levelDb": -9
+    }
+   ],
+   "performance": {
+    "timingHumanizeMs": 16,
+    "velocityHumanize": 5,
+    "noteLengthHumanize": 0.03,
+    "legatoOverlapMs": 70
+   },
+   "effects": [
+    {
+     "type": "eq",
+     "lowCutHz": 55
+    }
+   ],
+   "cc1": [
+    {
+     "beat": 4.0,
+     "value": 4,
+     "curve": "smooth"
+    },
+    {
+     "beat": 6.5,
+     "value": 28,
+     "curve": "smooth"
+    },
+    {
+     "beat": 15.9,
+     "value": 50
+    },
+    {
+     "beat": 16.0,
+     "value": 56,
+     "curve": "smooth"
+    },
+    {
+     "beat": 24.0,
+     "value": 74,
+     "curve": "smooth"
+    },
+    {
+     "beat": 31.9,
+     "value": 62
+    },
+    {
+     "beat": 36.0,
+     "value": 66,
+     "curve": "smooth"
+    },
+    {
+     "beat": 47.9,
+     "value": 72
+    },
+    {
+     "beat": 48.0,
+     "value": 96,
+     "curve": "smooth"
+    },
+    {
+     "beat": 59.9,
+     "value": 120
+    },
+    {
+     "beat": 60.0,
+     "value": 110,
+     "curve": "smooth"
+    },
+    {
+     "beat": 64.0,
+     "value": 66
+    }
+   ],
+   "cc11": [
+    {
+     "beat": 61.5,
+     "value": 127,
+     "curve": "smooth"
+    },
+    {
+     "beat": 64.0,
+     "value": 40
+    }
+   ],
+   "notes": [
+    {
+     "pitch": 36,
+     "startBeat": 4.0,
+     "durationBeat": 4.0,
+     "velocity": 64,
+     "articulation": "sustain"
+    },
+    {
+     "pitch": 43,
+     "startBeat": 8.0,
+     "durationBeat": 4.0,
+     "velocity": 64,
+     "articulation": "sustain"
+    },
+    {
+     "pitch": 38,
+     "startBeat": 12.0,
+     "durationBeat": 4.0,
+     "velocity": 64,
+     "articulation": "sustain"
+    },
+    {
+     "pitch": 55,
+     "startBeat": 16.0,
+     "durationBeat": 3,
+     "velocity": 78,
+     "articulation": "legato"
+    },
+    {
+     "pitch": 54,
+     "startBeat": 19.0,
+     "durationBeat": 1,
+     "velocity": 78,
+     "articulation": "legato"
+    },
+    {
+     "pitch": 52,
+     "startBeat": 20.0,
+     "durationBeat": 2,
+     "velocity": 78,
+     "articulation": "legato"
+    },
+    {
+     "pitch": 55,
+     "startBeat": 22.0,
+     "durationBeat": 1,
+     "velocity": 78,
+     "articulation": "legato"
+    },
+    {
+     "pitch": 60,
+     "startBeat": 23.0,
+     "durationBeat": 1,
+     "velocity": 78,
+     "articulation": "legato"
+    },
+    {
+     "pitch": 59,
+     "startBeat": 24.0,
+     "durationBeat": 3,
+     "velocity": 78,
+     "articulation": "legato"
+    },
+    {
+     "pitch": 57,
+     "startBeat": 27.0,
+     "durationBeat": 0.5,
+     "velocity": 78,
+     "articulation": "legato"
+    },
+    {
+     "pitch": 55,
+     "startBeat": 27.5,
+     "durationBeat": 0.5,
+     "velocity": 78,
+     "articulation": "legato"
+    },
+    {
+     "pitch": 57,
+     "startBeat": 28.0,
+     "durationBeat": 4,
+     "velocity": 78,
+     "articulation": "legato"
+    },
+    {
+     "pitch": 60,
+     "startBeat": 38.0,
+     "durationBeat": 1,
+     "velocity": 80,
+     "articulation": "legato"
+    },
+    {
+     "pitch": 64,
+     "startBeat": 39.0,
+     "durationBeat": 1,
+     "velocity": 80,
+     "articulation": "legato"
+    },
+    {
+     "pitch": 57,
+     "startBeat": 43.0,
+     "durationBeat": 1,
+     "velocity": 80,
+     "articulation": "legato"
+    },
+    {
+     "pitch": 54,
+     "startBeat": 44.0,
+     "durationBeat": 2,
+     "velocity": 80,
+     "articulation": "legato"
+    },
+    {
+     "pitch": 50,
+     "startBeat": 46.0,
+     "durationBeat": 2,
+     "velocity": 80,
+     "articulation": "legato"
+    },
+    {
+     "pitch": 36,
+     "startBeat": 48.0,
+     "durationBeat": 0.92,
+     "velocity": 96,
+     "articulation": "sustain"
+    },
+    {
+     "pitch": 36,
+     "startBeat": 49.0,
+     "durationBeat": 0.92,
+     "velocity": 96,
+     "articulation": "sustain"
+    },
+    {
+     "pitch": 48,
+     "startBeat": 50.0,
+     "durationBeat": 0.92,
+     "velocity": 96,
+     "articulation": "sustain"
+    },
+    {
+     "pitch": 36,
+     "startBeat": 51.0,
+     "durationBeat": 0.92,
+     "velocity": 96,
+     "articulation": "sustain"
+    },
+    {
+     "pitch": 38,
+     "startBeat": 52.0,
+     "durationBeat": 0.92,
+     "velocity": 96,
+     "articulation": "sustain"
+    },
+    {
+     "pitch": 38,
+     "startBeat": 53.0,
+     "durationBeat": 0.92,
+     "velocity": 96,
+     "articulation": "sustain"
+    },
+    {
+     "pitch": 50,
+     "startBeat": 54.0,
+     "durationBeat": 0.92,
+     "velocity": 96,
+     "articulation": "sustain"
+    },
+    {
+     "pitch": 38,
+     "startBeat": 55.0,
+     "durationBeat": 0.92,
+     "velocity": 96,
+     "articulation": "sustain"
+    },
+    {
+     "pitch": 36,
+     "startBeat": 56.0,
+     "durationBeat": 2.0,
+     "velocity": 92,
+     "articulation": "sustain"
+    },
+    {
+     "pitch": 38,
+     "startBeat": 58.0,
+     "durationBeat": 2.0,
+     "velocity": 92,
+     "articulation": "sustain"
+    },
+    {
+     "pitch": 40,
+     "startBeat": 60.0,
+     "durationBeat": 4.0,
+     "velocity": 80,
+     "articulation": "sustain"
+    },
+    {
+     "pitch": 52,
+     "startBeat": 60.0,
+     "durationBeat": 4.0,
+     "velocity": 82,
+     "articulation": "sustain"
+    }
+   ]
+  },
+  {
+   "name": "Basses",
+   "instrument": "basses",
+   "mixer": {
+    "gainDb": 2.0,
+    "pan": 0.4
+   },
+   "sends": [
+    {
+     "bus": "hall",
+     "levelDb": -12
+    }
+   ],
+   "performance": {
+    "timingHumanizeMs": 12,
+    "velocityHumanize": 5,
+    "noteLengthHumanize": 0.03,
+    "legatoOverlapMs": 70
+   },
+   "effects": [
+    {
+     "type": "eq",
+     "lowCutHz": 35,
+     "highCutHz": 5000
+    }
+   ],
+   "cc1": [
+    {
+     "beat": 10.0,
+     "value": 8,
+     "curve": "smooth"
+    },
+    {
+     "beat": 12.0,
+     "value": 40,
+     "curve": "smooth"
+    },
+    {
+     "beat": 16.0,
+     "value": 58,
+     "curve": "smooth"
+    },
+    {
+     "beat": 47.9,
+     "value": 66
+    },
+    {
+     "beat": 48.0,
+     "value": 92,
+     "curve": "smooth"
+    },
+    {
+     "beat": 59.9,
+     "value": 116
+    },
+    {
+     "beat": 60.0,
+     "value": 104,
+     "curve": "smooth"
+    },
+    {
+     "beat": 64.0,
+     "value": 60
+    }
+   ],
+   "cc11": [
+    {
+     "beat": 61.5,
+     "value": 127,
+     "curve": "smooth"
+    },
+    {
+     "beat": 64.0,
+     "value": 40
+    }
+   ],
+   "notes": [
+    {
+     "pitch": 31,
+     "startBeat": 10.0,
+     "durationBeat": 2.0,
+     "velocity": 60,
+     "articulation": "sustain"
+    },
+    {
+     "pitch": 26,
+     "startBeat": 12.0,
+     "durationBeat": 4.0,
+     "velocity": 62,
+     "articulation": "sustain"
+    },
+    {
+     "pitch": 28,
+     "startBeat": 16.0,
+     "durationBeat": 4.0,
+     "velocity": 70,
+     "articulation": "sustain"
+    },
+    {
+     "pitch": 24,
+     "startBeat": 20.0,
+     "durationBeat": 4.0,
+     "velocity": 70,
+     "articulation": "sustain"
+    },
+    {
+     "pitch": 31,
+     "startBeat": 24.0,
+     "durationBeat": 4.0,
+     "velocity": 70,
+     "articulation": "sustain"
+    },
+    {
+     "pitch": 26,
+     "startBeat": 28.0,
+     "durationBeat": 4.0,
+     "velocity": 70,
+     "articulation": "sustain"
+    },
+    {
+     "pitch": 28,
+     "startBeat": 32.0,
+     "durationBeat": 4.0,
+     "velocity": 70,
+     "articulation": "sustain"
+    },
+    {
+     "pitch": 24,
+     "startBeat": 36.0,
+     "durationBeat": 4.0,
+     "velocity": 70,
+     "articulation": "sustain"
+    },
+    {
+     "pitch": 31,
+     "startBeat": 40.0,
+     "durationBeat": 4.0,
+     "velocity": 70,
+     "articulation": "sustain"
+    },
+    {
+     "pitch": 30,
+     "startBeat": 44.0,
+     "durationBeat": 4.0,
+     "velocity": 70,
+     "articulation": "sustain"
+    },
+    {
+     "pitch": 24,
+     "startBeat": 48.0,
+     "durationBeat": 2.0,
+     "velocity": 80,
+     "articulation": "sustain"
+    },
+    {
+     "pitch": 24,
+     "startBeat": 50.0,
+     "durationBeat": 2.0,
+     "velocity": 76,
+     "articulation": "sustain"
+    },
+    {
+     "pitch": 26,
+     "startBeat": 52.0,
+     "durationBeat": 2.0,
+     "velocity": 80,
+     "articulation": "sustain"
+    },
+    {
+     "pitch": 26,
+     "startBeat": 54.0,
+     "durationBeat": 2.0,
+     "velocity": 76,
+     "articulation": "sustain"
+    },
+    {
+     "pitch": 24,
+     "startBeat": 56.0,
+     "durationBeat": 2.0,
+     "velocity": 80,
+     "articulation": "sustain"
+    },
+    {
+     "pitch": 26,
+     "startBeat": 58.0,
+     "durationBeat": 2.0,
+     "velocity": 80,
+     "articulation": "sustain"
+    },
+    {
+     "pitch": 28,
+     "startBeat": 60.0,
+     "durationBeat": 4.0,
+     "velocity": 78,
+     "articulation": "sustain"
+    }
+   ]
+  },
+  {
+   "name": "Harp",
+   "instrument": "harp",
+   "mixer": {
+    "gainDb": -4.0,
+    "pan": -0.45
+   },
+   "sends": [
+    {
+     "bus": "hall",
+     "levelDb": -7
+    }
+   ],
+   "performance": {
+    "timingHumanizeMs": 10,
+    "velocityHumanize": 6
+   },
+   "cc11": [
+    {
+     "beat": 61.5,
+     "value": 127,
+     "curve": "smooth"
+    },
+    {
+     "beat": 64.0,
+     "value": 40
+    }
+   ],
+   "notes": [
+    {
+     "pitch": 48,
+     "startBeat": 48.0,
+     "durationBeat": 2.0,
+     "velocity": 72
+    },
+    {
+     "pitch": 52,
+     "startBeat": 48.25,
+     "durationBeat": 2.0,
+     "velocity": 69
+    },
+    {
+     "pitch": 55,
+     "startBeat": 48.5,
+     "durationBeat": 2.0,
+     "velocity": 66
+    },
+    {
+     "pitch": 60,
+     "startBeat": 48.75,
+     "durationBeat": 2.0,
+     "velocity": 63
+    },
+    {
+     "pitch": 64,
+     "startBeat": 49.0,
+     "durationBeat": 2.0,
+     "velocity": 72
+    },
+    {
+     "pitch": 67,
+     "startBeat": 49.25,
+     "durationBeat": 2.0,
+     "velocity": 69
+    },
+    {
+     "pitch": 72,
+     "startBeat": 49.5,
+     "durationBeat": 2.0,
+     "velocity": 66
+    },
+    {
+     "pitch": 67,
+     "startBeat": 49.75,
+     "durationBeat": 2.0,
+     "velocity": 63
+    },
+    {
+     "pitch": 48,
+     "startBeat": 50.0,
+     "durationBeat": 2.0,
+     "velocity": 72
+    },
+    {
+     "pitch": 52,
+     "startBeat": 50.25,
+     "durationBeat": 2.0,
+     "velocity": 69
+    },
+    {
+     "pitch": 55,
+     "startBeat": 50.5,
+     "durationBeat": 2.0,
+     "velocity": 66
+    },
+    {
+     "pitch": 60,
+     "startBeat": 50.75,
+     "durationBeat": 2.0,
+     "velocity": 63
+    },
+    {
+     "pitch": 64,
+     "startBeat": 51.0,
+     "durationBeat": 2.0,
+     "velocity": 72
+    },
+    {
+     "pitch": 67,
+     "startBeat": 51.25,
+     "durationBeat": 2.0,
+     "velocity": 69
+    },
+    {
+     "pitch": 72,
+     "startBeat": 51.5,
+     "durationBeat": 2.0,
+     "velocity": 66
+    },
+    {
+     "pitch": 67,
+     "startBeat": 51.75,
+     "durationBeat": 2.0,
+     "velocity": 63
+    },
+    {
+     "pitch": 50,
+     "startBeat": 52.0,
+     "durationBeat": 2.0,
+     "velocity": 72
+    },
+    {
+     "pitch": 54,
+     "startBeat": 52.25,
+     "durationBeat": 2.0,
+     "velocity": 69
+    },
+    {
+     "pitch": 57,
+     "startBeat": 52.5,
+     "durationBeat": 2.0,
+     "velocity": 66
+    },
+    {
+     "pitch": 62,
+     "startBeat": 52.75,
+     "durationBeat": 2.0,
+     "velocity": 63
+    },
+    {
+     "pitch": 66,
+     "startBeat": 53.0,
+     "durationBeat": 2.0,
+     "velocity": 72
+    },
+    {
+     "pitch": 69,
+     "startBeat": 53.25,
+     "durationBeat": 2.0,
+     "velocity": 69
+    },
+    {
+     "pitch": 74,
+     "startBeat": 53.5,
+     "durationBeat": 2.0,
+     "velocity": 66
+    },
+    {
+     "pitch": 69,
+     "startBeat": 53.75,
+     "durationBeat": 2.0,
+     "velocity": 63
+    },
+    {
+     "pitch": 50,
+     "startBeat": 54.0,
+     "durationBeat": 2.0,
+     "velocity": 72
+    },
+    {
+     "pitch": 54,
+     "startBeat": 54.25,
+     "durationBeat": 2.0,
+     "velocity": 69
+    },
+    {
+     "pitch": 57,
+     "startBeat": 54.5,
+     "durationBeat": 2.0,
+     "velocity": 66
+    },
+    {
+     "pitch": 62,
+     "startBeat": 54.75,
+     "durationBeat": 2.0,
+     "velocity": 63
+    },
+    {
+     "pitch": 66,
+     "startBeat": 55.0,
+     "durationBeat": 2.0,
+     "velocity": 72
+    },
+    {
+     "pitch": 69,
+     "startBeat": 55.25,
+     "durationBeat": 2.0,
+     "velocity": 69
+    },
+    {
+     "pitch": 74,
+     "startBeat": 55.5,
+     "durationBeat": 2.0,
+     "velocity": 66
+    },
+    {
+     "pitch": 69,
+     "startBeat": 55.75,
+     "durationBeat": 2.0,
+     "velocity": 63
+    },
+    {
+     "pitch": 48,
+     "startBeat": 56.0,
+     "durationBeat": 2.0,
+     "velocity": 72
+    },
+    {
+     "pitch": 52,
+     "startBeat": 56.25,
+     "durationBeat": 2.0,
+     "velocity": 69
+    },
+    {
+     "pitch": 55,
+     "startBeat": 56.5,
+     "durationBeat": 2.0,
+     "velocity": 66
+    },
+    {
+     "pitch": 60,
+     "startBeat": 56.75,
+     "durationBeat": 2.0,
+     "velocity": 63
+    },
+    {
+     "pitch": 64,
+     "startBeat": 57.0,
+     "durationBeat": 2.0,
+     "velocity": 72
+    },
+    {
+     "pitch": 67,
+     "startBeat": 57.25,
+     "durationBeat": 2.0,
+     "velocity": 69
+    },
+    {
+     "pitch": 72,
+     "startBeat": 57.5,
+     "durationBeat": 2.0,
+     "velocity": 66
+    },
+    {
+     "pitch": 67,
+     "startBeat": 57.75,
+     "durationBeat": 2.0,
+     "velocity": 63
+    },
+    {
+     "pitch": 48,
+     "startBeat": 58.0,
+     "durationBeat": 2.0,
+     "velocity": 72
+    },
+    {
+     "pitch": 52,
+     "startBeat": 58.25,
+     "durationBeat": 2.0,
+     "velocity": 69
+    },
+    {
+     "pitch": 55,
+     "startBeat": 58.5,
+     "durationBeat": 2.0,
+     "velocity": 66
+    },
+    {
+     "pitch": 60,
+     "startBeat": 58.75,
+     "durationBeat": 2.0,
+     "velocity": 63
+    },
+    {
+     "pitch": 64,
+     "startBeat": 59.0,
+     "durationBeat": 2.0,
+     "velocity": 72
+    },
+    {
+     "pitch": 67,
+     "startBeat": 59.25,
+     "durationBeat": 2.0,
+     "velocity": 69
+    },
+    {
+     "pitch": 72,
+     "startBeat": 59.5,
+     "durationBeat": 2.0,
+     "velocity": 66
+    },
+    {
+     "pitch": 67,
+     "startBeat": 59.75,
+     "durationBeat": 2.0,
+     "velocity": 63
+    },
+    {
+     "pitch": 52,
+     "startBeat": 60.0,
+     "durationBeat": 2.0,
+     "velocity": 64
+    },
+    {
+     "pitch": 55,
+     "startBeat": 60.5,
+     "durationBeat": 2.0,
+     "velocity": 61
+    },
+    {
+     "pitch": 59,
+     "startBeat": 61.0,
+     "durationBeat": 2.0,
+     "velocity": 58
+    },
+    {
+     "pitch": 64,
+     "startBeat": 61.5,
+     "durationBeat": 2.0,
+     "velocity": 55
+    },
+    {
+     "pitch": 67,
+     "startBeat": 62.0,
+     "durationBeat": 2.0,
+     "velocity": 64
+    },
+    {
+     "pitch": 71,
+     "startBeat": 62.5,
+     "durationBeat": 2.0,
+     "velocity": 61
+    },
+    {
+     "pitch": 76,
+     "startBeat": 63.0,
+     "durationBeat": 2.0,
+     "velocity": 58
+    },
+    {
+     "pitch": 71,
+     "startBeat": 63.5,
+     "durationBeat": 2.0,
+     "velocity": 55
+    }
+   ]
+  },
+  {
+   "name": "Timpani",
+   "instrument": "timpani",
+   "mixer": {
+    "gainDb": 1.0,
+    "pan": 0.1
+   },
+   "sends": [
+    {
+     "bus": "hall",
+     "levelDb": -9
+    }
+   ],
+   "performance": {
+    "timingHumanizeMs": 6,
+    "velocityHumanize": 4
+   },
+   "cc11": [
+    {
+     "beat": 54.0,
+     "value": 28,
+     "curve": "exponential"
+    },
+    {
+     "beat": 59.95,
+     "value": 124
+    },
+    {
+     "beat": 60.0,
+     "value": 127
+    },
+    {
+     "beat": 61.5,
+     "value": 127,
+     "curve": "smooth"
+    },
+    {
+     "beat": 64.0,
+     "value": 40
+    }
+   ],
+   "notes": [
+    {
+     "pitch": 38,
+     "startBeat": 54.0,
+     "durationBeat": 6.0,
+     "velocity": 104,
+     "articulation": "roll"
+    },
+    {
+     "pitch": 40,
+     "startBeat": 60.0,
+     "durationBeat": 2.0,
+     "velocity": 110,
+     "articulation": "hit"
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,221 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/biud436/InitialDAW/tools/musicir/music-ir.schema.json",
+  "title": "Music IR",
+  "description": "Sidecar of a composition JSON: sections, harmony, track roles, motifs, relations, dependencies (declared by the generator or inferred), plus measured cells (track x section) and the generator code sites that made the notes. Beats are quarter notes, bars count from 1.",
+  "type": "object",
+  "required": ["musicIr", "song", "fingerprint"],
+  "additionalProperties": false,
+  "properties": {
+    "musicIr": {"const": 1},
+    "origin": {"enum": ["declared", "inferred"], "description": "absent means declared by the generator"},
+    "error": {"type": "string", "description": "the generator could not build the IR; only song, generator and fingerprint are present"},
+    "warnings": {"type": "array", "items": {"type": "string"}},
+    "song": {
+      "type": "object",
+      "required": ["id", "composition"],
+      "additionalProperties": false,
+      "properties": {
+        "id": {"type": "string"},
+        "title": {"type": "string"},
+        "composition": {"type": "string", "description": "file name of the composition JSON next to this file"},
+        "key": {"type": "string"},
+        "genre": {"type": "string"},
+        "summary": {"type": "string"},
+        "keyCandidates": {"type": "array", "items": {"type": "object", "required": ["key", "r"], "additionalProperties": false,
+                                                    "properties": {"key": {"type": "string"}, "r": {"type": "number"}}}}
+      }
+    },
+    "generator": {
+      "type": "object",
+      "required": ["script", "sha256"],
+      "additionalProperties": false,
+      "properties": {
+        "script": {"type": "string"},
+        "sha256": {"type": ["string", "null"]},
+        "inputs": {"type": "object", "description": "files the generator read (repository-relative path to sha256)", "additionalProperties": {"type": ["string", "null"]}}
+      }
+    },
+    "fingerprint": {
+      "type": "object",
+      "required": ["composition"],
+      "additionalProperties": false,
+      "properties": {
+        "composition": {"type": "string", "description": "hash of the generator output"},
+        "global": {"type": "string"},
+        "harmony": {"type": "string"},
+        "file": {"type": "string", "description": "hash of the composition file when it differs from the generator output (written with MUSICIR_IR_ONLY or by apply)"}
+      }
+    },
+    "time": {
+      "type": "object",
+      "required": ["meter", "barBeats", "tempo", "endBeat"],
+      "additionalProperties": false,
+      "properties": {
+        "meter": {"type": "array", "items": {"type": "integer"}, "minItems": 2, "maxItems": 2},
+        "barBeats": {"type": "number"},
+        "tempo": {"type": ["number", "array"]},
+        "endBeat": {"type": "number"},
+        "endSeconds": {"type": "number"},
+        "tailSeconds": {"type": "number"}
+      }
+    },
+    "sections": {"type": "array", "items": {"$ref": "#/$defs/section"}},
+    "harmony": {"type": "array", "items": {"$ref": "#/$defs/chord"}},
+    "tracks": {"type": "array", "items": {"$ref": "#/$defs/track"}},
+    "motifs": {"type": "array", "items": {"$ref": "#/$defs/motif"}},
+    "relations": {"type": "array", "items": {"$ref": "#/$defs/relation"}},
+    "dependencies": {"type": "array", "items": {"$ref": "#/$defs/dependency"}},
+    "code": {"type": "array", "items": {"type": "object", "required": ["symbol", "note"], "additionalProperties": false,
+                                         "properties": {"symbol": {"type": "string"}, "note": {"type": "string"},
+                                                        "affects": {"oneOf": [{"const": "all"}, {"type": "array", "items": {"type": "string"}}]}}}},
+    "cells": {"type": "object", "description": "track id to section id to measured cell",
+              "additionalProperties": {"type": "object", "additionalProperties": {"$ref": "#/$defs/cell"}}},
+    "sites": {"type": "object", "description": "site id to the generator statement that made notes or lane points",
+              "additionalProperties": {"$ref": "#/$defs/site"}}
+  },
+  "$defs": {
+    "id": {"type": "string", "minLength": 1},
+    "roles": {"type": "array", "items": {"enum": ["main-melody", "counter-melody", "answer", "motif", "harmony", "pad", "bass", "sub-bass", "arpeggio",
+                                                 "ostinato", "rhythm", "texture", "accent", "transition", "atmosphere", "doubling"]}},
+    "section": {
+      "type": "object",
+      "required": ["id", "name", "bars", "beats"],
+      "additionalProperties": false,
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "name": {"type": "string"},
+        "bars": {"type": "array", "items": {"type": "integer", "minimum": 1}, "minItems": 2, "maxItems": 2, "description": "first and last bar, both included"},
+        "beats": {"type": "array", "items": {"type": "number", "minimum": 0}, "minItems": 2, "maxItems": 2, "description": "start beat and end beat (end excluded)"},
+        "seconds": {"type": "array", "items": {"type": "number"}, "minItems": 2, "maxItems": 2},
+        "form": {"type": "string"},
+        "purpose": {"type": "string"},
+        "energy": {"type": "object", "additionalProperties": false,
+                   "properties": {"level": {"type": "integer", "minimum": 1, "maximum": 5}, "trend": {"enum": ["rise", "fall", "steady", "peak", "drop", "release"]},
+                                  "tension": {"type": "integer", "minimum": 1, "maximum": 5}}},
+        "key": {"type": "string"},
+        "progression": {"type": "string"},
+        "roman": {"type": "string"},
+        "note": {"type": "string"},
+        "aliases": {"type": "array", "items": {"type": "string"}},
+        "origin": {"const": "inferred"},
+        "confidence": {"type": "number", "minimum": 0, "maximum": 1},
+        "basis": {"type": "string"}
+      }
+    },
+    "chord": {
+      "type": "object",
+      "required": ["beat", "beats", "chord", "tones", "bass"],
+      "additionalProperties": false,
+      "properties": {
+        "beat": {"type": "number", "minimum": 0},
+        "beats": {"type": "number", "exclusiveMinimum": 0},
+        "chord": {"type": "string"},
+        "tones": {"type": "array", "items": {"type": "integer", "minimum": 0, "maximum": 11}},
+        "bass": {"type": "integer", "minimum": 0, "maximum": 11}
+      }
+    },
+    "track": {
+      "type": "object",
+      "required": ["id", "name"],
+      "additionalProperties": false,
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "name": {"type": "string", "description": "track name in the composition JSON"},
+        "instrument": {"type": "string"},
+        "family": {"enum": ["strings", "keys", "plucked", "choir", "mallets", "winds", "brass", "percussion", "bass", "fx", "synth"]},
+        "pitched": {"type": "boolean"},
+        "role": {"$ref": "#/$defs/roles"},
+        "roles": {"type": "object", "description": "section id to roles where they differ", "additionalProperties": {"$ref": "#/$defs/roles"}},
+        "note": {"type": "string"},
+        "settings": {"type": "string", "description": "hash of the track settings (instrument, mixer, effects, sends, synth, plugin)"},
+        "origin": {"enum": ["undeclared", "inferred"]},
+        "confidence": {"type": "number", "minimum": 0, "maximum": 1},
+        "basis": {"type": "string"}
+      }
+    },
+    "motif": {
+      "type": "object",
+      "required": ["id", "name", "kind", "uses"],
+      "additionalProperties": false,
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "name": {"type": "string"},
+        "kind": {"enum": ["motif", "theme", "ostinato", "rhythm"]},
+        "data": {"type": "string", "description": "name of the data in the generator"},
+        "notes": {"type": "array", "items": {"type": "array", "minItems": 3, "maxItems": 3, "items": {"type": "number"}},
+                  "description": "[beat from the motif start, length, MIDI pitch]"},
+        "beats": {"type": "number"},
+        "note": {"type": "string"},
+        "uses": {"type": "array", "items": {
+          "type": "object",
+          "required": ["motif", "track", "bar", "how", "section"],
+          "additionalProperties": false,
+          "properties": {
+            "motif": {"type": "string"},
+            "track": {"type": "string"},
+            "bar": {"type": "integer", "minimum": 1},
+            "section": {"type": "string"},
+            "how": {"enum": ["original", "transposed", "octave", "partial", "varied"]},
+            "transpose": {"type": "integer"},
+            "part": {"type": "array", "items": {"type": "integer", "minimum": 0}, "minItems": 2, "maxItems": 2},
+            "note": {"type": "string"},
+            "match": {"type": "number", "minimum": 0, "maximum": 1, "description": "share of the motif notes found at the same beat and pitch"},
+            "extra": {"type": "integer", "minimum": 0, "description": "other notes of the track inside the motif window"}
+          }
+        }}
+      }
+    },
+    "relation": {
+      "type": "object",
+      "required": ["from", "to", "kind"],
+      "additionalProperties": false,
+      "properties": {"from": {"type": "string"}, "to": {"type": "string"}, "kind": {"enum": ["restates", "varies", "recalls", "prepares", "contrasts", "answers"]},
+                     "note": {"type": "string"}}
+    },
+    "dependency": {
+      "type": "object",
+      "required": ["from", "to", "kind", "origin"],
+      "additionalProperties": false,
+      "properties": {
+        "from": {"type": "array", "items": {"type": "string"}},
+        "to": {"type": "string", "description": "a track id or harmony"},
+        "kind": {"enum": ["follows-harmony", "avoids-clash", "doubles", "answers", "sidechain"]},
+        "via": {"type": "string"},
+        "note": {"type": "string"},
+        "origin": {"enum": ["declared", "derived"]}
+      }
+    },
+    "cell": {
+      "type": "object",
+      "required": ["n", "hash"],
+      "additionalProperties": false,
+      "properties": {
+        "n": {"type": "integer", "minimum": 0},
+        "pitch": {"type": "array", "items": {"type": "integer"}, "minItems": 2, "maxItems": 2},
+        "vel": {"type": "array", "items": {"type": "integer"}, "minItems": 3, "maxItems": 3, "description": "min, mean, max"},
+        "density": {"type": "number", "description": "notes per bar"},
+        "poly": {"type": "integer", "description": "most notes sounding together"},
+        "chordTones": {"type": "number", "minimum": 0, "maximum": 1},
+        "cc": {"type": "object", "additionalProperties": {"type": "array", "items": {"type": "number"}, "minItems": 2, "maxItems": 2}},
+        "hash": {"type": "string"},
+        "sites": {"type": "array", "items": {"type": "string"}, "description": "site ids, most notes first"}
+      }
+    },
+    "site": {
+      "type": "object",
+      "required": ["fn", "code", "occ", "sections", "tracks", "notes", "points"],
+      "additionalProperties": false,
+      "properties": {
+        "fn": {"type": "string", "description": "generator function holding the statement"},
+        "code": {"type": "string", "description": "the statement (first line); found again by its text inside fn, never by a line number"},
+        "occ": {"type": "integer", "minimum": 0, "description": "how many identical statements come before it in the function"},
+        "helper": {"type": "string", "description": "the function the statement called that added the notes"},
+        "sections": {"type": "array", "items": {"type": "string"}},
+        "tracks": {"type": "array", "items": {"type": "string"}},
+        "notes": {"type": "integer", "minimum": 0},
+        "points": {"type": "integer", "minimum": 0}
+      }
+    }
+  }
+}

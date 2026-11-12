@@ -1,0 +1,550 @@
+{
+ "title": "",
+ "metadata": {
+  "template": {
+   "id": "dungeon",
+   "name": "던전",
+   "description": "낮은 현의 지속음, 그랜드 피아노, 먼 합창, 금속 타악기(징, 브레이크 드럼, 벨 트리, 활로 긋는 심벌), 바이올린 하모닉스, 바람. 효과음 아래에 깔리도록 작게 맞춥니다.",
+   "order": 5
+  },
+  "loop": {
+   "startBeat": 20.0,
+   "endBeat": 180.0
+  }
+ },
+ "tempo": 60.0,
+ "timeSignature": [
+  5,
+  4
+ ],
+ "performance": {
+  "humanizeSeed": 20261009
+ },
+ "render": {
+  "tailSeconds": 10.0,
+  "fadeOutSeconds": 0.0
+ },
+ "tracks": [
+  {
+   "name": "Piano Melody",
+   "instrument": "grand-piano",
+   "mixer": {
+    "gainDb": 8.0,
+    "pan": 0.05
+   },
+   "effects": [
+    {
+     "type": "eq",
+     "lowCutHz": 45,
+     "bands": [
+      {
+       "type": "peak",
+       "freqHz": 280,
+       "gainDb": -2.5,
+       "q": 0.9
+      },
+      {
+       "type": "highShelf",
+       "freqHz": 6000,
+       "gainDb": -1.5
+      }
+     ]
+    },
+    {
+     "type": "stereo",
+     "width": 0.8
+    }
+   ],
+   "sends": [
+    {
+     "bus": "hall",
+     "levelDb": -9
+    },
+    {
+     "bus": "echo",
+     "levelDb": -17
+    }
+   ],
+   "notes": []
+  },
+  {
+   "name": "Piano",
+   "instrument": "grand-piano",
+   "mixer": {
+    "gainDb": 2.0,
+    "pan": -0.1
+   },
+   "effects": [
+    {
+     "type": "eq",
+     "lowCutHz": 45,
+     "bands": [
+      {
+       "type": "peak",
+       "freqHz": 280,
+       "gainDb": -2.5,
+       "q": 0.9
+      },
+      {
+       "type": "highShelf",
+       "freqHz": 6000,
+       "gainDb": -1.5
+      }
+     ]
+    },
+    {
+     "type": "stereo",
+     "width": 1.1
+    }
+   ],
+   "sends": [
+    {
+     "bus": "hall",
+     "levelDb": -8
+    },
+    {
+     "bus": "echo",
+     "levelDb": -20
+    }
+   ],
+   "notes": []
+  },
+  {
+   "name": "Distant Choir",
+   "instrument": "choir",
+   "mixer": {
+    "gainDb": -5.0,
+    "pan": -0.15
+   },
+   "effects": [
+    {
+     "type": "eq",
+     "lowCutHz": 180,
+     "highCutHz": 6000,
+     "bands": [
+      {
+       "type": "peak",
+       "freqHz": 400,
+       "gainDb": -4.0,
+       "q": 1.0
+      }
+     ]
+    },
+    {
+     "type": "stereo",
+     "width": 1.3
+    }
+   ],
+   "sends": [
+    {
+     "bus": "far",
+     "levelDb": -1
+    }
+   ],
+   "cc1": [
+    {
+     "beat": 0,
+     "value": 44
+    }
+   ],
+   "notes": []
+  },
+  {
+   "name": "Choir",
+   "instrument": "choir-large",
+   "mixer": {
+    "gainDb": -4.0
+   },
+   "effects": [
+    {
+     "type": "eq",
+     "lowCutHz": 150,
+     "highCutHz": 8000,
+     "bands": [
+      {
+       "type": "peak",
+       "freqHz": 400,
+       "gainDb": -3.0,
+       "q": 1.0
+      }
+     ]
+    }
+   ],
+   "sends": [
+    {
+     "bus": "hall",
+     "levelDb": -6
+    },
+    {
+     "bus": "far",
+     "levelDb": -9
+    }
+   ],
+   "cc1": [
+    {
+     "beat": 0,
+     "value": 52
+    }
+   ],
+   "notes": []
+  },
+  {
+   "name": "Basses",
+   "instrument": "sso-basses",
+   "mixer": {
+    "gainDb": 0.0,
+    "pan": 0.1
+   },
+   "effects": [
+    {
+     "type": "eq",
+     "lowCutHz": 28,
+     "bands": [
+      {
+       "type": "peak",
+       "freqHz": 220,
+       "gainDb": -2.0,
+       "q": 0.8
+      }
+     ]
+    }
+   ],
+   "sends": [
+    {
+     "bus": "hall",
+     "levelDb": -14
+    }
+   ],
+   "cc1": [
+    {
+     "beat": 0,
+     "value": 46
+    }
+   ],
+   "notes": []
+  },
+  {
+   "name": "Celli",
+   "instrument": "sso-celli",
+   "mixer": {
+    "gainDb": -1.0,
+    "pan": -0.2
+   },
+   "effects": [
+    {
+     "type": "eq",
+     "lowCutHz": 50,
+     "bands": [
+      {
+       "type": "peak",
+       "freqHz": 300,
+       "gainDb": -2.0,
+       "q": 0.8
+      }
+     ]
+    }
+   ],
+   "sends": [
+    {
+     "bus": "hall",
+     "levelDb": -11
+    }
+   ],
+   "cc1": [
+    {
+     "beat": 0,
+     "value": 46
+    }
+   ],
+   "notes": []
+  },
+  {
+   "name": "Violas",
+   "instrument": "sso-violas",
+   "mixer": {
+    "gainDb": -2.0,
+    "pan": 0.25
+   },
+   "effects": [
+    {
+     "type": "eq",
+     "lowCutHz": 120,
+     "highCutHz": 7000
+    }
+   ],
+   "sends": [
+    {
+     "bus": "hall",
+     "levelDb": -9
+    }
+   ],
+   "cc1": [
+    {
+     "beat": 0,
+     "value": 30
+    }
+   ],
+   "notes": []
+  },
+  {
+   "name": "Harmonics",
+   "instrument": "sso-violins-harmonics",
+   "mixer": {
+    "gainDb": 0.0,
+    "pan": 0.3
+   },
+   "effects": [
+    {
+     "type": "eq",
+     "lowCutHz": 600
+    },
+    {
+     "type": "stereo",
+     "width": 1.4
+    }
+   ],
+   "sends": [
+    {
+     "bus": "far",
+     "levelDb": -4
+    }
+   ],
+   "cc1": [
+    {
+     "beat": 0,
+     "value": 18
+    }
+   ],
+   "notes": []
+  },
+  {
+   "name": "Gong",
+   "instrument": "percussion",
+   "mixer": {
+    "gainDb": -6.0,
+    "pan": -0.1
+   },
+   "effects": [
+    {
+     "type": "eq",
+     "lowCutHz": 50,
+     "highCutHz": 7000
+    }
+   ],
+   "sends": [
+    {
+     "bus": "far",
+     "levelDb": -6
+    }
+   ],
+   "notes": []
+  },
+  {
+   "name": "Metal",
+   "instrument": "percussion",
+   "mixer": {
+    "gainDb": -1.0,
+    "pan": 0.35
+   },
+   "effects": [
+    {
+     "type": "eq",
+     "lowCutHz": 400,
+     "highCutHz": 6500
+    }
+   ],
+   "sends": [
+    {
+     "bus": "far",
+     "levelDb": -3
+    },
+    {
+     "bus": "echo",
+     "levelDb": -8
+    }
+   ],
+   "notes": []
+  },
+  {
+   "name": "Bells",
+   "instrument": "percussion",
+   "mixer": {
+    "gainDb": 12.0,
+    "pan": -0.3
+   },
+   "effects": [
+    {
+     "type": "eq",
+     "lowCutHz": 800,
+     "highCutHz": 11000
+    }
+   ],
+   "sends": [
+    {
+     "bus": "hall",
+     "levelDb": -6
+    }
+   ],
+   "notes": []
+  },
+  {
+   "name": "Bowed Metal",
+   "instrument": "percussion",
+   "mixer": {
+    "gainDb": -2.0
+   },
+   "effects": [
+    {
+     "type": "eq",
+     "lowCutHz": 300,
+     "highCutHz": 8000
+    },
+    {
+     "type": "stereo",
+     "width": 1.5
+    }
+   ],
+   "sends": [
+    {
+     "bus": "far",
+     "levelDb": -4
+    }
+   ],
+   "notes": []
+  },
+  {
+   "name": "Rub",
+   "instrument": "percussion",
+   "mixer": {
+    "gainDb": -8.0
+   },
+   "effects": [
+    {
+     "type": "eq",
+     "lowCutHz": 40,
+     "highCutHz": 2000
+    }
+   ],
+   "sends": [
+    {
+     "bus": "far",
+     "levelDb": -8
+    }
+   ],
+   "notes": []
+  },
+  {
+   "name": "Wind",
+   "instrument": "synth.noise",
+   "mixer": {
+    "gainDb": -5.0
+   },
+   "synth": {
+    "attack": 1.5,
+    "release": 1.5
+   },
+   "effects": [
+    {
+     "type": "eq",
+     "lowCutHz": 250,
+     "highCutHz": 2200,
+     "bands": [
+      {
+       "type": "peak",
+       "freqHz": 700,
+       "gainDb": 3.0,
+       "q": 0.7
+      }
+     ]
+    },
+    {
+     "type": "stereo",
+     "width": 1.6
+    }
+   ],
+   "cc11": [
+    {
+     "beat": 0,
+     "value": 59
+    }
+   ],
+   "cc74": [
+    {
+     "beat": 0,
+     "value": 51
+    }
+   ],
+   "notes": []
+  }
+ ],
+ "buses": [
+  {
+   "name": "hall",
+   "effects": [
+    {
+     "type": "reverb",
+     "mix": 1.0,
+     "decaySeconds": 4.6,
+     "preDelayMs": 35,
+     "damping": 0.55,
+     "width": 1.0,
+     "lowCutHz": 120,
+     "highCutHz": 6500
+    }
+   ]
+  },
+  {
+   "name": "far",
+   "effects": [
+    {
+     "type": "reverb",
+     "mix": 1.0,
+     "decaySeconds": 6.5,
+     "preDelayMs": 80,
+     "damping": 0.7,
+     "width": 1.0,
+     "lowCutHz": 200,
+     "highCutHz": 4000
+    }
+   ]
+  },
+  {
+   "name": "echo",
+   "effects": [
+    {
+     "type": "delay",
+     "timeMs": 1500.0,
+     "feedback": 0.3,
+     "mix": 1.0,
+     "pingPong": 1,
+     "lowCutHz": 500,
+     "highCutHz": 4000
+    }
+   ]
+  }
+ ],
+ "master": {
+  "targetLufs": -20.0,
+  "effects": [
+   {
+    "type": "eq",
+    "lowCutHz": 25,
+    "bands": [
+     {
+      "type": "peak",
+      "freqHz": 300,
+      "gainDb": -1.0,
+      "q": 0.7
+     }
+    ]
+   },
+   {
+    "type": "limiter",
+    "ceilingDb": -1.0,
+    "releaseMs": 120,
+    "lookaheadMs": 5,
+    "truePeak": 1
+   }
+  ]
+ }
+}

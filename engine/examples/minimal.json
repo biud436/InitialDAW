@@ -1,0 +1,13 @@
+{
+  "tempo": 92,
+  "timeSignature": [4, 4],
+  "tracks": [
+    {
+      "name": "Piano",
+      "instrument": "piano",
+      "notes": [
+        { "pitch": 60, "startBeat": 0.0, "durationBeat": 1.0, "velocity": 72 }
+      ]
+    }
+  ]
+}

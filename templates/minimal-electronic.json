@@ -1,0 +1,703 @@
+{
+ "title": "",
+ "metadata": {
+  "template": {
+   "id": "minimal-electronic",
+   "name": "미니멀 전자 음악",
+   "description": "작은 북(킥, 스냅, 틱, 셰이커), 서브와 맥박 베이스, 패드, 현 신스, 폴리 키 시퀀스, 유리 벨, 그랜드 피아노 두 트랙.",
+   "order": 13
+  }
+ },
+ "tempo": 110.0,
+ "timeSignature": [
+  4,
+  4
+ ],
+ "performance": {
+  "humanizeSeed": 20261009
+ },
+ "render": {
+  "tailSeconds": 6.0,
+  "fadeOutSeconds": 3.0
+ },
+ "tracks": [
+  {
+   "name": "Kick",
+   "instrument": "synth.edm-drums",
+   "mixer": {
+    "gainDb": -12.0
+   },
+   "performance": {
+    "timingHumanizeMs": 0,
+    "velocityHumanize": 3
+   },
+   "effects": [
+    {
+     "type": "eq",
+     "lowCutHz": 32,
+     "bands": [
+      {
+       "type": "peak",
+       "freqHz": 58,
+       "gainDb": 1.5,
+       "q": 1.0
+      },
+      {
+       "type": "peak",
+       "freqHz": 3000,
+       "gainDb": -3.0,
+       "q": 0.8
+      }
+     ]
+    }
+   ],
+   "notes": []
+  },
+  {
+   "name": "Snap",
+   "instrument": "synth.drums",
+   "mixer": {
+    "gainDb": -6.0
+   },
+   "performance": {
+    "timingHumanizeMs": 0,
+    "velocityHumanize": 3
+   },
+   "effects": [
+    {
+     "type": "eq",
+     "lowCutHz": 450,
+     "bands": [
+      {
+       "type": "highShelf",
+       "freqHz": 6000,
+       "gainDb": 2.0
+      }
+     ]
+    }
+   ],
+   "sends": [
+    {
+     "bus": "verb",
+     "levelDb": -10
+    },
+    {
+     "bus": "echo",
+     "levelDb": -20
+    }
+   ],
+   "notes": []
+  },
+  {
+   "name": "Ticks",
+   "instrument": "synth.drums",
+   "mixer": {
+    "gainDb": -12.0,
+    "pan": 0.35
+   },
+   "performance": {
+    "timingHumanizeMs": 0,
+    "velocityHumanize": 3
+   },
+   "effects": [
+    {
+     "type": "eq",
+     "lowCutHz": 1500,
+     "bands": [
+      {
+       "type": "peak",
+       "freqHz": 4500,
+       "gainDb": 2.0,
+       "q": 0.8
+      }
+     ]
+    }
+   ],
+   "sends": [
+    {
+     "bus": "echo",
+     "levelDb": -22
+    }
+   ],
+   "notes": []
+  },
+  {
+   "name": "Shaker",
+   "instrument": "synth.drums",
+   "mixer": {
+    "gainDb": -10.0,
+    "pan": -0.3
+   },
+   "performance": {
+    "timingHumanizeMs": 2,
+    "velocityHumanize": 6
+   },
+   "effects": [
+    {
+     "type": "eq",
+     "lowCutHz": 3000,
+     "highCutHz": 14000
+    }
+   ],
+   "sends": [
+    {
+     "bus": "verb",
+     "levelDb": -20
+    }
+   ],
+   "notes": []
+  },
+  {
+   "name": "Hats",
+   "instrument": "synth.edm-drums",
+   "mixer": {
+    "gainDb": -13.0,
+    "pan": 0.15
+   },
+   "performance": {
+    "timingHumanizeMs": 2,
+    "velocityHumanize": 6
+   },
+   "effects": [
+    {
+     "type": "eq",
+     "lowCutHz": 700
+    }
+   ],
+   "sends": [
+    {
+     "bus": "verb",
+     "levelDb": -20
+    }
+   ],
+   "notes": []
+  },
+  {
+   "name": "Crash",
+   "instrument": "synth.edm-drums",
+   "mixer": {
+    "gainDb": -16.0
+   },
+   "performance": {
+    "timingHumanizeMs": 0,
+    "velocityHumanize": 3
+   },
+   "effects": [
+    {
+     "type": "eq",
+     "lowCutHz": 500,
+     "highCutHz": 12000
+    }
+   ],
+   "sends": [
+    {
+     "bus": "verb",
+     "levelDb": -12
+    }
+   ],
+   "notes": []
+  },
+  {
+   "name": "Swell",
+   "instrument": "synth.noise",
+   "mixer": {
+    "gainDb": -6.0
+   },
+   "performance": {
+    "timingHumanizeMs": 0,
+    "velocityHumanize": 3
+   },
+   "effects": [
+    {
+     "type": "eq",
+     "lowCutHz": 400,
+     "highCutHz": 11000
+    },
+    {
+     "type": "stereo",
+     "width": 1.6
+    }
+   ],
+   "sends": [
+    {
+     "bus": "verb",
+     "levelDb": -8
+    }
+   ],
+   "cc11": [
+    {
+     "beat": 0,
+     "value": 10
+    }
+   ],
+   "cc74": [
+    {
+     "beat": 0,
+     "value": 73
+    }
+   ],
+   "notes": []
+  },
+  {
+   "name": "Sub",
+   "instrument": "synth.sub",
+   "mixer": {
+    "gainDb": -11.0
+   },
+   "performance": {
+    "timingHumanizeMs": 0,
+    "velocityHumanize": 3
+   },
+   "effects": [
+    {
+     "type": "compressor",
+     "sidechain": "Kick",
+     "thresholdDb": -14,
+     "ratio": 3,
+     "attackMs": 1,
+     "releaseMs": 170,
+     "kneeDb": 6
+    }
+   ],
+   "cc11": [
+    {
+     "beat": 0,
+     "value": 127
+    }
+   ],
+   "notes": []
+  },
+  {
+   "name": "Pulse Bass",
+   "instrument": "synth.bass",
+   "mixer": {
+    "gainDb": -1.0
+   },
+   "synth": {
+    "decay": 0.16,
+    "sustain": 0.3,
+    "release": 0.05,
+    "cutoffHz": 320,
+    "filterEnvHz": 1100,
+    "filterEnvDecay": 0.12,
+    "resonance": 0.2
+   },
+   "performance": {
+    "timingHumanizeMs": 0,
+    "velocityHumanize": 3
+   },
+   "effects": [
+    {
+     "type": "eq",
+     "lowCutHz": 70,
+     "highCutHz": 4500
+    },
+    {
+     "type": "compressor",
+     "sidechain": "Kick",
+     "thresholdDb": -10,
+     "ratio": 2,
+     "attackMs": 2,
+     "releaseMs": 150,
+     "kneeDb": 6
+    }
+   ],
+   "cc74": [
+    {
+     "beat": 0,
+     "value": 96
+    }
+   ],
+   "notes": []
+  },
+  {
+   "name": "Pad",
+   "instrument": "synth.pad",
+   "mixer": {
+    "gainDb": -3.0
+   },
+   "performance": {
+    "timingHumanizeMs": 2,
+    "velocityHumanize": 6
+   },
+   "effects": [
+    {
+     "type": "eq",
+     "lowCutHz": 140,
+     "highCutHz": 8000,
+     "bands": [
+      {
+       "type": "peak",
+       "freqHz": 350,
+       "gainDb": -2.0,
+       "q": 0.8
+      }
+     ]
+    },
+    {
+     "type": "compressor",
+     "sidechain": "Kick",
+     "thresholdDb": -10,
+     "ratio": 2,
+     "attackMs": 2,
+     "releaseMs": 150,
+     "kneeDb": 6
+    },
+    {
+     "type": "stereo",
+     "width": 1.5
+    }
+   ],
+   "sends": [
+    {
+     "bus": "verb",
+     "levelDb": -8
+    }
+   ],
+   "cc1": [
+    {
+     "beat": 0,
+     "value": 76
+    }
+   ],
+   "cc11": [
+    {
+     "beat": 0,
+     "value": 127
+    }
+   ],
+   "notes": []
+  },
+  {
+   "name": "Air",
+   "instrument": "synth.strings",
+   "mixer": {
+    "gainDb": -12.0
+   },
+   "synth": {
+    "attack": 1.2,
+    "release": 2.0,
+    "vibratoCents": 5
+   },
+   "performance": {
+    "timingHumanizeMs": 2,
+    "velocityHumanize": 6
+   },
+   "effects": [
+    {
+     "type": "eq",
+     "lowCutHz": 500,
+     "highCutHz": 9000
+    },
+    {
+     "type": "compressor",
+     "sidechain": "Kick",
+     "thresholdDb": -10,
+     "ratio": 2,
+     "attackMs": 2,
+     "releaseMs": 150,
+     "kneeDb": 6
+    },
+    {
+     "type": "stereo",
+     "width": 1.7
+    }
+   ],
+   "sends": [
+    {
+     "bus": "verb",
+     "levelDb": -6
+    }
+   ],
+   "cc1": [
+    {
+     "beat": 0,
+     "value": 66
+    }
+   ],
+   "notes": []
+  },
+  {
+   "name": "Sequence",
+   "instrument": "synth.poly-keys",
+   "mixer": {
+    "gainDb": -2.0
+   },
+   "synth": {
+    "attack": 0.002,
+    "decay": 0.22,
+    "sustain": 0.0,
+    "release": 0.16,
+    "cutoffHz": 700,
+    "filterEnvHz": 3200,
+    "filterEnvDecay": 0.09,
+    "resonance": 0.22,
+    "drive": 0.3
+   },
+   "performance": {
+    "timingHumanizeMs": 0,
+    "velocityHumanize": 2
+   },
+   "effects": [
+    {
+     "type": "eq",
+     "lowCutHz": 180,
+     "highCutHz": 9000
+    },
+    {
+     "type": "stereo",
+     "width": 1.3
+    }
+   ],
+   "sends": [
+    {
+     "bus": "echo",
+     "levelDb": -9
+    },
+    {
+     "bus": "verb",
+     "levelDb": -14
+    }
+   ],
+   "cc74": [
+    {
+     "beat": 0,
+     "value": 84
+    }
+   ],
+   "notes": []
+  },
+  {
+   "name": "Glass Bell",
+   "instrument": "synth.ep",
+   "mixer": {
+    "gainDb": -6.0,
+    "pan": 0.2
+   },
+   "synth": {
+    "decay": 1.6,
+    "sustain": 0.0,
+    "release": 0.9,
+    "cutoffHz": 900,
+    "filterEnvHz": 2500,
+    "filterVelHz": 3000,
+    "vibratoCents": 0
+   },
+   "performance": {
+    "timingHumanizeMs": 0,
+    "velocityHumanize": 3
+   },
+   "effects": [
+    {
+     "type": "eq",
+     "lowCutHz": 400
+    },
+    {
+     "type": "stereo",
+     "width": 1.2
+    }
+   ],
+   "sends": [
+    {
+     "bus": "echo",
+     "levelDb": -6
+    },
+    {
+     "bus": "verb",
+     "levelDb": -9
+    }
+   ],
+   "notes": []
+  },
+  {
+   "name": "Piano Melody",
+   "instrument": "grand-piano",
+   "mixer": {
+    "gainDb": 10.0,
+    "pan": 0.05
+   },
+   "performance": {
+    "timingHumanizeMs": 6,
+    "velocityHumanize": 3,
+    "noteLengthHumanize": 0.02
+   },
+   "effects": [
+    {
+     "type": "eq",
+     "lowCutHz": 60,
+     "bands": [
+      {
+       "type": "peak",
+       "freqHz": 300,
+       "gainDb": -2.5,
+       "q": 0.9
+      },
+      {
+       "type": "highShelf",
+       "freqHz": 5000,
+       "gainDb": 1.5
+      }
+     ]
+    },
+    {
+     "type": "stereo",
+     "width": 0.7
+    }
+   ],
+   "sends": [
+    {
+     "bus": "room",
+     "levelDb": -10
+    },
+    {
+     "bus": "echo",
+     "levelDb": -18
+    },
+    {
+     "bus": "verb",
+     "levelDb": -12
+    }
+   ],
+   "notes": []
+  },
+  {
+   "name": "Piano",
+   "instrument": "grand-piano",
+   "mixer": {
+    "gainDb": 0.0,
+    "pan": -0.08
+   },
+   "performance": {
+    "timingHumanizeMs": 6,
+    "velocityHumanize": 3,
+    "noteLengthHumanize": 0.02
+   },
+   "effects": [
+    {
+     "type": "eq",
+     "lowCutHz": 60,
+     "bands": [
+      {
+       "type": "peak",
+       "freqHz": 300,
+       "gainDb": -2.5,
+       "q": 0.9
+      },
+      {
+       "type": "highShelf",
+       "freqHz": 5000,
+       "gainDb": 1.5
+      }
+     ]
+    },
+    {
+     "type": "stereo",
+     "width": 1.2
+    }
+   ],
+   "sends": [
+    {
+     "bus": "room",
+     "levelDb": -10
+    },
+    {
+     "bus": "verb",
+     "levelDb": -12
+    }
+   ],
+   "notes": []
+  }
+ ],
+ "buses": [
+  {
+   "name": "verb",
+   "effects": [
+    {
+     "type": "reverb",
+     "mix": 1.0,
+     "decaySeconds": 2.8,
+     "preDelayMs": 24,
+     "damping": 0.4,
+     "width": 1.0,
+     "lowCutHz": 350,
+     "highCutHz": 9000
+    },
+    {
+     "type": "compressor",
+     "sidechain": "Kick",
+     "thresholdDb": -10,
+     "ratio": 2,
+     "attackMs": 2,
+     "releaseMs": 150,
+     "kneeDb": 6
+    }
+   ]
+  },
+  {
+   "name": "echo",
+   "effects": [
+    {
+     "type": "delay",
+     "timeMs": 409.09,
+     "feedback": 0.34,
+     "mix": 1.0,
+     "pingPong": 1,
+     "lowCutHz": 450,
+     "highCutHz": 7000
+    }
+   ]
+  },
+  {
+   "name": "room",
+   "effects": [
+    {
+     "type": "reverb",
+     "mix": 1.0,
+     "decaySeconds": 1.5,
+     "preDelayMs": 10,
+     "damping": 0.5,
+     "width": 1.0,
+     "lowCutHz": 200,
+     "highCutHz": 8000
+    }
+   ]
+  }
+ ],
+ "master": {
+  "targetLufs": -14.0,
+  "effects": [
+   {
+    "type": "eq",
+    "lowCutHz": 28,
+    "bands": [
+     {
+      "type": "peak",
+      "freqHz": 300,
+      "gainDb": -1.0,
+      "q": 0.7
+     },
+     {
+      "type": "highShelf",
+      "freqHz": 10000,
+      "gainDb": 1.5
+     }
+    ]
+   },
+   {
+    "type": "compressor",
+    "thresholdDb": -16,
+    "ratio": 1.8,
+    "attackMs": 15,
+    "releaseMs": 150,
+    "kneeDb": 8
+   },
+   {
+    "type": "limiter",
+    "ceilingDb": -1.0,
+    "releaseMs": 80,
+    "lookaheadMs": 5,
+    "truePeak": 1
+   }
+  ]
+ }
+}

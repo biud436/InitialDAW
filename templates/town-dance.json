@@ -1,0 +1,489 @@
+{
+ "title": "",
+ "metadata": {
+  "template": {
+   "id": "town-dance",
+   "name": "마을 춤곡",
+   "description": "나일론 기타, 독주 플루트와 클라리넷, 하프, 현악, 큰북과 탬버린. 6/8 의 템포 108 은 점4분음표 72 입니다.",
+   "order": 6
+  },
+  "loop": {
+   "startBeat": 12.0,
+   "endBeat": 108.0
+  }
+ },
+ "tempo": 108.0,
+ "timeSignature": [
+  6,
+  8
+ ],
+ "performance": {
+  "humanizeSeed": 20261011
+ },
+ "render": {
+  "tailSeconds": 5.0,
+  "fadeOutSeconds": 0.0
+ },
+ "tracks": [
+  {
+   "name": "Flute",
+   "instrument": "flute-solo",
+   "mixer": {
+    "gainDb": 8.0,
+    "pan": -0.18
+   },
+   "effects": [
+    {
+     "type": "eq",
+     "lowCutHz": 250,
+     "bands": [
+      {
+       "type": "peak",
+       "freqHz": 400,
+       "gainDb": -1.5,
+       "q": 0.9
+      },
+      {
+       "type": "highShelf",
+       "freqHz": 7000,
+       "gainDb": 1.0
+      }
+     ]
+    }
+   ],
+   "sends": [
+    {
+     "bus": "room",
+     "levelDb": -11
+    },
+    {
+     "bus": "hall",
+     "levelDb": -12
+    }
+   ],
+   "cc1": [
+    {
+     "beat": 0,
+     "value": 72.45
+    }
+   ],
+   "cc11": [
+    {
+     "beat": 0,
+     "value": 80.2
+    }
+   ],
+   "notes": []
+  },
+  {
+   "name": "Clarinet",
+   "instrument": "clarinet-solo",
+   "mixer": {
+    "gainDb": 5.0,
+    "pan": 0.16
+   },
+   "effects": [
+    {
+     "type": "eq",
+     "lowCutHz": 120,
+     "bands": [
+      {
+       "type": "peak",
+       "freqHz": 350,
+       "gainDb": -3.0,
+       "q": 0.9
+      },
+      {
+       "type": "highShelf",
+       "freqHz": 3000,
+       "gainDb": 2.0
+      }
+     ]
+    }
+   ],
+   "sends": [
+    {
+     "bus": "room",
+     "levelDb": -11
+    },
+    {
+     "bus": "hall",
+     "levelDb": -12
+    }
+   ],
+   "cc1": [
+    {
+     "beat": 0,
+     "value": 72.71
+    }
+   ],
+   "cc11": [
+    {
+     "beat": 0,
+     "value": 90.43
+    }
+   ],
+   "notes": []
+  },
+  {
+   "name": "Guitar",
+   "instrument": "guitar",
+   "mixer": {
+    "gainDb": -10.0,
+    "pan": -0.3
+   },
+   "effects": [
+    {
+     "type": "eq",
+     "lowCutHz": 80,
+     "bands": [
+      {
+       "type": "peak",
+       "freqHz": 300,
+       "gainDb": -4.5,
+       "q": 0.9
+      },
+      {
+       "type": "highShelf",
+       "freqHz": 4000,
+       "gainDb": 3.5
+      }
+     ]
+    }
+   ],
+   "sends": [
+    {
+     "bus": "room",
+     "levelDb": -12
+    },
+    {
+     "bus": "hall",
+     "levelDb": -16
+    }
+   ],
+   "notes": []
+  },
+  {
+   "name": "Harp",
+   "instrument": "harp",
+   "mixer": {
+    "gainDb": 6.0,
+    "pan": 0.42
+   },
+   "effects": [
+    {
+     "type": "eq",
+     "lowCutHz": 60,
+     "bands": [
+      {
+       "type": "peak",
+       "freqHz": 320,
+       "gainDb": -3.0,
+       "q": 0.9
+      },
+      {
+       "type": "highShelf",
+       "freqHz": 4000,
+       "gainDb": 2.0
+      }
+     ]
+    }
+   ],
+   "sends": [
+    {
+     "bus": "room",
+     "levelDb": -10
+    },
+    {
+     "bus": "hall",
+     "levelDb": -10
+    }
+   ],
+   "notes": []
+  },
+  {
+   "name": "Violins",
+   "instrument": "sso-violins-2",
+   "mixer": {
+    "gainDb": -6.0,
+    "pan": -0.4
+   },
+   "effects": [
+    {
+     "type": "eq",
+     "lowCutHz": 160,
+     "bands": [
+      {
+       "type": "peak",
+       "freqHz": 320,
+       "gainDb": -2.0,
+       "q": 0.9
+      },
+      {
+       "type": "highShelf",
+       "freqHz": 8000,
+       "gainDb": 1.5
+      }
+     ]
+    }
+   ],
+   "sends": [
+    {
+     "bus": "room",
+     "levelDb": -12
+    },
+    {
+     "bus": "hall",
+     "levelDb": -12
+    }
+   ],
+   "cc1": [
+    {
+     "beat": 0,
+     "value": 50
+    }
+   ],
+   "notes": []
+  },
+  {
+   "name": "Violas",
+   "instrument": "sso-violas",
+   "mixer": {
+    "gainDb": -4.0,
+    "pan": 0.2
+   },
+   "effects": [
+    {
+     "type": "eq",
+     "lowCutHz": 110,
+     "bands": [
+      {
+       "type": "peak",
+       "freqHz": 330,
+       "gainDb": -2.5,
+       "q": 0.9
+      }
+     ]
+    }
+   ],
+   "sends": [
+    {
+     "bus": "room",
+     "levelDb": -12
+    },
+    {
+     "bus": "hall",
+     "levelDb": -12
+    }
+   ],
+   "cc1": [
+    {
+     "beat": 0,
+     "value": 34
+    }
+   ],
+   "notes": []
+  },
+  {
+   "name": "Celli",
+   "instrument": "sso-celli",
+   "mixer": {
+    "gainDb": -1.0,
+    "pan": 0.28
+   },
+   "effects": [
+    {
+     "type": "eq",
+     "lowCutHz": 45,
+     "bands": [
+      {
+       "type": "peak",
+       "freqHz": 300,
+       "gainDb": -4.0,
+       "q": 0.9
+      },
+      {
+       "type": "highShelf",
+       "freqHz": 3000,
+       "gainDb": 2.0
+      }
+     ]
+    }
+   ],
+   "sends": [
+    {
+     "bus": "room",
+     "levelDb": -13
+    },
+    {
+     "bus": "hall",
+     "levelDb": -13
+    }
+   ],
+   "cc1": [
+    {
+     "beat": 0,
+     "value": 36
+    }
+   ],
+   "notes": []
+  },
+  {
+   "name": "Basses",
+   "instrument": "sso-basses",
+   "mixer": {
+    "gainDb": -2.0,
+    "pan": 0.45
+   },
+   "effects": [
+    {
+     "type": "eq",
+     "lowCutHz": 30,
+     "bands": [
+      {
+       "type": "peak",
+       "freqHz": 220,
+       "gainDb": -2.0,
+       "q": 0.9
+      }
+     ],
+     "highCutHz": 5000
+    }
+   ],
+   "sends": [
+    {
+     "bus": "room",
+     "levelDb": -15
+    },
+    {
+     "bus": "hall",
+     "levelDb": -15
+    }
+   ],
+   "cc1": [
+    {
+     "beat": 0,
+     "value": 24
+    }
+   ],
+   "notes": []
+  },
+  {
+   "name": "Bass Drum",
+   "instrument": "percussion",
+   "mixer": {
+    "gainDb": -6.0
+   },
+   "effects": [
+    {
+     "type": "eq",
+     "lowCutHz": 35,
+     "highCutHz": 6000
+    }
+   ],
+   "sends": [
+    {
+     "bus": "room",
+     "levelDb": -14
+    },
+    {
+     "bus": "hall",
+     "levelDb": -12
+    }
+   ],
+   "notes": []
+  },
+  {
+   "name": "Tambourine",
+   "instrument": "percussion",
+   "mixer": {
+    "gainDb": 8.0,
+    "pan": 0.3
+   },
+   "effects": [
+    {
+     "type": "eq",
+     "lowCutHz": 500
+    }
+   ],
+   "sends": [
+    {
+     "bus": "room",
+     "levelDb": -12
+    },
+    {
+     "bus": "hall",
+     "levelDb": -10
+    }
+   ],
+   "notes": []
+  }
+ ],
+ "buses": [
+  {
+   "name": "room",
+   "effects": [
+    {
+     "type": "reverb",
+     "mix": 1.0,
+     "decaySeconds": 0.8,
+     "preDelayMs": 10,
+     "damping": 0.45,
+     "width": 1.0,
+     "lowCutHz": 250,
+     "highCutHz": 9000
+    }
+   ]
+  },
+  {
+   "name": "hall",
+   "effects": [
+    {
+     "type": "reverb",
+     "mix": 1.0,
+     "decaySeconds": 1.9,
+     "preDelayMs": 22,
+     "damping": 0.5,
+     "width": 1.0,
+     "lowCutHz": 200,
+     "highCutHz": 8000
+    }
+   ]
+  }
+ ],
+ "master": {
+  "targetLufs": -18.0,
+  "effects": [
+   {
+    "type": "eq",
+    "lowCutHz": 30,
+    "bands": [
+     {
+      "type": "peak",
+      "freqHz": 320,
+      "gainDb": -2.0,
+      "q": 0.7
+     },
+     {
+      "type": "peak",
+      "freqHz": 3000,
+      "gainDb": 2.0,
+      "q": 0.8
+     },
+     {
+      "type": "highShelf",
+      "freqHz": 8000,
+      "gainDb": 1.5
+     }
+    ]
+   },
+   {
+    "type": "limiter",
+    "ceilingDb": -1.0,
+    "releaseMs": 120,
+    "lookaheadMs": 5,
+    "truePeak": 1
+   }
+  ]
+ }
+}

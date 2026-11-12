@@ -1,0 +1,3 @@
+// 테스트용: 벨로시티 레이어 둘. 여린 레이어는 건반 높이, 센 레이어는 완전5도 위
+<region> sample=*sine pitch_keycenter=69 lovel=0 hivel=62 ampeg_release=0.03
+<region> sample=*sine pitch_keycenter=69 transpose=7 lovel=63 hivel=127 ampeg_release=0.03

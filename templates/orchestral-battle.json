@@ -1,0 +1,502 @@
+{
+ "title": "",
+ "metadata": {
+  "template": {
+   "id": "orchestral-battle",
+   "name": "관현악 전투",
+   "description": "Sonatina 현악 다섯 성부, 호른 합주, 팀파니, 관현악 큰북과 타악기. 무대와 홀 잔향.",
+   "order": 3
+  },
+  "loop": {
+   "startBeat": 16.0,
+   "endBeat": 144.0
+  }
+ },
+ "tempo": 160.0,
+ "timeSignature": [
+  4,
+  4
+ ],
+ "performance": {
+  "humanizeSeed": 20261014
+ },
+ "render": {
+  "tailSeconds": 5.0,
+  "fadeOutSeconds": 0.0
+ },
+ "tracks": [
+  {
+   "name": "Violins I",
+   "instrument": "sso-violins-1",
+   "mixer": {
+    "gainDb": 15.0,
+    "pan": -0.4
+   },
+   "effects": [
+    {
+     "type": "eq",
+     "lowCutHz": 170,
+     "bands": [
+      {
+       "type": "peak",
+       "freqHz": 320,
+       "gainDb": -2.0,
+       "q": 0.9
+      },
+      {
+       "type": "peak",
+       "freqHz": 3200,
+       "gainDb": 1.5,
+       "q": 1.0
+      },
+      {
+       "type": "highShelf",
+       "freqHz": 8000,
+       "gainDb": 2.0
+      }
+     ]
+    }
+   ],
+   "sends": [
+    {
+     "bus": "stage",
+     "levelDb": -13
+    },
+    {
+     "bus": "hall",
+     "levelDb": -11
+    }
+   ],
+   "cc1": [
+    {
+     "beat": 0,
+     "value": 84.44
+    }
+   ],
+   "cc11": [
+    {
+     "beat": 0,
+     "value": 96.45
+    }
+   ],
+   "notes": []
+  },
+  {
+   "name": "Violins II",
+   "instrument": "sso-violins-2",
+   "mixer": {
+    "gainDb": 9.0,
+    "pan": -0.15
+   },
+   "effects": [
+    {
+     "type": "eq",
+     "lowCutHz": 140,
+     "bands": [
+      {
+       "type": "peak",
+       "freqHz": 320,
+       "gainDb": -2.0,
+       "q": 0.9
+      },
+      {
+       "type": "peak",
+       "freqHz": 3200,
+       "gainDb": 1.5,
+       "q": 1.0
+      },
+      {
+       "type": "highShelf",
+       "freqHz": 8000,
+       "gainDb": 2.0
+      }
+     ]
+    }
+   ],
+   "sends": [
+    {
+     "bus": "stage",
+     "levelDb": -13
+    },
+    {
+     "bus": "hall",
+     "levelDb": -11
+    }
+   ],
+   "cc1": [
+    {
+     "beat": 0,
+     "value": 80.4
+    }
+   ],
+   "cc11": [
+    {
+     "beat": 0,
+     "value": 79.58
+    }
+   ],
+   "notes": []
+  },
+  {
+   "name": "Violas",
+   "instrument": "sso-violas",
+   "mixer": {
+    "gainDb": -3.0,
+    "pan": 0.15
+   },
+   "effects": [
+    {
+     "type": "eq",
+     "lowCutHz": 110,
+     "bands": [
+      {
+       "type": "peak",
+       "freqHz": 330,
+       "gainDb": -2.5,
+       "q": 0.9
+      },
+      {
+       "type": "highShelf",
+       "freqHz": 3500,
+       "gainDb": 2.0
+      }
+     ]
+    }
+   ],
+   "sends": [
+    {
+     "bus": "stage",
+     "levelDb": -14
+    },
+    {
+     "bus": "hall",
+     "levelDb": -13
+    }
+   ],
+   "cc1": [
+    {
+     "beat": 0,
+     "value": 50
+    }
+   ],
+   "cc11": [
+    {
+     "beat": 0,
+     "value": 110
+    }
+   ],
+   "notes": []
+  },
+  {
+   "name": "Celli",
+   "instrument": "sso-celli",
+   "mixer": {
+    "gainDb": 2.0,
+    "pan": 0.3
+   },
+   "effects": [
+    {
+     "type": "eq",
+     "lowCutHz": 45,
+     "bands": [
+      {
+       "type": "peak",
+       "freqHz": 280,
+       "gainDb": -2.5,
+       "q": 0.9
+      },
+      {
+       "type": "highShelf",
+       "freqHz": 3000,
+       "gainDb": 2.0
+      }
+     ]
+    }
+   ],
+   "sends": [
+    {
+     "bus": "stage",
+     "levelDb": -14
+    },
+    {
+     "bus": "hall",
+     "levelDb": -14
+    }
+   ],
+   "cc1": [
+    {
+     "beat": 0,
+     "value": 83.06
+    }
+   ],
+   "cc11": [
+    {
+     "beat": 0,
+     "value": 123.25
+    }
+   ],
+   "notes": []
+  },
+  {
+   "name": "Basses",
+   "instrument": "sso-basses",
+   "mixer": {
+    "gainDb": 0.0,
+    "pan": 0.45
+   },
+   "effects": [
+    {
+     "type": "eq",
+     "lowCutHz": 30,
+     "bands": [
+      {
+       "type": "peak",
+       "freqHz": 220,
+       "gainDb": -2.0,
+       "q": 0.9
+      }
+     ],
+     "highCutHz": 5000
+    }
+   ],
+   "sends": [
+    {
+     "bus": "stage",
+     "levelDb": -16
+    },
+    {
+     "bus": "hall",
+     "levelDb": -16
+    }
+   ],
+   "cc1": [
+    {
+     "beat": 0,
+     "value": 80
+    }
+   ],
+   "cc11": [
+    {
+     "beat": 0,
+     "value": 110
+    }
+   ],
+   "notes": []
+  },
+  {
+   "name": "Horns",
+   "instrument": "horns",
+   "mixer": {
+    "gainDb": 5.0,
+    "pan": 0.22
+   },
+   "effects": [
+    {
+     "type": "eq",
+     "lowCutHz": 70,
+     "bands": [
+      {
+       "type": "peak",
+       "freqHz": 300,
+       "gainDb": -2.0,
+       "q": 0.9
+      },
+      {
+       "type": "peak",
+       "freqHz": 2400,
+       "gainDb": 2.5,
+       "q": 1.0
+      }
+     ],
+     "highCutHz": 10000
+    }
+   ],
+   "sends": [
+    {
+     "bus": "stage",
+     "levelDb": -12
+    },
+    {
+     "bus": "hall",
+     "levelDb": -10
+    }
+   ],
+   "cc1": [
+    {
+     "beat": 0,
+     "value": 77.4
+    }
+   ],
+   "cc11": [
+    {
+     "beat": 0,
+     "value": 68.93
+    }
+   ],
+   "notes": []
+  },
+  {
+   "name": "Timpani",
+   "instrument": "timpani",
+   "mixer": {
+    "gainDb": 2.0,
+    "pan": 0.1
+   },
+   "effects": [
+    {
+     "type": "eq",
+     "lowCutHz": 35,
+     "highCutHz": 9000
+    }
+   ],
+   "sends": [
+    {
+     "bus": "stage",
+     "levelDb": -12
+    },
+    {
+     "bus": "hall",
+     "levelDb": -11
+    }
+   ],
+   "cc11": [
+    {
+     "beat": 0,
+     "value": 127
+    }
+   ],
+   "notes": []
+  },
+  {
+   "name": "Snare",
+   "instrument": "percussion",
+   "mixer": {
+    "gainDb": -5.0,
+    "pan": -0.08
+   },
+   "effects": [
+    {
+     "type": "eq",
+     "lowCutHz": 140,
+     "bands": [
+      {
+       "type": "peak",
+       "freqHz": 450,
+       "gainDb": -2.0,
+       "q": 1.0
+      }
+     ]
+    }
+   ],
+   "sends": [
+    {
+     "bus": "stage",
+     "levelDb": -12
+    },
+    {
+     "bus": "hall",
+     "levelDb": -11
+    }
+   ],
+   "cc11": [
+    {
+     "beat": 0,
+     "value": 127
+    }
+   ],
+   "notes": []
+  },
+  {
+   "name": "Percussion",
+   "instrument": "percussion",
+   "mixer": {
+    "gainDb": -3.0,
+    "pan": -0.12
+   },
+   "effects": [
+    {
+     "type": "eq",
+     "lowCutHz": 35
+    }
+   ],
+   "sends": [
+    {
+     "bus": "stage",
+     "levelDb": -12
+    },
+    {
+     "bus": "hall",
+     "levelDb": -10
+    }
+   ],
+   "notes": []
+  }
+ ],
+ "buses": [
+  {
+   "name": "stage",
+   "effects": [
+    {
+     "type": "reverb",
+     "mix": 1.0,
+     "decaySeconds": 1.0,
+     "preDelayMs": 10,
+     "damping": 0.45,
+     "width": 1.0,
+     "lowCutHz": 250,
+     "highCutHz": 9000
+    }
+   ]
+  },
+  {
+   "name": "hall",
+   "effects": [
+    {
+     "type": "reverb",
+     "mix": 1.0,
+     "decaySeconds": 2.0,
+     "preDelayMs": 24,
+     "damping": 0.5,
+     "width": 1.0,
+     "lowCutHz": 300,
+     "highCutHz": 8500
+    }
+   ]
+  }
+ ],
+ "master": {
+  "targetLufs": -16.0,
+  "effects": [
+   {
+    "type": "eq",
+    "lowCutHz": 30,
+    "bands": [
+     {
+      "type": "peak",
+      "freqHz": 300,
+      "gainDb": -1.5,
+      "q": 0.8
+     },
+     {
+      "type": "peak",
+      "freqHz": 3000,
+      "gainDb": 1.5,
+      "q": 0.8
+     },
+     {
+      "type": "highShelf",
+      "freqHz": 8000,
+      "gainDb": 1.5
+     }
+    ]
+   },
+   {
+    "type": "limiter",
+    "ceilingDb": -1.0,
+    "releaseMs": 100,
+    "lookaheadMs": 5,
+    "truePeak": 1
+   }
+  ]
+ }
+}

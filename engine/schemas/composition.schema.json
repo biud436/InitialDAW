@@ -1,0 +1,1128 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/biud436/InitialDAW/engine/schemas/composition.schema.json",
+  "title": "music-render composition",
+  "description": "A piece of music for music-render. Beats are quarter notes.",
+  "type": "object",
+  "required": [
+    "tempo",
+    "tracks"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "comment": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "loop": {
+          "type": "object",
+          "description": "game loop: playback returns from endBeat to startBeat; render --loop and the app's export write it into the file",
+          "properties": {
+            "startBeat": {
+              "type": "number",
+              "minimum": 0
+            },
+            "endBeat": {
+              "type": "number",
+              "minimum": 0
+            }
+          }
+        }
+      }
+    },
+    "tempo": {
+      "oneOf": [
+        {
+          "type": "number",
+          "minimum": 1,
+          "maximum": 999
+        },
+        {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": [
+              "beat",
+              "bpm"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "beat": {
+                "type": "number",
+                "minimum": 0
+              },
+              "bpm": {
+                "type": "number",
+                "minimum": 1,
+                "maximum": 999
+              },
+              "ramp": {
+                "type": "boolean",
+                "description": "change bpm linearly until the next point"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "timeSignature": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 32
+        },
+        {
+          "enum": [
+            1,
+            2,
+            4,
+            8,
+            16,
+            32
+          ]
+        }
+      ],
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "performance": {
+      "$ref": "#/$defs/performance"
+    },
+    "instruments": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "$ref": "#/$defs/instrumentTable"
+              }
+            ]
+          }
+        },
+        {
+          "$ref": "#/$defs/instrumentTable"
+        }
+      ],
+      "description": "registry file(s), relative to this file, or objects of instrument definitions (name to definition, as in a registry file); read after the default registry"
+    },
+    "tracks": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/track"
+      }
+    },
+    "buses": {
+      "type": "array",
+      "description": "submix buses fed by track sends",
+      "items": {
+        "type": "object",
+        "required": [
+          "name"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "mixer": {
+            "$ref": "#/$defs/mixer"
+          },
+          "effects": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/effect"
+            }
+          },
+          "vca": { "type": "string", "description": "the VCA whose gain and mute also act on this bus" },
+          "comment": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "vcas": {
+      "type": "array",
+      "description": "VCA faders: no audio passes through them; each adds its gain (and gain curve) to the faders of the tracks and buses that name it, and its mute mutes them",
+      "items": {
+        "type": "object",
+        "required": [ "name" ],
+        "additionalProperties": false,
+        "properties": {
+          "name": { "type": "string", "description": "unique among the VCAs" },
+          "gainDb": { "type": "number", "minimum": -120, "maximum": 24, "default": 0 },
+          "mute": { "type": "boolean", "default": false },
+          "automation": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": { "gainDb": { "$ref": "#/$defs/automationLane" } }
+          },
+          "comment": { "type": "string" }
+        }
+      }
+    },
+    "master": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "mixer": {
+          "$ref": "#/$defs/mixer"
+        },
+        "effects": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/effect"
+          }
+        },
+        "targetLufs": {
+          "type": "number",
+          "minimum": -60,
+          "maximum": 0,
+          "description": "normalise the master to this integrated loudness before a trailing limiter (re-adjusted after it)"
+        }
+      }
+    },
+    "key": {
+      "type": "string",
+      "description": "the first key for the score and MIDI, e.g. \"Bb minor\" or \"F# major\" (estimated from the notes when absent)"
+    },
+    "keyChanges": {
+      "type": "array",
+      "description": "key changes on bar lines in ascending beat order",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["beat", "key"],
+        "properties": {
+          "beat": { "type": "number", "exclusiveMinimum": 0 },
+          "key": { "type": "string" },
+          "comment": { "type": "string" }
+        }
+      }
+    },
+    "meterChanges": {
+      "type": "array",
+      "description": "time signature changes in ascending beat order; each starts a bar of the meter before it",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["beat", "timeSignature"],
+        "properties": {
+          "beat": { "type": "number", "exclusiveMinimum": 0 },
+          "timeSignature": { "type": "array", "items": { "type": "integer", "minimum": 1, "maximum": 32 }, "minItems": 2, "maxItems": 2 },
+          "comment": { "type": "string" }
+        }
+      }
+    },
+    "markers": {
+      "type": "array",
+      "description": "named positions (section names) in ascending beat order; not used for sound",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["beat", "name"],
+        "properties": {
+          "beat": { "type": "number", "minimum": 0 },
+          "name": { "type": "string" },
+          "comment": { "type": "string" }
+        }
+      }
+    },
+    "video": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["file"],
+      "description": "a video to write the music against; not used for sound. The video's 0 s sits at the song's offsetSeconds",
+      "properties": {
+        "file": { "type": "string", "description": ".mp4, .mov or .m4v, relative to the song's folder" },
+        "offsetSeconds": { "type": "number", "default": 0, "description": "song second where the video starts (negative: the video starts before the song)" },
+        "comment": { "type": "string" }
+      }
+    },
+    "render": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "endBeat": {
+          "type": "number",
+          "minimum": 0,
+          "description": "song end; output length = time(endBeat) + tailSeconds"
+        },
+        "tailSeconds": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 60,
+          "default": 2
+        },
+        "fadeOutSeconds": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 60,
+          "default": 0
+        }
+      }
+    }
+  },
+  "$defs": {
+    "note": {
+      "type": "object",
+      "required": [
+        "pitch",
+        "startBeat",
+        "durationBeat",
+        "velocity"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "pitch": {
+          "oneOf": [
+            {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 127
+            },
+            {
+              "type": "string",
+              "pattern": "^[A-Ga-g][#b]*-?[0-9]+$",
+              "description": "C4 = 60"
+            }
+          ]
+        },
+        "startBeat": {
+          "type": "number",
+          "minimum": 0,
+          "description": "quarter-note beats from the start"
+        },
+        "durationBeat": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "velocity": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 127
+        },
+        "channel": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 16,
+          "default": 1
+        },
+        "articulation": {
+          "type": "string",
+          "description": "a name from the instrument profile"
+        },
+        "humanize": {
+          "type": "boolean",
+          "default": true
+        },
+        "lyric": {
+          "type": "string",
+          "minLength": 1,
+          "description": "the syllable sung on this note, or \"-\" to keep singing the previous syllable. No effect on the sound"
+        },
+        "comment": {
+          "type": "string"
+        }
+      }
+    },
+    "track": {
+      "type": "object",
+      "required": [
+        "name",
+        "instrument"
+      ],
+      "additionalProperties": false,
+      "patternProperties": {
+        "^(cc([0-9]|[1-9][0-9]|1[01][0-9]|12[0-7])|pitchBend|aftertouch)$": {
+          "$ref": "#/$defs/automationLane"
+        }
+      },
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "description": "unique; names the stem"
+        },
+        "instrument": {
+          "type": "string",
+          "minLength": 1,
+          "description": "a name from the instrument registry, never a file path"
+        },
+        "articulation": {
+          "type": "string",
+          "description": "default articulation for the track's notes"
+        },
+        "transpose": {
+          "type": "integer",
+          "minimum": -48,
+          "maximum": 48
+        },
+        "output": { "type": "string", "description": "the bus that receives the track after its fader instead of the master (a subgroup)" },
+        "folder": { "type": "string", "description": "the track view folder; never changes the sound" },
+        "vca": { "type": "string", "description": "the VCA whose gain and mute also act on this track (a name in $.vcas)" },
+        "color": {
+          "type": "string",
+          "pattern": "^#[0-9A-Fa-f]{6}$",
+          "description": "track colour in the app; not used for sound"
+        },
+        "clips": {
+          "type": "array",
+          "description": "audio clips of a track whose instrument is \"audio\"; placed in beats, played in seconds (not stretched by the tempo)",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["file", "startBeat"],
+            "properties": {
+              "file": { "type": "string", "description": "WAV, AIFF, FLAC, Ogg Vorbis or MP3, relative to the song file" },
+              "startBeat": { "type": "number", "minimum": 0 },
+              "offsetSeconds": { "type": "number", "minimum": 0, "description": "where the clip starts inside the file" },
+              "lengthSeconds": { "type": "number", "exclusiveMinimum": 0, "description": "default: to the end of the file" },
+              "gainDb": { "type": "number", "minimum": -96, "maximum": 24 },
+              "fadeInSeconds": { "type": "number", "minimum": 0 },
+              "fadeOutSeconds": { "type": "number", "minimum": 0 },
+              "fadeInShape": { "$ref": "#/$defs/fadeShape" },
+              "fadeOutShape": { "$ref": "#/$defs/fadeShape" },
+              "reverse": { "type": "boolean", "description": "plays the whole file backwards; every file second of the clip (offsetSeconds, lengthSeconds, warp, pitchEdits, gainCurve) counts in the reversed file, from the file's end" },
+              "gainCurve": {
+                "type": "array",
+                "description": "gain inside the clip in dB, on the file's seconds (it stays with the sound when the clip is moved, trimmed or split), added to gainDb. Outside the points it holds the end values",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["seconds", "value"],
+                  "properties": {
+                    "seconds": { "type": "number", "minimum": 0, "description": "rising; two points at the same second make a jump" },
+                    "value": { "type": "number", "minimum": -96, "maximum": 24, "description": "dB" },
+                    "curve": { "enum": ["linear", "step", "exponential", "smooth"], "description": "shape from this point to the next (default linear)" },
+                    "comment": { "type": "string" }
+                  }
+                }
+              },
+              "sourceBpm": { "type": "number", "minimum": 20, "maximum": 400, "description": "the file's tempo: the clip follows the song's tempo" },
+              "stretch": { "type": "number", "minimum": 0.25, "maximum": 4, "description": "a fixed length factor" },
+              "pitchSemitones": { "type": "number", "minimum": -24, "maximum": 24 },
+              "warp": {
+                "type": "array",
+                "minItems": 2,
+                "description": "warp markers: the file's seconds land on beats inside the clip (only differences count; offsetSeconds plays at startBeat). Both rise",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["seconds", "beat"],
+                  "properties": { "seconds": { "type": "number", "minimum": 0 }, "beat": { "type": "number" } }
+                }
+              },
+              "warpMode": { "enum": ["stretch", "slice"], "description": "stretch (default) time-stretches between warp markers; slice cuts at the markers and plays each piece unstretched (drums keep their attacks, no pitchSemitones)" },
+              "pitchCorrection": {
+                "type": "object",
+                "additionalProperties": false,
+                "description": "pulls the measured pitch to the nearest semitone, or to the notes of key (or scale with root)",
+                "properties": {
+                  "strength": { "type": "number", "minimum": 0, "maximum": 1, "description": "share of the distance to the target (default 1)" },
+                  "speedMs": { "type": "number", "minimum": 0, "maximum": 1000, "description": "how fast the correction follows (0 flattens vibrato, default 30)" },
+                  "formant": { "type": "boolean", "description": "keep the formants (default true)" },
+                  "key": { "type": "string", "description": "\"A minor\"" },
+                  "scale": { "type": "string", "description": "a scale id from music-render scales" },
+                  "root": { "type": "string", "description": "the scale's root note (C, F#, Bb)" }
+                }
+              },
+              "pitchEdits": {
+                "type": "array",
+                "description": "per-note pitch edits in the file's seconds, in time order and not overlapping (not with warpMode slice). Inside an edit it wins over pitchCorrection",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["seconds", "lengthSeconds"],
+                  "properties": {
+                    "seconds": { "type": "number", "minimum": 0, "description": "where the note starts in the file" },
+                    "lengthSeconds": { "type": "number", "minimum": 0.01, "maximum": 3600 },
+                    "semitones": { "type": "number", "minimum": -24, "maximum": 24, "description": "pitch shift (fractions allowed, default 0)" },
+                    "flatten": { "type": "number", "minimum": 0, "maximum": 1, "description": "how much of the slow pitch drift is pulled to the note's centre (default 0)" },
+                    "vibrato": { "type": "number", "minimum": 0, "maximum": 2, "description": "scale of the fast pitch movement (default 1, 0 removes the vibrato)" },
+                    "comment": { "type": "string" }
+                  }
+                }
+              },
+              "muted": { "type": "boolean", "description": "a take that does not play" },
+              "comment": { "type": "string" }
+            }
+          }
+        },
+        "notes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/note"
+          }
+        },
+        "automation": {
+          "type": "object",
+          "description": "cc0..cc127 (0..127), pitchBend (-1..1, ±2 semitones on the built-in synths unless the track's synth.bendRange says otherwise; the drum kits follow it too), aftertouch (0..127). Lanes can also sit directly on the track",
+          "patternProperties": {
+            "^(cc([0-9]|[1-9][0-9]|1[01][0-9]|12[0-7])|pitchBend|aftertouch)$": {
+              "$ref": "#/$defs/automationLane"
+            }
+          },
+          "additionalProperties": false
+        },
+        "performance": {
+          "$ref": "#/$defs/performance"
+        },
+        "mixer": {
+          "$ref": "#/$defs/mixer"
+        },
+        "effects": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/effect"
+          }
+        },
+        "sends": {
+          "type": "array",
+          "description": "post-fader unless preFader is true",
+          "items": {
+            "type": "object",
+            "required": [
+              "bus"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "bus": {
+                "type": "string"
+              },
+              "levelDb": {
+                "type": "number",
+                "minimum": -120,
+                "maximum": 12
+              },
+              "preFader": {
+                "type": "boolean"
+              },
+              "automation": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "levelDb": {
+                    "$ref": "#/$defs/automationLane",
+                    "description": "send level lane in dB (-120..12); replaces levelDb"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "plugin": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "settings for a plugin instrument, applied after the registry entry: state, then program, then parameters",
+          "properties": {
+            "state": {
+              "type": "string",
+              "description": "plugin state, standard base64 (written by the app when the plugin panel changes)"
+            },
+            "program": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "parameters": {
+              "type": "object",
+              "description": "parameter name or ID to a normalised 0..1 number or the parameter text"
+            },
+            "comment": {
+              "type": "string"
+            }
+          }
+        },
+        "synth": {
+          "type": "object",
+          "description": "values over a built-in synth preset (only the ones that differ): detune, noise, filter, filterMode, cutoffHz, resonance, filterEnvHz, filterEnvDecay, filterVelHz, keytrack, attack, decay, sustain, release, vibratoRate, vibratoCents, vibratoDelay, bendRange, pitchEnv, pitchEnvDecay, mono, glide, drive, velocityCurve, spread, levelDb, decayLow, decayHigh (piano, pluck), tune (drum kits)",
+          "properties": {
+            "filterMode": {
+              "description": "subtractive presets: which output of the filter is heard (CC74 moves the cutoff in every mode)",
+              "oneOf": [
+                { "enum": [ "lowpass", "highpass", "bandpass" ] },
+                { "enum": [ 0, 1, 2 ] }
+              ]
+            },
+            "bendRange": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 24,
+              "description": "semitones at pitchBend -1 and 1 (default 2). Subtractive presets, the modelled piano and the drum kits"
+            },
+            "pitchEnv": {
+              "type": "number",
+              "minimum": -24,
+              "maximum": 24,
+              "description": "subtractive presets: semitones above the note where each new note starts, falling to the note in pitchEnvDecay seconds (synth.808: 12)"
+            },
+            "mono": {
+              "type": "number",
+              "enum": [ 0, 1 ],
+              "description": "subtractive presets: 1 plays one voice. A note that overlaps a held note glides to it (glide seconds, no new attack), a note after a gap cuts the previous one (synth.808: 1)"
+            },
+            "glide": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "description": "mono: seconds to slide to an overlapping note, straight in semitones (synth.808: 0.08)"
+            },
+            "tune": {
+              "type": "number",
+              "minimum": -24,
+              "maximum": 24,
+              "description": "drum kits: semitones that move every drum (default 0). The club-drums kick body is A1 (55 Hz) at 0"
+            },
+            "comment": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": {
+            "type": "number"
+          }
+        },
+        "comment": {
+          "type": "string"
+        }
+      }
+    },
+    "performance": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "timingHumanizeMs": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 200,
+          "description": "max start offset; gaussian, clamped"
+        },
+        "velocityHumanize": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 64
+        },
+        "noteLengthHumanize": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 0.9,
+          "description": "relative length variation"
+        },
+        "legatoOverlapMs": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 500,
+          "description": "extend notes followed by a note starting at their end"
+        },
+        "swing": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "1 = triplet feel"
+        },
+        "swingGrid": {
+          "type": "number",
+          "minimum": 0.0625,
+          "maximum": 4,
+          "default": 0.5,
+          "description": "beats; 0.5 swings eighths"
+        },
+        "accentPattern": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": -64,
+            "maximum": 64
+          },
+          "minItems": 1,
+          "description": "velocity offsets per accentGrid slot within the bar"
+        },
+        "accentGrid": {
+          "type": "number",
+          "minimum": 0.0625,
+          "maximum": 16,
+          "default": 1
+        },
+        "humanizeSeed": {
+          "oneOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "string",
+              "pattern": "^[0-9]{1,19}$"
+            }
+          ]
+        },
+        "comment": {
+          "type": "string"
+        }
+      }
+    },
+    "mixer": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "pan is a stereo balance; mute applies to tracks and buses, solo to tracks",
+      "properties": {
+        "gainDb": {
+          "type": "number",
+          "minimum": -120,
+          "maximum": 24
+        },
+        "pan": {
+          "type": "number",
+          "minimum": -1,
+          "maximum": 1
+        },
+        "mute": {
+          "type": "boolean"
+        },
+        "solo": {
+          "type": "boolean"
+        },
+        "automation": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "curves that replace gainDb (dB) and pan (-1..1), read on the song position",
+          "properties": {
+            "gainDb": { "$ref": "#/$defs/automationLane" },
+            "pan": { "$ref": "#/$defs/automationLane" }
+          }
+        }
+      }
+    },
+    "effect": {
+      "type": "object",
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "type": {
+          "enum": [
+            "eq",
+            "compressor",
+            "reverb",
+            "limiter",
+            "gain",
+            "stereo",
+            "delay",
+            "distortion",
+            "filter",
+            "ducker",
+            "chorus",
+            "flanger",
+            "phaser",
+            "tremolo",
+            "gate"
+          ]
+        },
+        "bypass": {
+          "type": "boolean",
+          "description": "skip the effect but keep its latency (the chain stays aligned)"
+        },
+        "lowCutHz": {
+          "type": "number"
+        },
+        "lowCutSlope": {
+          "enum": [
+            12,
+            24
+          ]
+        },
+        "highCutHz": {
+          "type": "number"
+        },
+        "highCutSlope": {
+          "enum": [
+            12,
+            24
+          ]
+        },
+        "bands": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "freqHz"
+            ],
+            "properties": {
+              "type": {
+                "enum": [
+                  "peak",
+                  "lowShelf",
+                  "highShelf"
+                ]
+              },
+              "freqHz": {
+                "type": "number"
+              },
+              "gainDb": {
+                "type": "number"
+              },
+              "q": {
+                "type": "number"
+              }
+            }
+          }
+        },
+        "thresholdDb": {
+          "type": "number",
+          "default": -18,
+          "description": "compressor: level where compression starts (default -18); gate: level that opens the gate, -96..0 (default -40), it closes 3 dB lower after holdMs"
+        },
+        "ratio": {
+          "type": "number",
+          "default": 3
+        },
+        "attackMs": {
+          "type": "number",
+          "description": "compressor: attack (default 10); ducker: time to reach depthDb at each period start, 0..200 (default 1); gate: time to open, 0.01..100 (default 0.5)"
+        },
+        "releaseMs": {
+          "type": "number",
+          "description": "compressor, limiter: release; gate: time to close, 1..5000 (default 120)"
+        },
+        "kneeDb": {
+          "type": "number",
+          "default": 6
+        },
+        "makeupDb": {
+          "type": "number",
+          "default": 0
+        },
+        "mix": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "compressor: parallel mix; reverb: wet amount (dry = 1 - mix, automatable); delay, distortion, filter, ducker, chorus, flanger, phaser: wet amount (automatable)"
+        },
+        "mode": {
+          "enum": [
+            "convolution",
+            "algorithmic",
+            "lowpass",
+            "highpass",
+            "bandpass",
+            "notch"
+          ],
+          "description": "reverb: convolution (default) or algorithmic; filter: lowpass (default), highpass, bandpass or notch"
+        },
+        "ir": {
+          "type": "string",
+          "description": "impulse response WAV, relative to the composition; without it a hall IR is generated"
+        },
+        "decaySeconds": {
+          "type": "number",
+          "default": 2.2
+        },
+        "preDelayMs": {
+          "type": "number",
+          "default": 20
+        },
+        "damping": {
+          "type": "number",
+          "default": 0.5
+        },
+        "width": {
+          "type": "number",
+          "default": 1,
+          "description": "reverb: stereo width 0..1; stereo: side level 0..2 (automatable)"
+        },
+        "dryDb": {
+          "type": "number",
+          "description": "reverb: dry level in dB instead of 1 - mix (automatable)"
+        },
+        "wetDb": {
+          "type": "number",
+          "description": "reverb: wet level in dB instead of mix (automatable)"
+        },
+        "roomSize": {
+          "type": "number"
+        },
+        "seed": {
+          "type": "integer"
+        },
+        "ceilingDb": {
+          "type": "number",
+          "default": -1
+        },
+        "lookaheadMs": {
+          "type": "number",
+          "default": 5
+        },
+        "gainDb": {
+          "type": "number",
+          "minimum": -96,
+          "maximum": 36,
+          "description": "gain: level in dB (automatable)"
+        },
+        "comment": {
+          "type": "string"
+        },
+        "sidechain": {
+          "type": "string",
+          "description": "compressor: name of the track whose pre-fader signal drives the detector (for example the kick); the track must not key itself or form a loop"
+        },
+        "timeMs": {
+          "type": "number",
+          "minimum": 1,
+          "maximum": 4000,
+          "default": 375,
+          "description": "delay: echo time in milliseconds; use timeBeats instead for a tempo-synced delay"
+        },
+        "feedback": {
+          "type": "number",
+          "minimum": -0.95,
+          "maximum": 0.95,
+          "default": 0.35,
+          "description": "delay: share of the echo fed back, 0..0.95 (automatable); chorus, flanger: -0.95..0.95, negative inverts the echo (automatable); phaser: 0..0.95 (automatable)"
+        },
+        "pingPong": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "default": 0,
+          "description": "delay: 1 bounces echoes between left and right"
+        },
+        "pan": {
+          "type": "number",
+          "minimum": -1,
+          "maximum": 1,
+          "description": "stereo: stage position"
+        },
+        "truePeak": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "default": 0,
+          "description": "limiter: 1 also limits peaks between samples (4x interpolation); adds 6 samples of latency"
+        },
+        "driveDb": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 48,
+          "default": 12,
+          "description": "distortion: gain into the tanh shaper (automatable)"
+        },
+        "toneHz": {
+          "type": "number",
+          "minimum": 200,
+          "maximum": 20000,
+          "default": 8000,
+          "description": "distortion: 12 dB/oct low-pass after the shaper"
+        },
+        "outputDb": {
+          "type": "number",
+          "minimum": -48,
+          "maximum": 12,
+          "default": 0
+        },
+        "timeBeats": {
+          "type": "number",
+          "minimum": 0.015625,
+          "maximum": 16,
+          "description": "delay: echo time in beats; follows the tempo map (on a ramp the echo is always the sound timeBeats earlier); not with timeMs"
+        },
+        "cutoffHz": {
+          "type": "number",
+          "minimum": 20,
+          "maximum": 20000,
+          "default": 1000,
+          "description": "filter: cutoff (centre for bandpass and notch); automatable, points are joined in log frequency"
+        },
+        "resonance": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "default": 0,
+          "description": "filter: 0..1 maps to Q 0.7071..10 exponentially; 0 is Butterworth (-3 dB at the cutoff), 1 peaks +20 dB on a 12 dB lowpass; automatable"
+        },
+        "slope": {
+          "enum": [
+            12,
+            24
+          ],
+          "default": 12,
+          "description": "filter: 12 or 24 dB per octave (one or two stages)"
+        },
+        "rateBeats": {
+          "type": "number",
+          "minimum": 0.0625,
+          "maximum": 64,
+          "default": 1,
+          "description": "ducker: period in beats (0.0625..16); chorus, flanger, phaser, tremolo: LFO period in beats following the tempo map, replaces rateHz (0.0625..64)"
+        },
+        "depthDb": {
+          "type": "number",
+          "minimum": -60,
+          "maximum": 0,
+          "default": -12,
+          "description": "ducker: gain at the bottom of each period (automatable)"
+        },
+        "holdMs": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 2000,
+          "default": 30,
+          "description": "ducker: time held at depthDb after the attack; gate: time kept open after the level falls 3 dB below the threshold (default 50)"
+        },
+        "releaseBeats": {
+          "type": "number",
+          "minimum": 0.01,
+          "maximum": 16,
+          "default": 0.5,
+          "description": "ducker: time back to 0 dB after the hold, in beats"
+        },
+        "curve": {
+          "type": "number",
+          "minimum": 0.25,
+          "maximum": 4,
+          "default": 1,
+          "description": "ducker: release shape; the remaining depth is depthDb * (1 - r)^curve, 1 is a straight line in dB, above 1 recovers fast first"
+        },
+        "offsetBeats": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 16,
+          "default": 0,
+          "description": "ducker: the periods start at offsetBeats + k * rateBeats"
+        },
+        "rateHz": {
+          "type": "number",
+          "minimum": 0.01,
+          "maximum": 40,
+          "description": "chorus (default 0.8), flanger (0.2), phaser (0.4): LFO rate up to 20 Hz; tremolo (4) up to 40 Hz. The LFO phase depends only on the song position"
+        },
+        "depthMs": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 20,
+          "description": "chorus (0..20, default 3), flanger (0..10, default 2): the delay swings between delayMs and delayMs + depthMs (automatable)"
+        },
+        "delayMs": {
+          "type": "number",
+          "minimum": 0.1,
+          "maximum": 40,
+          "description": "chorus (0.5..40, default 12), flanger (0.1..20, default 1): the shortest delay"
+        },
+        "phaseDeg": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 180,
+          "description": "chorus (default 90), flanger (0), phaser (90), tremolo (0): how far the right channel's LFO leads the left one; a tremolo at 180 is an auto-pan"
+        },
+        "lowHz": {
+          "type": "number",
+          "minimum": 20,
+          "maximum": 20000,
+          "default": 200,
+          "description": "phaser: lowest corner frequency of the sweep"
+        },
+        "highHz": {
+          "type": "number",
+          "minimum": 20,
+          "maximum": 20000,
+          "default": 2500,
+          "description": "phaser: highest corner frequency of the sweep"
+        },
+        "stages": {
+          "enum": [ 2, 4, 6, 8, 10, 12 ],
+          "default": 6,
+          "description": "phaser: first-order all-pass stages"
+        },
+        "depth": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "default": 0.5,
+          "description": "tremolo: the gain swings between 1 and 1 - depth (automatable)"
+        },
+        "shape": {
+          "enum": [ "sine", "triangle", "square" ],
+          "default": "sine",
+          "description": "tremolo: LFO shape (square has rounded edges)"
+        },
+        "rangeDb": {
+          "type": "number",
+          "minimum": -96,
+          "maximum": 0,
+          "default": -80,
+          "description": "gate: gain while closed (-96 is silence)"
+        },
+        "automation": {
+          "type": "object",
+          "description": "parameter lanes: parameter name to points (only parameters marked automatable: gain.gainDb, filter.cutoffHz, resonance, mix, ducker.depthDb, mix, delay.mix, feedback, reverb.mix, dryDb, wetDb, stereo.width, distortion.driveDb, mix, chorus and flanger depthMs, feedback, mix, phaser.feedback, mix, tremolo.depth). Before the first point the first value holds, after the last the last",
+          "additionalProperties": {
+            "$ref": "#/$defs/automationLane"
+          }
+        }
+      },
+      "description": "track effects run in the stream (their latency is aligned); bus and master effects run on the whole buffer"
+    },
+    "automationPoint": {
+      "type": "object",
+      "required": [
+        "beat",
+        "value"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "beat": {
+          "type": "number",
+          "minimum": 0
+        },
+        "value": {
+          "type": "number"
+        },
+        "curve": {
+          "enum": [
+            "linear",
+            "step",
+            "exponential",
+            "smooth"
+          ],
+          "default": "linear",
+          "description": "shape from this point to the next"
+        }
+      }
+    },
+    "fadeShape": {
+      "enum": ["sine", "linear", "equalPower", "exponential"],
+      "description": "sine (default, sin squared: two opposite fades add up in amplitude), linear, equalPower (sine: two opposite fades add up in power), exponential (straight in dB from -60 dB)"
+    },
+    "automationLane": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/automationPoint"
+      }
+    },
+    "instrumentTable": {
+      "type": "object",
+      "description": "instrument name to definition (see instrument.schema.json)",
+      "additionalProperties": {
+        "type": "object"
+      }
+    }
+  }
+}

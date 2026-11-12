@@ -1,0 +1,343 @@
+{
+ "title": "Dexed demo",
+ "comment": "악기 패널(플러그인의 자체 화면)을 확인하는 예제. Dexed 는 ./build.sh --plugins 로 받는다. 없으면 synth.ep 로 대신한다.",
+ "tempo": 84,
+ "performance": {
+  "humanizeSeed": 4,
+  "timingHumanizeMs": 6,
+  "velocityHumanize": 4
+ },
+ "render": {
+  "tailSeconds": 3
+ },
+ "buses": [
+  {
+   "name": "hall",
+   "effects": [
+    {
+     "type": "reverb",
+     "mix": 1,
+     "decaySeconds": 2.4
+    }
+   ]
+  }
+ ],
+ "master": {
+  "targetLufs": -16,
+  "effects": [
+   {
+    "type": "limiter",
+    "ceilingDb": -1,
+    "truePeak": 1
+   }
+  ]
+ },
+ "tracks": [
+  {
+   "name": "Dexed Pad",
+   "instrument": "dexed",
+   "plugin": {
+    "program": 30
+   },
+   "mixer": {
+    "gainDb": -10
+   },
+   "sends": [
+    {
+     "bus": "hall",
+     "levelDb": -10
+    }
+   ],
+   "notes": [
+    {
+     "pitch": "A3",
+     "startBeat": 0,
+     "durationBeat": 4,
+     "velocity": 70
+    },
+    {
+     "pitch": "C4",
+     "startBeat": 0,
+     "durationBeat": 4,
+     "velocity": 70
+    },
+    {
+     "pitch": "E4",
+     "startBeat": 0,
+     "durationBeat": 4,
+     "velocity": 70
+    },
+    {
+     "pitch": "F3",
+     "startBeat": 4,
+     "durationBeat": 4,
+     "velocity": 70
+    },
+    {
+     "pitch": "A3",
+     "startBeat": 4,
+     "durationBeat": 4,
+     "velocity": 70
+    },
+    {
+     "pitch": "C4",
+     "startBeat": 4,
+     "durationBeat": 4,
+     "velocity": 70
+    },
+    {
+     "pitch": "D3",
+     "startBeat": 8,
+     "durationBeat": 4,
+     "velocity": 70
+    },
+    {
+     "pitch": "F3",
+     "startBeat": 8,
+     "durationBeat": 4,
+     "velocity": 70
+    },
+    {
+     "pitch": "A3",
+     "startBeat": 8,
+     "durationBeat": 4,
+     "velocity": 70
+    },
+    {
+     "pitch": "E3",
+     "startBeat": 12,
+     "durationBeat": 4,
+     "velocity": 70
+    },
+    {
+     "pitch": "G#3",
+     "startBeat": 12,
+     "durationBeat": 4,
+     "velocity": 70
+    },
+    {
+     "pitch": "B3",
+     "startBeat": 12,
+     "durationBeat": 4,
+     "velocity": 70
+    },
+    {
+     "pitch": "A3",
+     "startBeat": 16,
+     "durationBeat": 4,
+     "velocity": 70
+    },
+    {
+     "pitch": "C4",
+     "startBeat": 16,
+     "durationBeat": 4,
+     "velocity": 70
+    },
+    {
+     "pitch": "E4",
+     "startBeat": 16,
+     "durationBeat": 4,
+     "velocity": 70
+    },
+    {
+     "pitch": "F3",
+     "startBeat": 20,
+     "durationBeat": 4,
+     "velocity": 70
+    },
+    {
+     "pitch": "A3",
+     "startBeat": 20,
+     "durationBeat": 4,
+     "velocity": 70
+    },
+    {
+     "pitch": "C4",
+     "startBeat": 20,
+     "durationBeat": 4,
+     "velocity": 70
+    },
+    {
+     "pitch": "D3",
+     "startBeat": 24,
+     "durationBeat": 4,
+     "velocity": 70
+    },
+    {
+     "pitch": "F3",
+     "startBeat": 24,
+     "durationBeat": 4,
+     "velocity": 70
+    },
+    {
+     "pitch": "A3",
+     "startBeat": 24,
+     "durationBeat": 4,
+     "velocity": 70
+    },
+    {
+     "pitch": "E3",
+     "startBeat": 28,
+     "durationBeat": 4,
+     "velocity": 70
+    },
+    {
+     "pitch": "G#3",
+     "startBeat": 28,
+     "durationBeat": 4,
+     "velocity": 70
+    },
+    {
+     "pitch": "B3",
+     "startBeat": 28,
+     "durationBeat": 4,
+     "velocity": 70
+    }
+   ]
+  },
+  {
+   "name": "Melody",
+   "instrument": "synth.piano",
+   "sends": [
+    {
+     "bus": "hall",
+     "levelDb": -14
+    }
+   ],
+   "notes": [
+    {
+     "pitch": "E5",
+     "startBeat": 0,
+     "durationBeat": 1.5,
+     "velocity": 78
+    },
+    {
+     "pitch": "D5",
+     "startBeat": 1.5,
+     "durationBeat": 0.5,
+     "velocity": 66
+    },
+    {
+     "pitch": "C5",
+     "startBeat": 2,
+     "durationBeat": 2,
+     "velocity": 66
+    },
+    {
+     "pitch": "C5",
+     "startBeat": 4,
+     "durationBeat": 1.5,
+     "velocity": 78
+    },
+    {
+     "pitch": "B4",
+     "startBeat": 5.5,
+     "durationBeat": 0.5,
+     "velocity": 66
+    },
+    {
+     "pitch": "A4",
+     "startBeat": 6,
+     "durationBeat": 2,
+     "velocity": 66
+    },
+    {
+     "pitch": "A4",
+     "startBeat": 8,
+     "durationBeat": 1,
+     "velocity": 78
+    },
+    {
+     "pitch": "C5",
+     "startBeat": 9,
+     "durationBeat": 1,
+     "velocity": 66
+    },
+    {
+     "pitch": "D5",
+     "startBeat": 10,
+     "durationBeat": 2,
+     "velocity": 66
+    },
+    {
+     "pitch": "B4",
+     "startBeat": 12,
+     "durationBeat": 3,
+     "velocity": 78
+    },
+    {
+     "pitch": "G#4",
+     "startBeat": 15,
+     "durationBeat": 1,
+     "velocity": 66
+    },
+    {
+     "pitch": "A4",
+     "startBeat": 16,
+     "durationBeat": 1.5,
+     "velocity": 78
+    },
+    {
+     "pitch": "B4",
+     "startBeat": 17.5,
+     "durationBeat": 0.5,
+     "velocity": 66
+    },
+    {
+     "pitch": "C5",
+     "startBeat": 18,
+     "durationBeat": 2,
+     "velocity": 66
+    },
+    {
+     "pitch": "A4",
+     "startBeat": 20,
+     "durationBeat": 1.5,
+     "velocity": 78
+    },
+    {
+     "pitch": "C5",
+     "startBeat": 21.5,
+     "durationBeat": 0.5,
+     "velocity": 66
+    },
+    {
+     "pitch": "F5",
+     "startBeat": 22,
+     "durationBeat": 2,
+     "velocity": 66
+    },
+    {
+     "pitch": "E5",
+     "startBeat": 24,
+     "durationBeat": 1,
+     "velocity": 78
+    },
+    {
+     "pitch": "D5",
+     "startBeat": 25,
+     "durationBeat": 1,
+     "velocity": 66
+    },
+    {
+     "pitch": "C5",
+     "startBeat": 26,
+     "durationBeat": 1,
+     "velocity": 66
+    },
+    {
+     "pitch": "D5",
+     "startBeat": 27,
+     "durationBeat": 1,
+     "velocity": 66
+    },
+    {
+     "pitch": "B4",
+     "startBeat": 28,
+     "durationBeat": 4,
+     "velocity": 78
+    }
+   ]
+  }
+ ]
+}

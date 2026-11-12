@@ -1,0 +1,3 @@
+// 테스트용: 리전을 #include 로 불러온다
+<group> ampeg_release=0.03
+#include "includes/sine-region.sfz"

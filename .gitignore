@@ -1,0 +1,19 @@
+# 빌드 결과
+build/
+build-next/
+# 의존 소스와 샘플 (build.sh 가 받는다, 라이선스와 크기 때문에 커밋하지 않는다)
+external
+# 편집기와 운영체제
+.DS_Store
+.vscode/
+.idea/
+__pycache__/
+.cache/
+# 개인 지침 (Claude Code 가 함께 읽는다)
+CLAUDE.local.md
+
+# 곡 폴더는 따로 관리한다
+songs/
+docs/songs
+# Claude Code 의 개인 설정
+.claude/

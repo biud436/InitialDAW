@@ -1,0 +1,934 @@
+{
+ "title": "",
+ "metadata": {
+  "template": {
+   "id": "orchestral-theme",
+   "name": "관현악 주제곡",
+   "description": "목관(플루트, 오보에, 클라리넷), 독주 호른과 호른 합주, Sonatina 현악, 하프, 첼레스타, 하모닉스, 팀파니와 타악기.",
+   "order": 8
+  }
+ },
+ "tempo": 100.0,
+ "timeSignature": [
+  4,
+  4
+ ],
+ "performance": {
+  "humanizeSeed": 20261010
+ },
+ "render": {
+  "tailSeconds": 5.0,
+  "fadeOutSeconds": 0.0
+ },
+ "tracks": [
+  {
+   "name": "Flute",
+   "instrument": "flute",
+   "mixer": {
+    "gainDb": 10.0,
+    "pan": -0.12
+   },
+   "performance": {
+    "timingHumanizeMs": 8,
+    "velocityHumanize": 3,
+    "noteLengthHumanize": 0.02,
+    "legatoOverlapMs": 80
+   },
+   "effects": [
+    {
+     "type": "eq",
+     "lowCutHz": 250,
+     "bands": [
+      {
+       "type": "peak",
+       "freqHz": 400,
+       "gainDb": -1.5,
+       "q": 0.9
+      },
+      {
+       "type": "highShelf",
+       "freqHz": 7000,
+       "gainDb": 1.0
+      }
+     ]
+    }
+   ],
+   "sends": [
+    {
+     "bus": "stage",
+     "levelDb": -12
+    },
+    {
+     "bus": "hall",
+     "levelDb": -8
+    }
+   ],
+   "cc1": [
+    {
+     "beat": 0,
+     "value": 88.4
+    }
+   ],
+   "cc11": [
+    {
+     "beat": 0,
+     "value": 122.55
+    }
+   ],
+   "notes": []
+  },
+  {
+   "name": "Oboe",
+   "instrument": "oboe-solo",
+   "mixer": {
+    "gainDb": 6.0,
+    "pan": 0.06
+   },
+   "performance": {
+    "timingHumanizeMs": 8,
+    "velocityHumanize": 3,
+    "noteLengthHumanize": 0.02,
+    "legatoOverlapMs": 80
+   },
+   "effects": [
+    {
+     "type": "eq",
+     "lowCutHz": 200,
+     "bands": [
+      {
+       "type": "peak",
+       "freqHz": 350,
+       "gainDb": -2.0,
+       "q": 0.9
+      }
+     ]
+    }
+   ],
+   "sends": [
+    {
+     "bus": "stage",
+     "levelDb": -12
+    },
+    {
+     "bus": "hall",
+     "levelDb": -9
+    }
+   ],
+   "cc1": [
+    {
+     "beat": 0,
+     "value": 60.8
+    }
+   ],
+   "cc11": [
+    {
+     "beat": 0,
+     "value": 83.57
+    }
+   ],
+   "notes": []
+  },
+  {
+   "name": "Clarinet",
+   "instrument": "clarinet-solo",
+   "mixer": {
+    "gainDb": 5.0,
+    "pan": -0.18
+   },
+   "performance": {
+    "timingHumanizeMs": 8,
+    "velocityHumanize": 3,
+    "noteLengthHumanize": 0.02,
+    "legatoOverlapMs": 80
+   },
+   "effects": [
+    {
+     "type": "eq",
+     "lowCutHz": 120,
+     "bands": [
+      {
+       "type": "peak",
+       "freqHz": 300,
+       "gainDb": -2.0,
+       "q": 0.9
+      }
+     ]
+    }
+   ],
+   "sends": [
+    {
+     "bus": "stage",
+     "levelDb": -12
+    },
+    {
+     "bus": "hall",
+     "levelDb": -9
+    }
+   ],
+   "cc1": [
+    {
+     "beat": 0,
+     "value": 72.8
+    }
+   ],
+   "cc11": [
+    {
+     "beat": 0,
+     "value": 98.07
+    }
+   ],
+   "notes": []
+  },
+  {
+   "name": "Horn",
+   "instrument": "horn",
+   "mixer": {
+    "gainDb": 6.0,
+    "pan": 0.28
+   },
+   "performance": {
+    "timingHumanizeMs": 8,
+    "velocityHumanize": 3,
+    "noteLengthHumanize": 0.02,
+    "legatoOverlapMs": 80
+   },
+   "effects": [
+    {
+     "type": "eq",
+     "lowCutHz": 60,
+     "bands": [
+      {
+       "type": "peak",
+       "freqHz": 300,
+       "gainDb": -2.0,
+       "q": 0.9
+      }
+     ],
+     "highCutHz": 9000
+    }
+   ],
+   "sends": [
+    {
+     "bus": "stage",
+     "levelDb": -9
+    },
+    {
+     "bus": "hall",
+     "levelDb": -7
+    }
+   ],
+   "cc1": [
+    {
+     "beat": 0,
+     "value": 65.2
+    }
+   ],
+   "cc11": [
+    {
+     "beat": 0,
+     "value": 98.13
+    }
+   ],
+   "notes": []
+  },
+  {
+   "name": "Horns",
+   "instrument": "horns",
+   "mixer": {
+    "gainDb": -3.0,
+    "pan": 0.34
+   },
+   "performance": {
+    "timingHumanizeMs": 8,
+    "velocityHumanize": 3,
+    "noteLengthHumanize": 0.02,
+    "legatoOverlapMs": 80
+   },
+   "effects": [
+    {
+     "type": "eq",
+     "lowCutHz": 60,
+     "bands": [
+      {
+       "type": "peak",
+       "freqHz": 300,
+       "gainDb": -2.5,
+       "q": 0.9
+      }
+     ],
+     "highCutHz": 9000
+    }
+   ],
+   "sends": [
+    {
+     "bus": "stage",
+     "levelDb": -9
+    },
+    {
+     "bus": "hall",
+     "levelDb": -6
+    }
+   ],
+   "cc1": [
+    {
+     "beat": 0,
+     "value": 100.57
+    }
+   ],
+   "cc11": [
+    {
+     "beat": 0,
+     "value": 96.51
+    }
+   ],
+   "notes": []
+  },
+  {
+   "name": "Violins I",
+   "instrument": "sso-violins-1",
+   "mixer": {
+    "gainDb": 7.5,
+    "pan": -0.5
+   },
+   "performance": {
+    "timingHumanizeMs": 10,
+    "velocityHumanize": 4,
+    "noteLengthHumanize": 0.03,
+    "legatoOverlapMs": 70
+   },
+   "effects": [
+    {
+     "type": "eq",
+     "lowCutHz": 150,
+     "bands": [
+      {
+       "type": "peak",
+       "freqHz": 320,
+       "gainDb": -2.0,
+       "q": 0.9
+      },
+      {
+       "type": "peak",
+       "freqHz": 2700,
+       "gainDb": -1.5,
+       "q": 1.2
+      },
+      {
+       "type": "highShelf",
+       "freqHz": 8000,
+       "gainDb": 1.5
+      }
+     ]
+    }
+   ],
+   "sends": [
+    {
+     "bus": "stage",
+     "levelDb": -11
+    },
+    {
+     "bus": "hall",
+     "levelDb": -8
+    }
+   ],
+   "cc1": [
+    {
+     "beat": 0,
+     "value": 84.2
+    }
+   ],
+   "cc11": [
+    {
+     "beat": 0,
+     "value": 97.59
+    }
+   ],
+   "cc21": [
+    {
+     "beat": 0,
+     "value": 72
+    }
+   ],
+   "notes": []
+  },
+  {
+   "name": "Violins II",
+   "instrument": "sso-violins-2",
+   "mixer": {
+    "gainDb": 1.0,
+    "pan": -0.22
+   },
+   "performance": {
+    "timingHumanizeMs": 10,
+    "velocityHumanize": 4,
+    "noteLengthHumanize": 0.03,
+    "legatoOverlapMs": 70
+   },
+   "effects": [
+    {
+     "type": "eq",
+     "lowCutHz": 130,
+     "bands": [
+      {
+       "type": "peak",
+       "freqHz": 320,
+       "gainDb": -2.0,
+       "q": 0.9
+      },
+      {
+       "type": "peak",
+       "freqHz": 2700,
+       "gainDb": -1.5,
+       "q": 1.2
+      },
+      {
+       "type": "highShelf",
+       "freqHz": 8000,
+       "gainDb": 1.5
+      }
+     ]
+    }
+   ],
+   "sends": [
+    {
+     "bus": "stage",
+     "levelDb": -11
+    },
+    {
+     "bus": "hall",
+     "levelDb": -8
+    }
+   ],
+   "cc1": [
+    {
+     "beat": 0,
+     "value": 54.88
+    }
+   ],
+   "cc11": [
+    {
+     "beat": 0,
+     "value": 104.97
+    }
+   ],
+   "cc21": [
+    {
+     "beat": 0,
+     "value": 68
+    }
+   ],
+   "notes": []
+  },
+  {
+   "name": "Violas",
+   "instrument": "sso-violas",
+   "mixer": {
+    "gainDb": -4.0,
+    "pan": 0.18
+   },
+   "performance": {
+    "timingHumanizeMs": 10,
+    "velocityHumanize": 4,
+    "noteLengthHumanize": 0.03,
+    "legatoOverlapMs": 70
+   },
+   "effects": [
+    {
+     "type": "eq",
+     "lowCutHz": 110,
+     "bands": [
+      {
+       "type": "peak",
+       "freqHz": 330,
+       "gainDb": -2.5,
+       "q": 0.9
+      }
+     ]
+    }
+   ],
+   "sends": [
+    {
+     "bus": "stage",
+     "levelDb": -11
+    },
+    {
+     "bus": "hall",
+     "levelDb": -9
+    }
+   ],
+   "cc1": [
+    {
+     "beat": 0,
+     "value": 57.75
+    }
+   ],
+   "cc11": [
+    {
+     "beat": 0,
+     "value": 66.5
+    }
+   ],
+   "cc21": [
+    {
+     "beat": 0,
+     "value": 40
+    }
+   ],
+   "notes": []
+  },
+  {
+   "name": "Celli",
+   "instrument": "sso-celli",
+   "mixer": {
+    "gainDb": -2.0,
+    "pan": 0.4
+   },
+   "performance": {
+    "timingHumanizeMs": 10,
+    "velocityHumanize": 4,
+    "noteLengthHumanize": 0.03,
+    "legatoOverlapMs": 70
+   },
+   "effects": [
+    {
+     "type": "eq",
+     "lowCutHz": 50,
+     "bands": [
+      {
+       "type": "peak",
+       "freqHz": 280,
+       "gainDb": -2.5,
+       "q": 0.9
+      }
+     ]
+    }
+   ],
+   "sends": [
+    {
+     "bus": "stage",
+     "levelDb": -11
+    },
+    {
+     "bus": "hall",
+     "levelDb": -10
+    }
+   ],
+   "cc1": [
+    {
+     "beat": 0,
+     "value": 67.62
+    }
+   ],
+   "cc11": [
+    {
+     "beat": 0,
+     "value": 123.4
+    }
+   ],
+   "cc21": [
+    {
+     "beat": 0,
+     "value": 40
+    }
+   ],
+   "notes": []
+  },
+  {
+   "name": "Basses",
+   "instrument": "sso-basses",
+   "mixer": {
+    "gainDb": 0.0,
+    "pan": 0.55
+   },
+   "performance": {
+    "timingHumanizeMs": 8,
+    "velocityHumanize": 4,
+    "noteLengthHumanize": 0.03,
+    "legatoOverlapMs": 70
+   },
+   "effects": [
+    {
+     "type": "eq",
+     "lowCutHz": 30,
+     "bands": [
+      {
+       "type": "peak",
+       "freqHz": 220,
+       "gainDb": -2.0,
+       "q": 0.9
+      }
+     ],
+     "highCutHz": 5000
+    }
+   ],
+   "sends": [
+    {
+     "bus": "stage",
+     "levelDb": -12
+    },
+    {
+     "bus": "hall",
+     "levelDb": -12
+    }
+   ],
+   "cc1": [
+    {
+     "beat": 0,
+     "value": 65.4
+    }
+   ],
+   "cc11": [
+    {
+     "beat": 0,
+     "value": 66.5
+    }
+   ],
+   "notes": []
+  },
+  {
+   "name": "Harp",
+   "instrument": "harp",
+   "mixer": {
+    "gainDb": -5.0,
+    "pan": -0.55
+   },
+   "performance": {
+    "timingHumanizeMs": 7,
+    "velocityHumanize": 4
+   },
+   "effects": [
+    {
+     "type": "eq",
+     "lowCutHz": 60,
+     "bands": [
+      {
+       "type": "peak",
+       "freqHz": 300,
+       "gainDb": -1.5,
+       "q": 0.9
+      }
+     ]
+    }
+   ],
+   "sends": [
+    {
+     "bus": "stage",
+     "levelDb": -10
+    },
+    {
+     "bus": "hall",
+     "levelDb": -8
+    }
+   ],
+   "notes": []
+  },
+  {
+   "name": "Celesta",
+   "instrument": "celeste",
+   "mixer": {
+    "gainDb": -6.0,
+    "pan": -0.35
+   },
+   "performance": {
+    "timingHumanizeMs": 7,
+    "velocityHumanize": 4
+   },
+   "effects": [
+    {
+     "type": "eq",
+     "lowCutHz": 300,
+     "bands": [
+      {
+       "type": "peak",
+       "freqHz": 400,
+       "gainDb": 0.0,
+       "q": 0.9
+      }
+     ]
+    }
+   ],
+   "sends": [
+    {
+     "bus": "stage",
+     "levelDb": -9
+    },
+    {
+     "bus": "hall",
+     "levelDb": -6
+    }
+   ],
+   "notes": []
+  },
+  {
+   "name": "Harmonics",
+   "instrument": "sso-violins-harmonics",
+   "mixer": {
+    "gainDb": -4.0,
+    "pan": -0.4
+   },
+   "performance": {
+    "timingHumanizeMs": 10,
+    "velocityHumanize": 4,
+    "noteLengthHumanize": 0.03,
+    "legatoOverlapMs": 70
+   },
+   "effects": [
+    {
+     "type": "eq",
+     "lowCutHz": 600
+    }
+   ],
+   "sends": [
+    {
+     "bus": "stage",
+     "levelDb": -10
+    },
+    {
+     "bus": "hall",
+     "levelDb": -5
+    }
+   ],
+   "cc1": [
+    {
+     "beat": 0,
+     "value": 8
+    }
+   ],
+   "notes": []
+  },
+  {
+   "name": "Timpani",
+   "instrument": "timpani",
+   "mixer": {
+    "gainDb": 6.0,
+    "pan": 0.1
+   },
+   "performance": {
+    "timingHumanizeMs": 4,
+    "velocityHumanize": 3
+   },
+   "effects": [
+    {
+     "type": "eq",
+     "lowCutHz": 40,
+     "highCutHz": 9000
+    }
+   ],
+   "sends": [
+    {
+     "bus": "stage",
+     "levelDb": -8
+    },
+    {
+     "bus": "hall",
+     "levelDb": -8
+    }
+   ],
+   "cc11": [
+    {
+     "beat": 0,
+     "value": 104
+    }
+   ],
+   "notes": []
+  },
+  {
+   "name": "Cymbals",
+   "instrument": "percussion",
+   "mixer": {
+    "gainDb": 0.0,
+    "pan": -0.12
+   },
+   "performance": {
+    "timingHumanizeMs": 4,
+    "velocityHumanize": 3
+   },
+   "effects": [
+    {
+     "type": "eq",
+     "lowCutHz": 40
+    }
+   ],
+   "sends": [
+    {
+     "bus": "stage",
+     "levelDb": -8
+    },
+    {
+     "bus": "hall",
+     "levelDb": -6
+    }
+   ],
+   "notes": []
+  },
+  {
+   "name": "Triangle",
+   "instrument": "percussion",
+   "mixer": {
+    "gainDb": 10.0,
+    "pan": -0.25
+   },
+   "performance": {
+    "timingHumanizeMs": 4,
+    "velocityHumanize": 3
+   },
+   "effects": [
+    {
+     "type": "eq",
+     "lowCutHz": 900,
+     "highCutHz": 12000
+    }
+   ],
+   "sends": [
+    {
+     "bus": "stage",
+     "levelDb": -8
+    },
+    {
+     "bus": "hall",
+     "levelDb": -5
+    }
+   ],
+   "notes": []
+  },
+  {
+   "name": "Snare",
+   "instrument": "percussion",
+   "mixer": {
+    "gainDb": 1.0,
+    "pan": -0.08
+   },
+   "performance": {
+    "timingHumanizeMs": 4,
+    "velocityHumanize": 3
+   },
+   "effects": [
+    {
+     "type": "eq",
+     "lowCutHz": 140,
+     "bands": [
+      {
+       "type": "peak",
+       "freqHz": 450,
+       "gainDb": -2.0,
+       "q": 1.0
+      }
+     ]
+    }
+   ],
+   "sends": [
+    {
+     "bus": "stage",
+     "levelDb": -10
+    },
+    {
+     "bus": "hall",
+     "levelDb": -5
+    }
+   ],
+   "cc11": [
+    {
+     "beat": 0,
+     "value": 112
+    }
+   ],
+   "notes": []
+  },
+  {
+   "name": "Tambourine",
+   "instrument": "percussion",
+   "mixer": {
+    "gainDb": 16.0,
+    "pan": 0.22
+   },
+   "performance": {
+    "timingHumanizeMs": 4,
+    "velocityHumanize": 3
+   },
+   "effects": [
+    {
+     "type": "eq",
+     "lowCutHz": 500
+    }
+   ],
+   "sends": [
+    {
+     "bus": "stage",
+     "levelDb": -9
+    },
+    {
+     "bus": "hall",
+     "levelDb": -6
+    }
+   ],
+   "cc11": [
+    {
+     "beat": 0,
+     "value": 110
+    }
+   ],
+   "notes": []
+  }
+ ],
+ "buses": [
+  {
+   "name": "stage",
+   "effects": [
+    {
+     "type": "reverb",
+     "mix": 1.0,
+     "decaySeconds": 1.1,
+     "preDelayMs": 8,
+     "damping": 0.4,
+     "width": 1.0,
+     "lowCutHz": 220,
+     "highCutHz": 9000
+    }
+   ]
+  },
+  {
+   "name": "hall",
+   "effects": [
+    {
+     "type": "reverb",
+     "mix": 1.0,
+     "decaySeconds": 3.0,
+     "preDelayMs": 30,
+     "damping": 0.5,
+     "width": 1.0,
+     "lowCutHz": 180,
+     "highCutHz": 8000
+    }
+   ]
+  }
+ ],
+ "master": {
+  "targetLufs": -16.0,
+  "effects": [
+   {
+    "type": "eq",
+    "lowCutHz": 25,
+    "bands": [
+     {
+      "type": "peak",
+      "freqHz": 300,
+      "gainDb": -1.0,
+      "q": 0.7
+     },
+     {
+      "type": "highShelf",
+      "freqHz": 9000,
+      "gainDb": 1.0
+     }
+    ]
+   },
+   {
+    "type": "limiter",
+    "ceilingDb": -1.0,
+    "releaseMs": 150,
+    "lookaheadMs": 5,
+    "truePeak": 1
+   }
+  ]
+ }
+}

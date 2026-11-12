@@ -1,0 +1,2 @@
+// 테스트용: 한 옥타브 위 사인파 (아티큘레이션 파일 라우팅)
+<region> sample=*sine pitch_keycenter=69 transpose=12 ampeg_release=0.03

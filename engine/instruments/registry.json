@@ -1,0 +1,982 @@
+{
+  "$schema": "../schemas/instrument.schema.json",
+  "comment": "기본 악기 레지스트리. 악곡은 이름만 쓰고 무엇으로 연주할지는 여기서 정한다. 내장 신스는 synth.<preset> 이름으로 언제나 있다. VSCO 2 CE(CC0) 샘플은 build.sh --samples 로 external/vsco2-ce 에 받는다 (위치는 MUSIC_RENDER_VSCO 로 바꿀 수 있다). 샘플이 없으면 fallback 의 내장 신스로 대신한다. 현악은 sfzRegionOpcodes 로 CC102 가 공격 시간(최대 0.45초)을 늘리고, sustain 은 0.09초, legato 는 0.25초로 겹쳐 잇는다. Sonatina Symphonic Orchestra(CC Sampling Plus 1.0, 출처 표기)의 합창, 호른, 오보에, 잉글리시 호른, 클라리넷, 첼레스타는 build.sh --samples 가 external/sso 에 받는다 (위치는 MUSIC_RENDER_SSO). 무료 VSTi Dexed 는 build.sh --plugins 가 external/plugins/dexed 에 받는다 (위치는 MUSIC_RENDER_PLUGINS). 없으면 synth.ep 로 대신한다. 나일론 기타(FreePats, CC0)도 build.sh --samples 가 external/freepats 에 받는다 (위치는 MUSIC_RENDER_FREEPATS). FreePats 드럼 세트 MuldjordKit(CC BY 4.0, GM 건반으로 keymap), 일렉트릭 베이스, 클린과 재즈 일렉트릭 기타, 테너 색소폰(모두 CC0)도 build.sh --samples 가 external/freepats 에 받는다. Karoryfer x bigcat 독주 첼로(CC0)는 build.sh --samples 가 external/karoryfer 에 받고, tools/make-cello-sfz.py 가 샘플 곁에 우리 SFZ 를 쓴다 (위치는 MUSIC_RENDER_KARORYFER, 그 폴더에서도 그 도구를 돌린다).",
+  "instruments": {
+    "piano": {
+      "type": "sfz",
+      "file": "${MUSIC_RENDER_VSCO:-../../external/vsco2-ce}/UprightPiano.sfz",
+      "description": "VSCO 2 CE upright piano",
+      "fallback": "synth.piano"
+    },
+    "strings": {
+      "type": "synth",
+      "preset": "strings",
+      "description": "built-in string ensemble synth"
+    },
+    "bass": {
+      "type": "synth",
+      "preset": "bass",
+      "description": "built-in subtractive bass"
+    },
+    "drums": {
+      "type": "synth",
+      "preset": "drums",
+      "description": "built-in synthesised GM drum kit"
+    },
+    "synth": {
+      "type": "synth",
+      "preset": "pluck",
+      "description": "built-in Karplus-Strong pluck"
+    },
+    "pad": {
+      "type": "synth",
+      "preset": "pad",
+      "description": "built-in warm pad"
+    },
+    "violins": {
+      "type": "sfz",
+      "file": "${MUSIC_RENDER_VSCO:-../../external/vsco2-ce}/ViolinEnsSusVib.sfz",
+      "description": "VSCO 2 CE violin section (G3 up)",
+      "articulations": {
+        "sustain": {
+          "cc": {
+            "cc102": 24
+          }
+        },
+        "legato": {
+          "legato": true,
+          "cc": {
+            "cc102": 70
+          }
+        },
+        "staccato": {
+          "file": "${MUSIC_RENDER_VSCO:-../../external/vsco2-ce}/ViolinEnsSpic.sfz",
+          "lengthFactor": 0.6,
+          "cc": {
+            "cc102": 0
+          }
+        },
+        "spiccato": {
+          "file": "${MUSIC_RENDER_VSCO:-../../external/vsco2-ce}/ViolinEnsSpic.sfz",
+          "cc": {
+            "cc102": 0
+          }
+        },
+        "pizzicato": {
+          "file": "${MUSIC_RENDER_VSCO:-../../external/vsco2-ce}/ViolinEnsPizz.sfz",
+          "cc": {
+            "cc102": 0
+          }
+        },
+        "tremolo": {
+          "file": "${MUSIC_RENDER_VSCO:-../../external/vsco2-ce}/ViolinEnsTrem.sfz",
+          "cc": {
+            "cc102": 20
+          }
+        }
+      },
+      "defaultArticulation": "sustain",
+      "dynamics": {
+        "controller": "cc1",
+        "layers": [
+          40,
+          100
+        ],
+        "gainDb": [
+          -18,
+          0
+        ],
+        "brightnessHz": [
+          6000,
+          20000
+        ]
+      },
+      "fallback": "synth.strings",
+      "sfzRegionOpcodes": "ampeg_attack_oncc102=0.45"
+    },
+    "violas": {
+      "type": "sfz",
+      "file": "${MUSIC_RENDER_VSCO:-../../external/vsco2-ce}/ViolaEnsSusVib.sfz",
+      "description": "VSCO 2 CE viola section (C3 up)",
+      "articulations": {
+        "sustain": {
+          "cc": {
+            "cc102": 24
+          }
+        },
+        "legato": {
+          "legato": true,
+          "cc": {
+            "cc102": 70
+          }
+        },
+        "staccato": {
+          "file": "${MUSIC_RENDER_VSCO:-../../external/vsco2-ce}/ViolaEnsSpic.sfz",
+          "lengthFactor": 0.6,
+          "cc": {
+            "cc102": 0
+          }
+        },
+        "spiccato": {
+          "file": "${MUSIC_RENDER_VSCO:-../../external/vsco2-ce}/ViolaEnsSpic.sfz",
+          "cc": {
+            "cc102": 0
+          }
+        },
+        "pizzicato": {
+          "file": "${MUSIC_RENDER_VSCO:-../../external/vsco2-ce}/ViolaEnsPizz.sfz",
+          "cc": {
+            "cc102": 0
+          }
+        },
+        "tremolo": {
+          "file": "${MUSIC_RENDER_VSCO:-../../external/vsco2-ce}/ViolaEnsTrem.sfz",
+          "cc": {
+            "cc102": 20
+          }
+        }
+      },
+      "defaultArticulation": "sustain",
+      "dynamics": {
+        "controller": "cc1",
+        "layers": [
+          40,
+          100
+        ],
+        "gainDb": [
+          -18,
+          0
+        ],
+        "brightnessHz": [
+          6000,
+          20000
+        ]
+      },
+      "fallback": "synth.strings",
+      "sfzRegionOpcodes": "ampeg_attack_oncc102=0.45"
+    },
+    "celli": {
+      "type": "sfz",
+      "file": "${MUSIC_RENDER_VSCO:-../../external/vsco2-ce}/CelloEnsSusVib.sfz",
+      "description": "VSCO 2 CE cello section (C2 up)",
+      "articulations": {
+        "sustain": {
+          "cc": {
+            "cc102": 24
+          }
+        },
+        "legato": {
+          "legato": true,
+          "cc": {
+            "cc102": 70
+          }
+        },
+        "staccato": {
+          "file": "${MUSIC_RENDER_VSCO:-../../external/vsco2-ce}/CelloEnsSpic.sfz",
+          "lengthFactor": 0.6,
+          "cc": {
+            "cc102": 0
+          }
+        },
+        "spiccato": {
+          "file": "${MUSIC_RENDER_VSCO:-../../external/vsco2-ce}/CelloEnsSpic.sfz",
+          "cc": {
+            "cc102": 0
+          }
+        },
+        "pizzicato": {
+          "file": "${MUSIC_RENDER_VSCO:-../../external/vsco2-ce}/CelloEnsPizz.sfz",
+          "cc": {
+            "cc102": 0
+          }
+        },
+        "tremolo": {
+          "file": "${MUSIC_RENDER_VSCO:-../../external/vsco2-ce}/CelloEnsTrem.sfz",
+          "cc": {
+            "cc102": 20
+          }
+        }
+      },
+      "defaultArticulation": "sustain",
+      "dynamics": {
+        "controller": "cc1",
+        "layers": [
+          40,
+          100
+        ],
+        "gainDb": [
+          -18,
+          0
+        ],
+        "brightnessHz": [
+          6000,
+          20000
+        ]
+      },
+      "fallback": "synth.strings",
+      "sfzRegionOpcodes": "ampeg_attack_oncc102=0.45"
+    },
+    "basses": {
+      "type": "sfz",
+      "file": "${MUSIC_RENDER_VSCO:-../../external/vsco2-ce}/ContrabassSusVB.sfz",
+      "description": "VSCO 2 CE solo contrabass (sounds an octave below written in most scores; write the sounding pitch)",
+      "articulations": {
+        "sustain": {
+          "cc": {
+            "cc102": 24
+          }
+        },
+        "legato": {
+          "legato": true,
+          "cc": {
+            "cc102": 70
+          }
+        },
+        "staccato": {
+          "file": "${MUSIC_RENDER_VSCO:-../../external/vsco2-ce}/ContrabassSpic.sfz",
+          "lengthFactor": 0.6,
+          "cc": {
+            "cc102": 0
+          }
+        },
+        "spiccato": {
+          "file": "${MUSIC_RENDER_VSCO:-../../external/vsco2-ce}/ContrabassSpic.sfz",
+          "cc": {
+            "cc102": 0
+          }
+        },
+        "pizzicato": {
+          "file": "${MUSIC_RENDER_VSCO:-../../external/vsco2-ce}/ContrabassPizz.sfz",
+          "cc": {
+            "cc102": 0
+          }
+        },
+        "tremolo": {
+          "file": "${MUSIC_RENDER_VSCO:-../../external/vsco2-ce}/ContrabassTrem.sfz",
+          "cc": {
+            "cc102": 20
+          }
+        }
+      },
+      "defaultArticulation": "sustain",
+      "dynamics": {
+        "controller": "cc1",
+        "layers": [
+          40,
+          100
+        ],
+        "gainDb": [
+          -18,
+          0
+        ],
+        "brightnessHz": [
+          6000,
+          20000
+        ]
+      },
+      "fallback": "synth.bass",
+      "sfzRegionOpcodes": "ampeg_attack_oncc102=0.45"
+    },
+    "violin-solo": {
+      "type": "sfz",
+      "file": "${MUSIC_RENDER_VSCO:-../../external/vsco2-ce}/SViolinVib.sfz",
+      "description": "VSCO 2 CE solo violin",
+      "articulations": {
+        "sustain": {
+          "cc": {
+            "cc102": 24
+          }
+        },
+        "legato": {
+          "legato": true,
+          "cc": {
+            "cc102": 70
+          }
+        },
+        "staccato": {
+          "file": "${MUSIC_RENDER_VSCO:-../../external/vsco2-ce}/SViolinSpic.sfz",
+          "lengthFactor": 0.6,
+          "cc": {
+            "cc102": 0
+          }
+        },
+        "spiccato": {
+          "file": "${MUSIC_RENDER_VSCO:-../../external/vsco2-ce}/SViolinSpic.sfz",
+          "cc": {
+            "cc102": 0
+          }
+        },
+        "pizzicato": {
+          "file": "${MUSIC_RENDER_VSCO:-../../external/vsco2-ce}/SViolinPizz.sfz",
+          "cc": {
+            "cc102": 0
+          }
+        },
+        "tremolo": {
+          "file": "${MUSIC_RENDER_VSCO:-../../external/vsco2-ce}/SViolinTrem.sfz",
+          "cc": {
+            "cc102": 20
+          }
+        }
+      },
+      "defaultArticulation": "sustain",
+      "dynamics": {
+        "controller": "cc1",
+        "layers": [
+          40,
+          100
+        ],
+        "gainDb": [
+          -18,
+          0
+        ],
+        "brightnessHz": [
+          6000,
+          20000
+        ]
+      },
+      "fallback": "synth.strings",
+      "sfzRegionOpcodes": "ampeg_attack_oncc102=0.45"
+    },
+    "harp": {
+      "type": "sfz",
+      "file": "${MUSIC_RENDER_VSCO:-../../external/vsco2-ce}/Harp.sfz",
+      "description": "VSCO 2 CE harp",
+      "fallback": "synth.pluck"
+    },
+    "timpani": {
+      "type": "sfz",
+      "file": "${MUSIC_RENDER_VSCO:-../../external/vsco2-ce}/Timpani.sfz",
+      "description": "VSCO 2 CE timpani (hit, roll)",
+      "articulations": {
+        "hit": {},
+        "roll": {
+          "file": "${MUSIC_RENDER_VSCO:-../../external/vsco2-ce}/TimpaniRolls.sfz"
+        }
+      },
+      "defaultArticulation": "hit",
+      "fallback": "synth.drums"
+    },
+    "flute": {
+      "type": "sfz",
+      "file": "${MUSIC_RENDER_VSCO:-../../external/vsco2-ce}/FluteSusVib.sfz",
+      "description": "VSCO 2 CE flute",
+      "articulations": {
+        "sustain": {},
+        "staccato": {
+          "file": "${MUSIC_RENDER_VSCO:-../../external/vsco2-ce}/FluteStac.sfz"
+        }
+      },
+      "defaultArticulation": "sustain",
+      "dynamics": {
+        "gainDb": [
+          -14,
+          0
+        ],
+        "brightnessHz": [
+          3000,
+          20000
+        ]
+      },
+      "fallback": "synth.sine"
+    },
+    "oboe": {
+      "type": "sfz",
+      "file": "${MUSIC_RENDER_VSCO:-../../external/vsco2-ce}/OboeSusVib.sfz",
+      "description": "VSCO 2 CE oboe",
+      "articulations": {
+        "sustain": {},
+        "staccato": {
+          "file": "${MUSIC_RENDER_VSCO:-../../external/vsco2-ce}/OboeStac.sfz"
+        }
+      },
+      "defaultArticulation": "sustain",
+      "dynamics": {
+        "gainDb": [
+          -14,
+          0
+        ],
+        "brightnessHz": [
+          3000,
+          20000
+        ]
+      },
+      "fallback": "synth.sine"
+    },
+    "clarinet": {
+      "type": "sfz",
+      "file": "${MUSIC_RENDER_VSCO:-../../external/vsco2-ce}/ClarinetSus.sfz",
+      "description": "VSCO 2 CE clarinet",
+      "articulations": {
+        "sustain": {},
+        "staccato": {
+          "file": "${MUSIC_RENDER_VSCO:-../../external/vsco2-ce}/ClarinetStac.sfz"
+        }
+      },
+      "defaultArticulation": "sustain",
+      "dynamics": {
+        "gainDb": [
+          -14,
+          0
+        ],
+        "brightnessHz": [
+          2500,
+          20000
+        ]
+      },
+      "fallback": "synth.sine"
+    },
+    "percussion": {
+      "type": "sfz",
+      "file": "${MUSIC_RENDER_VSCO:-../../external/vsco2-ce}/GM-StylePerc.sfz",
+      "keyNames": {
+        "32": "큰북 문지르기",
+        "33": "큰북 문지르기 2",
+        "34": "큰북 문지르기 3",
+        "35": "큰북 문지르기 4",
+        "36": "큰북",
+        "42": "징 긁기",
+        "46": "징",
+        "47": "심벌 크레셴도 (짧게)",
+        "48": "심벌 크레셴도 (중간)",
+        "49": "크래시",
+        "50": "심벌 크레셴도 (길게)",
+        "51": "서스펜디드 심벌",
+        "67": "앤빌",
+        "68": "브레이크 드럼",
+        "78": "트라이앵글",
+        "79": "트라이앵글 2",
+        "80": "트라이앵글 3",
+        "81": "트라이앵글 4",
+        "83": "벨 트리",
+        "84": "벨 트리 2",
+        "85": "벨 트리 3",
+        "86": "벨 트리 4",
+        "88": "금속음",
+        "101": "활 심벌",
+        "102": "활 심벌 2",
+        "103": "활 심벌 3",
+        "104": "활 심벌 4"
+      },
+      "description": "VSCO 2 CE orchestral percussion on GM-style keys: 36 bass drum, 47/48/50 suspended cymbal swell (short/medium/long), 49 crash, 51 suspended cymbal, 78/79 triangle, 83-86 bell tree, 42 gong scrape, 46 gong",
+      "fallback": "synth.drums"
+    },
+    "gayageum": {
+      "type": "sfz",
+      "file": "${MUSIC_RENDER_GUGAK:-../../external/gugak}/InitialDAW/gayageum.sfz",
+      "description": "가야금 (국립국악원 「국악기 디지털 음원」 단음, 윤다영, 공공누리 제1유형): Eb2~Ab5 의 반음마다 약, 중, 강 세 층 (벨로시티 1~56, 57~96, 97~127). tools/make-gugak-sfz.py 가 SFZ 를 쓴다",
+      "fallback": "synth.pluck"
+    },
+    "haegeum": {
+      "type": "sfz",
+      "file": "${MUSIC_RENDER_GUGAK:-../../external/gugak}/InitialDAW/haegeum.sfz",
+      "description": "해금 (국립국악원 「국악기 디지털 음원」 기본음계, 공공누리 제1유형): Ab3~G5 의 Ab장조 14음을 약, 중, 강 세 층으로 녹음, 사이의 반음은 이웃 음을 옮긴다 (A5 까지). 음의 가운데를 루프로 이어 길게 낸다. 요성 없이 곧은 소리라 요성과 꺾는 소리는 피치 벤드로",
+      "fallback": "synth.strings"
+    },
+    "daegeum": {
+      "type": "sfz",
+      "file": "${MUSIC_RENDER_GUGAK:-../../external/gugak}/InitialDAW/daegeum.sfz",
+      "description": "대금 (국립국악원 산조대금 음계 녹음, 공공누리 제1유형, jonijonii/Daegeum-Sanjo-Sampler 가 자른 것): C4~F#6 의 18음, 요성이 들어 있다. 국악 조율을 음마다 A440 으로 맞춘다",
+      "fallback": "synth.sine"
+    },
+    "janggu": {
+      "type": "sfz",
+      "file": "${MUSIC_RENDER_GUGAK:-../../external/gugak}/InitialDAW/janggu.sfz",
+      "description": "장구 (국립국악원 「국악기 디지털 음원」 단타, 공공누리 제1유형): 35 쿵, 36 덩, 37 더, 38 덕, 39 기덕, 40 더러러러, 약, 중, 강 세 층. 음표 길이와 상관없이 끝까지 울린다",
+      "keyNames": { "35": "쿵", "36": "덩", "37": "더", "38": "덕", "39": "기덕", "40": "더러러러" },
+      "fallback": "synth.drums"
+    },
+    "ajaeng": {
+      "type": "sfz",
+      "file": "${MUSIC_RENDER_GUGAK:-../../external/gugak}/InitialDAW/ajaeng.sfz",
+      "description": "아쟁 (국립국악원 「국악기 디지털 음원」, 말총활대, 공공누리 제1유형): 길게 그은 단음 Bb1~Eb4 (8~15초), 트레몰로 Eb3~G4, 술폰티첼로 C4~A4. 국악 음정을 음마다 A440 으로 맞췄다",
+      "articulations": {
+        "sustain": {},
+        "tremolo": { "file": "${MUSIC_RENDER_GUGAK:-../../external/gugak}/InitialDAW/ajaeng-tremolo.sfz" },
+        "sulpont": { "file": "${MUSIC_RENDER_GUGAK:-../../external/gugak}/InitialDAW/ajaeng-sulpont.sfz" }
+      },
+      "defaultArticulation": "sustain",
+      "fallback": "synth.strings"
+    },
+    "jing": {
+      "type": "sfz",
+      "file": "${MUSIC_RENDER_GUGAK:-../../external/gugak}/InitialDAW/jing.sfz",
+      "description": "징과 아쟁 효과음 (국립국악원 「국악기 디지털 음원」, 공공누리 제1유형): 46 징 강, 45 징 약 (기본 울림 Bb2 둘레, 14초에 걸쳐 사라진다), 60~62 아쟁 효과음. 끝까지 울린다",
+      "keyNames": { "45": "징 약", "46": "징 강", "60": "아쟁 효과음 1", "61": "아쟁 효과음 2", "62": "아쟁 효과음 3" },
+      "fallback": "synth.drums"
+    },
+    "marimba": {
+      "type": "sfz",
+      "file": "${MUSIC_RENDER_VSCO:-../../external/vsco2-ce}/Marimba.sfz",
+      "description": "VSCO 2 CE marimba (F2 to C7, ten notes recorded with outrigger mallets, one layer: velocity sets the level)",
+      "fallback": "synth.pluck"
+    },
+    "xylophone": {
+      "type": "sfz",
+      "file": "${MUSIC_RENDER_VSCO:-../../external/vsco2-ce}/Xylophone.sfz",
+      "description": "VSCO 2 CE xylophone (G3 to C7, eight notes recorded with medium mallets from afar, one layer: velocity sets the level)",
+      "fallback": "synth.pluck"
+    },
+    "tubular-bells": {
+      "type": "sfz",
+      "file": "${MUSIC_RENDER_VSCO:-../../external/vsco2-ce}/TubularBells.sfz",
+      "description": "VSCO 2 CE tubular bells (C4 to G5 only, four notes recorded, rings for many seconds)",
+      "fallback": "synth.ep"
+    },
+    "glockenspiel": {
+      "type": "sfz",
+      "file": "${MUSIC_RENDER_VSCO:-../../external/vsco2-ce}/Glockenspiel.sfz",
+      "description": "VSCO 2 CE glockenspiel (G4 up)",
+      "fallback": "synth.pluck"
+    },
+    "choir": {
+      "type": "sfz",
+      "file": "${MUSIC_RENDER_SSO:-../../external/sso/Sonatina Symphonic Orchestra}/Chorus - Performance/Mixed Chorus.sfz",
+      "controllers": {
+        "cc1": "native",
+        "cc11": "engine"
+      },
+      "description": "Sonatina Symphonic Orchestra mixed chorus, aah (male G2-F#4, female G4-C6). 놓는 시간 0.8초(원래 1.25초보다 선율이 또렷하다). CC1 = SFZ 안의 다이내믹스, 벨로시티 = 공격 시간(127 이면 0.2초, 64 이면 0.51초)",
+      "fallback": "synth.pad",
+      "sfzRegionOpcodes": "ampeg_release=0.8"
+    },
+    "choir-large": {
+      "type": "sfz",
+      "file": "${MUSIC_RENDER_SSO:-../../external/sso/Sonatina Symphonic Orchestra}/Chorus - Performance/Large Chorus.sfz",
+      "controllers": {
+        "cc1": "native",
+        "cc11": "engine"
+      },
+      "description": "Sonatina Symphonic Orchestra large chorus. 놓는 시간 0.8초(원래 1.25초보다 선율이 또렷하다). CC1 = SFZ 안의 다이내믹스, 벨로시티 = 공격 시간(127 이면 0.2초, 64 이면 0.51초)",
+      "fallback": "synth.pad",
+      "sfzRegionOpcodes": "ampeg_release=0.8"
+    },
+    "horn": {
+      "type": "sfz",
+      "file": "${MUSIC_RENDER_SSO:-../../external/sso/Sonatina Symphonic Orchestra}/Brass - Performance/Horn Solo Legato.sfz",
+      "controllers": {
+        "cc1": "native",
+        "cc11": "engine"
+      },
+      "description": "Sonatina Symphonic Orchestra solo French horn, legato (overlapping notes connect). CC1 = dynamics",
+      "fallback": "synth.strings"
+    },
+    "oboe-solo": {
+      "type": "sfz",
+      "file": "${MUSIC_RENDER_SSO:-../../external/sso/Sonatina Symphonic Orchestra}/Woodwinds - Performance/Oboe Solo Legato.sfz",
+      "controllers": {
+        "cc1": "native",
+        "cc11": "engine"
+      },
+      "description": "Sonatina Symphonic Orchestra solo oboe, legato",
+      "fallback": "synth.sine"
+    },
+    "cor-anglais": {
+      "type": "sfz",
+      "file": "${MUSIC_RENDER_SSO:-../../external/sso/Sonatina Symphonic Orchestra}/Woodwinds - Performance/Cor Anglais Solo Legato.sfz",
+      "controllers": {
+        "cc1": "native",
+        "cc11": "engine"
+      },
+      "description": "Sonatina Symphonic Orchestra solo cor anglais, legato",
+      "fallback": "synth.sine"
+    },
+    "celeste": {
+      "type": "sfz",
+      "file": "${MUSIC_RENDER_SSO:-../../external/sso/Sonatina Symphonic Orchestra}/Percussion/Celeste.sfz",
+      "description": "Sonatina Symphonic Orchestra celeste",
+      "fallback": "synth.pluck"
+    },
+    "horns": {
+      "type": "sfz",
+      "file": "${MUSIC_RENDER_SSO:-../../external/sso/Sonatina Symphonic Orchestra}/Brass - Performance/Horns Legato.sfz",
+      "controllers": {
+        "cc1": "native",
+        "cc11": "engine"
+      },
+      "description": "Sonatina Symphonic Orchestra French horn section, legato",
+      "fallback": "synth.strings"
+    },
+    "trombones": {
+      "type": "sfz",
+      "file": "${MUSIC_RENDER_SSO:-../../external/sso/Sonatina Symphonic Orchestra}/Brass - Performance/Trombones Sustain (looped).sfz",
+      "description": "Sonatina Symphonic Orchestra trombone section (E2-F5): sustain holds 1.1 s then fades slowly (28 s toward 35%), staccato has two round robins. CC1 = dynamics",
+      "articulations": {
+        "sustain": {},
+        "staccato": {
+          "file": "${MUSIC_RENDER_SSO:-../../external/sso/Sonatina Symphonic Orchestra}/Brass - Performance/Trombones Staccato.sfz"
+        }
+      },
+      "defaultArticulation": "sustain",
+      "controllers": {
+        "cc1": "native",
+        "cc11": "engine"
+      },
+      "fallback": "synth.strings"
+    },
+    "clarinet-solo": {
+      "type": "sfz",
+      "file": "${MUSIC_RENDER_SSO:-../../external/sso/Sonatina Symphonic Orchestra}/Woodwinds - Performance/Clarinet Solo Legato.sfz",
+      "articulations": {
+        "sustain": {},
+        "staccato": {
+          "file": "${MUSIC_RENDER_SSO:-../../external/sso/Sonatina Symphonic Orchestra}/Woodwinds - Performance/Clarinet Solo Staccato.sfz"
+        }
+      },
+      "defaultArticulation": "sustain",
+      "controllers": {
+        "cc1": "native",
+        "cc11": "engine"
+      },
+      "description": "Sonatina Symphonic Orchestra solo clarinet, legato patch (overlapping notes connect, no engine overlap). CC1 = dynamics. Staccato: velocity is dynamics and brightness, the body starts at a random offset",
+      "fallback": "synth.sine"
+    },
+    "flute-solo": {
+      "type": "sfz",
+      "file": "${MUSIC_RENDER_SSO:-../../external/sso/Sonatina Symphonic Orchestra}/Woodwinds - Performance/Flute Solo 1 Legato.sfz",
+      "controllers": {
+        "cc1": "native",
+        "cc11": "engine"
+      },
+      "description": "Sonatina Symphonic Orchestra solo flute, legato (C4 to C7, overlapping notes connect). CC1 = dynamics",
+      "fallback": "flute"
+    },
+    "sso-violins-1": {
+      "type": "sfz",
+      "file": "${MUSIC_RENDER_SSO:-../../external/sso/Sonatina Symphonic Orchestra}/Strings - Performance/1st Violins Sustain.sfz",
+      "description": "Sonatina Symphonic Orchestra 1st violins (CC1 dynamics, CC21 vibrato, velocity is attack speed)",
+      "articulations": {
+        "sustain": {},
+        "legato": {
+          "file": "${MUSIC_RENDER_SSO:-../../external/sso/Sonatina Symphonic Orchestra}/Strings - Performance/1st Violins Legato.sfz"
+        },
+        "staccato": {
+          "file": "${MUSIC_RENDER_SSO:-../../external/sso/Sonatina Symphonic Orchestra}/Strings - Performance/1st Violins Staccato.sfz"
+        },
+        "marcato": {
+          "file": "${MUSIC_RENDER_SSO:-../../external/sso/Sonatina Symphonic Orchestra}/Strings - Performance/1st Violins Marcato.sfz"
+        },
+        "tremolo": {
+          "file": "${MUSIC_RENDER_SSO:-../../external/sso/Sonatina Symphonic Orchestra}/Strings - Performance/1st Violins Tremolo.sfz"
+        },
+        "pizzicato": {
+          "file": "${MUSIC_RENDER_SSO:-../../external/sso/Sonatina Symphonic Orchestra}/Strings - Performance/1st Violins Pizzicato.sfz"
+        }
+      },
+      "defaultArticulation": "sustain",
+      "controllers": {
+        "cc1": "native",
+        "cc11": "engine",
+        "cc21": "native"
+      },
+      "fallback": "synth.strings"
+    },
+    "sso-violins-2": {
+      "type": "sfz",
+      "file": "${MUSIC_RENDER_SSO:-../../external/sso/Sonatina Symphonic Orchestra}/Strings - Performance/2nd Violins Sustain.sfz",
+      "description": "Sonatina Symphonic Orchestra 2nd violins",
+      "articulations": {
+        "sustain": {},
+        "legato": {
+          "file": "${MUSIC_RENDER_SSO:-../../external/sso/Sonatina Symphonic Orchestra}/Strings - Performance/2nd Violins Legato.sfz"
+        },
+        "staccato": {
+          "file": "${MUSIC_RENDER_SSO:-../../external/sso/Sonatina Symphonic Orchestra}/Strings - Performance/2nd Violins Staccato.sfz"
+        },
+        "marcato": {
+          "file": "${MUSIC_RENDER_SSO:-../../external/sso/Sonatina Symphonic Orchestra}/Strings - Performance/2nd Violins Marcato.sfz"
+        },
+        "tremolo": {
+          "file": "${MUSIC_RENDER_SSO:-../../external/sso/Sonatina Symphonic Orchestra}/Strings - Performance/2nd Violins Tremolo.sfz"
+        },
+        "pizzicato": {
+          "file": "${MUSIC_RENDER_SSO:-../../external/sso/Sonatina Symphonic Orchestra}/Strings - Performance/2nd Violins Pizzicato.sfz"
+        }
+      },
+      "defaultArticulation": "sustain",
+      "controllers": {
+        "cc1": "native",
+        "cc11": "engine",
+        "cc21": "native"
+      },
+      "fallback": "synth.strings"
+    },
+    "sso-violins-harmonics": {
+      "type": "sfz",
+      "file": "${MUSIC_RENDER_SSO:-../../external/sso/Sonatina Symphonic Orchestra}/Strings - Performance/1st Violins Harmonics.sfz",
+      "description": "Sonatina Symphonic Orchestra 1st violins, natural harmonics. Write the sounding pitch (G5-C9); the SFZ keys sound two octaves higher. CC1 dynamics, velocity is attack speed",
+      "transpose": -24,
+      "controllers": {
+        "cc1": "native",
+        "cc11": "engine",
+        "cc21": "native"
+      },
+      "fallback": "synth.strings"
+    },
+    "sso-violas": {
+      "type": "sfz",
+      "file": "${MUSIC_RENDER_SSO:-../../external/sso/Sonatina Symphonic Orchestra}/Strings - Performance/Violas Sustain.sfz",
+      "description": "Sonatina Symphonic Orchestra violas",
+      "articulations": {
+        "sustain": {},
+        "legato": {
+          "file": "${MUSIC_RENDER_SSO:-../../external/sso/Sonatina Symphonic Orchestra}/Strings - Performance/Violas Legato.sfz"
+        },
+        "staccato": {
+          "file": "${MUSIC_RENDER_SSO:-../../external/sso/Sonatina Symphonic Orchestra}/Strings - Performance/Violas Staccato.sfz"
+        },
+        "marcato": {
+          "file": "${MUSIC_RENDER_SSO:-../../external/sso/Sonatina Symphonic Orchestra}/Strings - Performance/Violas Marcato.sfz"
+        },
+        "tremolo": {
+          "file": "${MUSIC_RENDER_SSO:-../../external/sso/Sonatina Symphonic Orchestra}/Strings - Performance/Violas Tremolo.sfz"
+        },
+        "pizzicato": {
+          "file": "${MUSIC_RENDER_SSO:-../../external/sso/Sonatina Symphonic Orchestra}/Strings - Performance/Violas Pizzicato.sfz"
+        }
+      },
+      "defaultArticulation": "sustain",
+      "controllers": {
+        "cc1": "native",
+        "cc11": "engine",
+        "cc21": "native"
+      },
+      "fallback": "synth.strings"
+    },
+    "sso-celli": {
+      "type": "sfz",
+      "file": "${MUSIC_RENDER_SSO:-../../external/sso/Sonatina Symphonic Orchestra}/Strings - Performance/Celli Sustain.sfz",
+      "description": "Sonatina Symphonic Orchestra celli",
+      "articulations": {
+        "sustain": {},
+        "legato": {
+          "file": "${MUSIC_RENDER_SSO:-../../external/sso/Sonatina Symphonic Orchestra}/Strings - Performance/Celli Legato.sfz"
+        },
+        "staccato": {
+          "file": "${MUSIC_RENDER_SSO:-../../external/sso/Sonatina Symphonic Orchestra}/Strings - Performance/Celli Staccato.sfz"
+        },
+        "marcato": {
+          "file": "${MUSIC_RENDER_SSO:-../../external/sso/Sonatina Symphonic Orchestra}/Strings - Performance/Celli Marcato.sfz"
+        },
+        "tremolo": {
+          "file": "${MUSIC_RENDER_SSO:-../../external/sso/Sonatina Symphonic Orchestra}/Strings - Performance/Celli Tremolo.sfz"
+        },
+        "pizzicato": {
+          "file": "${MUSIC_RENDER_SSO:-../../external/sso/Sonatina Symphonic Orchestra}/Strings - Performance/Celli Pizzicato.sfz"
+        }
+      },
+      "defaultArticulation": "sustain",
+      "controllers": {
+        "cc1": "native",
+        "cc11": "engine",
+        "cc21": "native"
+      },
+      "fallback": "synth.strings"
+    },
+    "sso-basses": {
+      "type": "sfz",
+      "file": "${MUSIC_RENDER_SSO:-../../external/sso/Sonatina Symphonic Orchestra}/Strings - Performance/Basses Sustain.sfz",
+      "description": "Sonatina Symphonic Orchestra basses",
+      "articulations": {
+        "sustain": {},
+        "legato": {
+          "file": "${MUSIC_RENDER_SSO:-../../external/sso/Sonatina Symphonic Orchestra}/Strings - Performance/Basses Legato.sfz"
+        },
+        "staccato": {
+          "file": "${MUSIC_RENDER_SSO:-../../external/sso/Sonatina Symphonic Orchestra}/Strings - Performance/Basses Staccato.sfz"
+        },
+        "marcato": {
+          "file": "${MUSIC_RENDER_SSO:-../../external/sso/Sonatina Symphonic Orchestra}/Strings - Performance/Basses Marcato.sfz"
+        },
+        "tremolo": {
+          "file": "${MUSIC_RENDER_SSO:-../../external/sso/Sonatina Symphonic Orchestra}/Strings - Performance/Basses Tremolo.sfz"
+        },
+        "pizzicato": {
+          "file": "${MUSIC_RENDER_SSO:-../../external/sso/Sonatina Symphonic Orchestra}/Strings - Performance/Basses Pizzicato.sfz"
+        }
+      },
+      "defaultArticulation": "sustain",
+      "controllers": {
+        "cc1": "native",
+        "cc11": "engine",
+        "cc21": "native"
+      },
+      "fallback": "synth.bass"
+    },
+    "sso-cello-solo": {
+      "type": "sfz",
+      "file": "${MUSIC_RENDER_SSO:-../../external/sso/Sonatina Symphonic Orchestra}/Strings - Performance/Cello Solo Legato.sfz",
+      "description": "Sonatina Symphonic Orchestra solo cello, legato",
+      "articulations": {
+        "legato": {},
+        "sustain": {
+          "file": "${MUSIC_RENDER_SSO:-../../external/sso/Sonatina Symphonic Orchestra}/Strings - Performance/Cello Solo Sustain.sfz"
+        },
+        "staccato": {
+          "file": "${MUSIC_RENDER_SSO:-../../external/sso/Sonatina Symphonic Orchestra}/Strings - Performance/Cello Solo Staccato.sfz"
+        },
+        "marcato": {
+          "file": "${MUSIC_RENDER_SSO:-../../external/sso/Sonatina Symphonic Orchestra}/Strings - Performance/Cello Solo Marcato.sfz"
+        },
+        "pizzicato": {
+          "file": "${MUSIC_RENDER_SSO:-../../external/sso/Sonatina Symphonic Orchestra}/Strings - Performance/Cello Solo Pizzicato.sfz"
+        }
+      },
+      "defaultArticulation": "legato",
+      "controllers": {
+        "cc1": "native",
+        "cc11": "engine",
+        "cc21": "native"
+      },
+      "fallback": "synth.strings"
+    },
+    "cello-solo": {
+      "type": "sfz",
+      "file": "${MUSIC_RENDER_KARORYFER:-../../external/karoryfer}/Karoryfer_Bigcat_cello/InitialDAW/cello-legato.sfz",
+      "description": "Karoryfer x bigcat solo cello (CC0, Karoryfer Lecolds and bigcat instruments, played by Kamila Borowiak) through our SFZ from tools/make-cello-sfz.py. Bowed keys 34-86 (Bb1-D6, recorded C2-C6), pizzicato keys 34-75 (Bb1-D#5), other keys are silent. Four recorded dynamic layers picked by CC1 at the note start (p up to 42, mp 43-72, mf 73-100, f from 101), CC1 = loudness (24 dB) and brightness inside the note, vibrato added per note (CC21 = depth, also inside a note, default 64, 0 = none), legato notes glide from a fifth of the interval away. Bowed notes need no key calibration; staccato and pizzicato ring out their recordings",
+      "articulations": {
+        "legato": {},
+        "sustain": {
+          "file": "${MUSIC_RENDER_KARORYFER:-../../external/karoryfer}/Karoryfer_Bigcat_cello/InitialDAW/cello-sustain.sfz"
+        },
+        "staccato": {
+          "file": "${MUSIC_RENDER_KARORYFER:-../../external/karoryfer}/Karoryfer_Bigcat_cello/InitialDAW/cello-staccato.sfz"
+        },
+        "pizzicato": {
+          "file": "${MUSIC_RENDER_KARORYFER:-../../external/karoryfer}/Karoryfer_Bigcat_cello/InitialDAW/cello-pizzicato.sfz"
+        }
+      },
+      "defaultArticulation": "legato",
+      "controllers": {
+        "cc1": "native",
+        "cc11": "engine",
+        "cc21": "native"
+      },
+      "fallback": "sso-cello-solo"
+    },
+    "vibraphone": {
+      "type": "sfz",
+      "file": "${MUSIC_RENDER_SSO:-../../external/sso/Sonatina Symphonic Orchestra}/Percussion/Vibraphone.sfz",
+      "description": "Sonatina Symphonic Orchestra vibraphone (CC64 pedal, CC21 motor vibrato)",
+      "fallback": "synth.ep"
+    },
+    "grand-piano": {
+      "type": "sfz",
+      "file": "${MUSIC_RENDER_SSO:-../../external/sso/Sonatina Symphonic Orchestra}/Grand Piano/Grand Piano.sfz",
+      "description": "Sonatina Symphonic Orchestra grand piano (Splendid Grand Piano, Steinway recorded by Akai, public domain, 4 velocity layers, CC64 half pedal)",
+      "fallback": "piano"
+    },
+    "guitar": {
+      "type": "sfz",
+      "file": "${MUSIC_RENDER_FREEPATS:-../../external/freepats}/spanish-classical-guitar/SpanishClassicalGuitar-20190618.sfz",
+      "description": "FreePats Spanish classical guitar (nylon strings, CC0, G1 to C6, one velocity layer, 1.5 s release)",
+      "fallback": "synth.pluck"
+    },
+    "drum-kit": {
+      "type": "sfz",
+      "file": "${MUSIC_RENDER_FREEPATS:-../../external/freepats}/muldjordkit/MuldjordKit 20201018.sfz",
+      "keymap": {
+        "35": 49,
+        "36": 48,
+        "38": 50,
+        "40": 51,
+        "41": 64,
+        "42": 52,
+        "43": 64,
+        "44": 52,
+        "45": 63,
+        "46": 53,
+        "47": 62,
+        "48": 62,
+        "49": 58,
+        "50": 61,
+        "51": 54,
+        "52": 60,
+        "53": 55,
+        "54": 0,
+        "55": 0,
+        "56": 0,
+        "57": 59,
+        "58": 0,
+        "59": 56,
+        "60": 0,
+        "61": 0,
+        "62": 0,
+        "63": 0,
+        "64": 0,
+        "65": 0,
+        "66": 0
+      },
+      "keyNames": {
+        "35": "킥 2",
+        "36": "킥",
+        "38": "스네어",
+        "40": "스네어 2",
+        "41": "플로어 탐",
+        "42": "닫힌 하이햇",
+        "43": "플로어 탐",
+        "44": "닫힌 하이햇 2",
+        "45": "탐 3",
+        "46": "열린 하이햇",
+        "47": "탐 2",
+        "48": "탐 2",
+        "49": "크래시",
+        "50": "탐 1",
+        "51": "라이드",
+        "52": "차이나",
+        "53": "라이드 벨",
+        "57": "크래시 2",
+        "59": "라이드 2"
+      },
+      "description": "FreePats MuldjordKit acoustic rock kit (CC BY 4.0, Lars Muldjord), played on GM keys: 36 kick (35 second kick), 38 snare (40 second snare), 42 closed hi-hat (44 the same), 46 open hi-hat, 49 and 57 crashes, 52 china, 51 and 59 rides, 53 ride bell, 50 48 47 45 hanging toms (high to low), 43 41 floor tom. Velocity picks the recorded layer (no volume scaling), four random takes per layer, the open hi-hat is not choked by the closed one",
+      "fallback": "synth.drums"
+    },
+    "bass-guitar": {
+      "type": "sfz",
+      "file": "${MUSIC_RENDER_FREEPATS:-../../external/freepats}/electric-bass-YR/FingerBassYR 20190930.sfz",
+      "articulations": {
+        "finger": {},
+        "pick": {
+          "file": "${MUSIC_RENDER_FREEPATS:-../../external/freepats}/electric-bass-YR/PickedBassYR 20190930.sfz"
+        }
+      },
+      "defaultArticulation": "finger",
+      "description": "FreePats electric bass (Yamaha RBX, CC0), fingered or picked, one velocity layer, sampled E1 to D#2 and stretched up to A2 (finger) or A#2 (pick)",
+      "fallback": "synth.bass"
+    },
+    "electric-guitar": {
+      "type": "sfz",
+      "file": "${MUSIC_RENDER_FREEPATS:-../../external/freepats}/electric-guitar-FSBS-clean/EGuitarFSBS-clean bridge 20260807.sfz",
+      "description": "FreePats FSBS clean electric guitar, bridge pickup (CC0), B1 to D6, two velocity layers (soft up to 92), four random takes, 1.1 s release",
+      "fallback": "synth.pluck"
+    },
+    "jazz-guitar": {
+      "type": "sfz",
+      "file": "${MUSIC_RENDER_FREEPATS:-../../external/freepats}/electric-guitar-FSBS-jazz/EGuitarFSBS-jazz bridge 20260807.sfz",
+      "description": "FreePats FSBS jazz electric guitar, bridge pickup (CC0), B1 to D6, two velocity layers (soft up to 92), four random takes, 0.4 s release",
+      "fallback": "synth.pluck"
+    },
+    "tenor-sax": {
+      "type": "sfz",
+      "file": "${MUSIC_RENDER_FREEPATS:-../../external/freepats}/tenor-saxophone/TenorSaxophone-SFZ+FLAC-20200717/TenorSaxophone-20200717.sfz",
+      "dynamics": {
+        "gainDb": [
+          -14,
+          0
+        ],
+        "brightnessHz": [
+          2500,
+          20000
+        ]
+      },
+      "description": "FreePats tenor saxophone (Versilian Community Sample Library, CC0), sounding G2 to F5, two velocity layers (soft up to 89), looped sustain. CC1 = dynamics in the engine (-14 to 0 dB and brightness)",
+      "fallback": "synth.lead"
+    },
+    "dexed": {
+      "type": "vst3",
+      "plugin": "${MUSIC_RENDER_PLUGINS:-../../external/plugins}/dexed/Dexed.vst3",
+      "description": "Dexed 1.0.1, DX7 FM synth with its own panel (GPL-3.0, build.sh --plugins)",
+      "fallback": "synth.ep"
+    }
+  }
+}

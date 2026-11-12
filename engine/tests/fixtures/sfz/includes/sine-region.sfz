@@ -1,0 +1,2 @@
+// 테스트용: included.sfz 가 불러오는 리전
+<region> sample=*sine pitch_keycenter=69
