@@ -206,6 +206,10 @@ public:
     bool normalizeClip (ArrangementPanel::ClipRef ref);   // 봉우리가 -1 dBFS 가 되는 게인
     // 거꾸로 재생을 켜고 끈다 (같은 자리에서 같은 소리 조각을 거꾸로)
     bool reverseClip (ArrangementPanel::ClipRef ref);
+    // 잡음 줄이기 (클립의 restore, 끄면 nullopt). 결과(메운 클릭, 잰 험, 잡음 크기)는 뒤 스레드에서 재서 상태 줄에 알린다
+    bool setClipRestore (ArrangementPanel::ClipRef ref, std::optional<mr::ClipRestore> restore);
+    // 트랙 보기에서 고른 구간(이 클립의 트랙과 시간에 걸친)을 잡음 지문으로
+    bool setClipNoiseProfileFromRange (ArrangementPanel::ClipRef ref);
     bool setClipFadeShape (ArrangementPanel::ClipRef ref, bool fadeIn, mr::FadeShape shape);
     // 시작 순서로 바로 뒤의 들리는 클립과 겹치거나 맞붙었으면 그 사이의 크로스페이드 (맞붙었으면 앞뒤 10 ms 씩 늘인다)
     bool crossfadeClip (ArrangementPanel::ClipRef ref);

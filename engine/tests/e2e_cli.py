@@ -351,6 +351,51 @@ def main():
     run("arrange", edits, "crossfade", "Loop", "--clip", "2", code=1)   # 뒤 클립이 없다
     er, _ = run("render", edits, "--output", os.path.join(tone_dir, "edits.wav"))
     check("a song with reversed, crossfaded clips renders", er.get("ok") is True, er)
+    # 잡음 줄이기: 쉿 소리, 60 Hz 험, 클릭 셋이 섞인 녹음 (0.6 초 쉼 뒤 1.4 초 화음)
+    import struct
+    noisy_wav = os.path.join(tone_dir, "noisy.wav")
+    rng = random.Random(5)
+    frames = []
+    for i in range(96000):
+        t = i / 48000.0
+        v = 0.0005 * rng.gauss(0.0, 1.0) + sum(0.004 / k * math.sin(2 * math.pi * 60.0 * k * t) for k in (1, 2, 3))
+        if t >= 0.6:
+            v += sum(0.15 * math.sin(2 * math.pi * f * t) for f in (220.0, 277.18, 329.63))
+        if i in (20000, 52000, 80000):
+            v += 0.5
+        frames.append(max(-32768, min(32767, int(round(v * 32767)))))
+    with wave.open(noisy_wav, "wb") as w:
+        w.setnchannels(1)
+        w.setsampwidth(2)
+        w.setframerate(48000)
+        w.writeframes(struct.pack("<%dh" % len(frames), *frames))
+    rs, _ = run("restore", noisy_wav, "--output", os.path.join(tone_dir, "restored.wav"), "--noise", "18", "--hum", "auto", "--declick")
+    rr = rs.get("restore", {})
+    check("restore fills the clicks, finds the 60 Hz hum and measures the noise", rs.get("ok") is True and rr.get("clicks") == 3
+          and abs(rr.get("humHz", 0) - 60.0) < 0.05 and len(rr.get("humNotches", [])) == 10 and rr.get("denoised") is True
+          and -72 < rr.get("noiseFloorDb", 0) < -62, rs)
+    check("restore writes the whole recording", abs(rs.get("seconds", 0) - 2.0) < 1e-3 and os.path.exists(os.path.join(tone_dir, "restored.wav")))
+    run("restore", noisy_wav, "--noise", "12", code=2)                                   # --output 이 없다
+    run("restore", noisy_wav, "--output", os.path.join(tone_dir, "x.wav"), code=2)      # 할 일이 없다
+    run("restore", noisy_wav, "--output", os.path.join(tone_dir, "x.wav"), "--hum", "70", code=2)
+    run("restore", noisy_wav, "--output", os.path.join(tone_dir, "x.wav"), "--profile", "soon", code=2)
+    restored_song = os.path.join(tone_dir, "restore.json")
+    with open(restored_song, "w") as f:
+        json.dump({"tempo": 120, "tracks": [{"name": "Take", "instrument": "audio", "clips": [{"file": "noisy.wav", "startBeat": 0}]}]}, f)
+    ra, _ = run("arrange", restored_song, "restore", "Take")
+    c0 = json.load(open(restored_song))["tracks"][0]["clips"][0]
+    check("arrange restore turns noise reduction on at 12 dB and reports what it found", c0.get("restore") == {"noiseDb": 12}
+          and ra.get("restored", [{}])[0].get("clip") == 1 and ra["restored"][0].get("denoised") is True, (c0, ra.get("restored")))
+    run("arrange", restored_song, "restore", "Take", "--hum", "60", "--declick", "--profile", "0.1:0.4")
+    c0 = json.load(open(restored_song))["tracks"][0]["clips"][0]
+    check("more restore options keep the noise setting", c0.get("restore") == {"noiseDb": 12, "profile": {"seconds": 0.1, "lengthSeconds": 0.4},
+          "humHz": 60, "declick": True}, c0)
+    rv, _ = run("validate", restored_song)
+    check("the restored clip validates", rv.get("ok") is True and not rv.get("warnings"), rv)
+    rre, _ = run("render", restored_song, "--output", os.path.join(tone_dir, "restore.wav"))
+    check("a song with a restored clip renders", rre.get("ok") is True, rre)
+    run("arrange", restored_song, "unrestore", "Take")
+    check("unrestore removes it", "restore" not in json.load(open(restored_song))["tracks"][0]["clips"][0])
     # 그루브: 목록, 루프에서 뽑기, 음표와 오디오 트랙에 입히기
     gl, _ = run("groove", "list")
     check("groove list has the factory grooves", len(gl.get("grooves", [])) >= 10 and any(g["id"] == "swing-16-66" for g in gl["grooves"]), gl)

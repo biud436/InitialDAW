@@ -75,6 +75,7 @@ usage:
   music-render notes <audio> [--from <s>] [--seconds <s>]                        # the notes of a sung or played line (pitch, drift, vibrato)
   music-render tempo <audio> [--from <s>] [--seconds <s>]                        # the tempo of a loop or a recording
   music-render beats <audio> [--from <s>] [--seconds <s>]                        # every beat of a performance whose tempo moves
+  music-render restore <audio> --output <file> [--noise 12] [--profile <s>:<len>] [--hum 50|60|auto] [--declick]   # reduce noise, hum and clicks
   music-render slice <audio> --output <kit.sfz> [--root C2] [--from <s>] [--seconds <s>]   # one key per attack
   music-render groove list | extract <song.json> --track <t> [--bars a-b] | extract-audio <audio> --bpm <n> [--from <s>]
                 [--grid 1/16] [--length <beats>] --output <groove.json>   # a groove's timing and accents
@@ -94,6 +95,7 @@ usage:
                 pitch-edit <track> [--clip <n>] --note <k> [--semitones <x> | --to <note>] [--flatten 0-100] [--vibrato 0-200] [--clear]
                 reverse <track> [--clip <n>] | fade <track> [--clip <n>] [--in <s>] [--out <s>] [--in-shape <shape>] [--out-shape <shape>]
                 crossfade <track> [--clip <n>] [--ms 20]
+                restore <track> [--clip <n>] [--noise <dB>] [--profile <s>:<len>] [--hum 50|60|auto|off] [--declick | --no-declick] | unrestore <track> [--clip <n>]
   music-render format <song.json> [--output <out.json>] [--check]   # rewrites the song in the save format (one note per line)
   music-render realtime <song.json> [--seconds 20] [--from 0] [--block-size 256] [--output <out.wav>] [--no-pace]
   music-render instruments [--registry <file>]...
@@ -180,9 +182,10 @@ const std::vector<std::string> valueOptions { "--output", "--root", "--sample-ra
                                               "--groove", "--timing", "--velocity", "--length", "--track", "--template",
                                               "--video", "--video-offset", "--video-sound", "--width", "--height", "--threshold", "--ratio", "--min-gap",
                                               "--song", "--fps", "--size", "--scenes", "--clicks", "--rotate", "--before",
-                                              "--note", "--semitones", "--flatten", "--vibrato", "--in", "--out", "--in-shape", "--out-shape", "--ms" };
+                                              "--note", "--semitones", "--flatten", "--vibrato", "--in", "--out", "--in-shape", "--out-shape", "--ms",
+                                              "--noise", "--profile", "--hum" };
 const std::vector<std::string> flagOptions { "--quiet", "--verbose", "--strict", "--humanized", "--no-default-registry", "--no-pace", "--help",
-                                             "--loop", "--force", "--one-shot", "--no-formant", "--check", "--clear" };
+                                             "--loop", "--force", "--one-shot", "--no-formant", "--check", "--clear", "--declick", "--no-declick" };
 
 Args parseArgs (int argc, char** argv)
 {
@@ -1167,6 +1170,107 @@ int cmdTempo (const Args& a)
     return tempo ? exitOk : exitFailed;
 }
 
+// --noise, --profile <s>:<len>, --hum 50|60|auto|off, --declick, --no-declick 를 base 위에 (없는 옵션은 그대로 둔다)
+ClipRestore restoreOptions (const Args& a, ClipRestore base)
+{
+    if (const auto noise = numberValue (a, "--noise"))
+    {
+        if (*noise < 0.0 || *noise > 40.0)
+            throw UsageError ("--noise is the most the noise is turned down, 0 to 40 dB");
+        base.noiseDb = *noise;
+    }
+    if (const auto profile = a.value ("--profile"))
+    {
+        const auto colon = profile->find (':');
+        double start = 0.0, length = 0.0;
+        try
+        {
+            if (colon == std::string::npos)
+                throw std::invalid_argument ("no colon");
+            start = std::stod (profile->substr (0, colon));
+            length = std::stod (profile->substr (colon + 1));
+        }
+        catch (const std::exception&)
+        {
+            throw UsageError ("--profile is <seconds>:<length> where only noise is heard, for example 0.5:1.5");
+        }
+        if (start < 0.0 || length < 0.05)
+            throw UsageError ("--profile needs a start of 0 or more and a length of at least 0.05 seconds");
+        base.profileSeconds = start;
+        base.profileLengthSeconds = length;
+    }
+    if (const auto hum = a.value ("--hum"))
+    {
+        if (*hum == "auto")
+            base.humHz = -1.0;
+        else if (*hum == "off")
+            base.humHz = 0.0;
+        else if (*hum == "50" || *hum == "60")
+            base.humHz = std::stod (*hum);
+        else
+            throw UsageError ("--hum is 50, 60, auto or off");
+    }
+    if (a.flag ("--declick"))
+        base.declick = true;
+    if (a.flag ("--no-declick"))
+        base.declick = false;
+    return base;
+}
+
+juce::var restoreReportJson (const dsp::RestoreReport& r)
+{
+    auto* o = new juce::DynamicObject();
+    o->setProperty ("clicks", r.clicks);
+    o->setProperty ("humHz", number (r.humHz, 3));
+    juce::Array<juce::var> notches;
+    for (const double f : r.humNotches)
+        notches.add (number (f, 2));
+    o->setProperty ("humNotches", notches);
+    o->setProperty ("denoised", r.denoised);
+    if (r.denoised)
+        o->setProperty ("noiseFloorDb", number (r.noiseFloorDb, 1));
+    if (! r.noiseSkipped.empty())
+        o->setProperty ("noiseSkipped", juce::String (r.noiseSkipped));
+    return juce::var (o);
+}
+
+int cmdRestore (const Args& a)
+{
+    if (a.positional.size() != 1)
+        throw UsageError ("restore needs exactly one audio file");
+    const auto out = a.value ("--output");
+    if (! out)
+        throw UsageError ("restore needs --output <file> (.wav, .flac, .ogg or .mp3)");
+    const auto r = restoreOptions (a, {});
+    if (! r.active())
+        throw UsageError ("restore needs --noise <dB>, --hum 50|60|auto or --declick");
+    const auto input = fileArg (a.positional[0]);
+    AudioClip clip;
+    clip.file = input.getFullPathName().toStdString();
+    clip.restore = r;
+    const auto info = audioFileInfo (input);
+    if (! info)
+        throw Failure ("invalid-input", "not a readable audio file: " + input.getFullPathName().toStdString());
+    std::string error;
+    dsp::RestoreReport report;
+    const auto audio = clipAudio (clip, input.getParentDirectory(), info->sampleRate, error, &report);
+    if (audio == nullptr)
+        throw Failure ("invalid-input", error);
+    const auto output = fileArg (*out);
+    const auto type = audioFileTypeFor (output);
+    if (! type)
+        throw UsageError ("--output must end in .wav, .flac, .ogg or .mp3");
+    writeAudioFile (output, *audio, 0, audio->getNumSamples(), info->sampleRate, { *type, 24, -1 });
+    auto* o = new juce::DynamicObject();
+    o->setProperty ("ok", true);
+    o->setProperty ("command", "restore");
+    o->setProperty ("output", output.getFullPathName());
+    o->setProperty ("seconds", number (audio->getNumSamples() / info->sampleRate, 3));
+    o->setProperty ("restore", restoreReportJson (report));
+    emit (juce::var (o));
+    return exitOk;
+}
+
 int cmdBeats (const Args& a)
 {
     if (a.positional.size() != 1)
@@ -1679,6 +1783,7 @@ int cmdArrange (const Args& a)
     const auto& root = doc->root();
     const auto folder = source.getParentDirectory();   // 길이가 적히지 않은 클립의 파일
     juce::var after;
+    juce::Array<juce::var> restored;   // arrange restore 가 미리 만든 복원의 결과
     if (op == "insert-bars")
     {
         // 넣는 마디는 넣는 자리 앞의 박자로 (그 자리의 박자 바꾸기는 뒤로 밀린다)
@@ -1924,7 +2029,7 @@ int cmdArrange (const Args& a)
         trackJson = withClip (trackJson, k, clip);
         after.getProperty ("tracks", juce::var()).getArray()->set ((int) index, trackJson);
     }
-    else if (op == "reverse" || op == "fade" || op == "crossfade")
+    else if (op == "reverse" || op == "fade" || op == "crossfade" || op == "restore" || op == "unrestore")
     {
         // 오디오 트랙의 클립 (--clip 이 없으면 모든 들리는 클립)
         const auto index = trackOperand();
@@ -1956,7 +2061,33 @@ int cmdArrange (const Args& a)
                 throw UsageError (std::string (option) + " is sine, linear, equalPower or exponential");
             return shape;
         };
-        if (op == "reverse")
+        if (op == "restore" || op == "unrestore")
+            for (const size_t k : chosen)
+            {
+                if (op == "unrestore")
+                    clips[k].restore.reset();
+                else
+                {
+                    // 옵션이 하나도 없으면 잡음 12 dB (처음 켤 때), 있으면 지금 값 위에 그 옵션만
+                    const bool none = ! a.value ("--noise") && ! a.value ("--profile") && ! a.value ("--hum") && ! a.flag ("--declick")
+                                      && ! a.flag ("--no-declick");
+                    auto r = restoreOptions (a, clips[k].restore.value_or (ClipRestore {}));
+                    if (none && ! clips[k].restore)
+                        r.noiseDb = 12.0;
+                    clips[k].restore = r.active() ? std::optional<ClipRestore> (r) : std::nullopt;
+                    // 복원한 소리를 미리 만들어 결과를 알린다 (클릭 수, 잰 험, 잡음 크기)
+                    std::string error;
+                    dsp::RestoreReport report;
+                    if (r.active() && clipAudio (clips[k], folder, 48000.0, error, &report) != nullptr)
+                    {
+                        auto entry = restoreReportJson (report);
+                        entry.getDynamicObject()->setProperty ("clip", (int) k + 1);
+                        restored.add (entry);
+                    }
+                }
+                changed[k] = true;
+            }
+        else if (op == "reverse")
             for (const size_t k : chosen)
             {
                 const auto info = audioFileInfo (clipFile (clips[k], folder));
@@ -2175,6 +2306,8 @@ int cmdArrange (const Args& a)
     o->setProperty ("tracks", names);
     o->setProperty ("markers", markers);
     o->setProperty ("sections", sectionList);
+    if (! restored.isEmpty())
+        o->setProperty ("restored", restored);
     emit (juce::var (o));
     return exitOk;
 }
@@ -2577,6 +2710,7 @@ int main (int argc, char** argv)
         if (args.command == "slice") return cmdSlice (args);
         if (args.command == "groove") return cmdGroove (args);
         if (args.command == "beats") return cmdBeats (args);
+        if (args.command == "restore") return cmdRestore (args);
         if (args.command == "track-template") return cmdTrackTemplate (args);
         if (args.command == "import-midi") return cmdImportMidi (args);
         if (args.command == "arrange") return cmdArrange (args);
@@ -2587,7 +2721,7 @@ int main (int argc, char** argv)
         if (args.command == "new") return cmdNew (args);
 
         const auto s = closestMatch (args.command, { "validate", "render", "realtime", "inspect", "video-info", "video-frame", "video-scenes",
-                                                     "video-audio", "video-pattern", "export-midi", "export-musicxml", "sampler", "transcribe", "notes", "tempo", "beats", "slice", "groove", "track-template", "instruments", "templates", "new", "chords", "scales",
+                                                     "video-audio", "video-pattern", "export-midi", "export-musicxml", "sampler", "transcribe", "notes", "tempo", "beats", "restore", "slice", "groove", "track-template", "instruments", "templates", "new", "chords", "scales",
                                                      "arrange", "import-midi", "format", "plugins", "version", "help" });
         throw UsageError ("unknown command '" + args.command + "'" + (s.empty() ? std::string {} : " (did you mean '" + s + "'?)"));
     }

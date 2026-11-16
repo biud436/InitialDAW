@@ -2,6 +2,7 @@
 
 #include "analysis/NoteSegments.h"
 #include "analysis/PitchTrack.h"
+#include "dsp/Restore.h"
 
 #include "io/AudioFile.h"
 #include "io/Codecs.h"
@@ -411,6 +412,59 @@ std::shared_ptr<const juce::AudioBuffer<float>> loadClipAudio (const juce::File&
     return result;
 }
 
+juce::String restoreKey (const AudioClip& clip)
+{
+    if (! clip.restore || ! clip.restore->active())
+        return {};
+    const auto& r = *clip.restore;
+    juce::String key ("|restore ");
+    key << juce::String (r.noiseDb, 6) << "," << juce::String (r.humHz, 6) << (r.declick ? ",click" : ",");
+    if (r.profileSeconds)
+        key << ",p" << juce::String (*r.profileSeconds, 9) << "+" << juce::String (r.profileLengthSeconds, 9);
+    return key;
+}
+
+std::shared_ptr<const juce::AudioBuffer<float>> clipAudio (const AudioClip& clip, const juce::File& songFolder, double sampleRate, std::string& error,
+                                                           dsp::RestoreReport* report)
+{
+    const auto file = clipFile (clip, songFolder);
+    auto source = loadClipAudio (file, sampleRate, error, clip.reverse);
+    const auto extra = restoreKey (clip);
+    if (source == nullptr || extra.isEmpty())
+        return source;
+    struct Restored
+    {
+        std::weak_ptr<const juce::AudioBuffer<float>> audio;
+        dsp::RestoreReport report;
+    };
+    static std::map<juce::String, Restored> cache;
+    const auto key = cacheKey (file, sampleRate) + (clip.reverse ? "|reversed" : "") + extra;
+    {
+        std::lock_guard<std::mutex> lock (cacheMutex());
+        if (auto it = cache.find (key); it != cache.end())
+            if (auto alive = it->second.audio.lock())
+            {
+                if (report != nullptr)
+                    *report = it->second.report;
+                return alive;
+            }
+    }
+    auto out = std::make_shared<juce::AudioBuffer<float>> (*source);
+    dsp::RestoreSettings settings;
+    settings.noiseDb = clip.restore->noiseDb;
+    settings.profileStart = clip.restore->profileSeconds;
+    settings.profileLength = clip.restore->profileLengthSeconds;
+    settings.humHz = clip.restore->humHz;
+    settings.declick = clip.restore->declick;
+    const auto done = dsp::restoreAudio (*out, sampleRate, settings);
+    if (report != nullptr)
+        *report = done;
+    std::shared_ptr<const juce::AudioBuffer<float>> result = out;
+    std::lock_guard<std::mutex> lock (cacheMutex());
+    cache[key] = { result, done };
+    return result;
+}
+
 namespace
 {
 
@@ -446,7 +500,8 @@ std::shared_ptr<const juce::AudioBuffer<float>> renderStretched (const AudioClip
     static std::map<juce::String, std::weak_ptr<const juce::AudioBuffer<float>>> cache;
     const auto file = clipFile (spec, folder);
     juce::String key = cacheKey (file, sampleRate) + (spec.reverse ? "|reversed" : "") + "|" + juce::String (spec.offsetSeconds, 9) + "|"
-                       + juce::String (clipLengthSeconds (spec, folder), 9) + "|" + juce::String (spec.stretch, 9) + "|" + juce::String (spec.pitchSemitones, 9);
+                       + juce::String (clipLengthSeconds (spec, folder), 9) + "|" + juce::String (spec.stretch, 9) + "|" + juce::String (spec.pitchSemitones, 9)
+                       + restoreKey (spec);
     for (const auto& w : spec.warp)
         key << "|w" << juce::String (w.seconds, 9) << "," << juce::String (w.beat, 9);
     if (const auto& pc = spec.pitchCorrection)
@@ -470,7 +525,7 @@ std::shared_ptr<const juce::AudioBuffer<float>> renderStretched (const AudioClip
             if (auto alive = it->second.lock())
                 return alive;
     }
-    const auto source = loadClipAudio (file, sampleRate, error, spec.reverse);
+    const auto source = clipAudio (spec, folder, sampleRate, error);
     if (source == nullptr)
         return nullptr;
     const double sr = sampleRate;
@@ -505,7 +560,8 @@ std::shared_ptr<const juce::AudioBuffer<float>> renderStretched (const AudioClip
                 m[(size_t) i] = 0.5f * (input.getSample (0, (int) i) + input.getSample (1, (int) i));
             return m;
         };
-        const auto frames = clipPitchFrames (cacheKey (file, sampleRate) + (spec.reverse ? "|reversed|" : "|") + juce::String (srcStart) + "|" + juce::String (srcFrames),
+        const auto frames = clipPitchFrames (cacheKey (file, sampleRate) + (spec.reverse ? "|reversed|" : "|") + juce::String (srcStart) + "|" + juce::String (srcFrames)
+                                                 + restoreKey (spec),
                                              sr, mono);
         if (const auto& pc = spec.pitchCorrection)
             correction = pitchCorrectionCurve (frames, pc->allowed, pc->strength, pc->speedMs, spec.pitchSemitones);
@@ -573,7 +629,7 @@ std::shared_ptr<const juce::AudioBuffer<float>> renderSliced (const AudioClip& s
     const auto file = clipFile (spec, folder);
     const double length = clipLengthSeconds (spec, folder);
     juce::String key = cacheKey (file, sampleRate) + (spec.reverse ? "|reversed" : "") + "|slice|" + juce::String (spec.offsetSeconds, 9) + "|" + juce::String (length, 9) + "|"
-                       + juce::String (spec.sourceBpm.value_or (0.0), 9) + "@" + juce::String (spec.startBeat, 9);
+                       + juce::String (spec.sourceBpm.value_or (0.0), 9) + "@" + juce::String (spec.startBeat, 9) + restoreKey (spec);
     for (const auto& w : spec.warp)
         key << "|w" << juce::String (w.seconds, 9) << "," << juce::String (w.beat, 9);
     for (const auto& p : tempo.points())
@@ -584,7 +640,7 @@ std::shared_ptr<const juce::AudioBuffer<float>> renderSliced (const AudioClip& s
             if (auto alive = it->second.lock())
                 return alive;
     }
-    const auto source = loadClipAudio (file, sampleRate, error, spec.reverse);
+    const auto source = clipAudio (spec, folder, sampleRate, error);
     if (source == nullptr)
         return nullptr;
     const double sr = sampleRate;
@@ -803,6 +859,8 @@ AudioClip withClipReversed (const AudioClip& clip, double fileSeconds)
     out.gainCurve = mirroredLane (clip.gainCurve, L);
     for (auto& p : out.gainCurve.points)
         p.beat = tidy (std::max (0.0, p.beat));
+    if (out.restore && out.restore->profileSeconds)
+        out.restore->profileSeconds = tidy (std::max (0.0, mirror (*clip.restore->profileSeconds + clip.restore->profileLengthSeconds)));
     return out;
 }
 
@@ -982,7 +1040,7 @@ std::unique_ptr<AudioClipPlayer::ClipList> AudioClipPlayer::makeList (const std:
         }
         if (c.data == nullptr)
         {
-            c.data = loadClipAudio (clipFile (spec, songFolder_), sampleRate_, error, spec.reverse);
+            c.data = clipAudio (spec, songFolder_, sampleRate_, error);
             if (c.data == nullptr)
             {
                 warnings.push_back (spec.path + ": " + error);

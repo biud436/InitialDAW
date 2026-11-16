@@ -591,6 +591,29 @@ juce::var clipJson (const AudioClip& clip, const juce::var& original)
         }
         o->setProperty ("gainCurve", points);
     }
+    if (clip.restore && clip.restore->active())
+    {
+        const auto& r = *clip.restore;
+        auto* ro = new juce::DynamicObject();
+        if (r.noiseDb > 0.0)
+            ro->setProperty ("noiseDb", std::round (r.noiseDb * 100.0) / 100.0);
+        if (r.profileSeconds)
+        {
+            auto* po = new juce::DynamicObject();
+            po->setProperty ("seconds", std::round (*r.profileSeconds * 1.0e6) / 1.0e6);
+            po->setProperty ("lengthSeconds", std::round (r.profileLengthSeconds * 1.0e6) / 1.0e6);
+            ro->setProperty ("profile", juce::var (po));
+        }
+        if (r.humHz < 0.0)
+            ro->setProperty ("humHz", "auto");
+        else if (r.humHz > 0.0)
+            ro->setProperty ("humHz", r.humHz);
+        if (r.declick)
+            ro->setProperty ("declick", true);
+        o->setProperty ("restore", juce::var (ro));
+    }
+    else
+        o->removeProperty ("restore");
     if (clip.sourceBpm)
         o->setProperty ("sourceBpm", *clip.sourceBpm);
     else

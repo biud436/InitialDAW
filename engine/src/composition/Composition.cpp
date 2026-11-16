@@ -632,9 +632,48 @@ void readTrack (const juce::var& v, const std::string& path, Composition& c, Dia
                 if (clip.warpSlices && ! clip.pitchEdits.empty())
                     d.error (cr.pathOf ("pitchEdits"), "a sliced clip plays at the file's own pitch");
             }
+            if (const auto* restoreVar = cr.get ("restore"))
+            {
+                // 복원: { "noiseDb", "profile": { "seconds", "lengthSeconds" }, "humHz": 50 | 60 | "auto", "declick" }
+                ObjectReader rr (*restoreVar, cr.pathOf ("restore"), d);
+                if (rr.ok())
+                {
+                    ClipRestore r;
+                    r.noiseDb = rr.number ("noiseDb", false, 0.0, 40.0).value_or (0.0);
+                    r.declick = rr.boolean ("declick", false).value_or (false);
+                    if (rr.has ("humHz"))
+                    {
+                        const auto* hum = rr.get ("humHz");
+                        if (hum != nullptr && hum->isString())
+                        {
+                            if (hum->toString() == "auto")
+                                r.humHz = -1.0;
+                            else
+                                d.error (rr.pathOf ("humHz"), "humHz must be 50, 60 or \"auto\"");
+                        }
+                        else if (const auto hz = rr.number ("humHz", false, 40.0, 70.0))
+                            r.humHz = *hz;
+                    }
+                    if (const auto* profileVar = rr.object ("profile", false))
+                    {
+                        ObjectReader pr (*profileVar, rr.pathOf ("profile"), d);
+                        const auto seconds = pr.number ("seconds", true, 0.0);
+                        const auto length = pr.number ("lengthSeconds", true, 0.05, 3600.0);
+                        pr.warnUnknown ({ "seconds", "lengthSeconds" });
+                        if (seconds && length)
+                        {
+                            r.profileSeconds = *seconds;
+                            r.profileLengthSeconds = *length;
+                        }
+                    }
+                    rr.warnUnknown ({ "noiseDb", "profile", "humHz", "declick", "comment" });
+                    if (r.active())
+                        clip.restore = r;
+                }
+            }
             cr.warnUnknown ({ "file", "startBeat", "offsetSeconds", "lengthSeconds", "gainDb", "fadeInSeconds", "fadeOutSeconds", "fadeInShape", "fadeOutShape",
-                              "reverse", "gainCurve", "sourceBpm", "stretch", "pitchSemitones", "warp", "warpMode", "pitchCorrection", "pitchEdits", "muted",
-                              "comment" });
+                              "reverse", "gainCurve", "sourceBpm", "stretch", "pitchSemitones", "warp", "warpMode", "pitchCorrection", "pitchEdits", "restore",
+                              "muted", "comment" });
             if (! start || clip.file.empty())
                 continue;
             clip.startBeat = *start;

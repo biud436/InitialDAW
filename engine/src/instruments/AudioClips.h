@@ -5,6 +5,7 @@
 #include "composition/Composition.h"
 #include "composition/Groove.h"
 #include "core/Handoff.h"
+#include "dsp/Restore.h"
 #include "instruments/Instrument.h"
 #include "timing/TempoMap.h"
 
@@ -78,6 +79,13 @@ float fadeGain (FadeShape shape, double t);
 // 파일 전체를 sampleRate 의 스테레오(모노는 두 채널에 같게)로. 같은 파일과 샘플레이트는 한 번만 읽는다 (수정 시각이 바뀌면 다시).
 // reversed 면 원래 샘플레이트에서 거꾸로 돌린 뒤 바꾼다
 std::shared_ptr<const juce::AudioBuffer<float>> loadClipAudio (const juce::File& file, double sampleRate, std::string& error, bool reversed = false);
+
+// 클립의 소리 (렌더 샘플레이트, 스테레오): 복원(restore)이 있으면 파일의 소리를 복원한 것 (파일, 뒤집기, 복원 값마다 한 번 만든다).
+// 재생, 늘이기, 조각 재생이 모두 이 소리를 쓴다. report 가 있으면 복원의 결과(클릭 수, 잰 험, 잡음 크기)를 담는다
+std::shared_ptr<const juce::AudioBuffer<float>> clipAudio (const AudioClip& clip, const juce::File& songFolder, double sampleRate, std::string& error,
+                                                           dsp::RestoreReport* report = nullptr);
+// 캐시 열쇠에 붙이는 복원 값 (복원이 없으면 빈 문자열)
+juce::String restoreKey (const AudioClip& clip);
 
 // 클립의 파일의 초가 가리키는 소리의 파일: 뒤집지 않은 클립은 그 파일, 뒤집은 클립은 거꾸로 돌린 사본 (임시 폴더, 원래 파일이 바뀌면 다시 쓴다).
 // 클립의 소리를 재는 곳(어택, 템포, 받아 적기, 음 덩어리, 샘플러)은 이 파일을 읽는다. 쓰지 못하면 원래 파일

@@ -2563,6 +2563,91 @@ bool MainComponent::clearClipGainCurve (ArrangementPanel::ClipRef ref)
     return editClip (ref, *clip);
 }
 
+namespace
+{
+
+juce::String restoreSummary (const mr::dsp::RestoreReport& r, const mr::ClipRestore& asked)
+{
+    juce::StringArray parts;
+    if (asked.declick)
+        parts.add (juce::String::fromUTF8 ("클릭 ") + juce::String (r.clicks) + juce::String::fromUTF8 ("개를 메웠습니다"));
+    if (asked.humHz != 0.0)
+        parts.add (r.humHz > 0.0 ? juce::String (r.humHz, 2) + juce::String::fromUTF8 (" Hz 험과 배음 ") + juce::String ((int) r.humNotches.size())
+                                       + juce::String::fromUTF8 ("개를 지웠습니다")
+                                 : juce::String::fromUTF8 ("험을 찾지 못했습니다"));
+    if (asked.noiseDb > 0.0)
+    {
+        if (r.denoised)
+            parts.add (juce::String::fromUTF8 ("잡음(") + juce::String (r.noiseFloorDb, 1) + juce::String::fromUTF8 (" dBFS)을 최대 ")
+                       + juce::String (asked.noiseDb, 0) + juce::String::fromUTF8 (" dB 줄였습니다"));
+        else
+            parts.add (juce::String::fromUTF8 ("조용한 구간이 없어 잡음을 재지 못했습니다. 잡음만 들리는 곳을 구간으로 고르고 '고른 구간을 잡음 지문으로'를 쓰십시오"));
+    }
+    return juce::String::fromUTF8 ("잡음 줄이기: ") + parts.joinIntoString (", ") + ".";
+}
+
+} // namespace
+
+bool MainComponent::setClipRestore (ArrangementPanel::ClipRef ref, std::optional<mr::ClipRestore> restore)
+{
+    auto clip = clipAt (ref);
+    if (! clip)
+        return false;
+    if (restore && ! restore->active())
+        restore.reset();
+    if (clip->restore == restore)
+        return false;
+    clip->restore = restore;
+    if (! editClip (ref, *clip))
+        return false;
+    if (! restore)
+    {
+        setStatus (juce::String::fromUTF8 ("잡음 줄이기를 껐습니다."));
+        return true;
+    }
+    setStatus (juce::String::fromUTF8 ("잡음 줄이기를 계산합니다..."));
+    // 재생기도 같은 소리를 쓰도록 재생 샘플레이트로 만든다 (캐시를 함께 쓴다)
+    const double rate = audio_ != nullptr ? audio_->sampleRate() : 48000.0;
+    juce::Component::SafePointer<MainComponent> safe (this);
+    juce::Thread::launch ([safe, c = *clip, folder = project_.file().getParentDirectory(), rate]
+    {
+        std::string error;
+        mr::dsp::RestoreReport report;
+        const bool ok = mr::clipAudio (c, folder, rate, error, &report) != nullptr;
+        juce::MessageManager::callAsync ([safe, report, ok, error, asked = *c.restore]
+        {
+            if (auto* self = safe.getComponent())
+                self->setStatus (ok ? restoreSummary (report, asked) : juce::String::fromUTF8 (error.c_str()), ! ok || (asked.noiseDb > 0.0 && ! report.denoised));
+        });
+    });
+    return true;
+}
+
+bool MainComponent::setClipNoiseProfileFromRange (ArrangementPanel::ClipRef ref)
+{
+    const auto clip = clipAt (ref);
+    const auto& range = arrangement_.range();
+    if (! clip || ! range || ref.track < range->firstTrack || ref.track > range->lastTrack)
+        return false;
+    // 구간의 곡의 초를 클립의 파일의 초로 (늘인 클립도), 클립의 소리 안으로 줄인다
+    const auto& tempo = project_.tempo();
+    const auto folder = project_.file().getParentDirectory();
+    const double clipStart = tempo.secondsAt (clip->startBeat), clipEnd = mr::clipEndSeconds (*clip, tempo, folder);
+    const double from = std::max (tempo.secondsAt (range->start), clipStart), to = std::min (tempo.secondsAt (range->end), clipEnd);
+    if (to - from < 0.05)
+    {
+        setStatus (juce::String::fromUTF8 ("고른 구간이 이 클립과 0.05초 넘게 겹치지 않습니다."), true);
+        return false;
+    }
+    const double a = mr::clipSourceAt (*clip, tempo, from), b = mr::clipSourceAt (*clip, tempo, to);
+    auto restore = clip->restore.value_or (mr::ClipRestore {});
+    if (restore.noiseDb <= 0.0)
+        restore.noiseDb = 12.0;
+    restore.profileSeconds = std::round (std::min (a, b) * 1.0e6) / 1.0e6;
+    restore.profileLengthSeconds = std::round (std::abs (b - a) * 1.0e6) / 1.0e6;
+    return setClipRestore (ref, restore);
+}
+
 void MainComponent::setClipGainEditing (bool on)
 {
     arrangement_.setGainCurveEditing (on);
@@ -2836,6 +2921,52 @@ void MainComponent::showClipMenu (ArrangementPanel::ClipRef ref)
     m.addItem (juce::String::fromUTF8 ("재생 위치에서 나누기"), [this, ref] { splitClip (ref, timeline_.playheadBeat()); });
     m.addItem (juce::String::fromUTF8 ("바로 뒤에 복제"), [this, ref] { duplicateClip (ref); });
     m.addItem (juce::String::fromUTF8 ("거꾸로 재생"), true, clip->reverse, [this, ref] { reverseClip (ref); });
+    {
+        // 잡음 줄이기: 넓은 대역 잡음, 전기 험, 클릭
+        const auto now = clip->restore.value_or (mr::ClipRestore {});
+        juce::PopupMenu restore;
+        auto with = [this, ref, now] (std::function<void (mr::ClipRestore&)> change)
+        {
+            return [this, ref, now, change]
+            {
+                auto r = now;
+                change (r);
+                setClipRestore (ref, r);
+            };
+        };
+        juce::PopupMenu amount;
+        for (const double db : { 0.0, 6.0, 12.0, 18.0, 24.0 })
+            amount.addItem (db == 0.0 ? juce::String::fromUTF8 ("끄기") : juce::String (db, 0) + " dB", true, std::abs (now.noiseDb - db) < 1.0e-9,
+                            with ([db] (mr::ClipRestore& r) { r.noiseDb = db; }));
+        restore.addSubMenu (juce::String::fromUTF8 ("잡음을 줄이는 양"), amount);
+        restore.addItem (juce::String::fromUTF8 ("잡음 지문: 자동 (가장 조용한 곳)"), now.noiseDb > 0.0, ! now.profileSeconds,
+                         with ([] (mr::ClipRestore& r) { r.profileSeconds.reset(); r.profileLengthSeconds = 0.0; }));
+        const auto& range = arrangement_.range();
+        restore.addItem (juce::String::fromUTF8 ("고른 구간을 잡음 지문으로"), range && ref.track >= range->firstTrack && ref.track <= range->lastTrack,
+                         now.profileSeconds.has_value(), [this, ref] { setClipNoiseProfileFromRange (ref); });
+        restore.addSeparator();
+        juce::PopupMenu hum;
+        const std::pair<double, const char*> hums[] = { { 0.0, "끄기" }, { 50.0, "50 Hz" }, { 60.0, "60 Hz" }, { -1.0, "자동 (50 Hz 와 60 Hz 가운데 찾기)" } };
+        for (const auto& [hz, name] : hums)
+            hum.addItem (juce::String::fromUTF8 (name), true, now.humHz == hz, with ([hz = hz] (mr::ClipRestore& r) { r.humHz = hz; }));
+        restore.addSubMenu (juce::String::fromUTF8 ("험 지우기"), hum);
+        restore.addItem (juce::String::fromUTF8 ("클릭 메우기"), true, now.declick, with ([] (mr::ClipRestore& r) { r.declick = ! r.declick; }));
+        restore.addSeparator();
+        restore.addItem (juce::String::fromUTF8 ("모두 끄기"), clip->restore.has_value(), false, [this, ref] { setClipRestore (ref, std::nullopt); });
+        juce::String label = juce::String::fromUTF8 ("잡음 줄이기");
+        if (clip->restore)
+        {
+            juce::StringArray on;
+            if (now.noiseDb > 0.0)
+                on.add (juce::String (now.noiseDb, 0) + " dB");
+            if (now.humHz != 0.0)
+                on.add (juce::String::fromUTF8 ("험"));
+            if (now.declick)
+                on.add (juce::String::fromUTF8 ("클릭"));
+            label << " (" << on.joinIntoString (", ") << ")";
+        }
+        m.addSubMenu (label, restore);
+    }
     m.addSeparator();
     {
         // 페이드의 모양 (들어오기, 나가기)

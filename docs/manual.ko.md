@@ -166,6 +166,16 @@
   3e-8 이내로 같음), 다른 소리는 등전력 페이드(서로 상관없는 두 잡음이 겹친 구간에서 0.08dB 이내)를 사용합니다. 편집 > 클립을 영점에서 자르기를 켜면
   나누기와 끝 자르기 위치를 10ms 안의 가장 가까운 영점 교차로 옮깁니다. 명령줄에서는 `arrange song.json reverse Vocal --clip 2`,
   `fade Vocal --clip 2 --in 0.1 --out-shape exponential`, `crossfade Vocal [--clip 1] [--ms 20]`을 사용합니다.
+- **노이즈, 험, 클릭 제거.** 클립 메뉴의 "잡음 줄이기"는 집에서 녹음한 소리를 다른 처리보다 먼저 정리합니다. 노이즈를 줄이는 최대량(6~24dB),
+  노이즈 프로파일(자동: 녹음에서 가장 조용한 10%, 또는 "고른 구간을 잡음 지문으로": 노이즈만 들리는 곳을 클립 위에서 구간으로 선택), 전원 험
+  (50Hz, 60Hz, 자동), 클릭 메우기를 설정합니다. 설정은 클립의
+  `"restore": { "noiseDb": 12, "profile": { "seconds": 0.5, "lengthSeconds": 1 }, "humHz": "auto", "declick": true }`로 저장됩니다. 녹음은 클립을
+  준비할 때 한 번 처리하므로 재생과 내보내기 결과가 같고, 상태 줄에 처리 결과(메운 클릭 수, 측정한 험 주파수, 노이즈 레벨)가 표시됩니다.
+  험은 50Hz나 60Hz에서 0.3Hz 이내이고 녹음 전체에 고르게 있을 때만 제거하므로 그 근처의 음은 건드리지 않습니다. 조용한 구간이 없는 녹음은
+  노이즈를 줄이지 않고 이유를 알립니다. 테스트 신호에서 노이즈만 있는 구간은 24dB 줄고 음악은 0.2dB 이내로 유지되며, 험과 배음은 44dB 이상
+  줄고, 일부러 넣은 클릭 30개를 모두 찾아 원래 신호와의 차이 -45dB 이내로 메웁니다. 명령줄에서는
+  `music-render restore take.wav --output clean.wav --noise 12 --hum auto --declick`, `arrange song.json restore Vocal [--clip 1] [--noise 12]
+  [--profile 0.5:1] [--hum 60] [--declick]`, `unrestore Vocal`을 사용합니다.
 - **시간.** 클립의 위치는 박 단위이지만 소리는 초 단위로 재생됩니다. 템포를 바꾸면 시작 위치만 이동하고 재생 속도는 그대로입니다. 구간 편집과 시간 삽입, 삭제는
   클립을 경계에서 나누고 파일 안의 시작 위치를 조정합니다.
 - **오디오 녹음.** 오디오 트랙을 선택하고 ⌥R을 누릅니다(MIDI 녹음과 같은 버튼이며 카운트인도 같습니다). 입력이 꺼져 있으면 기본 입력의 첫 두 채널을 켭니다(처음에는
@@ -395,6 +405,8 @@ $MR arrange song.json tune Vocal --key "A minor" --speed 30                     
 $MR notes take.wav                                                             # 노래나 독주 녹음의 음 목록 (음높이, 흔들림, 비브라토)
 $MR arrange song.json pitch-edit Vocal --note 3 --to E4 --vibrato 0             # 오디오 클립의 음 하나 편집 (음높이, 흔들림, 비브라토)
 $MR arrange song.json reverse Vocal --clip 2                                     # 클립을 같은 자리에서 거꾸로 재생
+$MR restore take.wav --output clean.wav --noise 12 --hum auto --declick         # 녹음의 노이즈, 전원 험, 클릭을 줄이고 결과를 출력합니다
+$MR arrange song.json restore Vocal --clip 1 --profile 0.5:1                    # 같은 처리를 클립에 설정해 곡에 저장합니다 (unrestore로 해제)
 $MR arrange song.json crossfade Vocal --ms 20                                    # 겹치거나 맞붙은 다음 클립과 크로스페이드
 $MR groove extract-audio loop.wav --bpm 94 --output feel.json                  # 녹음에서 그루브 추출 (음표에서는 groove extract song.json --track Kit)
 $MR arrange song.json groove Hat --groove feel.json [--timing 100] [--velocity 100]   # 음표(오디오 트랙은 어택)에 그루브 적용

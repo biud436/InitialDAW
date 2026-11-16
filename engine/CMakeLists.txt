@@ -59,6 +59,7 @@ add_library(music_render_core STATIC
   src/effects/Automation.cpp
   src/dsp/Fft.cpp
   src/dsp/Freeverb.cpp
+  src/dsp/Restore.cpp
   src/media/Timecode.cpp
   src/media/VideoCommon.cpp)
 
@@ -183,6 +184,7 @@ add_executable(music_render_tests
   tests/test_electronic.cpp
   tests/test_arrange.cpp
   tests/test_audio_clips.cpp
+  tests/test_restore.cpp
   tests/test_audio_take.cpp
   tests/test_document.cpp
   tests/test_note_tools.cpp

@@ -1366,6 +1366,25 @@ private:
                         && xa.fadeOutShape == mr::FadeShape::sine && xb.fadeInShape == mr::FadeShape::sine,
                     "the crossfade lengthens both halves into each other with sine fades");
             expect (! view.crossfadeClip ({ t, 1 }), "the last clip has nothing after it");
+
+            // 잡음 줄이기 (D38): 클립의 restore, 고른 구간을 잡음 지문으로, 끄면 지운다
+            mr::ClipRestore restore;
+            restore.noiseDb = 12.0;
+            expect (view.setClipRestore (ref, restore) && clips (t)[0].restore && near (clips (t)[0].restore->noiseDb, 12.0), "turn noise reduction on");
+            expect (! view.setClipRestore (ref, restore), "the same restore is no edit");
+            restore.humHz = -1.0;
+            restore.declick = true;
+            expect (view.setClipRestore (ref, restore) && clips (t)[0].restore->humHz == -1.0 && clips (t)[0].restore->declick, "hum and clicks too");
+            expect (project.toJson().find ("\"humHz\": \"auto\"") != std::string::npos, "the song saves the restore settings");
+            arrangement.setRange (ArrangementPanel::Range { t, t, 40.0, 40.5 });
+            expect (view.setClipNoiseProfileFromRange (ref) && clips (t)[0].restore->profileSeconds.has_value()
+                        && near (*clips (t)[0].restore->profileSeconds, clips (t)[0].offsetSeconds)
+                        && std::abs (clips (t)[0].restore->profileLengthSeconds - 0.25) < 1.0e-3 && clips (t)[0].restore->declick,
+                    "the selected range becomes the noise profile in the file's seconds");
+            arrangement.setRange (ArrangementPanel::Range { t, t, 10.0, 12.0 });
+            expect (! view.setClipNoiseProfileFromRange (ref), "a range away from the clip is no profile");
+            arrangement.setRange (std::nullopt);
+            expect (view.setClipRestore (ref, std::nullopt) && ! clips (t)[0].restore, "turn the restore off");
         }
 
         expect (project.toJson().find ("\"instrument\": \"audio\"") != std::string::npos, "the song saves the audio track");

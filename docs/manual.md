@@ -192,6 +192,19 @@ effects, fader, sends, buses and the master, in playback and in export alike.
   overlap). Edit > Cut clips at zero crossings moves splits and trimmed edges to the nearest zero crossing within 10 ms.
   From the command line: `arrange song.json reverse Vocal --clip 2`, `fade Vocal --clip 2 --in 0.1 --out-shape exponential`,
   `crossfade Vocal [--clip 1] [--ms 20]`.
+- **Noise, hum and clicks.** A clip's menu > "잡음 줄이기" (noise reduction) cleans a home recording before anything else
+  happens to it: how far the noise is turned down (6 to 24 dB), the noise profile (automatic: the quietest tenth of the
+  recording; or "고른 구간을 잡음 지문으로", the selected range: select a range over the clip where only the noise is
+  heard), mains hum (50 Hz, 60 Hz or automatic) and filling clicks. The settings are the clip's
+  `"restore": { "noiseDb": 12, "profile": { "seconds": 0.5, "lengthSeconds": 1 }, "humHz": "auto", "declick": true }`; the
+  recording is repaired once when the clip is prepared, so playback and export give the same sound, and the status bar
+  says what was found (clicks filled, the hum's frequency, the noise level). Hum is taken only when it sits within 0.3 Hz
+  of 50 or 60 Hz and sounds through the whole recording, so notes near those frequencies are left alone, and a recording
+  without a quiet part keeps its noise and the status bar says why. On the test signals the noise-only parts drop 24 dB
+  with the music within 0.2 dB, the hum and its harmonics drop 44 dB or more, and 30 inserted clicks are all found and
+  filled to within -45 dB of the original. From the command line: `music-render restore take.wav --output clean.wav
+  --noise 12 --hum auto --declick`, and `arrange song.json restore Vocal [--clip 1] [--noise 12] [--profile 0.5:1]
+  [--hum 60] [--declick]`, `unrestore Vocal`.
 - **Timing.** A clip sits on a beat, but its audio plays in seconds: a tempo change moves where it starts, never how fast it
   plays. Range editing, inserting and deleting time split clips at the edges and move their start inside the file.
 - **Recording audio.** Select an audio track and press ⌥R (the same button as MIDI recording, with the count-in). If no input
@@ -447,6 +460,8 @@ $MR notes take.wav                                                             #
 $MR arrange song.json pitch-edit Vocal --note 3 --to E4 --vibrato 0             # one note of an audio clip: pitch, drift, vibrato
 $MR arrange song.json reverse Vocal --clip 2                                     # play a clip backwards in the same place
 $MR arrange song.json crossfade Vocal --ms 20                                    # crossfade each clip into the next (overlapping or touching)
+$MR restore take.wav --output clean.wav --noise 12 --hum auto --declick         # reduce hiss, mains hum and clicks in a recording (reports what it found)
+$MR arrange song.json restore Vocal --clip 1 --profile 0.5:1                    # the same on a clip, kept in the song (unrestore removes it)
 $MR groove extract-audio loop.wav --bpm 94 --output feel.json                  # a groove from a recording (or groove extract song.json --track Kit)
 $MR arrange song.json groove Hat --groove feel.json [--timing 100] [--velocity 100]   # notes (or an audio track's attacks) take the groove
 $MR beats take.wav; $MR arrange song.json follow-tempo Drums                  # every beat of a free performance; the song's tempo follows it

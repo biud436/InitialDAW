@@ -808,6 +808,8 @@ void ArrangementPanel::paintClips (juce::Graphics& g, size_t index, juce::Rectan
         auto label = juce::File (juce::String::fromUTF8 (clip.file.c_str())).getFileNameWithoutExtension();
         if (clip.reverse)
             label << juce::String::fromUTF8 ("  거꾸로");
+        if (clip.restore)
+            label << juce::String::fromUTF8 ("  잡음 줄임");
         if (std::abs (clip.gainDb) > 0.05)
             label << "  " << (clip.gainDb > 0 ? "+" : "") << juce::String (clip.gainDb, 1) << " dB";
         g.setColour (colours::text.withAlpha (0.9f * alpha));

@@ -25,7 +25,7 @@ line, which answers in JSON. Every route gives the same sound. The interface is 
   copy and paste across tracks, inserting and deleting time, tempo and meter changes, MIDI import, autosave and an undo
   history.
 - **Audio.** Clips from WAV, AIFF, FLAC, Ogg Vorbis and MP3; recording with loop takes and comping; fade shapes, gain
-  curves, reverse and crossfades; stretching, pitch shifting, warp markers and audio quantize; pitch correction and
+  curves, reverse and crossfades; noise, hum and click reduction; stretching, pitch shifting, warp markers and audio quantize; pitch correction and
   per-note pitch editing; tempo detection, slicing, melody transcription and tempo following; bouncing a track to audio.
 - **Instruments.** SFZ sample libraries through sfizz, a built-in synth with its own panel (subtractive presets, an 808,
   drum kits), VST3 and AU plugins in their own windows, a quick sampler that turns one sound into an instrument, and track

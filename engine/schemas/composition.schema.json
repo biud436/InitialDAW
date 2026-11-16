@@ -465,6 +465,30 @@
                   }
                 }
               },
+              "restore": {
+                "type": "object",
+                "description": "repair the clip's recording before anything else, once when the clip is prepared: fill clicks, notch out mains hum, reduce broadband noise",
+                "additionalProperties": false,
+                "properties": {
+                  "noiseDb": { "type": "number", "minimum": 0, "maximum": 40, "description": "the most the noise is turned down, in dB (0 or absent: no noise reduction)" },
+                  "profile": {
+                    "type": "object",
+                    "description": "where the noise alone is heard, in the file's seconds (absent: the quietest 10% of the frames)",
+                    "additionalProperties": false,
+                    "required": ["seconds", "lengthSeconds"],
+                    "properties": {
+                      "seconds": { "type": "number", "minimum": 0 },
+                      "lengthSeconds": { "type": "number", "minimum": 0.05, "maximum": 3600 }
+                    }
+                  },
+                  "humHz": {
+                    "description": "mains hum to remove: 50 or 60 (measured near it), or \"auto\" to find which",
+                    "oneOf": [ { "type": "number", "minimum": 40, "maximum": 70 }, { "const": "auto" } ]
+                  },
+                  "declick": { "type": "boolean", "description": "fill short clicks from the sound around them" },
+                  "comment": { "type": "string" }
+                }
+              },
               "muted": { "type": "boolean", "description": "a take that does not play" },
               "comment": { "type": "string" }
             }

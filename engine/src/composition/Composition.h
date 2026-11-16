@@ -159,6 +159,22 @@ struct PitchEdit
     }
 };
 
+// 클립 소리의 복원 (클립을 준비할 때 파일의 소리에 한 번 하고 캐시한다): 클릭 메우기, 전기 험 지우기, 넓은 대역 잡음 줄이기
+struct ClipRestore
+{
+    double noiseDb = 0.0;                     // 잡음을 줄이는 양의 상한 (dB, 0..40). 0 이면 잡음을 줄이지 않는다
+    std::optional<double> profileSeconds;     // 잡음 지문을 재는 구간 (파일의 초). 없으면 가장 조용한 10% 프레임
+    double profileLengthSeconds = 0.0;
+    double humHz = 0.0;                       // 0 끄기, 50 이나 60 (그 근처에서 잰다), -1 은 둘 가운데 찾는다 (JSON 은 "auto")
+    bool declick = false;
+    bool active() const noexcept { return noiseDb > 0.0 || humHz != 0.0 || declick; }
+    bool operator== (const ClipRestore& o) const
+    {
+        return noiseDb == o.noiseDb && profileSeconds == o.profileSeconds && profileLengthSeconds == o.profileLengthSeconds && humHz == o.humHz
+               && declick == o.declick;
+    }
+};
+
 // 클립 페이드의 모양 (t 는 0..1): sine 은 사인 제곱 (맞선 두 페이드의 크기 합이 1), linear 는 t, equalPower 는 사인 (맞선 두 페이드의 힘 합이 1),
 // exponential 은 -60 dB 에서 0 dB 까지 데시벨로 곧게 (처음은 0)
 enum class FadeShape { sine, linear, equalPower, exponential };
@@ -192,6 +208,7 @@ struct AudioClip
     bool warpSlices = false;
     std::optional<PitchCorrection> pitchCorrection;
     std::vector<PitchEdit> pitchEdits;      // 음마다의 높이 편집 (파일의 초, 시작 순서, 겹치지 않는다)
+    std::optional<ClipRestore> restore;     // 잡음, 험, 클릭 줄이기 (다른 처리보다 먼저, 파일의 소리에)
     bool muted = false;                     // 들리지 않는 클립 (겹쳐 녹음한 테이크 가운데 고르지 않은 것)
     std::string path;
 
@@ -205,7 +222,7 @@ struct AudioClip
                && gainDb == o.gainDb && fadeInSeconds == o.fadeInSeconds && fadeOutSeconds == o.fadeOutSeconds && fadeInShape == o.fadeInShape
                && fadeOutShape == o.fadeOutShape && reverse == o.reverse && gainCurve == o.gainCurve && sourceBpm == o.sourceBpm
                && stretch == o.stretch && pitchSemitones == o.pitchSemitones && warp == o.warp && warpSlices == o.warpSlices
-               && pitchCorrection == o.pitchCorrection && pitchEdits == o.pitchEdits && muted == o.muted;
+               && pitchCorrection == o.pitchCorrection && pitchEdits == o.pitchEdits && restore == o.restore && muted == o.muted;
     }
     bool operator!= (const AudioClip& o) const { return ! (*this == o); }
 };
