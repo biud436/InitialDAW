@@ -303,7 +303,7 @@ double maxDiff (const juce::AudioBuffer<float>& a, const juce::AudioBuffer<float
 // 버스 둘(잔향, 딜레이와 컴프레서), 트랙 효과, 마스터 효과가 든 곡
 const char* busyJson = R"({ "tempo": 100, "performance": { "humanizeSeed": 3, "timingHumanizeMs": 6 },
   "render": { "tailSeconds": 1.0 },
-  "buses": [ { "name": "hall", "effects": [ { "type": "reverb", "mix": 1, "decaySeconds": 1.4 } ] },
+  "buses": [ { "name": "hall", "effects": [ { "type": "reverb", "mix": 1, "decaySeconds": 1.4 }, { "type": "limiter", "ceilingDb": 0, "lookaheadMs": 10.6667 } ] },
              { "name": "echo", "mixer": { "gainDb": -3 }, "effects": [ { "type": "delay", "timeMs": 180, "feedback": 0.5, "mix": 1 },
                                                                        { "type": "compressor", "thresholdDb": -30, "ratio": 4 } ] } ],
   "master": { "mixer": { "gainDb": -1 }, "effects": [ { "type": "eq", "lowCutHz": 40, "bands": [ { "type": "peak", "freqHz": 2000, "gainDb": 2 } ] },
@@ -346,7 +346,7 @@ TEST (realtime_apply_matches_a_player_built_from_the_edited_song)
     CHECK_EQ (maxDiff (a, b), 0.0);
     applied.collectRetired();
 
-    // 버스를 다시 켜고 트랙을 끈다: 출력 지연(버스 리버브의 지연 포함)만큼 당기면 오프라인 렌더와 같다
+    // 버스를 다시 켜고 트랙을 끈다: 출력 지연(버스 리미터의 미리 보기 포함)만큼 당기면 오프라인 렌더와 같다
     const auto offlineSong = composition (edit (busyJson, { { R"("mixer": { "gainDb": -6, "pan": 0.4 })", R"("mixer": { "gainDb": -6, "pan": 0.4, "mute": true })" },
                                                             { R"({ "type": "reverb", "mix": 1, "decaySeconds": 1.4 })", R"({ "type": "reverb", "mix": 1, "decaySeconds": 0.8 })" } }));
     RealtimePlayer live (before, playerOptions());
@@ -363,7 +363,30 @@ TEST (realtime_apply_matches_a_player_built_from_the_edited_song)
     CHECK (worst < 1.0e-5);
     // 버스 효과의 지연이 바뀌는 교체는 재생기를 다시 만든다 (버스 지연 맞추기가 바뀐다)
     RealtimePlayer other (before, playerOptions());
-    CHECK (! other.apply (composition (edit (busyJson, { { R"({ "type": "reverb", "mix": 1, "decaySeconds": 1.4 })", R"({ "type": "eq", "lowCutHz": 300 })" } }))));
+    CHECK (! other.apply (composition (edit (busyJson, { { R"({ "type": "limiter", "ceilingDb": 0, "lookaheadMs": 10.6667 })", R"({ "type": "eq", "lowCutHz": 300 })" } }))));
+}
+
+TEST (realtime_pitch_shift_matches_offline)
+{
+    // 피치 시프터 (지연이 크다) 가 든 트랙과 버스: 실시간을 출력 지연만큼 당기면 오프라인 렌더와 같다
+    const auto c = composition (R"({ "tempo": 120, "render": { "tailSeconds": 0.5 },
+  "buses": [ { "name": "fifth", "effects": [ { "type": "pitch", "semitones": 7, "mix": 1 } ] } ],
+  "tracks": [ { "name": "Lead", "instrument": "synth.saw-pad", "synth": { "attack": 0.002, "release": 0.05 },
+      "effects": [ { "type": "pitch", "semitones": -12, "cents": 5, "mix": 0.5, "formant": 1 } ], "sends": [ { "bus": "fifth", "levelDb": -6 } ],
+      "notes": [ { "pitch": "A3", "startBeat": 0, "durationBeat": 1.5, "velocity": 90 }, { "pitch": "C4", "startBeat": 2, "durationBeat": 1, "velocity": 80 },
+                 { "pitch": "E4", "startBeat": 4, "durationBeat": 2, "velocity": 90 } ] } ] })");
+    const auto reference = offline (c, "rt_pitch_reference.wav");
+    RealtimePlayer live (c, playerOptions());
+    const int latency = live.outputLatencySamples();
+    live.play();
+    const auto played = pull (live, (double) (reference.getNumSamples() + latency) / kRate);
+    double worst = 0.0;
+    for (int ch = 0; ch < 2; ++ch)
+        for (int i = 0; i < reference.getNumSamples(); ++i)
+            worst = std::max (worst, (double) std::abs (played.getSample (ch, i + latency) - reference.getSample (ch, i)));
+    CHECK (latency > 1000);
+    CHECK (rms (reference, 0.2, 3.0) > 0.005f);
+    CHECK (worst < 1.0e-5);
 }
 
 TEST (realtime_apply_while_playing_keeps_effect_state)
@@ -786,7 +809,7 @@ TEST (realtime_holds_automation_and_the_ducker_while_stopped)
 
 namespace
 {
-// 반복 시험: 7~8박에서 -96 dB 로 끊는 게인 곡선 (마스터, 또는 리버브 뒤의 트랙 효과). 다른 트랙의 리버브가 재생 지연 1024 를 만든다.
+// 반복 시험: 7~8박에서 -96 dB 로 끊는 게인 곡선 (마스터, 또는 지연 뒤의 트랙 효과). 다른 트랙의 리미터 (미리 보기) 가 재생 지연 1024 를 만든다.
 std::string wrapJson (bool onTrack)
 {
     const std::string lane = R"({ "type": "gain", "automation": { "gainDb": [ { "beat": 0, "value": 0, "curve": "step" }, { "beat": 7, "value": -96, "curve": "step" }, { "beat": 8, "value": 0 } ] } })";
@@ -794,9 +817,9 @@ std::string wrapJson (bool onTrack)
   "master": { "effects": [ )") + (onTrack ? "" : lane) + R"( ] },
   "tracks": [
     { "name": "Pad", "instrument": "synth.saw-pad", "synth": { "attack": 0.002 },
-      "effects": [ )" + (onTrack ? R"({ "type": "reverb", "mix": 0 }, )" + lane : std::string()) + R"( ],
+      "effects": [ )" + (onTrack ? R"({ "type": "limiter", "ceilingDb": 0, "lookaheadMs": 10.6667 }, )" + lane : std::string()) + R"( ],
       "notes": [ { "pitch": "A3", "startBeat": 0, "durationBeat": 16, "velocity": 90 } ] },
-    { "name": "Room", "instrument": "synth.sine", "effects": [ { "type": "reverb", "mix": 0.3 } ],
+    { "name": "Room", "instrument": "synth.sine", "effects": [ { "type": "reverb", "mix": 0.3 }, { "type": "limiter", "ceilingDb": 0, "lookaheadMs": 10.6667 } ],
       "notes": [ { "pitch": "A4", "startBeat": 15, "durationBeat": 1, "velocity": 60 } ] } ] })";
 }
 } // namespace
@@ -826,7 +849,7 @@ TEST (realtime_loop_wrap_reads_lanes_where_the_sound_came_from)
 
 namespace
 {
-// 위치 옮기기 시험: 박마다 치는 패드, 리버브(지연 1024) 뒤의 곡선 필터와 덕킹, 마스터의 곡선 고역 통과
+// 위치 옮기기 시험: 박마다 치는 패드, 지연 1024 (리미터의 미리 보기) 뒤의 곡선 필터와 덕킹, 마스터의 곡선 고역 통과
 std::string seekSweepJson()
 {
     std::string notes;
@@ -836,7 +859,7 @@ std::string seekSweepJson()
     return R"({ "tempo": 120, "render": { "tailSeconds": 0.3 },
   "master": { "effects": [ { "type": "filter", "mode": "highpass", "cutoffHz": 20, "automation": { "cutoffHz": [ { "beat": 0, "value": 20 }, { "beat": 16, "value": 800 } ] } } ] },
   "tracks": [ { "name": "Pad", "instrument": "synth.saw-pad", "synth": { "attack": 0.002, "release": 0.01 },
-      "effects": [ { "type": "reverb", "mix": 0 },
+      "effects": [ { "type": "limiter", "ceilingDb": 0, "lookaheadMs": 10.6667 },
                    { "type": "filter", "mode": "lowpass", "slope": 24, "cutoffHz": 300, "resonance": 0.3,
                      "automation": { "cutoffHz": [ { "beat": 0, "value": 300 }, { "beat": 16, "value": 6000 } ] } },
                    { "type": "ducker", "depthDb": -9, "releaseBeats": 0.4 } ],

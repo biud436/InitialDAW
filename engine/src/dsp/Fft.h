@@ -34,4 +34,7 @@ private:
     std::unique_ptr<Setup> setup_;
 };
 
+// 직접 합성곱: out[i] = sum_j taps[j] * line[numTaps - 1 + i - j] (i < count). line 은 numTaps - 1 + count 샘플
+void convolve (const float* line, const float* taps, int numTaps, float* out, int count) noexcept;
+
 } // namespace mr::dsp

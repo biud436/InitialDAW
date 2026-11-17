@@ -141,27 +141,34 @@ double duckerShape (const juce::var& params, const TempoMap& tempo, double sampl
 juce::AudioBuffer<float> generateHallImpulse (double sampleRate, double decaySeconds, double preDelayMs, double damping,
                                               double width, uint64_t seed);
 
-// 균일 분할 FFT 컨볼루션 (오버랩 세이브). 모노 입력 하나를 IR 두 개로 스테레오로 낸다. 지연 = 분할 크기.
+// IR 파일의 소리를 렌더 샘플레이트로 바꾸고 (sinc), 적힌 preDelayMs 만큼 앞을 비우고, 적힌 decaySeconds 로 뒤쪽을 지수로 줄인다
+juce::AudioBuffer<float> impulseFromFile (const juce::AudioBuffer<float>& file, double fileRate, double sampleRate, const juce::var& params);
+
+// 지연 없는 컨볼루션: IR 의 첫 분할은 샘플마다 직접 계산하고 (vDSP_conv), 나머지는 균일 분할 FFT (오버랩 세이브) 가
+// 한 분할 앞의 입력으로 미리 계산해 둔다. 모노 입력 하나를 IR 두 개로 스테레오로 낸다.
 class StereoConvolver
 {
 public:
     void prepare (const juce::AudioBuffer<float>& impulse, int partitionSize);
     void process (const float* input, float* outLeft, float* outRight, int numSamples);
-    int latencySamples() const noexcept { return partition_; }
+    int latencySamples() const noexcept { return 0; }
     // 같은 분할 크기의 앞 컨볼버에서 입력 기록과 출력 대기열을 옮긴다 (할당하지 않는다)
     void continueFrom (StereoConvolver& previous);
 
 private:
     void processPartition();
+    void direct (int count, float* outLeft, float* outRight) const;
 
     int partition_ = 0, fftSize_ = 0, partitions_ = 0, bins_ = 0;
     std::unique_ptr<dsp::Fft> fft_;
     float scale_ = 1.0f;
-    std::vector<std::vector<float>> irRe_[2], irIm_[2];   // [채널][분할][빈]
+    std::vector<float> taps_[2];                           // IR 의 첫 분할 [채널]
+    std::vector<float> line_;                              // 직접 계산의 입력: 분할 크기 - 1 샘플의 기록 뒤에 이번 조각
+    std::vector<std::vector<float>> irRe_[2], irIm_[2];   // 첫 분할 뒤의 IR [채널][분할][빈]
     std::vector<std::vector<float>> inRe_, inIm_;          // 주파수 영역 지연선 [분할][빈]
     int head_ = 0;
     std::vector<float> previous_, current_, work_, accRe_, accIm_;
-    std::vector<float> outFifo_[2];
+    std::vector<float> outFifo_[2];                        // 다음 분할의 꼬리 (FFT 쪽)
     int fifoPos_ = 0;
 };
 

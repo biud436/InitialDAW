@@ -555,6 +555,40 @@ def main():
     hints = [e.get("hint", "") for e in bv.get("errors", [])]
     check("unknown effect suggests the right one", any("limiter" in h for h in hints), bv)
 
+    # D39: 피치 시프터, 스테레오의 저역 모노와 위상, 다른 샘플레이트의 IR 파일
+    import struct
+    ir_wav = os.path.join(OUT, "ir_44k.wav")
+    with wave.open(ir_wav, "wb") as w:
+        w.setnchannels(1)
+        w.setsampwidth(2)
+        w.setframerate(44100)
+        frames = bytearray()
+        for i in range(22050):
+            v = int(12000 * math.exp(-i / 4000.0) * (1 if (i * 7919) % 13 < 7 else -1))
+            frames += struct.pack("<h", v)
+        w.writeframes(bytes(frames))
+    fx_song = os.path.join(OUT, "fx_d39.json")
+    json.dump({"tempo": 100, "render": {"tailSeconds": 0.5},
+               "tracks": [{"name": "Lead", "instrument": "synth.saw-pad",
+                           "effects": [{"type": "pitch", "semitones": 7, "cents": 10, "mix": 0.5},
+                                       {"type": "stereo", "monoBelowHz": 120, "invertLeft": 1, "swap": 1},
+                                       {"type": "reverb", "ir": "ir_44k.wav", "preDelayMs": 15, "decaySeconds": 0.3, "mix": 0.3}],
+                           "notes": [{"pitch": 57, "startBeat": 0, "durationBeat": 2, "velocity": 90}]}]},
+              open(fx_song, "w"))
+    fv, _ = run("validate", fx_song)
+    check("pitch, stereo options and an IR file validate", fv.get("ok") is True and not fv.get("warnings"), fv)
+    fr, _ = run("render", fx_song, "--output", os.path.join(OUT, "fx_d39.wav"), "--quiet")
+    lead = (fr.get("tracks") or [{}])[0]
+    check("a 44.1 kHz IR renders at 48 kHz and the pitch latency is reported",
+          fr.get("ok") is True and 8000 < lead.get("latencySamples", 0) < 16000 and lead.get("audible") is True, lead)
+    json.dump({"tempo": 100, "tracks": [{"name": "Lead", "instrument": "synth.sine",
+                                          "effects": [{"type": "pitch", "semitones": 30}, {"type": "stereo", "monoBelowHz": 900}],
+                                          "notes": [{"pitch": 57, "startBeat": 0, "durationBeat": 1, "velocity": 90}]}]},
+              open(fx_song, "w"))
+    fb, _ = run("validate", fx_song, code=1)
+    fpaths = sorted(e.get("path", "") for e in fb.get("errors", []))
+    check("out of range pitch and mono values are errors", fpaths == ["$.tracks[0].effects[0].semitones", "$.tracks[0].effects[1].monoBelowHz"], fb)
+
     # format: 앱의 저장 형식으로 다시 쓴다. 뜻은 같고, 두 번 쓰면 바뀌지 않으며, --check 는 쓰지 않는다
     fsrc = os.path.join(OUT, "format_src.json")
     with open(fsrc, "w", encoding="utf-8") as f:

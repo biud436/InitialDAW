@@ -38,6 +38,7 @@ const std::vector<EffectPreset>& effectPresets (const std::string& type)
         add ("hard-drive", R"({ "type": "distortion", "driveDb": 24, "toneHz": 4000, "mix": 1, "outputDb": -8 })");
         add ("mono", R"({ "type": "stereo", "width": 0 })");
         add ("wide", R"({ "type": "stereo", "width": 1.4 })");
+        add ("bass-mono", R"({ "type": "stereo", "monoBelowHz": 120 })");
         add ("master-ceiling", R"({ "type": "limiter", "ceilingDb": -1, "releaseMs": 60, "lookaheadMs": 5, "truePeak": 1 })");
         add ("lo-fi", R"({ "type": "filter", "mode": "lowpass", "cutoffHz": 3000, "resonance": 0.2, "slope": 12 })");
         add ("rumble-cut", R"({ "type": "filter", "mode": "highpass", "cutoffHz": 40, "slope": 24 })");
@@ -59,6 +60,9 @@ const std::vector<EffectPreset>& effectPresets (const std::string& type)
         add ("long-sustain", R"({ "type": "transient", "attackDb": -2, "sustainDb": 6 })");
         add ("vocal-deesser", R"({ "type": "deesser", "frequencyHz": 6500, "thresholdDb": -32, "rangeDb": 6 })");
         add ("bright-deesser", R"({ "type": "deesser", "frequencyHz": 9000, "thresholdDb": -36, "rangeDb": 4 })");
+        add ("octave-down", R"({ "type": "pitch", "semitones": -12, "mix": 0.4, "formant": 1 })");
+        add ("octave-up", R"({ "type": "pitch", "semitones": 12, "mix": 0.3 })");
+        add ("fifth-up", R"({ "type": "pitch", "semitones": 7, "mix": 0.35 })");
         return t;
     }();
     static const std::vector<EffectPreset> none;

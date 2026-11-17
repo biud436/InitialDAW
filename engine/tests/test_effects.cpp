@@ -137,8 +137,9 @@ TEST (convolution_matches_direct_convolution)
             ref[1] += (double) x[(size_t) (n - k)] * ir.getSample (1, k);
         }
         maxRef = std::max (maxRef, std::abs (ref[0]));
-        maxErr = std::max (maxErr, std::abs (ref[0] - l[(size_t) n + 256]));
-        maxErr = std::max (maxErr, std::abs (ref[1] - r[(size_t) n + 256]));
+        const auto at = (size_t) (n + conv.latencySamples());
+        maxErr = std::max (maxErr, std::abs (ref[0] - l[at]));
+        maxErr = std::max (maxErr, std::abs (ref[1] - r[at]));
     }
     CHECK (maxErr < 1.0e-4 * std::max (1.0, maxRef));
 }
@@ -176,7 +177,7 @@ TEST (reverb_keeps_the_dry_signal_in_place)
     auto dry = sine (330.0, 0.3, 0.5);
     const auto original = dry;
     auto chain = createEffectChain ({ spec (R"({ "type": "reverb", "mix": 0 })") }, mrtest::sourceDir(), fs, 512);
-    CHECK_EQ (chain.latencySamples(), 1024);
+    CHECK_EQ (chain.latencySamples(), 0);   // 첫 분할을 직접 계산해 지연이 없다
     processOffline (chain, dry, dry.getNumSamples(), 512);
     double maxDiff = 0.0;
     for (int i = 0; i < dry.getNumSamples(); ++i)
@@ -193,6 +194,150 @@ TEST (reverb_keeps_the_dry_signal_in_place)
     CHECK (impulse.getMagnitude (0, 0, 1800) < 1.0e-4f);
     CHECK (impulse.getMagnitude (0, 2400, 9600) > 1.0e-3f);
     CHECK (impulse.getMagnitude (0, 90000, 6000) < 0.1f * impulse.getMagnitude (0, 2400, 9600));
+}
+
+TEST (reverb_ir_file_is_resampled_delayed_and_shortened)
+{
+    // 44.1 kHz 의 평평한 IR (모두 1) 을 48 kHz 렌더에: 길이가 샘플레이트 비만큼, 프리딜레이만큼 앞이 비고, decaySeconds 에 -60 dB
+    juce::AudioBuffer<float> file (1, 44100);
+    for (int i = 0; i < file.getNumSamples(); ++i)
+        file.setSample (0, i, 1.0f);
+    const auto p = juce::JSON::parse (R"({ "type": "reverb", "ir": "x.wav", "preDelayMs": 10, "decaySeconds": 0.5 })");
+    const auto ir = impulseFromFile (file, 44100.0, fs, p);
+    const int pre = 480;
+    CHECK_EQ (ir.getNumSamples(), pre + 48000);
+    CHECK (ir.getMagnitude (0, 0, pre) == 0.0f);
+    CHECK (std::abs (ir.getSample (1, pre + 4800) - 1.0f * (float) std::exp (-6.907755 * 0.1 / 0.5)) < 0.01f);   // 0.1초에 -12 dB
+    CHECK (std::abs (20.0 * std::log10 (ir.getSample (0, pre + 24000)) + 60.0) < 0.5);                            // 0.5초에 -60 dB
+    // 적지 않으면 파일 그대로 (샘플레이트만 바꾼다)
+    const auto plain = impulseFromFile (file, 48000.0, fs, juce::JSON::parse (R"({ "type": "reverb", "ir": "x.wav" })"));
+    CHECK_EQ (plain.getNumSamples(), 44100);
+    CHECK (plain.getSample (0, 0) == 1.0f && plain.getSample (1, 44099) == 1.0f);
+}
+
+namespace
+{
+juce::AudioBuffer<float> through (const std::string& json, juce::AudioBuffer<float> buffer, int blockSize, int* latency = nullptr)
+{
+    auto chain = createEffectChain ({ spec (json) }, mrtest::sourceDir(), fs, std::max (512, blockSize));
+    if (latency)
+        *latency = chain.latencySamples();
+    // 지연을 되돌리지 않고 블록마다 그대로 돌린다 (실시간과 같은 길)
+    for (int pos = 0, k = 0; pos < buffer.getNumSamples(); ++k)
+    {
+        const int n = std::min (buffer.getNumSamples() - pos, blockSize > 0 ? blockSize : 37 + (k * 97) % 400);
+        juce::AudioBuffer<float> view (buffer.getArrayOfWritePointers(), 2, pos, n);
+        chain.process (view, n, (int64_t) pos);
+        pos += n;
+    }
+    return buffer;
+}
+
+// 영점 교차 (선형 보간) 로 [from, to) 의 주파수: 깨끗한 사인파에서 0.1 센트 안
+double crossingHz (const juce::AudioBuffer<float>& b, int from, int to)
+{
+    const float* x = b.getReadPointer (0);
+    double first = -1.0, last = -1.0;
+    int count = 0;
+    for (int i = from + 1; i < to; ++i)
+        if (x[i - 1] < 0.0f && x[i] >= 0.0f)
+        {
+            const double t = (i - 1) + x[i - 1] / (double) (x[i - 1] - x[i]);
+            if (first < 0.0)
+                first = t;
+            else
+                ++count;
+            last = t;
+        }
+    return count > 0 ? count * fs / (last - first) : 0.0;
+}
+
+} // namespace
+
+TEST (pitch_shift_moves_a_tone_and_reports_its_latency)
+{
+    // 반음과 센트로 옮긴 순음이 2 센트 안 (영점 교차로 잰다, 옮기지 않은 사인파는 0.1 센트 안으로 잰다)
+    const double cases[][3] = { { 220, 7, 0 }, { 440, -11, -50 }, { 220, 7, 30 }, { 880, -24, 0 }, { 110, 12, 0 }, { 196, -7, 0 } };
+    int latency = 0;
+    for (const auto& c : cases)
+    {
+        const auto json = "{ \"type\": \"pitch\", \"semitones\": " + std::to_string ((int) c[1]) + ", \"cents\": " + std::to_string ((int) c[2]) + " }";
+        const auto out = through (json, sine (c[0], 0.3, 2.0), 512, &latency);
+        const double want = c[0] * std::pow (2.0, (c[1] + c[2] / 100.0) / 12.0);
+        const double cents = 1200.0 * std::log2 (crossingHz (out, latency + 4800, (int) (1.9 * fs)) / want);
+        std::printf ("    %.0f Hz %+d semitones %+d cents: %+.2f cents\n", c[0], (int) c[1], (int) c[2], cents);
+        CHECK (std::abs (cents) < 2.0);
+    }
+    std::printf ("    latency %d samples (%.0f ms)\n", latency, latency * 1000.0 / fs);
+    CHECK (latency > 1000 && latency < 0.3 * fs);
+    CHECK (std::abs (1200.0 * std::log2 (crossingHz (sine (329.63, 0.3, 2.0), 4800, (int) (1.9 * fs)) / 329.63)) < 0.1);
+    // 섞기 0 은 지연만큼 늦춘 원음이다
+    Random rng (5);
+    juce::AudioBuffer<float> noise (2, 30000);
+    for (int ch = 0; ch < 2; ++ch)
+        for (int i = 0; i < noise.getNumSamples(); ++i)
+            noise.setSample (ch, i, (float) (0.2 * rng.gaussian()));
+    const auto dry = through (R"({ "type": "pitch", "semitones": 5, "mix": 0 })", noise, 300, &latency);
+    double worst = 0.0;
+    for (int ch = 0; ch < 2; ++ch)
+        for (int i = 0; i + latency < noise.getNumSamples(); ++i)
+            worst = std::max (worst, (double) std::abs (dry.getSample (ch, i + latency) - noise.getSample (ch, i)));
+    CHECK (worst == 0.0);
+}
+
+TEST (pitch_shift_is_the_same_for_any_block_size)
+{
+    // 실시간의 블록 크기와 오프라인의 블록 크기가 달라도 같은 소리 (늘 64 샘플 조각으로 넘긴다). 중간의 무음 구간도 지난다
+    auto input = sine (330.0, 0.3, 3.0);
+    for (int i = (int) (1.0 * fs); i < (int) (1.8 * fs); ++i)
+        for (int ch = 0; ch < 2; ++ch)
+            input.setSample (ch, i, 0.0f);
+    const std::string json = R"({ "type": "pitch", "semitones": -5, "cents": 12, "mix": 0.7, "formant": 1 })";
+    const auto a = through (json, input, 512), b = through (json, input, 0), c = through (json, input, 128);
+    double ab = 0.0, ac = 0.0;
+    for (int ch = 0; ch < 2; ++ch)
+        for (int i = 0; i < input.getNumSamples(); ++i)
+        {
+            ab = std::max (ab, (double) std::abs (a.getSample (ch, i) - b.getSample (ch, i)));
+            ac = std::max (ac, (double) std::abs (a.getSample (ch, i) - c.getSample (ch, i)));
+        }
+    CHECK (a.getMagnitude (0, 0, input.getNumSamples()) > 0.1f);
+    CHECK (ab == 0.0);
+    CHECK (ac == 0.0);
+}
+
+TEST (stereo_folds_the_lows_to_mono_and_flips_channels)
+{
+    // 왼쪽에만 60 Hz 와 5 kHz: 150 Hz 아래를 모노로 하면 60 Hz 의 좌우 차이가 -60 dB 아래, 5 kHz 는 왼쪽에 남는다
+    auto make = [] (double freq)
+    {
+        juce::AudioBuffer<float> b (2, (int) fs);
+        b.clear();
+        for (int i = 0; i < b.getNumSamples(); ++i)
+            b.setSample (0, i, (float) (0.5 * std::sin (2.0 * 3.141592653589793 * freq * i / fs)));
+        return b;
+    };
+    const std::string mono = R"({ "type": "stereo", "monoBelowHz": 150 })";
+    auto low = make (60.0);
+    const float before = low.getRMSLevel (0, 24000, 24000);
+    low = through (mono, low, 512);
+    double side = 0.0;
+    for (int i = 24000; i < 48000; ++i)
+        side += std::pow ((double) low.getSample (0, i) - low.getSample (1, i), 2.0);
+    const double sideDb = 20.0 * std::log10 (std::sqrt (side / 24000.0) / before + 1.0e-12);
+    std::printf ("    60 Hz side after mono below 150 Hz: %.1f dB\n", sideDb);
+    CHECK (sideDb < -60.0);
+    CHECK (std::abs (20.0 * std::log10 (low.getRMSLevel (0, 24000, 24000) / before) + 6.02) < 0.3);   // 가운데로 모여 한쪽에 절반
+    auto high = through (mono, make (5000.0), 512);
+    CHECK (high.getRMSLevel (1, 24000, 24000) < 0.02f * high.getRMSLevel (0, 24000, 24000));
+    // 위상 뒤집기와 좌우 바꾸기
+    auto flip = through (R"({ "type": "stereo", "invertLeft": 1, "swap": 1 })", make (440.0), 512);
+    const auto ref = make (440.0);
+    CHECK (flip.getMagnitude (0, 0, flip.getNumSamples()) < 1.0e-7f);
+    double worst = 0.0;
+    for (int i = 0; i < ref.getNumSamples(); ++i)
+        worst = std::max (worst, (double) std::abs (flip.getSample (1, i) + ref.getSample (0, i)));
+    CHECK (worst < 1.0e-7);
 }
 
 TEST (effect_specs_are_validated)
@@ -290,7 +435,7 @@ TEST (track_effect_latency_is_aligned)
     auto make = [] (bool withReverb)
     {
         auto r = mrtest::parse (std::string (R"({ "tempo": 120, "render": { "tailSeconds": 0.3 }, "tracks": [
-            { "name": "A", "instrument": "synth.sine" )") + (withReverb ? R"(, "effects": [ { "type": "reverb", "mix": 0 }, { "type": "limiter", "ceilingDb": -0.1 } ])" : "") + R"(,
+            { "name": "A", "instrument": "synth.sine" )") + (withReverb ? R"(, "effects": [ { "type": "limiter", "ceilingDb": 0, "lookaheadMs": 10.6667 }, { "type": "reverb", "mix": 0 }, { "type": "limiter", "ceilingDb": -0.1 } ])" : "") + R"(,
               "notes": [ { "pitch": "A4", "startBeat": 0.5, "durationBeat": 1, "velocity": 100 } ] },
             { "name": "B", "instrument": "synth.sine", "notes": [ { "pitch": "E5", "startBeat": 0.5, "durationBeat": 1, "velocity": 100 } ] } ] })");
         return *r.composition;

@@ -459,7 +459,7 @@ TEST (distortion_adds_harmonics_and_trailer_drums_sound_as_designed)
 
 namespace
 {
-// 120 BPM 의 킥(소리 없는 키, 페이더 -120)과 패드. keyLatency 면 키 트랙에, otherLatency 면 다른 트랙(Room)에 리버브가 있다 (지연 1024 샘플).
+// 120 BPM 의 킥(소리 없는 키, 페이더 -120)과 패드. keyLatency 면 키 트랙에, otherLatency 면 다른 트랙(Room)에 리버브와 리미터가 있다 (리미터의 미리 보기로 지연 1024 샘플).
 std::string keyedSong (bool consumerFx, bool keyLatency, bool otherLatency, bool masterKey)
 {
     std::string json = R"({ "tempo": 120, "render": { "tailSeconds": 0.3 },)";
@@ -468,12 +468,12 @@ std::string keyedSong (bool consumerFx, bool keyLatency, bool otherLatency, bool
     json += R"( "tracks": [
       { "name": "Kick", "instrument": "synth.edm-drums", "mixer": { "gainDb": -120 }, )";
     if (keyLatency)
-        json += R"("effects": [ { "type": "reverb", "mix": 0.2 } ], )";
+        json += R"("effects": [ { "type": "reverb", "mix": 0.2 }, { "type": "limiter", "ceilingDb": 0, "lookaheadMs": 10.6667 } ], )";
     json += R"("notes": [
         { "pitch": 36, "startBeat": 0, "durationBeat": 0.5, "velocity": 110 }, { "pitch": 36, "startBeat": 1, "durationBeat": 0.5, "velocity": 110 },
         { "pitch": 36, "startBeat": 2, "durationBeat": 0.5, "velocity": 110 }, { "pitch": 36, "startBeat": 3, "durationBeat": 0.5, "velocity": 110 } ] },)";
     if (otherLatency)
-        json += R"( { "name": "Room", "instrument": "synth.sine", "mixer": { "gainDb": -120 }, "effects": [ { "type": "reverb", "mix": 0.3 } ],
+        json += R"( { "name": "Room", "instrument": "synth.sine", "mixer": { "gainDb": -120 }, "effects": [ { "type": "reverb", "mix": 0.3 }, { "type": "limiter", "ceilingDb": 0, "lookaheadMs": 10.6667 } ],
           "notes": [ { "pitch": "A4", "startBeat": 0, "durationBeat": 1, "velocity": 80 } ] },)";
     json += R"( { "name": "Pad", "instrument": "synth.saw-pad", )";
     if (consumerFx)
@@ -530,7 +530,7 @@ double maxDifference (const juce::AudioBuffer<float>& a, const juce::AudioBuffer
 
 TEST (sidechain_keys_line_up_with_track_latency)
 {
-    // 다른 트랙의 지연(리버브, 1024 샘플)이 있어도, 키 트랙에 지연이 있어도 킥 뒤 1~5 ms 에 6 dB 넘게 누른다 (오프라인, 실시간)
+    // 다른 트랙의 지연(리미터, 1024 샘플)이 있어도, 키 트랙에 지연이 있어도 킥 뒤 1~5 ms 에 6 dB 넘게 누른다 (오프라인, 실시간)
     for (const bool keyLatency : { false, true })
     {
         const auto keyed = composition (keyedSong (true, keyLatency, true, false));

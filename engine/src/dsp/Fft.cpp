@@ -79,4 +79,10 @@ void Fft::forwardMagnitudes (float* data, bool ignoreNegative) const noexcept
     std::memset (data + limit, 0, (size_t) (size_ * 2 - limit) * sizeof (float));
 }
 
+void convolve (const float* line, const float* taps, int numTaps, float* out, int count) noexcept
+{
+    // vDSP_conv 는 상관이라 탭을 끝에서 거꾸로 읽게 한다 (간격 -1)
+    vDSP_conv (line, 1, taps + numTaps - 1, -1, out, 1, (vDSP_Length) count, (vDSP_Length) numTaps);
+}
+
 } // namespace mr::dsp

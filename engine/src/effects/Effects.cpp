@@ -7,12 +7,19 @@
 #include "core/Json.h"
 #include "effects/Automation.h"
 #include "core/Random.h"
+#include "dsp/Fft.h"
 #include "dsp/Freeverb.h"
+#include "dsp/Resample.h"
 #include "io/AudioFile.h"
+
+#if MUSIC_RENDER_HAS_STRETCH
+ #include <signalsmith-stretch/signalsmith-stretch.h>
+#endif
 
 #include <array>
 #include <cmath>
 #include <complex>
+#include <cstring>
 #include <limits>
 #include <map>
 
@@ -741,40 +748,98 @@ private:
     int delayPos_ = 0, boxPos_ = 0;
 };
 
+// 링크위츠-라일리 4차 (버터워스 2차 두 단) 나누기: 낮은 쪽과 높은 쪽을 더하면 크기가 평평한 올패스다
+struct Crossover
+{
+    Biquad low[2], high[2];
+    void set (double fs, double f)
+    {
+        for (auto& b : low)
+            b = Biquad::make ("lowpass", fs, f, 0.7071068);
+        for (auto& b : high)
+            b = Biquad::make ("highpass", fs, f, 0.7071068);
+    }
+    void split (int ch, float x, float& lo, float& hi)
+    {
+        lo = low[1].process (ch, low[0].process (ch, x));
+        hi = high[1].process (ch, high[0].process (ch, x));
+    }
+};
+
 // 스테레오 배치: 폭(width)으로 옆 성분을 줄이고, 가운데 성분을 등전력 팬으로 무대 위치(pan)에 놓는다.
 // 밸런스와 달리 한쪽 채널을 끄지 않고 소리의 상 자체를 옮긴다 (스테레오로 녹음한 섹션을 무대에 앉힐 때).
+// 먼저 채널의 위상 뒤집기와 좌우 바꾸기, 끝에 monoBelowHz 아래를 모노로 (링크위츠-라일리 8차로 나누고 낮은 쪽만 가운데로 모은다.
+// 8차는 나눔 주파수의 1.3 옥타브 아래에서 높은 쪽이 -63 dB 라 좌우 차이가 거기서 -60 dB 아래, 두 쪽을 더하면 크기가 평평한 올패스다).
 class StereoEffect final : public Effect
 {
 public:
     StereoEffect (const juce::var& p, const LaneContext& ctx)
-        : width_ (value (p, "stereo", "width")), pan_ (value (p, "stereo", "pan")), widthParam_ (makeParam (p, "stereo", "width", ctx))
+        : width_ (value (p, "stereo", "width")), pan_ (value (p, "stereo", "pan")), widthParam_ (makeParam (p, "stereo", "width", ctx)),
+          invertLeft_ (value (p, "stereo", "invertLeft") > 0.5), invertRight_ (value (p, "stereo", "invertRight") > 0.5),
+          swap_ (value (p, "stereo", "swap") > 0.5), monoBelow_ (value (p, "stereo", "monoBelowHz"))
     {
     }
     std::string type() const override { return "stereo"; }
     void setPosition (BlockPosition s) override { position_ = s; }
     bool followsPosition() const override { return widthParam_.automated(); }
-    void prepare (double, int) override
+    void prepare (double fs, int) override
     {
         const double theta = (std::clamp (pan_, -1.0, 1.0) + 1.0) * pi / 4.0;
         gainL_ = std::cos (theta) * std::sqrt (2.0);
         gainR_ = std::sin (theta) * std::sqrt (2.0);
+        if (monoBelow_ > 0.0)
+        {
+            // 버터워스 4차 (Q 0.5412, 1.3066) 를 두 번: 링크위츠-라일리 8차
+            const double f = std::min (monoBelow_, fs * 0.45), q[4] = { 0.5411961, 1.3065630, 0.5411961, 1.3065630 };
+            for (int k = 0; k < 4; ++k)
+            {
+                low_[k] = Biquad::make ("lowpass", fs, f, q[k]);
+                high_[k] = Biquad::make ("highpass", fs, f, q[k]);
+            }
+        }
     }
     void process (juce::AudioBuffer<float>& buffer, int n) override
     {
         float* l = buffer.getWritePointer (0);
         float* r = buffer.getWritePointer (1);
+        if (invertLeft_ || invertRight_ || swap_)
+            for (int i = 0; i < n; ++i)
+            {
+                float a = invertLeft_ ? -l[i] : l[i], c = invertRight_ ? -r[i] : r[i];
+                if (swap_)
+                    std::swap (a, c);
+                l[i] = a;
+                r[i] = c;
+            }
         if (! widthParam_.automated())
         {
             for (int i = 0; i < n; ++i)
                 place (l[i], r[i], width_);
-            return;
         }
-        forEachGridStep (position_, n, [&] (int offset, int count, int64_t grid)
+        else
         {
-            const double w0 = widthParam_.atGrid (grid), w1 = widthParam_.atGrid (grid + kAutomationGrid);
-            for (int j = 0; j < count; ++j)
-                place (l[offset + j], r[offset + j], w0 + (w1 - w0) * gridFraction (position_, offset, j, grid));
-        });
+            forEachGridStep (position_, n, [&] (int offset, int count, int64_t grid)
+            {
+                const double w0 = widthParam_.atGrid (grid), w1 = widthParam_.atGrid (grid + kAutomationGrid);
+                for (int j = 0; j < count; ++j)
+                    place (l[offset + j], r[offset + j], w0 + (w1 - w0) * gridFraction (position_, offset, j, grid));
+            });
+        }
+        if (monoBelow_ > 0.0)
+            for (int i = 0; i < n; ++i)
+            {
+                float loL = l[i], hiL = l[i], loR = r[i], hiR = r[i];
+                for (int k = 0; k < 4; ++k)
+                {
+                    loL = low_[k].process (0, loL);
+                    loR = low_[k].process (1, loR);
+                    hiL = high_[k].process (0, hiL);
+                    hiR = high_[k].process (1, hiR);
+                }
+                const float mid = 0.5f * (loL + loR);
+                l[i] = mid + hiL;
+                r[i] = mid + hiR;
+            }
     }
 
 private:
@@ -788,9 +853,114 @@ private:
 
     double width_, pan_;
     Param widthParam_;
+    bool invertLeft_, invertRight_, swap_;
+    double monoBelow_;
+    Biquad low_[4], high_[4];
     BlockPosition position_;
     double gainL_ = 1.0, gainR_ = 1.0;
 };
+
+#if MUSIC_RENDER_HAS_STRETCH
+// 피치 시프터: Signalsmith Stretch 의 실시간 처리 (늘이지 않고 음높이만 옮긴다). 늘 64 샘플 조각으로 넘겨 블록 크기와 상관없이
+// 같은 소리를 낸다 (Stretch 의 무음 판정이 넘긴 조각마다라서). 지연 = Stretch 의 입력과 출력 지연 + 조각. 마른 소리도 같은 만큼 늦춰 섞는다.
+// Stretch 는 입력의 곡 위치가 처음 0 에 닿을 때 시작한다: 실시간의 버스는 트랙 정렬만큼 곡 앞의 무음을 먼저 받는데, 그것을 넘기면
+// 분석 프레임의 격자가 오프라인과 어긋난다. 시작한 뒤 지연만큼은 젖은 소리를 내지 않는다 (분석 창이 앞을 내다봐 음 머리가 번져 나오는
+// 곡 앞의 자리이고, 오프라인은 이 샘플을 버린다. 실시간에서 뒤의 효과가 이 소리를 받으면 상태가 오프라인과 달라진다).
+class PitchEffect final : public Effect
+{
+public:
+    PitchEffect (const juce::var& p, const LaneContext& ctx)
+        : semitones_ (value (p, "pitch", "semitones") + value (p, "pitch", "cents") / 100.0), formant_ (value (p, "pitch", "formant") > 0.5),
+          mix_ (value (p, "pitch", "mix")), mixParam_ (makeParam (p, "pitch", "mix", ctx)), stretch_ (20261117)
+    {
+    }
+    std::string type() const override { return "pitch"; }
+    int latencySamples() const override { return latency_; }
+    void setPosition (BlockPosition s) override { position_ = s; }
+    bool followsPosition() const override { return true; }
+    void prepare (double fs, int) override
+    {
+        // 블록 0.2초, 간격 15 ms: 기본값 (0.12초, 30 ms) 은 순음을 2~10 센트 어긋나게 옮겼다. 이 값은 ±24 반음에서 2 센트 안.
+        // 계산을 간격마다 나눠 실시간에서 튀지 않게 한다 (지연이 한 간격 는다)
+        stretch_.configure (2, (int) std::lround (fs * 0.2), (int) std::lround (fs * 0.015), true);
+        stretch_.setTransposeSemitones ((float) semitones_);
+        if (formant_)
+            stretch_.setFormantFactor (1.0f, true);
+        stretch_.reset();
+        latency_ = stretch_.inputLatency() + stretch_.outputLatency() + kChunk;
+        for (int ch = 0; ch < 2; ++ch)
+        {
+            in_[ch].assign ((size_t) kChunk, 0.0f);
+            out_[ch].assign ((size_t) kChunk, 0.0f);
+            dry_[ch].assign ((size_t) latency_, 0.0f);
+        }
+        pos_ = dryPos_ = 0;
+        warm_ = 0;
+        started_ = false;
+    }
+    void process (juce::AudioBuffer<float>& buffer, int n) override
+    {
+        float* x[2] = { buffer.getWritePointer (0), buffer.getWritePointer (1) };
+        auto one = [&] (int i, double mix)
+        {
+            float wet[2] = { 0.0f, 0.0f };
+            if (! started_ && ! position_.held && position_.at (i) + latency_ >= 0)
+            {
+                started_ = true;
+                warm_ = latency_;
+            }
+            if (started_)
+            {
+                for (int ch = 0; ch < 2; ++ch)
+                {
+                    in_[ch][(size_t) pos_] = x[ch][i];
+                    wet[ch] = warm_ > 0 ? 0.0f : out_[ch][(size_t) pos_];
+                }
+                if (warm_ > 0)
+                    --warm_;
+                if (++pos_ == kChunk)
+                {
+                    float* ins[2] = { in_[0].data(), in_[1].data() };
+                    float* outs[2] = { out_[0].data(), out_[1].data() };
+                    stretch_.process (ins, kChunk, outs, kChunk);
+                    pos_ = 0;
+                }
+            }
+            for (int ch = 0; ch < 2; ++ch)
+            {
+                const float dry = dry_[ch][(size_t) dryPos_];
+                dry_[ch][(size_t) dryPos_] = x[ch][i];
+                x[ch][i] = (float) (dry * (1.0 - mix) + wet[ch] * mix);
+            }
+            dryPos_ = (dryPos_ + 1) % latency_;
+        };
+        if (! mixParam_.automated())
+        {
+            for (int i = 0; i < n; ++i)
+                one (i, mix_);
+            return;
+        }
+        forEachGridStep (position_, n, [&] (int offset, int count, int64_t grid)
+        {
+            const double m0 = mixParam_.atGrid (grid), m1 = mixParam_.atGrid (grid + kAutomationGrid);
+            for (int j = 0; j < count; ++j)
+                one (offset + j, m0 + (m1 - m0) * gridFraction (position_, offset, j, grid));
+        });
+    }
+
+private:
+    static constexpr int kChunk = 64;
+    double semitones_;
+    bool formant_;
+    double mix_;
+    Param mixParam_;
+    BlockPosition position_;
+    signalsmith::stretch::SignalsmithStretch<float> stretch_;
+    std::vector<float> in_[2], out_[2], dry_[2];
+    int pos_ = 0, dryPos_ = 0, latency_ = 1, warm_ = 0;
+    bool started_ = false;
+};
+#endif
 
 class GainEffect final : public Effect
 {
@@ -895,8 +1065,6 @@ public:
         mono_.assign ((size_t) maxBlock, 0.0f);
         wetL_.assign ((size_t) maxBlock, 0.0f);
         wetR_.assign ((size_t) maxBlock, 0.0f);
-        dryDelay_.assign (2, std::vector<float> ((size_t) std::max (1, partition_), 0.0f));
-        dryPos_ = 0;
     }
 
     // 입력의 주파수 영역 기록을 옮겨 새 IR 로 지난 소리의 꼬리를 이어 만든다
@@ -912,9 +1080,6 @@ public:
                 filters_[i].z1[ch] = p->filters_[i].z1[ch];
                 filters_[i].z2[ch] = p->filters_[i].z2[ch];
             }
-        for (size_t ch = 0; ch < dryDelay_.size(); ++ch)
-            std::copy (p->dryDelay_[ch].begin(), p->dryDelay_[ch].end(), dryDelay_[ch].begin());
-        dryPos_ = p->dryPos_;
     }
 
     void process (juce::AudioBuffer<float>& buffer, int n) override
@@ -936,15 +1101,11 @@ public:
                 wetL_[(size_t) i] = f.process (0, wetL_[(size_t) i]);
                 wetR_[(size_t) i] = f.process (1, wetR_[(size_t) i]);
             }
-        // 젖은 소리가 분할 크기만큼 늦으므로 마른 소리도 같이 늦춘다. 곡선은 나가는 소리의 곡 위치(position_)에서 읽는다.
+        // 컨볼루션에 지연이 없어 마른 소리를 그대로 섞는다. 곡선은 나가는 소리의 곡 위치(position_)에서 읽는다.
         auto mixOne = [&] (int i, double dry, double wet)
         {
-            const float dl = dryDelay_[0][(size_t) dryPos_], dr = dryDelay_[1][(size_t) dryPos_];
-            dryDelay_[0][(size_t) dryPos_] = l[i];
-            dryDelay_[1][(size_t) dryPos_] = r[i];
-            dryPos_ = (dryPos_ + 1) % partition_;
-            l[i] = (float) (dl * dry + wetL_[(size_t) i] * wet);
-            r[i] = (float) (dr * dry + wetR_[(size_t) i] * wet);
+            l[i] = (float) (l[i] * dry + wetL_[(size_t) i] * wet);
+            r[i] = (float) (r[i] * dry + wetR_[(size_t) i] * wet);
         };
         if (! levels_.automated())
             for (int i = 0; i < n; ++i)
@@ -962,8 +1123,6 @@ private:
     StereoConvolver conv_;
     std::vector<Biquad> filters_;
     std::vector<float> mono_, wetL_, wetR_;
-    std::vector<std::vector<float>> dryDelay_;
-    int dryPos_ = 0;
 };
 
 class AlgorithmicReverb final : public Effect
@@ -1684,24 +1843,6 @@ private:
     bool isOpen_ = false;
 };
 
-// 링크위츠-라일리 4차 (버터워스 2차 두 단) 나누기: 낮은 쪽과 높은 쪽을 더하면 크기가 평평한 올패스다
-struct Crossover
-{
-    Biquad low[2], high[2];
-    void set (double fs, double f)
-    {
-        for (auto& b : low)
-            b = Biquad::make ("lowpass", fs, f, 0.7071068);
-        for (auto& b : high)
-            b = Biquad::make ("highpass", fs, f, 0.7071068);
-    }
-    void split (int ch, float x, float& lo, float& hi)
-    {
-        lo = low[1].process (ch, low[0].process (ch, x));
-        hi = high[1].process (ch, high[0].process (ch, x));
-    }
-};
-
 // 한 대역의 압축: 링크한 피크 검출, 니가 있는 게인 계산, dB 에서 어택과 릴리스
 struct BandCompressor
 {
@@ -1937,7 +2078,7 @@ const std::vector<std::string>& effectTypes()
 {
     static const std::vector<std::string> types { "eq", "compressor", "reverb", "delay", "distortion", "stereo", "gain", "limiter",
                                                   "filter", "ducker", "chorus", "flanger", "phaser", "tremolo", "gate", "multiband", "transient",
-                                                  "deesser" };
+                                                  "deesser", "pitch" };
     return types;
 }
 
@@ -2015,7 +2156,8 @@ const std::vector<EffectParameter>& effectParameters (const std::string& type)
                      toggle ("pingPong"), number ("lowCutHz", 10, 4000, 150, "Hz", true), number ("highCutHz", 500, 24000, 7000, "Hz", true) } },
         { "distortion", { automatable (number ("driveDb", 0, 48, 12, "dB")), number ("toneHz", 200, 20000, 8000, "Hz", true),
                           automatable (number ("mix", 0, 1, 1, "percent")), number ("outputDb", -48, 12, 0, "dB") } },
-        { "stereo", { automatable (number ("width", 0, 2, 1, "percent")), number ("pan", -1, 1, 0, "pan") } },
+        { "stereo", { automatable (number ("width", 0, 2, 1, "percent")), number ("pan", -1, 1, 0, "pan"), toggle ("invertLeft"),
+                      toggle ("invertRight"), toggle ("swap"), number ("monoBelowHz", 0, 500, 0, "Hz") } },
         { "gain", { automatable (number ("gainDb", -96, 36, 0, "dB")) } },
         { "limiter", { number ("ceilingDb", -24, 0, -1, "dB"), number ("releaseMs", 1, 2000, 60, "ms", true),
                        number ("lookaheadMs", 0.1, 50, 5, "ms", true), toggle ("truePeak") } },
@@ -2049,6 +2191,8 @@ const std::vector<EffectParameter>& effectParameters (const std::string& type)
                          number ("attackMs", 0.1, 200, 10, "ms", true), number ("releaseMs", 5, 2000, 150, "ms", true), number ("kneeDb", 0, 24, 6, "dB") } },
         { "transient", { number ("attackDb", -24, 24, 0, "dB"), number ("sustainDb", -24, 24, 0, "dB"), number ("outputDb", -24, 24, 0, "dB") } },
         { "deesser", { number ("frequencyHz", 2000, 16000, 6000, "Hz", true), number ("thresholdDb", -60, 0, -30, "dB"), number ("rangeDb", 0, 24, 8, "dB") } },
+        { "pitch", { number ("semitones", -24, 24, 0, "semitones"), number ("cents", -100, 100, 0, "cents"),
+                     automatable (number ("mix", 0, 1, 1, "percent")), toggle ("formant") } },
     };
     static const std::vector<P> none;
     const auto it = table.find (type);
@@ -2291,6 +2435,14 @@ std::unique_ptr<Effect> createEffect (const EffectSpec& spec, const juce::File& 
         e = std::make_unique<TransientEffect> (p);
     else if (spec.type == "deesser")
         e = std::make_unique<DeesserEffect> (p);
+    else if (spec.type == "pitch")
+    {
+#if MUSIC_RENDER_HAS_STRETCH
+        e = std::make_unique<PitchEffect> (p, ctx);
+#else
+        throw Failure ("invalid-input", spec.path + ": this build has no pitch shifting (Signalsmith Stretch)");
+#endif
+    }
     else if (spec.type == "reverb")
     {
         if (paramText (p, "mode", "convolution") == "algorithmic")
@@ -2303,12 +2455,7 @@ std::unique_ptr<Effect> createEffect (const EffectSpec& spec, const juce::File& 
             {
                 const auto file = baseDir.getChildFile (juce::String::fromUTF8 (irPath.c_str()));
                 auto data = readAudioFile (file);
-                if (std::abs (data.sampleRate - sampleRate) > 1.0)
-                    throw Failure ("invalid-input", spec.path + ".ir: impulse response is " + std::to_string ((int) data.sampleRate)
-                                   + " Hz but the render is " + std::to_string ((int) sampleRate) + " Hz");
-                impulse.setSize (2, data.buffer.getNumSamples());
-                impulse.copyFrom (0, 0, data.buffer, 0, 0, data.buffer.getNumSamples());
-                impulse.copyFrom (1, 0, data.buffer, std::min (1, data.buffer.getNumChannels() - 1), 0, data.buffer.getNumSamples());
+                impulse = impulseFromFile (data.buffer, data.sampleRate, sampleRate, p);
             }
             else
             {
@@ -2316,7 +2463,7 @@ std::unique_ptr<Effect> createEffect (const EffectSpec& spec, const juce::File& 
                 impulse = generateHallImpulse (sampleRate, value (p, "reverb", "decaySeconds"), value (p, "reverb", "preDelayMs"),
                                                value (p, "reverb", "damping"), value (p, "reverb", "width"), seed);
             }
-            e = std::make_unique<ConvolutionReverb> (std::move (impulse), p, 1024, ctx);
+            e = std::make_unique<ConvolutionReverb> (std::move (impulse), p, 512, ctx);
         }
     }
     else
@@ -2540,6 +2687,35 @@ double duckerShape (const juce::var& params, const TempoMap& tempo, double sampl
 }
 
 // ---------------------------------------------------------------------------
+// IR 파일
+// ---------------------------------------------------------------------------
+juce::AudioBuffer<float> impulseFromFile (const juce::AudioBuffer<float>& file, double fileRate, double sampleRate, const juce::var& p)
+{
+    const int frames = file.getNumSamples();
+    const double ratio = fileRate / sampleRate;
+    const bool same = std::abs (ratio - 1.0) < 1.0e-9;
+    const int length = same ? frames : (int) std::ceil ((double) frames / ratio);
+    // 적힌 값만 쓴다 (적지 않으면 파일 그대로)
+    const int pre = p.hasProperty ("preDelayMs") ? (int) std::lround (value (p, "reverb", "preDelayMs") * 0.001 * sampleRate) : 0;
+    const double decay = p.hasProperty ("decaySeconds") ? value (p, "reverb", "decaySeconds") : 0.0;
+    juce::AudioBuffer<float> ir (2, std::max (1, pre + length));
+    ir.clear();
+    for (int ch = 0; ch < 2; ++ch)
+    {
+        const float* src = file.getReadPointer (std::min (ch, file.getNumChannels() - 1));
+        float* dst = ir.getWritePointer (ch, pre);
+        if (same)
+            std::copy (src, src + frames, dst);
+        else
+            dsp::resample (src, frames, ratio, dst, length);
+        if (decay > 0.0)   // 응답 뒤쪽을 지수로 줄인다: decaySeconds 에 60 dB 더 작게
+            for (int i = 0; i < length; ++i)
+                dst[i] *= (float) std::exp (-6.907755 * (i / sampleRate) / decay);
+    }
+    return ir;
+}
+
+// ---------------------------------------------------------------------------
 // IR 생성
 // ---------------------------------------------------------------------------
 juce::AudioBuffer<float> generateHallImpulse (double fs, double rt60, double preDelayMs, double damping, double width, uint64_t seed)
@@ -2617,17 +2793,25 @@ void StereoConvolver::prepare (const juce::AudioBuffer<float>& impulse, int part
     scale_ = std::abs (work_[0]) > 1.0e-12f ? 1.0f / work_[0] : 1.0f;
 
     const int length = impulse.getNumSamples();
-    partitions_ = std::max (1, (length + partition_ - 1) / partition_);
+    const int tail = std::max (0, length - partition_);
+    partitions_ = std::max (1, (tail + partition_ - 1) / partition_);
     for (int ch = 0; ch < 2; ++ch)
     {
+        const float* h = impulse.getReadPointer (std::min (ch, impulse.getNumChannels() - 1));
+        taps_[ch].assign ((size_t) partition_, 0.0f);
+        for (int i = 0; i < partition_ && i < length; ++i)
+            taps_[ch][(size_t) i] = h[i];
         irRe_[ch].assign ((size_t) partitions_, std::vector<float> ((size_t) bins_, 0.0f));
         irIm_[ch].assign ((size_t) partitions_, std::vector<float> ((size_t) bins_, 0.0f));
-        const float* h = impulse.getReadPointer (std::min (ch, impulse.getNumChannels() - 1));
         for (int p = 0; p < partitions_; ++p)
         {
             std::fill (work_.begin(), work_.end(), 0.0f);
-            for (int i = 0; i < partition_ && p * partition_ + i < length; ++i)
-                work_[(size_t) i] = h[p * partition_ + i];
+            for (int i = 0; i < partition_; ++i)
+            {
+                const int at = partition_ + p * partition_ + i;   // 첫 분할 뒤의 IR
+                if (at < length)
+                    work_[(size_t) i] = h[at];
+            }
             fft_->forwardReal (work_.data(), true);
             for (int k = 0; k < bins_; ++k)
             {
@@ -2636,6 +2820,7 @@ void StereoConvolver::prepare (const juce::AudioBuffer<float>& impulse, int part
             }
         }
     }
+    line_.assign ((size_t) (2 * partition_ - 1), 0.0f);
     inRe_.assign ((size_t) partitions_, std::vector<float> ((size_t) bins_, 0.0f));
     inIm_.assign ((size_t) partitions_, std::vector<float> ((size_t) bins_, 0.0f));
     head_ = 0;
@@ -2646,6 +2831,13 @@ void StereoConvolver::prepare (const juce::AudioBuffer<float>& impulse, int part
     for (auto& f : outFifo_)
         f.assign ((size_t) partition_, 0.0f);
     fifoPos_ = 0;
+}
+
+// 첫 분할을 직접: y[i] = sum_j h[j] x[i - j]. line_ 의 분할 크기 - 1 번 칸이 이번 조각의 첫 샘플이다
+void StereoConvolver::direct (int count, float* outLeft, float* outRight) const
+{
+    dsp::convolve (line_.data(), taps_[0].data(), partition_, outLeft, count);
+    dsp::convolve (line_.data(), taps_[1].data(), partition_, outRight, count);
 }
 
 void StereoConvolver::processPartition()
@@ -2662,6 +2854,7 @@ void StereoConvolver::processPartition()
         xi[(size_t) k] = work_[(size_t) (2 * k + 1)];
     }
 
+    // 첫 분할 뒤의 IR 의 q 번째 분할은 (q + 1) 분할만큼 늦은 자리라, 지금까지의 입력으로 다음 분할의 꼬리가 모두 정해진다
     for (int ch = 0; ch < 2; ++ch)
     {
         std::fill (accRe_.begin(), accRe_.end(), 0.0f);
@@ -2701,6 +2894,7 @@ void StereoConvolver::continueFrom (StereoConvolver& previous)
         return;
     previous_ = previous.previous_;
     current_ = previous.current_;
+    line_ = previous.line_;
     outFifo_[0] = previous.outFifo_[0];
     outFifo_[1] = previous.outFifo_[1];
     fifoPos_ = previous.fifoPos_;
@@ -2717,12 +2911,23 @@ void StereoConvolver::continueFrom (StereoConvolver& previous)
 
 void StereoConvolver::process (const float* input, float* outLeft, float* outRight, int numSamples)
 {
-    for (int i = 0; i < numSamples; ++i)
+    int done = 0;
+    while (done < numSamples)
     {
-        current_[(size_t) fifoPos_] = input[i];
-        outLeft[i] = outFifo_[0][(size_t) fifoPos_];
-        outRight[i] = outFifo_[1][(size_t) fifoPos_];
-        if (++fifoPos_ == partition_)
+        const int count = std::min (numSamples - done, partition_ - fifoPos_);
+        std::copy (input + done, input + done + count, current_.begin() + fifoPos_);
+        std::copy (input + done, input + done + count, line_.begin() + (partition_ - 1));
+        direct (count, outLeft + done, outRight + done);
+        for (int i = 0; i < count; ++i)
+        {
+            outLeft[done + i] += outFifo_[0][(size_t) (fifoPos_ + i)];
+            outRight[done + i] += outFifo_[1][(size_t) (fifoPos_ + i)];
+        }
+        // 다음 조각을 위해 끝의 분할 크기 - 1 샘플을 앞으로
+        std::memmove (line_.data(), line_.data() + count, (size_t) (partition_ - 1) * sizeof (float));
+        fifoPos_ += count;
+        done += count;
+        if (fifoPos_ == partition_)
         {
             processPartition();
             fifoPos_ = 0;

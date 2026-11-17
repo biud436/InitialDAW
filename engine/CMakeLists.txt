@@ -59,6 +59,7 @@ add_library(music_render_core STATIC
   src/effects/Automation.cpp
   src/dsp/Fft.cpp
   src/dsp/Freeverb.cpp
+  src/dsp/Resample.cpp
   src/dsp/Restore.cpp
   src/media/Timecode.cpp
   src/media/VideoCommon.cpp)

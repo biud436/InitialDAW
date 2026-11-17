@@ -758,7 +758,11 @@
             "flanger",
             "phaser",
             "tremolo",
-            "gate"
+            "gate",
+            "multiband",
+            "transient",
+            "deesser",
+            "pitch"
           ]
         },
         "bypass": {
@@ -854,7 +858,41 @@
         },
         "ir": {
           "type": "string",
-          "description": "impulse response WAV, relative to the composition; without it a hall IR is generated"
+          "description": "impulse response file (WAV, AIFF, FLAC), relative to the composition, resampled to the render rate; preDelayMs and decaySeconds apply only when written (silence before it, and an exponential fade to -60 dB at decaySeconds); without it a hall IR is generated. The convolution has no latency (the first 512 samples of the response are computed directly)"
+        },
+        "invertLeft": {
+          "enum": [0, 1],
+          "description": "stereo: flip the polarity of the left channel (before width and pan)"
+        },
+        "invertRight": {
+          "enum": [0, 1],
+          "description": "stereo: flip the polarity of the right channel"
+        },
+        "swap": {
+          "enum": [0, 1],
+          "description": "stereo: swap left and right"
+        },
+        "monoBelowHz": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 500,
+          "description": "stereo: fold everything below this frequency to mono (8th-order Linkwitz-Riley split, the two halves add up flat); 0 is off"
+        },
+        "semitones": {
+          "type": "number",
+          "minimum": -24,
+          "maximum": 24,
+          "description": "pitch: shift in semitones (Signalsmith Stretch, within 2 cents on held tones); the latency (about 0.22 s) is reported and aligned, mix blends the shifted sound with the delayed dry sound (default 1)"
+        },
+        "cents": {
+          "type": "number",
+          "minimum": -100,
+          "maximum": 100,
+          "description": "pitch: added to semitones"
+        },
+        "formant": {
+          "enum": [0, 1],
+          "description": "pitch: keep the formants (for voices)"
         },
         "decaySeconds": {
           "type": "number",

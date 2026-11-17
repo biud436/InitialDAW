@@ -64,7 +64,7 @@ juce::String effectName (const std::string& type)
         { "eq", "EQ" }, { "compressor", "컴프레서" }, { "reverb", "리버브" }, { "delay", "딜레이" }, { "distortion", "디스토션" },
         { "stereo", "스테레오" }, { "gain", "게인" }, { "limiter", "리미터" }, { "filter", "필터" }, { "ducker", "덕킹" },
         { "chorus", "코러스" }, { "flanger", "플랜저" }, { "phaser", "페이저" }, { "tremolo", "트레몰로와 오토팬" }, { "gate", "노이즈 게이트" },
-        { "multiband", "멀티밴드 컴프레서" }, { "transient", "트랜지언트 셰이퍼" }, { "deesser", "디에서" },
+        { "multiband", "멀티밴드 컴프레서" }, { "transient", "트랜지언트 셰이퍼" }, { "deesser", "디에서" }, { "pitch", "피치 시프터" },
     };
     const auto it = names.find (type);
     return it != names.end() ? u8 (it->second) : juce::String::fromUTF8 (type.c_str());
@@ -84,6 +84,7 @@ juce::String presetName (const std::string& id)
         { "drum-gate", "드럼 게이트" },
         { "master-multiband", "마스터 대역별 묶기" }, { "bass-even", "저음 고르게" }, { "punchy-drums", "드럼 어택 살리기" },
         { "tight-drums", "드럼 울림 줄이기" }, { "long-sustain", "울림 길게" }, { "vocal-deesser", "보컬 치찰음" }, { "bright-deesser", "밝은 치찰음" },
+        { "bass-mono", "저역 모노" }, { "octave-down", "한 옥타브 아래 겹치기" }, { "octave-up", "한 옥타브 위 겹치기" }, { "fifth-up", "5도 위 화음" },
     };
     const auto it = names.find (id);
     return it != names.end() ? u8 (it->second) : juce::String::fromUTF8 (id.c_str());
@@ -106,7 +107,8 @@ juce::String parameterLabel (const std::string& type, const std::string& key)
         { "delay.lowCutHz", "피드백 저역 차단" }, { "delay.highCutHz", "피드백 고역 차단" },
         { "distortion.driveDb", "드라이브" }, { "distortion.toneHz", "톤" }, { "distortion.mix", "왜곡음 비율" },
         { "distortion.outputDb", "출력 게인" },
-        { "stereo.width", "스테레오 폭" }, { "stereo.pan", "위치" },
+        { "stereo.width", "스테레오 폭" }, { "stereo.pan", "위치" }, { "stereo.invertLeft", "왼쪽 위상 뒤집기" },
+        { "stereo.invertRight", "오른쪽 위상 뒤집기" }, { "stereo.swap", "좌우 바꾸기" }, { "stereo.monoBelowHz", "저역 모노" },
         { "gain.gainDb", "게인" },
         { "limiter.ceilingDb", "실링" }, { "limiter.releaseMs", "릴리스" }, { "limiter.lookaheadMs", "미리 보기" },
         { "limiter.truePeak", "트루 피크" },
@@ -130,6 +132,7 @@ juce::String parameterLabel (const std::string& type, const std::string& key)
         { "multiband.attackMs", "어택" }, { "multiband.releaseMs", "릴리스" }, { "multiband.kneeDb", "니" },
         { "transient.attackDb", "어택" }, { "transient.sustainDb", "서스테인" }, { "transient.outputDb", "출력 게인" },
         { "deesser.frequencyHz", "나눔 주파수" }, { "deesser.thresholdDb", "스레숄드" }, { "deesser.rangeDb", "최대 감소" },
+        { "pitch.semitones", "반음" }, { "pitch.cents", "센트" }, { "pitch.mix", "효과음 비율" }, { "pitch.formant", "포먼트 지키기" },
         { "band.freqHz", "주파수" }, { "band.gainDb", "게인" }, { "band.q", "Q" },
         { "synth.detune", "디튠 폭" }, { "synth.noise", "잡음" }, { "synth.filter", "켜기" }, { "synth.cutoffHz", "컷오프" },
         { "synth.resonance", "레조넌스" }, { "synth.filterEnvHz", "엔벨로프 양" }, { "synth.filterEnvDecay", "엔벨로프 감쇠" },
@@ -258,6 +261,8 @@ juce::String bandTypeName (const std::string& type)
 juce::String formatParameter (const mr::EffectParameter& p, double v)
 {
     const auto& u = p.unit;
+    if (p.key == "monoBelowHz" && v <= 0.0)
+        return u8 ("꺼짐");
     if (u == "dB")
         return (v > 0.0 ? "+" : "") + juce::String (v, 1) + " dB";
     if (u == "Hz")

@@ -31,8 +31,8 @@ line, which answers in JSON. Every route gives the same sound. The interface is 
   drum kits), VST3 and AU plugins in their own windows, a quick sampler that turns one sound into an instrument, and track
   templates.
 - **Mixing.** Buses, sends, subgroups, VCAs and sidechains; EQ, compressor, multiband compressor, transient shaper,
-  de-esser, gate, distortion, reverb, delay, filter, ducker, chorus, flanger, phaser, tremolo, stereo and a true-peak limiter; VST3 and
-  AU effects; drawn and recorded automation; effect presets; MIDI learn; loudness and spectrum meters and a loudness
+  de-esser, gate, distortion, zero-latency convolution reverb (impulse response files), delay, filter, ducker, chorus, flanger,
+  phaser, tremolo, pitch shifter, stereo (mono lows) and a true-peak limiter; VST3 and AU effects; drawn and recorded automation; effect presets; MIDI learn; loudness and spectrum meters and a loudness
   target.
 - **Recording.** MIDI and audio with count-in, metronome, loop overdub and punch, and input monitoring. The computer
   keyboard plays notes when no MIDI keyboard is attached.
@@ -166,10 +166,9 @@ every command, and [docs/plans/engine.md](docs/plans/engine.md) has the engine's
 
 ## Roadmap
 
-The planned stages are noise reduction, a convolution effect and a pitch shifter, a sound browser, drum
-audio to notes, a chord track, track freezing, mastering meters and dither, modulators, external MIDI devices and editing
-in the score ([docs/plans/next-stages.md](docs/plans/next-stages.md), in Korean). Features that need models trained on
-other people's recordings, such as stem separation, are left out on purpose.
+The planned stages are a sound browser, drum audio to notes, a chord track, track freezing, mastering meters and dither,
+modulators, external MIDI devices and editing in the score ([docs/plans/next-stages.md](docs/plans/next-stages.md), in Korean).
+Features that need models trained on other people's recordings, such as stem separation, are left out on purpose.
 
 ## License
 
