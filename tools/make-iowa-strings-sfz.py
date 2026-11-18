@@ -1,34 +1,37 @@
 #!/usr/bin/env python3
-"""University of Iowa 의 독주 바이올린 녹음으로 InitialDAW 의 SFZ 를 쓴다 (레지스트리의 violin-iowa).
+"""University of Iowa 의 독주 바이올린과 첼로 녹음으로 InitialDAW 의 SFZ 를 쓴다 (레지스트리의 violin-iowa, cello-iowa).
 
-받는 곳과 라이선스: University of Iowa Electronic Music Studios 「Musical Instrument Samples」 의 바이올린 arco (연주 Josue Jean-Francois,
-무향실, Neumann KM 84 5피트, 16비트 44.1 kHz 모노). 스튜디오는 녹음을 어떤 목적이든 제한 없이 쓸 수 있다고 밝힌다. 파일마다 SHA-256 으로 고정한다.
-녹음은 셈여림 셋 (pp, mf, ff) 과 줄 넷 (G, D, A, E) 마다 반음씩 오르는 음을 한 파일에 담았다 (35 파일, 음마다 4.5~5.5초, 비브라토 없이 곧은 소리).
-연주의 음정이 음마다 -65~+50 센트 벗어나 있어 음마다 재서 맞춘다.
+받는 곳과 라이선스: University of Iowa Electronic Music Studios 「Musical Instrument Samples」 의 arco 녹음 (바이올린 연주 Josue Jean-Francois,
+첼로 연주 Jean Montes, 무향실, 16비트 44.1 kHz 모노). 스튜디오는 녹음을 어떤 목적이든 제한 없이 쓸 수 있다고 밝힌다. 파일마다 SHA-256 으로 고정한다.
+녹음은 셈여림 셋 (pp, mf, ff) 과 줄 넷 (바이올린 G, D, A, E, 첼로 C, G, D, A) 마다 반음씩 오르는 음을 한 파일에 담았다
+(바이올린 35 파일, 음마다 4.5~5.5초, 첼로 41 파일, 음마다 2~3초, 비브라토 없이 곧은 소리). 연주의 음정이 음마다 -65~+60 센트 벗어나 있어 음마다 재서 맞춘다.
 
 이 도구가 하는 일:
-  - 없는 녹음을 받고 (`external/iowa/violin/*.aiff`), afconvert 로 WAV 로 바꿔 (`external/iowa/violin/wav/`) 그 곁에 SFZ 를 쓴다
-    (`external/iowa/InitialDAW/violin-legato.sfz`, `violin-sustain.sfz`). 내용이 같으면 파일을 건드리지 않는다.
-  - 아래 NOTES 표는 --measure 가 잰 값이다: 파일마다 엔진의 `music-render notes` 로 음을 나누고 (YIN), 파일 이름의 음 범위 안에서
+  - 없는 녹음을 받고 (`external/iowa/<악기>/*.aiff`), afconvert 로 WAV 로 바꿔 (`external/iowa/<악기>/wav/`) 그 곁에 SFZ 를 쓴다
+    (`external/iowa/InitialDAW/<악기>-legato.sfz`, `<악기>-sustain.sfz`). 내용이 같으면 파일을 건드리지 않는다.
+  - 아래 NOTES 표는 --measure 가 잰 값이다 (첼로는 활이 짧아 (0.6~0.8초 고르고 1.4초 남짓에 활을 뗀다) 고른 크기를 가장 큰 80 ms 크기로 잡고,
+    루프를 그 -4 dB 안의 0.4초 넘는 구간에서 고른다): 파일마다 엔진의 `music-render notes` 로 음을 나누고 (YIN), 파일 이름의 음 범위 안에서
     시간 순서대로 반음 건반에 맞춘다 (건너뛴 음과 음정이 0.75 반음 넘게 벗어난 음은 뺀다). 음마다 0.5~2.0초 RMS, 공격이 고른 크기의 -3 dB 에
-    닿는 때, 루프 (공격 0.25초 뒤의 처음으로 고른 구간 (활 바꿈처럼 20 ms 크기가 둘레보다 3 dB, 음 전체보다 4 dB 넘게 꺼지는 자리가 없는 곳) 안에서, 50 ms 크기 차이와
-    스펙트럼 차이가 작은 자리 가운데 끝을 파형 상관으로 다듬고, 크로스페이드를 미리 섞어 꺼짐이 가장 작은 것 (1.5 dB 넘으면 피한다)).
+    닿는 때, 루프 (공격 0.25초 뒤의 처음으로 고른 구간 (활 바꿈처럼 짧은 창 (바이올린 20 ms, 첼로 40 ms) 의 크기가 둘레보다 3 dB, 음 전체보다
+    4 dB 넘게 꺼지는 자리가 없는 곳) 안에서,
+    50 ms 크기 차이와 스펙트럼 차이가 작고 1초보다 짧지 않은 자리 가운데 끝을 파형 상관으로 다듬고, 크로스페이드를 미리 섞어 꺼짐이 가장 작은 것 (1.5 dB 넘으면 피한다)).
 
 SFZ 가 하는 일:
-  - 건반마다 1 포지션의 줄 (G3~C#4 는 G, D4~G#4 는 D, A4~D#5 는 A, E5 위는 E) 의 녹음을 고르고, 그 줄에 없으면 아래 줄, 그다음 다른 줄.
+  - 건반마다 1 포지션의 줄 (그 건반보다 낮은 개방현 가운데 가장 높은 줄) 의 녹음을 고르고, 그 줄에 없으면 아래 줄, 그다음 다른 줄.
     녹음이 없는 건반은 이웃 녹음을 옮긴다 (가운데에서 나눈다). 음높이는 음마다 tune 으로 맞춘다.
   - CC1: 음을 시작할 때 녹음 층을 고르고 (0~50 pp, 51~95 mf, 96~127 ff), 음 안에서는 크기 (24 dB) 를 바꾼다. 층마다 음을 같은 크기로 맞춰
     층이 바뀌는 자리에서 크기가 뛰지 않는다 (CC1 127 에서 RMS -17.9 dB 기준, sfizz 를 지나 약 11.5 dB 낮다).
-  - 지속음은 루프 (크로스페이드 0.25초) 로 길게 이어 내고, 활의 압력처럼 느린 크기 흔들림 넷 (0.19~2.7 Hz, 음마다 위상과 빠르기가 다르다) 을 더한다.
+  - 새로 시작하는 음은 녹음의 느린 공격 (pp 와 mf 는 0.4~1초) 앞부분을 건너뛰어 공격이 -3 dB 에 닿기 0.1초 앞에서 낸다.
+  - 지속음은 루프 (크로스페이드 바이올린 0.25초, 첼로 0.18초) 로 길게 이어 내고, 활의 압력처럼 느린 크기 흔들림 넷 (0.19~2.7 Hz, 음마다 위상과 빠르기가 다르다) 을 더한다.
   - 비브라토: 녹음에 없어 음마다 넣는다. 첫 음은 0.18초 뒤에 시작해 0.4초에 걸쳐 커지고, 레가토로 이어 받는 음은 0.12초에 차오른다.
-    빠르기 5.3~5.9 Hz (음마다 무작위), 깊이는 CC21 이 음 안에서도 정한다 (기본 64 에서 ±13 센트, 127 에서 ±22, 0 이면 없음).
-  - legato (violin-legato.sfz): 겹친 음은 녹음의 공격을 건너뛰고 루프 시작 (고른 구간) 에서 이어 받는다 (새 음 40 ms 에 차오르고 앞 음은 0.15초에 끈다).
-    한 목소리다. sustain (violin-sustain.sfz): 음마다 새 활, 겹음을 낼 수 있다.
-  - 건반: 55~99 (G3~D#7). 그 밖은 소리가 없다.
+    빠르기 5.3~5.9 Hz (첼로 5.0~5.6 Hz, 음마다 무작위), 깊이는 CC21 이 음 안에서도 정한다 (기본 64 에서 ±13 센트, 127 에서 ±22, 0 이면 없음).
+  - legato (<악기>-legato.sfz): 겹친 음은 녹음의 공격을 건너뛰고 루프 시작 (고른 구간) 에서 이어 받는다 (새 음 40 ms 에 차오르고 앞 음은 0.15초에 끈다).
+    한 목소리다. sustain (<악기>-sustain.sfz): 음마다 새 활, 겹음을 낼 수 있다.
+  - 건반: 바이올린 55~99 (G3~D#7), 첼로 36~81 (C2~A5). 그 밖은 소리가 없다.
 
 사용법:
-  tools/make-iowa-violin-sfz.py external/iowa                                       # build.sh --samples 가 부른다
-  tools/make-iowa-violin-sfz.py external/iowa --measure --engine build/engine/music-render   # NOTES 표를 다시 잰다 (numpy)
+  tools/make-iowa-strings-sfz.py external/iowa                                                  # build.sh --samples 가 부른다
+  tools/make-iowa-strings-sfz.py external/iowa --measure cello --engine build/engine/music-render   # 그 악기의 NOTES 표를 다시 잰다 (numpy)
 """
 import argparse
 import hashlib
@@ -39,17 +42,14 @@ import re
 import subprocess
 import sys
 
-BASE = "https://theremin.music.uiowa.edu/sound%20files/MIS/Strings/violin/Violin.arco.{name}.aiff"
+BASE = "https://theremin.music.uiowa.edu/sound%20files/MIS/Strings/{folder}/{prefix}.arco.{name}.aiff"
 SR = 44100
 LAYERS = {"pp": (0, 50), "mf": (51, 95), "ff": (96, 127)}
-OPEN = (("sulE", 76), ("sulA", 69), ("sulD", 62), ("sulG", 55))
 TARGET_DB = -17.9
 CC1_RANGE_DB = 24.0
-LOW_KEY, HIGH_KEY = 55, 99
-XFADE_S = 0.25
 
 # (파일 이름의 가운데, SHA-256)
-FILES = [
+VIOLIN_FILES = [
     ("pp.sulG.A4Gb5", "7903cfe7c2eaacca76111189db86b6178eba6b85e8fbb863ef0a3364a5e5dad2"),
     ("pp.sulG.B3Ab4", "49d2e10936e71c5f34b94e67f5a729d453e8e8a6e8ec19a5312876e77bb44980"),
     ("pp.sulG.G3B3", "d283c884c4143c215634739453b788fea23d4f22d777aabaabda654224baf721"),
@@ -86,8 +86,52 @@ FILES = [
     ("ff.sulE.C6Gb7", "218b4f84f0f505a86839bc58b499226e13eaa6b34d6ecb2789f00951db4594a0"),
     ("ff.sulE.E5B5", "6b9f797cb5892192d3a28048c6c6903c2b50d3dcd3ebf26c9be9def68eefffb6"),]
 
+CELLO_FILES = [
+    ("pp.sulC.B3Db4", "384fd9b5bf694266167ad5cb9fab90fca463946f0cd1982a732e06ae00740f3a"),
+    ("pp.sulC.C2Gb2", "2fbf30dfbe08428bd3ea46d1731055d46e1eaaa750839c43dea6b1b449a7a73a"),
+    ("pp.sulC.D3Bb3", "360ad4db331cc532ab07f6ef8e088788cc2e45f44b90bf1f14b8ccea12ecabc9"),
+    ("pp.sulC.Gb2D3", "d6c98e8359261e9f81eba103dbb185912ed0dabbffc91b5d4dc27a9ebbf548e5"),
+    ("pp.sulG.B2A3", "3cb5a5517861beb9c84436cbaea14ee1ddddb4602c74a6b864eca4f8e3a99834"),
+    ("pp.sulG.Bb3Gb4", "38ca264eacddfdaf83d1c81cf06b2da77eab2a5d7bd7aa6cbbc187c944a3e8c3"),
+    ("pp.sulG.G2Bb2", "8b82be1e53a68893159933287c775fc097804259a0f1d2dba06049232d00fc94"),
+    ("pp.sulG.Gb4G4", "330f66955f5a0642c33690b00c9f026fd14ea0d312cb9a07d8f894bf5d4a8159"),
+    ("pp.sulD.Bb4D5", "498bb2965f22226736a249f9a7bddb3eb70c07d854eac27b81b38e4b02cb7114"),
+    ("pp.sulD.C4A4", "377c2e8e635047d0067a00050d2f0951f25238f49079d15379f1be9d7f33cdd1"),
+    ("pp.sulD.D3B3", "5fd8cc2d35be7230afd5c5b96bc008bcdc9063ddbd8fdbb160c916e7c2c49e3a"),
+    ("pp.sulA.A3B3", "d034f1279299c8273f954e2f38d42f21df649a554109d5b50c49d9832b03948a"),
+    ("pp.sulA.Ab5", "dc51fef017750989b91b45ac584c15f9eaf19c836ae6760baec94e867fe46c03"),
+    ("pp.sulA.B4Ab5", "08b6b3a3a5030f530f4c1093f8760cd506eea99b3791447e5663030e6f8d47bc"),
+    ("pp.sulA.C4Bb4", "8d444d8c7bc3f135dcae0fe58dd369f05781a2f61ac13fb6e2b670ed86668080"),
+    ("mf.sulC.A2Gb3", "3289772e71ff803b1904625704cf9351ca6e390449799943abc910661cd2fc16"),
+    ("mf.sulC.C2Ab2", "8942170087befce24773228679e3a8961c34b8d684ce287db0e551f3a3236fb4"),
+    ("mf.sulC.C4Gb4", "d6db2d2dd3a92979c0b28de8f3b0453ab53f3e7427c7aa80fd9acd11fb3f240f"),
+    ("mf.sulG.B2A3", "4565c2165d0afe874cd6d39872160f242b153d987d94ef79dc562e04df09a7c2"),
+    ("mf.sulG.Bb3Eb4", "2c48c01cdd866a90c8d3f21890c728e6e006a89b2e92826098974a9388541cf5"),
+    ("mf.sulG.E4G4", "77080024dcad2790e9f160caa53b1b66e3c476ecec43ec979e0754edf5f7abf9"),
+    ("mf.sulG.G2Bb2", "549afb3c833c7f0ecbf8bf8898719c49c57437c2170baafed84e673ac122c59d"),
+    ("mf.sulD.B4Eb5", "3e33b437e3d7c202b00ad5b582640c67245cf46cf710800a676f0f2dcfeb4183"),
+    ("mf.sulD.C4Bb4", "0eb5b4bf2f38999cbf2b697cc277564ed84d3bac1986201607ace1e34a6efb50"),
+    ("mf.sulD.D3B3", "a42352e65954ae2b8ffe427a9044b8ad1f2b7c04b8623c30e205ece0a7485ce5"),
+    ("mf.sulA.A3B3", "59d2457357d62df927a0b4ff80e685df8c8b028386322576ac3efa562c61bf9c"),
+    ("mf.sulA.C4C5", "4d2da113625445434f331e0d453e47f82be01b83795e99b29d43f8551b12d4fc"),
+    ("mf.sulA.C5Ab5", "874f6da697ccc8d0d598aa30903f521e7b3e177545da70d1a85c3bd31c90fe97"),
+    ("ff.sulC.Bb2F3", "37627af18e75943f0520b51b2bc0cce4d2af2fcd381af550156a4f9cbdab4c7b"),
+    ("ff.sulC.C2A2", "cd1c57b6f2cf5373b1d2aa950beab967652ae2efdf4c6bd243511dae35bcbe8e"),
+    ("ff.sulC.Gb3Db4", "ace3f6905235efd7e91bfeb50ed3d83b21762c0eeb53a4c76e81149f9bdad0c0"),
+    ("ff.sulG.B2Bb3", "1ad2d6bf99d54b36c5eeb24b994bcc7e5f82042c309f44ac0df8e1819011e09c"),
+    ("ff.sulG.B3Gb4", "1ea8ad543d65db0389c6a8bab2b4edf319ae2be307be90b3840dba9d609f539c"),
+    ("ff.sulG.G2B2", "e6e308a363c65c9c55292d7176247ef486a1c3357f71dd6ddcaeab1cafaa7e4e"),
+    ("ff.sulG.G4", "1c7fbe793c310669a9ea6c1971aaa36c68b33a5c337f12ee7ab990588a8677be"),
+    ("ff.sulD.B4D5", "405530b0c3e68f72de9757a702b8d7e21f94b1daa975930e2d8c32a96ed895bd"),
+    ("ff.sulD.C4Bb4", "f49f2df8d3a14db743e65a0f6771469d130e62615846c4aed12f9b76450866a7"),
+    ("ff.sulD.D3B3", "fb9ca888cd0fd803848b584c4c9664a100648cf64dd06b56841fef5ae60b5bdd"),
+    ("ff.sulA.A3B3", "404fc6d966868e0409ef9437c2785ea9ff37bf571ecc089ab97752a148632dea"),
+    ("ff.sulA.C4B4", "53cacc8ba58dfd5a8c731d03dc4411d26168a9e863e3e9193f0fae4c972cf33d"),
+    ("ff.sulA.C5Bb5", "6241e6103128995a879acd4dc07ca7a358b3e2c5e56d5975edd096ba4b521ea5"),
+]
+
 # (파일, 건반, 시작 샘플, 끝 샘플, 센트, RMS dB, 공격 초, 루프 시작 샘플, 루프 끝 샘플): --measure 가 잰 값
-NOTES = [
+VIOLIN_NOTES = [
     ("pp.sulG.A4Gb5", 70, 466754, 655017, -3.5, -42.0, 0.45, 539519, 612506),
     ("pp.sulG.A4Gb5", 71, 805089, 997365, -8.9, -48.4, 0.18, 844779, 924018),
     ("pp.sulG.A4Gb5", 72, 1200931, 1389194, -8.8, -50.9, 0.0, 1294423, 1360778),
@@ -311,6 +355,230 @@ NOTES = [
     ("ff.sulE.E5B5", 83, 3015337, 3278967, -31.6, -23.0, 0.02, 3050617, 3225046),
 ]
 
+CELLO_NOTES = [
+    ("pp.sulC.B3Db4", 59, 102091, 189365, -18.6, -34.2, 0.36, 130315, 152153),
+    ("pp.sulC.B3Db4", 60, 338996, 426711, -46.3, -33.1, 0.37, 365015, 384240),
+    ("pp.sulC.B3Db4", 61, 579474, 677993, -27.9, -30.2, 0.41, 606375, 624961),
+    ("pp.sulC.C2Gb2", 36, 319989, 423227, 8.9, -32.2, 0.3, 369821, 397994),
+    ("pp.sulC.C2Gb2", 37, 729281, 824537, -1.8, -28.5, 0.53, 765002, 810885),
+    ("pp.sulC.C2Gb2", 38, 1436072, 1552275, 12.1, -31.2, 0.51, 1468265, 1494525),
+    ("pp.sulC.C2Gb2", 39, 2066570, 2180127, 2.2, -34.3, 0.42, 2093471, 2120645),
+    ("pp.sulC.C2Gb2", 40, 2692437, 2839158, -0.9, -28.0, 0.33, 2715810, 2760778),
+    ("pp.sulC.C2Gb2", 41, 3276762, 3408885, -11.4, -29.4, 0.39, 3302781, 3324627),
+    ("pp.sulC.C2Gb2", 42, 3847372, 3984611, -22.5, -29.3, 0.6, 3884416, 3916349),
+    ("pp.sulC.D3Bb3", 50, 100547, 203962, 29.3, -35.4, 0.44, 129653, 153300),
+    ("pp.sulC.D3Bb3", 51, 340804, 435796, -3.2, -35.5, 0.29, 369910, 388370),
+    ("pp.sulC.D3Bb3", 52, 838252, 938359, 22.9, -34.9, 0.35, 864271, 882749),
+    ("pp.sulC.D3Bb3", 53, 1085565, 1189156, -8.2, -31.8, 0.39, 1113348, 1133640),
+    ("pp.sulC.D3Bb3", 54, 1600036, 1685546, 6.6, -28.7, 0.46, 1629142, 1651951),
+    ("pp.sulC.D3Bb3", 55, 1825695, 1916938, 39.7, -28.0, 0.47, 1857888, 1878123),
+    ("pp.sulC.D3Bb3", 56, 2076536, 2163105, 24.8, -28.0, 0.2, 2094176, 2119739),
+    ("pp.sulC.D3Bb3", 57, 2314323, 2419502, -18.9, -31.8, 0.37, 2339459, 2366626),
+    ("pp.sulC.D3Bb3", 58, 2818210, 2907909, 11.1, -32.6, 0.47, 2849521, 2870636),
+    ("pp.sulC.Gb2D3", 42, 105840, 215208, 30.5, -26.2, 0.65, 143325, 161147),
+    ("pp.sulC.Gb2D3", 43, 364442, 479322, -7.0, -30.3, 0.37, 398399, 428238),
+    ("pp.sulC.Gb2D3", 44, 650166, 769500, -20.4, -29.6, 0.42, 677949, 704610),
+    ("pp.sulC.Gb2D3", 45, 1486655, 1614368, 18.1, -34.0, 0.81, 1531196, 1559364),
+    ("pp.sulC.Gb2D3", 46, 1747683, 1859917, -14.8, -35.1, 0.46, 1779435, 1799705),
+    ("pp.sulC.Gb2D3", 47, 2264579, 2375270, 33.8, -34.5, 0.59, 2299418, 2316945),
+    ("pp.sulC.Gb2D3", 48, 2532883, 2662581, 13.4, -33.4, 0.47, 2562430, 2580158),
+    ("pp.sulC.Gb2D3", 50, 3038093, 3160955, -42.6, -30.7, 0.41, 3083516, 3101073),
+    ("pp.sulG.B2A3", 47, 95476, 224072, 14.1, -35.5, 0.46, 129874, 160734),
+    ("pp.sulG.B2A3", 48, 457008, 562407, 46.2, -30.8, 0.48, 498462, 526742),
+    ("pp.sulG.B2A3", 49, 754506, 870489, 49.6, -24.8, 0.74, 796842, 824054),
+    ("pp.sulG.B2A3", 50, 1071630, 1174162, 50.7, -34.8, 0.38, 1097208, 1114697),
+    ("pp.sulG.B2A3", 51, 1372392, 1464120, 26.7, -36.3, 0.48, 1405908, 1423506),
+    ("pp.sulG.B2A3", 52, 1706361, 1800470, 31.5, -31.6, 0.37, 1734144, 1765707),
+    ("pp.sulG.B2A3", 53, 2054178, 2154946, 74.1, -25.1, 0.73, 2095191, 2117913),
+    ("pp.sulG.B2A3", 54, 2373991, 2462588, 65.3, -25.1, 0.34, 2406625, 2424083),
+    ("pp.sulG.B2A3", 55, 2665271, 2800261, 32.5, -24.6, 0.64, 2703197, 2730346),
+    ("pp.sulG.B2A3", 56, 2960521, 3056174, 1.6, -20.4, 0.6, 2995801, 3016798),
+    ("pp.sulG.B2A3", 57, 3557458, 3656860, 25.2, -31.5, 0.62, 3594502, 3614660),
+    ("pp.sulG.Bb3Gb4", 58, 113381, 216795, -15.4, -31.3, 0.43, 142046, 162299),
+    ("pp.sulG.Bb3Gb4", 59, 690164, 797107, -4.0, -29.4, 0.51, 721475, 738998),
+    ("pp.sulG.Bb3Gb4", 60, 958028, 1063206, -24.9, -33.7, 0.48, 991544, 1014298),
+    ("pp.sulG.Bb3Gb4", 61, 1535958, 1649295, -2.4, -28.5, 0.48, 1567710, 1595742),
+    ("pp.sulG.Bb3Gb4", 62, 2122268, 2221228, 44.0, -29.2, 0.53, 2154461, 2191359),
+    ("pp.sulG.Bb3Gb4", 63, 2396305, 2504571, 4.0, -27.4, 0.82, 2452753, 2470285),
+    ("pp.sulG.Bb3Gb4", 64, 2690452, 2800702, -3.6, -30.7, 0.33, 2740285, 2757724),
+    ("pp.sulG.Bb3Gb4", 66, 3265737, 3359626, -40.2, -24.1, 0.58, 3300135, 3321108),
+    ("pp.sulG.G2Bb2", 44, 481572, 622515, -25.4, -25.6, 0.48, 511560, 536999),
+    ("pp.sulG.G2Bb2", 45, 844206, 1001114, -44.5, -27.1, 0.65, 881691, 913361),
+    ("pp.sulG.G2Bb2", 46, 1512100, 1638447, 18.7, -32.5, 0.6, 1547380, 1564977),
+    ("pp.sulG.Gb4G4", 66, 108530, 213444, 37.5, -29.6, 0.8, 154394, 176324),
+    ("pp.sulG.Gb4G4", 67, 398443, 497888, 41.7, -27.2, 0.48, 429313, 462625),
+    ("pp.sulD.Bb4D5", 70, 90625, 165948, 18.2, -26.8, 0.56, 124141, 141632),
+    ("pp.sulD.Bb4D5", 72, 351388, 438662, -41.5, -32.8, 0.46, 386668, 404095),
+    ("pp.sulD.Bb4D5", 73, 648181, 753801, -13.6, -28.8, 0.85, 694486, 712299),
+    ("pp.sulD.Bb4D5", 74, 917809, 1061442, 23.9, -34.5, 0.3, 978666, 1022931),
+    ("pp.sulD.C4A4", 60, 81099, 194877, 14.2, -37.2, 0.45, 109764, 127340),
+    ("pp.sulD.C4A4", 61, 352491, 462300, 16.5, -32.1, 0.43, 380274, 397794),
+    ("pp.sulD.C4A4", 62, 624764, 780525, 17.2, -33.4, 0.68, 663572, 681106),
+    ("pp.sulD.C4A4", 63, 925085, 1020562, 2.2, -30.9, 0.6, 960365, 984000),
+    ("pp.sulD.C4A4", 64, 1209089, 1335039, -8.0, -32.6, 0.6, 1245251, 1262733),
+    ("pp.sulD.C4A4", 65, 1505662, 1617896, -24.4, -31.5, 0.42, 1532563, 1550021),
+    ("pp.sulD.C4A4", 66, 2059514, 2156931, 20.6, -37.3, 0.56, 2094794, 2113989),
+    ("pp.sulD.C4A4", 68, 2688468, 2774419, -8.3, -31.6, 0.53, 2721543, 2743411),
+    ("pp.sulD.C4A4", 69, 3268383, 3350321, 16.4, -35.9, 0.46, 3297489, 3321118),
+    ("pp.sulD.D3B3", 51, 811528, 926188, 31.3, -36.1, 0.61, 848131, 878997),
+    ("pp.sulD.D3B3", 52, 1128430, 1243311, 29.7, -34.6, 0.56, 1161946, 1188253),
+    ("pp.sulD.D3B3", 53, 1445333, 1548968, 17.7, -34.2, 0.59, 1480172, 1497676),
+    ("pp.sulD.D3B3", 54, 1763117, 1875176, 1.2, -29.9, 0.59, 1800602, 1818905),
+    ("pp.sulD.D3B3", 55, 2045578, 2168441, 25.9, -32.8, 0.58, 2079976, 2098392),
+    ("pp.sulD.D3B3", 57, 2327774, 2427881, -29.3, -30.4, 0.5, 2358644, 2376995),
+    ("pp.sulD.D3B3", 58, 2591668, 2706549, -8.9, -33.2, 0.58, 2629594, 2647085),
+    ("pp.sulD.D3B3", 59, 2887579, 2994522, -18.1, -33.7, 0.51, 2918890, 2936406),
+    ("pp.sulA.A3B3", 58, 384110, 514470, -23.7, -23.9, 0.52, 419390, 436848),
+    ("pp.sulA.A3B3", 59, 668291, 772808, -56.0, -29.0, 0.53, 700484, 718009),
+    ("pp.sulA.Ab5", 80, 98122, 198670, 54.7, -29.4, 0.76, 148396, 171136),
+    ("pp.sulA.B4Ab5", 71, 83745, 178340, 20.1, -20.5, 0.3, 138429, 156771),
+    ("pp.sulA.B4Ab5", 72, 320871, 395136, -6.3, -24.0, 0.46, 355269, 372843),
+    ("pp.sulA.B4Ab5", 75, 1191626, 1263420, 14.0, -23.4, 0.64, 1229552, 1247007),
+    ("pp.sulA.B4Ab5", 76, 1414639, 1489521, -17.3, -21.7, 0.59, 1453006, 1470490),
+    ("pp.sulA.B4Ab5", 77, 1861064, 1945868, 36.2, -22.2, 0.68, 1906046, 1924361),
+    ("pp.sulA.B4Ab5", 78, 2064365, 2154726, -5.5, -25.8, 0.78, 2107583, 2125035),
+    ("pp.sulA.B4Ab5", 80, 2482036, 2569310, -27.3, -21.8, 0.55, 2515111, 2538739),
+    ("pp.sulA.C4Bb4", 60, 361575, 486158, 5.0, -27.2, 0.38, 387153, 404634),
+    ("pp.sulA.C4Bb4", 61, 592042, 688180, 1.8, -27.1, 0.53, 628645, 647858),
+    ("pp.sulA.C4Bb4", 67, 1831869, 1934843, -11.6, -27.0, 0.46, 1861857, 1880283),
+    ("pp.sulA.C4Bb4", 68, 2079182, 2183214, 3.7, -21.3, 0.68, 2121518, 2143444),
+    ("pp.sulA.C4Bb4", 69, 2304798, 2387441, 12.8, -27.2, 0.45, 2338755, 2356566),
+    ("pp.sulA.C4Bb4", 70, 2747474, 2842685, 49.7, -21.7, 0.55, 2781431, 2799814),
+    ("mf.sulC.A2Gb3", 45, 136136, 242638, -1.2, -26.4, 0.25, 155980, 195709),
+    ("mf.sulC.A2Gb3", 46, 399810, 508737, 7.7, -26.3, 0.67, 438177, 455896),
+    ("mf.sulC.A2Gb3", 47, 640905, 755565, -13.2, -24.1, 0.38, 666483, 698142),
+    ("mf.sulC.A2Gb3", 48, 910091, 1018357, -30.8, -25.4, 0.4, 936551, 958501),
+    ("mf.sulC.A2Gb3", 49, 1167768, 1273608, -37.4, -22.1, 0.45, 1199079, 1221180),
+    ("mf.sulC.A2Gb3", 50, 1689559, 1782566, 15.4, -26.4, 0.56, 1725721, 1744125),
+    ("mf.sulC.A2Gb3", 51, 1951866, 2039580, -7.9, -24.6, 0.39, 1980531, 2000744),
+    ("mf.sulC.A2Gb3", 52, 2475200, 2565120, 28.0, -24.4, 0.37, 2509157, 2529427),
+    ("mf.sulC.A2Gb3", 53, 2745269, 2831440, 6.8, -23.2, 0.4, 2777021, 2798902),
+    ("mf.sulC.A2Gb3", 54, 3000299, 3079811, 6.0, -18.4, 0.53, 3032492, 3050973),
+    ("mf.sulC.C2Ab2", 36, 289737, 408366, 8.5, -28.1, 0.0, 302966, 339832),
+    ("mf.sulC.C2Ab2", 38, 910312, 1015490, -18.5, -26.0, 0.33, 941623, 972569),
+    ("mf.sulC.C2Ab2", 39, 1447538, 1556465, -5.1, -27.8, 0.44, 1476644, 1495988),
+    ("mf.sulC.C2Ab2", 40, 1708345, 1826533, -25.3, -24.8, 0.38, 1734805, 1764115),
+    ("mf.sulC.C2Ab2", 41, 2276309, 2395820, 11.8, -25.3, 0.38, 2303651, 2330206),
+    ("mf.sulC.C2Ab2", 42, 2563400, 2675414, 4.7, -21.0, 0.51, 2597357, 2627306),
+    ("mf.sulC.C2Ab2", 43, 2826148, 2948349, -6.0, -18.5, 0.54, 2861428, 2890353),
+    ("mf.sulC.C2Ab2", 44, 3418191, 3529323, 7.3, -18.8, 0.5, 3449061, 3481637),
+    ("mf.sulC.C4Gb4", 60, 1389194, 1470514, -56.9, -21.2, 0.44, 1417418, 1439360),
+    ("mf.sulC.C4Gb4", 61, 1620586, 1692602, -41.7, -19.7, 0.57, 1654543, 1673774),
+    ("mf.sulG.B2A3", 47, 97461, 224292, -13.8, -22.2, 0.32, 120393, 154578),
+    ("mf.sulG.B2A3", 48, 502122, 599098, 31.6, -24.3, 0.5, 534756, 561249),
+    ("mf.sulG.B2A3", 49, 805971, 903212, 17.7, -16.1, 0.43, 840810, 863804),
+    ("mf.sulG.B2A3", 50, 1095267, 1192728, 21.1, -23.0, 0.44, 1123491, 1149901),
+    ("mf.sulG.B2A3", 51, 1476732, 1576575, -10.2, -24.2, 0.57, 1511571, 1532671),
+    ("mf.sulG.B2A3", 52, 1778597, 1872045, -20.6, -22.8, 0.67, 1818728, 1839038),
+    ("mf.sulG.B2A3", 53, 2113624, 2200457, -26.6, -22.5, 0.43, 2141407, 2165016),
+    ("mf.sulG.B2A3", 54, 2456193, 2545893, -20.4, -17.5, 0.61, 2491914, 2510252),
+    ("mf.sulG.B2A3", 55, 3086250, 3214845, 17.9, -20.5, 0.45, 3114915, 3132491),
+    ("mf.sulG.B2A3", 56, 3415104, 3506126, -6.6, -15.3, 0.43, 3442887, 3463992),
+    ("mf.sulG.B2A3", 57, 3714587, 3810240, -36.5, -17.9, 0.48, 3744575, 3769977),
+    ("mf.sulG.Bb3Eb4", 58, 398884, 499432, -3.6, -18.9, 0.53, 434605, 454703),
+    ("mf.sulG.Bb3Eb4", 59, 954500, 1042435, -0.6, -20.3, 0.48, 984488, 1003767),
+    ("mf.sulG.Bb3Eb4", 60, 1542794, 1646208, -1.0, -26.2, 0.4, 1569254, 1601814),
+    ("mf.sulG.Bb3Eb4", 61, 2191417, 2279573, 4.8, -18.0, 0.46, 2223169, 2240601),
+    ("mf.sulG.Bb3Eb4", 62, 2781960, 2869013, -14.8, -20.3, 0.54, 2814594, 2832020),
+    ("mf.sulG.Bb3Eb4", 63, 3375325, 3461497, -9.7, -21.1, 0.46, 3407077, 3427476),
+    ("mf.sulG.E4G4", 64, 409292, 502960, 14.3, -19.8, 0.64, 449864, 471755),
+    ("mf.sulG.E4G4", 65, 702116, 797989, -14.8, -25.7, 0.49, 734309, 757120),
+    ("mf.sulG.E4G4", 66, 986781, 1059899, -2.4, -22.3, 0.47, 1016328, 1033766),
+    ("mf.sulG.E4G4", 67, 1282472, 1363748, 11.1, -23.4, 0.35, 1310255, 1330379),
+    ("mf.sulG.G2Bb2", 44, 571491, 715566, -12.6, -17.3, 0.48, 605007, 639226),
+    ("mf.sulG.G2Bb2", 45, 1376184, 1508087, 27.7, -22.1, 0.49, 1406613, 1433815),
+    ("mf.sulG.G2Bb2", 46, 1727352, 1850171, 4.9, -25.4, 0.39, 1758663, 1788464),
+    ("mf.sulD.B4Eb5", 75, 653076, 726635, -46.8, -22.4, 0.58, 687474, 707597),
+    ("mf.sulD.C4Bb4", 60, 138782, 219221, -3.6, -24.6, 0.28, 159950, 183601),
+    ("mf.sulD.C4Bb4", 61, 496610, 581855, -0.5, -18.4, 0.38, 524834, 542304),
+    ("mf.sulD.C4Bb4", 62, 812851, 899463, -6.6, -19.1, 0.37, 837987, 855756),
+    ("mf.sulD.C4Bb4", 63, 1168870, 1237578, 34.2, -21.8, 0.26, 1189156, 1206655),
+    ("mf.sulD.C4Bb4", 66, 2080285, 2149434, -18.6, -19.4, 0.41, 2108068, 2125546),
+    ("mf.sulD.D3B3", 51, 639802, 740086, -25.3, -27.5, 0.45, 677287, 697424),
+    ("mf.sulD.D3B3", 52, 1052843, 1141660, -31.8, -25.9, 0.45, 1086800, 1106147),
+    ("mf.sulD.D3B3", 53, 1436954, 1514923, -53.2, -24.9, 0.42, 1467383, 1486655),
+    ("mf.sulD.D3B3", 54, 1757605, 1847084, -67.6, -22.9, 0.37, 1786270, 1803863),
+    ("mf.sulD.D3B3", 55, 2093294, 2176158, -68.3, -18.7, 0.48, 2129456, 2147007),
+    ("mf.sulD.D3B3", 56, 2442258, 2523357, -32.5, -19.2, 0.41, 2471805, 2493656),
+    ("mf.sulD.D3B3", 57, 2778432, 2874305, -0.6, -22.9, 0.38, 2806656, 2827720),
+    ("mf.sulD.D3B3", 58, 3089160, 3168011, 0.0, -22.4, 0.43, 3116943, 3138893),
+    ("mf.sulD.D3B3", 59, 3416206, 3494660, -3.6, -22.6, 0.33, 3439579, 3457109),
+    ("mf.sulA.A3B3", 57, 74925, 241315, -3.1, -21.6, 0.49, 106236, 127310),
+    ("mf.sulA.A3B3", 58, 384331, 501858, -13.8, -19.8, 0.54, 420493, 440704),
+    ("mf.sulA.A3B3", 59, 718697, 814791, -35.3, -18.8, 0.59, 753536, 772841),
+    ("mf.sulA.C4C5", 60, 95035, 173004, -23.5, -22.0, 0.33, 124582, 143038),
+    ("mf.sulA.C4C5", 61, 382567, 460977, -49.4, -20.8, 0.46, 411673, 430984),
+    ("mf.sulA.C4C5", 62, 670055, 758431, -47.7, -22.9, 0.36, 697397, 714817),
+    ("mf.sulA.C4C5", 63, 960233, 1033130, -6.7, -20.2, 0.46, 989339, 1006840),
+    ("mf.sulA.C4C5", 64, 1206443, 1306727, -5.4, -21.7, 0.38, 1232021, 1249470),
+    ("mf.sulA.C4C5", 65, 1499488, 1578559, -7.0, -23.2, 0.43, 1527271, 1544770),
+    ("mf.sulA.C4C5", 66, 1780140, 1856169, -20.0, -19.1, 0.41, 1807041, 1824522),
+    ("mf.sulA.C4C5", 67, 2029658, 2130647, 10.6, -20.4, 0.45, 2059205, 2076635),
+    ("mf.sulA.C4C5", 70, 2554536, 2625890, 13.8, -16.3, 0.46, 2583642, 2601091),
+    ("mf.sulA.C4C5", 72, 3046472, 3129777, -32.7, -19.3, 0.5, 3078224, 3106301),
+    ("mf.sulA.C5Ab5", 72, 91287, 168594, 36.5, -16.8, 0.48, 122157, 139709),
+    ("mf.sulA.C5Ab5", 73, 317784, 397120, 22.9, -21.5, 0.51, 350859, 370164),
+    ("mf.sulA.C5Ab5", 74, 776601, 843985, 41.5, -19.9, 0.38, 802179, 820504),
+    ("mf.sulA.C5Ab5", 75, 981225, 1054827, 7.9, -20.8, 0.43, 1011654, 1029092),
+    ("mf.sulA.C5Ab5", 78, 1604005, 1677564, 27.3, -16.6, 0.4, 1630465, 1652300),
+    ("ff.sulC.Bb2F3", 46, 127096, 226056, -18.1, -22.6, 0.02, 142971, 169319),
+    ("ff.sulC.Bb2F3", 48, 1050858, 1142763, -13.9, -23.0, 0.04, 1073790, 1095818),
+    ("ff.sulC.Bb2F3", 49, 1639814, 1728631, 14.0, -15.4, 0.46, 1672448, 1690084),
+    ("ff.sulC.Bb2F3", 50, 1939517, 2020794, -12.3, -14.3, 0.3, 1961567, 1979390),
+    ("ff.sulC.Bb2F3", 51, 2555418, 2628977, 7.7, -20.3, 0.0, 2573939, 2597909),
+    ("ff.sulC.Bb2F3", 52, 2882067, 2958051, -21.9, -18.2, 0.16, 2897943, 2929632),
+    ("ff.sulC.Bb2F3", 53, 3509698, 3589475, 36.2, -17.2, 0.04, 3522928, 3561008),
+    ("ff.sulC.C2A2", 37, 533477, 645094, -9.8, -17.8, 0.38, 564347, 598836),
+    ("ff.sulC.C2A2", 38, 925570, 1041333, -32.4, -19.2, 0.52, 957322, 989070),
+    ("ff.sulC.C2A2", 39, 1751872, 1859476, 27.5, -22.4, 0.3, 1781860, 1810810),
+    ("ff.sulC.C2A2", 40, 2097087, 2207337, -12.9, -19.8, 0.36, 2124429, 2154567),
+    ("ff.sulC.C2A2", 41, 2877657, 2990773, 19.8, -19.5, 0.21, 2895738, 2929088),
+    ("ff.sulC.C2A2", 42, 3234558, 3344808, 4.6, -17.5, 0.28, 3268956, 3290318),
+    ("ff.sulC.C2A2", 43, 3575980, 3688259, -8.0, -16.0, 0.59, 3616993, 3634607),
+    ("ff.sulC.C2A2", 44, 3908847, 4016407, -11.2, -13.8, 0.43, 3936630, 3954123),
+    ("ff.sulC.C2A2", 45, 4195674, 4312583, -12.3, -19.1, 0.02, 4223897, 4248520),
+    ("ff.sulC.Gb3Db4", 54, 185440, 258337, -2.5, -12.7, 0.21, 203521, 225460),
+    ("ff.sulC.Gb3Db4", 57, 1123138, 1194713, 27.9, -16.9, 0.15, 1139455, 1160563),
+    ("ff.sulC.Gb3Db4", 58, 1403791, 1486434, 48.4, -18.8, 0.26, 1426723, 1455809),
+    ("ff.sulC.Gb3Db4", 61, 1952748, 2031642, -21.6, -14.7, 0.46, 1981854, 2006671),
+    ("ff.sulG.B2Bb3", 47, 108530, 224072, 31.9, -17.9, 0.66, 148220, 166062),
+    ("ff.sulG.B2Bb3", 48, 442455, 539210, 52.5, -13.5, 0.22, 475089, 494707),
+    ("ff.sulG.B2Bb3", 51, 1464781, 1543676, 15.3, -15.1, 0.35, 1491682, 1511049),
+    ("ff.sulG.B2Bb3", 52, 1800691, 1888847, 19.7, -15.6, 0.67, 1839058, 1856758),
+    ("ff.sulG.B2Bb3", 53, 2098410, 2181009, 16.6, -14.1, 0.52, 2131044, 2148800),
+    ("ff.sulG.B2Bb3", 54, 2400936, 2487548, 6.9, -11.9, 0.75, 2442831, 2462035),
+    ("ff.sulG.B2Bb3", 57, 3390143, 3466789, 20.9, -16.8, 0.46, 3421895, 3440319),
+    ("ff.sulG.B3Gb4", 60, 722005, 788508, -15.1, -15.9, 0.14, 736998, 754501),
+    ("ff.sulG.B3Gb4", 61, 1035379, 1106954, -27.4, -13.3, 0.22, 1053901, 1074856),
+    ("ff.sulG.B3Gb4", 62, 1691984, 1760030, 8.2, -14.0, 0.3, 1714034, 1733329),
+    ("ff.sulG.B3Gb4", 63, 2025468, 2094617, -40.1, -14.9, 0.07, 2037375, 2054920),
+    ("ff.sulG.B3Gb4", 66, 3544846, 3611569, 20.1, -17.4, 0.01, 3562926, 3589419),
+    ("ff.sulG.G2B2", 44, 639582, 778541, 21.2, -10.4, 0.43, 671775, 693081),
+    ("ff.sulG.G2B2", 45, 1162035, 1302096, -17.5, -15.3, 0.57, 1195992, 1213727),
+    ("ff.sulG.G2B2", 46, 1617058, 1745654, -32.1, -17.9, 0.2, 1634698, 1673584),
+    ("ff.sulG.G2B2", 47, 2054178, 2184317, -57.9, -13.4, 0.49, 2090781, 2108417),
+    ("ff.sulD.C4Bb4", 64, 1344785, 1412170, -2.3, -15.8, 0.23, 1364630, 1382154),
+    ("ff.sulD.D3B3", 50, 99004, 248371, -3.6, -14.6, 0.28, 126346, 143911),
+    ("ff.sulD.D3B3", 52, 1028985, 1119125, -28.2, -19.0, 0.29, 1058973, 1076593),
+    ("ff.sulD.D3B3", 53, 1445553, 1537678, -44.8, -18.4, 0.27, 1469808, 1487393),
+    ("ff.sulD.D3B3", 54, 1918261, 2003551, -65.0, -16.4, 0.34, 1944721, 1962245),
+    ("ff.sulA.C4B4", 60, 112058, 184293, -32.6, -16.5, 0.16, 130580, 148098),
+    ("ff.sulA.C4B4", 61, 440029, 511604, -27.9, -14.9, 0.27, 462520, 479950),
+    ("ff.sulA.C4B4", 62, 758916, 862551, -1.2, -16.4, 0.27, 779643, 798873),
+    ("ff.sulA.C4B4", 65, 1738598, 1812818, 10.6, -15.7, 0.38, 1766822, 1784636),
+    ("ff.sulA.C4B4", 66, 2037861, 2110978, 26.1, -13.7, 0.42, 2070936, 2088528),
+    ("ff.sulA.C5Bb5", 73, 344332, 412379, 35.8, -12.0, 0.41, 371233, 389049),
+]
+
+INSTRUMENTS = {
+    "violin": {"prefix": "Violin", "label": "독주 바이올린", "files": VIOLIN_FILES, "notes": VIOLIN_NOTES, "low": 55, "high": 99, "cutoff": 150,
+               "open": (("sulE", 76), ("sulA", 69), ("sulD", 62), ("sulG", 55)), "vib_hz": 5.3, "xfade": 0.25, "env_s": 0.02, "steady": "median",
+               "credit": "violin arco (연주 Josue Jean-Francois)"},
+    "cello": {"prefix": "Cello", "label": "독주 첼로", "files": CELLO_FILES, "notes": CELLO_NOTES, "low": 36, "high": 81, "cutoff": 45,
+              "open": (("sulA", 57), ("sulD", 50), ("sulG", 43), ("sulC", 36)), "vib_hz": 5.0, "xfade": 0.15, "env_s": 0.04, "steady": "peak",
+              "credit": "cello arco (연주 Jean Montes)"},
+}
+
 NAMES = {"C": 0, "Db": 1, "D": 2, "Eb": 3, "E": 4, "F": 5, "Gb": 6, "G": 7, "Ab": 8, "A": 9, "Bb": 10, "B": 11}
 
 
@@ -333,15 +601,17 @@ def sha256(path):
     return h.hexdigest()
 
 
-def fetch(root):
-    folder = os.path.join(root, "violin")
+def fetch(root, inst):
+    I = INSTRUMENTS[inst]
+    folder = os.path.join(root, inst)
     os.makedirs(folder, exist_ok=True)
     got = 0
-    for name, digest in FILES:
-        path = os.path.join(folder, f"Violin.arco.{name}.aiff")
+    for name, digest in I["files"]:
+        path = os.path.join(folder, f"{I['prefix']}.arco.{name}.aiff")
         if os.path.exists(path) and sha256(path) == digest:
             continue
-        subprocess.run(["curl", "-fsSL", "--retry", "3", "-A", "InitialDAW build", "-o", path + ".part", BASE.format(name=name)], check=True)
+        url = BASE.format(folder=inst, prefix=I["prefix"], name=name)
+        subprocess.run(["curl", "-fsSL", "--retry", "3", "-A", "InitialDAW build", "-o", path + ".part", url], check=True)
         if sha256(path + ".part") != digest:
             os.remove(path + ".part")
             sys.exit(f"[InitialDAW] {os.path.basename(path)} 의 SHA-256 이 맞지 않습니다")
@@ -350,17 +620,18 @@ def fetch(root):
     return got
 
 
-def wav_path(root, name):
-    return os.path.join(root, "violin", "wav", f"Violin.arco.{name}.wav")
+def wav_path(root, inst, name):
+    return os.path.join(root, inst, "wav", f"{INSTRUMENTS[inst]['prefix']}.arco.{name}.wav")
 
 
-def convert(root):
+def convert(root, inst):
     """AIFF 를 16비트 리틀 엔디언 WAV 로 (afconvert, macOS). 이미 있으면 그대로 둔다"""
-    os.makedirs(os.path.join(root, "violin", "wav"), exist_ok=True)
-    for name, _ in FILES:
-        out = wav_path(root, name)
+    I = INSTRUMENTS[inst]
+    os.makedirs(os.path.join(root, inst, "wav"), exist_ok=True)
+    for name, _ in I["files"]:
+        out = wav_path(root, inst, name)
         if not os.path.exists(out):
-            src = os.path.join(root, "violin", f"Violin.arco.{name}.aiff")
+            src = os.path.join(root, inst, f"{I['prefix']}.arco.{name}.aiff")
             subprocess.run(["afconvert", "-f", "WAVE", "-d", "LEI16", src, out + ".part.wav"], check=True)
             os.replace(out + ".part.wav", out)
 
@@ -368,7 +639,8 @@ def convert(root):
 # ---------------------------------------------------------------------------
 # 재기 (--measure)
 # ---------------------------------------------------------------------------
-def measure(root, engine):
+def measure(root, inst, engine):
+    I = INSTRUMENTS[inst]
     import wave
     import numpy as np
 
@@ -392,7 +664,7 @@ def measure(root, engine):
         return np.log10(np.array([b.mean() for b in bands]) + 1e-9)
 
     def env20(seg):
-        hop, win = int(0.01 * SR), int(0.02 * SR)
+        hop, win = int(0.01 * SR), int(I["env_s"] * SR)
         e = np.array([float(np.mean(seg[i:i + win] ** 2)) for i in range(0, len(seg) - win, hop)])
         return 10 * np.log10(e + 1e-12)
 
@@ -409,14 +681,15 @@ def measure(root, engine):
             worst = max(worst, 10 * math.log10((ref + 1e-12) / (got + 1e-12)))
         return worst
 
-    def choose_loop(seg, attack, L):
+    def choose_loop(seg, attack, L, steady):
         """공격 뒤 처음으로 고른 구간 (20 ms 크기가 300 ms 이동 중앙값의 -3 dB 위이고 음 전체 중앙값의 -4 dB 위) 안에서 루프를 고른다"""
         ev = env20(seg)
         k = 15
         local = np.array([np.median(ev[max(0, i - k):i + k + 1]) for i in range(len(ev))])
-        first = int((attack + 0.25) / 0.01)
-        last = int((L - 0.5) / 0.01)
-        clean = (ev >= local - 3.0) & (ev >= float(np.median(ev[first:last])) - 4.0)
+        first = int((attack + (0.25 if I["steady"] == "median" else 0.05)) / 0.01)
+        last = int((L - 0.5) / 0.01) if I["steady"] == "median" else len(ev)
+        floor = steady - 4.0 if I["steady"] == "peak" else float(np.median(ev[first:last])) - 4.0
+        clean = (ev >= local - 3.0) & (ev >= floor)
         spans, i = [], first
         while i < last:
             if clean[i]:
@@ -427,11 +700,11 @@ def measure(root, engine):
                 i = j
             else:
                 i += 1
-        xf = XFADE_S
-        want = 1.5 if L > 4.0 else 0.8
+        xf = I["xfade"]
+        want = 1.5 if L > 4.0 else (0.8 if I["steady"] == "median" else 0.4)
         span = next((sp for sp in spans if sp[1] - sp[0] >= want + xf + 0.05), None) or \
             max(spans, key=lambda sp: sp[1] - sp[0], default=None)
-        if span is None or span[1] - span[0] < 0.8 + xf + 0.05:
+        if span is None or span[1] - span[0] < want + xf + 0.05:
             return None
         s0, s1 = span[0] + xf, span[1]
         cands = []
@@ -441,7 +714,8 @@ def measure(root, engine):
                 p1 = spectrum(seg, le - 0.05)
                 if p0 is None or p1 is None:
                     continue
-                cands.append((abs(env_db(seg, le - 0.05) - e0) + 2.0 * float(np.mean(np.abs(p1 - p0))), ls, le))
+                short = max(0.0, 1.0 - (le - ls))                               # 1초보다 짧은 루프는 되풀이가 들린다
+                cands.append((abs(env_db(seg, le - 0.05) - e0) + 2.0 * float(np.mean(np.abs(p1 - p0))) + 2.0 * short, ls, le))
         best, pick = INF, None
         for cost, ls, le in sorted(cands)[:25]:
             i0, i1 = int(ls * SR), int(le * SR)
@@ -455,8 +729,8 @@ def measure(root, engine):
         return pick
 
     rows = []
-    for name, _ in FILES:
-        path = wav_path(root, name)
+    for name, _ in I["files"]:
+        path = wav_path(root, inst, name)
         x = read(path)
         out = subprocess.run([engine, "notes", path], capture_output=True, text=True, check=True).stdout
         found = [n for n in json.loads(out)["notes"] if n["endSeconds"] - n["startSeconds"] > 1.2]
@@ -496,17 +770,24 @@ def measure(root, engine):
             seg = x[a:b]
             L = len(seg) / SR
             cents = round((m[idx] - key) * 100.0, 1)
-            steady = float(np.median([env_db(seg, t) for t in np.arange(0.5, max(0.6, L - 1.2), 0.05)]))
-            rms = 10 * math.log10(max(1e-12, float(np.mean(seg[int(0.5 * SR):int(2.0 * SR)] ** 2))))
+            levels = [env_db(seg, t, 0.08) for t in np.arange(0.2, max(0.3, L - 0.3), 0.05)]
+            if I["steady"] == "peak":
+                steady = float(np.max(levels))                 # 활이 짧은 녹음: 가장 큰 고른 크기
+            else:
+                steady = float(np.median([env_db(seg, t) for t in np.arange(0.5, max(0.6, L - 1.2), 0.05)]))
+            if I["steady"] == "peak":
+                rms = steady
+            else:
+                rms = 10 * math.log10(max(1e-12, float(np.mean(seg[int(0.5 * SR):int(2.0 * SR)] ** 2))))
             attack = next((t for t in np.arange(0.0, 1.0, 0.01) if env_db(seg, t) >= steady - 3.0), 0.3)
-            loop = choose_loop(seg, attack, L)
+            loop = choose_loop(seg, attack, L, steady)
             if loop is None:
                 print(f"  {name} {key}: {L:.2f}초 안에 고른 구간이 짧아 뺀다", file=sys.stderr)
                 continue
             ls_i, le_i = loop
             rows.append((name, key, a, b, cents, round(rms, 1), round(float(attack), 2), a + ls_i, a + le_i))
         print(f"{name}: {len(found)} 음, {len(pairs)} 건반 ({lo}~{hi})", file=sys.stderr)
-    print("NOTES = [")
+    print(f"{inst.upper()}_NOTES = [")
     for r in rows:
         print(f'    ("{r[0]}", {r[1]}, {r[2]}, {r[3]}, {r[4]}, {r[5]}, {r[6]}, {r[7]}, {r[8]}),')
     print("]")
@@ -519,15 +800,16 @@ def string_of(name):
     return name.split(".")[1]
 
 
-def pick(layer):
+def pick(inst, layer):
     """층마다 건반 하나에 녹음 하나: 1 포지션의 줄, 없으면 아래 줄, 그다음 음정이 맞는 것"""
-    rank = {s: i for i, (s, _) in enumerate(OPEN)}
+    I = INSTRUMENTS[inst]
+    rank = {s: i for i, (s, _) in enumerate(I["open"])}
     chosen = {}
-    for row in NOTES:
+    for row in I["notes"]:
         name, key = row[0], row[1]
         if not name.startswith(layer + "."):
             continue
-        first = next(s for s, open_key in OPEN if open_key <= key)
+        first = next(s for s, open_key in I["open"] if open_key <= key)
         st = string_of(name)
         order = (0 if st == first else 1 + (rank[st] - rank[first]) if rank[st] > rank[first] else 10 + rank[first] - rank[st], abs(row[4]))
         if key not in chosen or order < chosen[key][0]:
@@ -535,40 +817,46 @@ def pick(layer):
     return [chosen[k][1] for k in sorted(chosen)]
 
 
-def key_ranges(keys):
+def key_ranges(inst, keys):
+    low, high = INSTRUMENTS[inst]["low"], INSTRUMENTS[inst]["high"]
     out = []
     for i, k in enumerate(keys):
-        lo = keys[i - 1] + (k - keys[i - 1]) // 2 + 1 if i > 0 else LOW_KEY
-        hi = k + (keys[i + 1] - k) // 2 if i + 1 < len(keys) else HIGH_KEY
-        out.append((max(LOW_KEY, lo), min(HIGH_KEY, hi)))
+        lo = keys[i - 1] + (k - keys[i - 1]) // 2 + 1 if i > 0 else low
+        hi = k + (keys[i + 1] - k) // 2 if i + 1 < len(keys) else high
+        out.append((max(low, lo), min(high, hi)))
     return out
 
 
-def header(kind):
-    return (f"// InitialDAW 독주 바이올린 ({kind}), tools/make-iowa-violin-sfz.py 가 쓴 파일이다. 고치지 말고 그 도구를 고친다.\n"
-            "// 샘플: University of Iowa Electronic Music Studios, Musical Instrument Samples, violin arco (연주 Josue Jean-Francois)\n\n"
-            "<control>\ndefault_path=../violin/wav/\nlabel_cc1=Dynamics\nlabel_cc21=Vibrato\nset_cc1=80\nset_cc21=64\n\n"
+def header(inst, kind):
+    I = INSTRUMENTS[inst]
+    return (f"// InitialDAW {I['label']} ({kind}), tools/make-iowa-strings-sfz.py 가 쓴 파일이다. 고치지 말고 그 도구를 고친다.\n"
+            f"// 샘플: University of Iowa Electronic Music Studios, Musical Instrument Samples, {I['credit']}\n\n"
+            f"<control>\ndefault_path=../{inst}/wav/\nlabel_cc1=Dynamics\nlabel_cc21=Vibrato\nset_cc1=80\nset_cc21=64\n\n"
             "<curve>\ncurve_index=7\nv000=0\nv064=0.6\nv127=1\n\n"
-            "<global>\namp_veltrack=0\nloop_mode=loop_continuous\nfil_type=hpf_2p\ncutoff=150\n"
+            f"<global>\namp_veltrack=0\nloop_mode=loop_continuous\nfil_type=hpf_2p\ncutoff={I['cutoff']}\n"
             "lfo03_wave=1 lfo03_freq=0.19 lfo03_freq_oncc135=0.04 lfo03_phase_oncc135=1 lfo03_volume=0.5\n"
             "lfo04_wave=1 lfo04_freq=0.47 lfo04_freq_oncc135=-0.08 lfo04_phase=0.5 lfo04_phase_oncc135=2.37 lfo04_volume=0.35\n"
             "lfo05_wave=1 lfo05_freq=1.37 lfo05_freq_oncc135=0.2 lfo05_phase_oncc135=3.71 lfo05_volume=0.3\n"
             "lfo06_wave=1 lfo06_freq=2.71 lfo06_freq_oncc135=-0.3 lfo06_phase=0.5 lfo06_phase_oncc135=5.13 lfo06_volume=0.2\n\n"
-            "<master>\nlfo01_wave=1 lfo01_freq=5.3 lfo01_freq_oncc135=0.6 lfo01_phase_oncc135=1 lfo01_wave2=1 lfo01_ratio2=1.13 lfo01_scale2=0.2\n"
+            f"<master>\nlfo01_wave=1 lfo01_freq={I['vib_hz']} lfo01_freq_oncc135=0.6 lfo01_phase_oncc135=1 lfo01_wave2=1 lfo01_ratio2=1.13 lfo01_scale2=0.2\n"
             "lfo01_pitch_oncc21=22 lfo01_pitch_curvecc21=7\n")
 
 
-def regions(group_line, legato):
+def regions(inst, group_line, legato):
+    I = INSTRUMENTS[inst]
     lines = [group_line]
     for layer, (lo_cc, hi_cc) in LAYERS.items():
-        rows = pick(layer)
-        for row, (lo, hi) in zip(rows, key_ranges([r[1] for r in rows])):
+        rows = pick(inst, layer)
+        for row, (lo, hi) in zip(rows, key_ranges(inst, [r[1] for r in rows])):
             name, key, a, b, cents, rms, attack, ls, le = row
             vol = TARGET_DB - rms - CC1_RANGE_DB
-            offset = ls - int(0.03 * SR) if legato else a          # 이어 받는 음은 고른 구간 (루프 시작) 에서
-            lines.append(f"<region> sample=Violin.arco.{name}.wav lokey={lo} hikey={hi} pitch_keycenter={key} tune={-cents:.1f} "
+            if legato:
+                offset = ls - int(0.03 * SR)                                  # 이어 받는 음은 고른 구간 (루프 시작) 에서
+            else:
+                offset = a + int(max(0.0, attack - 0.1) * SR)                 # 느린 공격의 앞부분을 건너뛴다
+            lines.append(f"<region> sample={I['prefix']}.arco.{name}.wav lokey={lo} hikey={hi} pitch_keycenter={key} tune={-cents:.1f} "
                          f"volume={vol:.1f} gain_cc1={CC1_RANGE_DB:.0f} locc1={lo_cc} hicc1={hi_cc} offset={offset} end={b} "
-                         f"loop_start={ls} loop_end={le} loop_crossfade={XFADE_S}\n")
+                         f"loop_start={ls} loop_end={le} loop_crossfade={I['xfade']}\n")
     return lines
 
 
@@ -581,7 +869,7 @@ def write_if_changed(path, text):
     return True
 
 
-def write_sfz(root):
+def write_sfz(root, inst):
     out = os.path.join(root, "InitialDAW")
     first = ("<group>\ntrigger=first group=1 off_by=1 off_mode=time off_time=0.15 ampeg_attack=0.03 ampeg_release=0.45\n"
              "lfo01_delay=0.18 lfo01_delay_oncc136=0.05 lfo01_fade=0.4 lfo01_fade_oncc136=0.1\n")
@@ -589,27 +877,31 @@ def write_sfz(root):
               "lfo01_fade=0.12\n")
     sustain = ("<group>\nampeg_attack=0.03 ampeg_release=0.45 note_polyphony=1 note_selfmask=off\n"
                "lfo01_delay=0.18 lfo01_delay_oncc136=0.05 lfo01_fade=0.4 lfo01_fade_oncc136=0.1\n")
-    changed = write_if_changed(os.path.join(out, "violin-legato.sfz"),
-                               header("legato") + "".join(regions(first, False)) + "".join(regions(legato, True)))
-    changed |= write_if_changed(os.path.join(out, "violin-sustain.sfz"), header("sustain") + "".join(regions(sustain, False)))
+    changed = write_if_changed(os.path.join(out, f"{inst}-legato.sfz"),
+                               header(inst, "legato") + "".join(regions(inst, first, False)) + "".join(regions(inst, legato, True)))
+    changed |= write_if_changed(os.path.join(out, f"{inst}-sustain.sfz"), header(inst, "sustain") + "".join(regions(inst, sustain, False)))
     return changed
 
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("root", help="external/iowa")
-    ap.add_argument("--measure", action="store_true", help="NOTES 표를 다시 재서 출력한다 (numpy 가 필요하다)")
+    ap.add_argument("--measure", choices=sorted(INSTRUMENTS), help="그 악기의 NOTES 표를 다시 재서 출력한다 (numpy 가 필요하다)")
     ap.add_argument("--engine", default="build/engine/music-render")
     args = ap.parse_args()
-    got = fetch(args.root)
-    convert(args.root)
     if args.measure:
-        measure(args.root, args.engine)
+        fetch(args.root, args.measure)
+        convert(args.root, args.measure)
+        measure(args.root, args.measure, args.engine)
         return
-    if not NOTES:
-        sys.exit("[InitialDAW] NOTES 표가 비었습니다 (--measure)")
-    changed = write_sfz(args.root)
-    print(f"[InitialDAW] Iowa 바이올린: 녹음 {len(FILES)}개 (새로 받음 {got}), SFZ {'새로 씀' if changed else '그대로'}")
+    for inst, I in INSTRUMENTS.items():
+        got = fetch(args.root, inst)
+        convert(args.root, inst)
+        if not I["notes"]:
+            print(f"[InitialDAW] Iowa {I['label']}: NOTES 표가 비어 SFZ 를 쓰지 않습니다 (--measure {inst})")
+            continue
+        changed = write_sfz(args.root, inst)
+        print(f"[InitialDAW] Iowa {I['label']}: 녹음 {len(I['files'])}개 (새로 받음 {got}), SFZ {'새로 씀' if changed else '그대로'}")
 
 
 if __name__ == "__main__":

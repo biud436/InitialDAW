@@ -857,7 +857,7 @@
     "violin-iowa": {
       "type": "sfz",
       "file": "${MUSIC_RENDER_IOWA:-../../external/iowa}/InitialDAW/violin-legato.sfz",
-      "description": "Solo violin from the University of Iowa Electronic Music Studios Musical Instrument Samples (arco, played by Josue Jean-Francois, anechoic, free to use without restriction) through our SFZ from tools/make-iowa-violin-sfz.py. Keys 55-99 (G3-D#7), each key from the first-position string, tuned per note (the recordings drift up to 60 cents). Three recorded layers picked by CC1 at the note start (pp up to 50, mf 51-95, ff from 96), all at the same loudness so CC1 = loudness (24 dB) inside the note; looped sustain with slow bow-pressure motion. Vibrato added per note (CC21 = depth, also inside a note, default 64 = 13 cents, 0 = none). legato: overlapping notes skip the recorded attack (one voice); sustain: a new bow per note, double stops allowed",
+      "description": "Solo violin from the University of Iowa Electronic Music Studios Musical Instrument Samples (arco, played by Josue Jean-Francois, anechoic, free to use without restriction) through our SFZ from tools/make-iowa-strings-sfz.py. Keys 55-99 (G3-D#7), each key from the first-position string, tuned per note (the recordings drift up to 60 cents). Three recorded layers picked by CC1 at the note start (pp up to 50, mf 51-95, ff from 96), all at the same loudness so CC1 = loudness (24 dB) inside the note; looped sustain with slow bow-pressure motion. Vibrato added per note (CC21 = depth, also inside a note, default 64 = 13 cents, 0 = none). legato: overlapping notes skip the recorded attack (one voice); sustain: a new bow per note, double stops allowed",
       "articulations": {
         "legato": {},
         "sustain": {
@@ -871,6 +871,24 @@
         "cc21": "native"
       },
       "fallback": "violin-solo"
+    },
+    "cello-iowa": {
+      "type": "sfz",
+      "file": "${MUSIC_RENDER_IOWA:-../../external/iowa}/InitialDAW/cello-legato.sfz",
+      "description": "Solo cello from the University of Iowa Electronic Music Studios Musical Instrument Samples (arco, played by Jean Montes, anechoic, free to use without restriction) through our SFZ from tools/make-iowa-strings-sfz.py. Keys 36-81 (C2-A5), each key from the first-position string, tuned per note. Three recorded layers picked by CC1 at the note start (pp up to 50, mf 51-95, ff from 96) at the same loudness, CC1 = loudness (24 dB) inside the note. The recorded bows are short (a 0.6-0.8 s plateau), so long notes loop 0.4-1 s of it with slow bow-pressure motion. Vibrato added per note (CC21 = depth, default 64 = 13 cents, 0 = none). legato: overlapping notes skip the recorded attack (one voice); sustain: a new bow per note",
+      "articulations": {
+        "legato": {},
+        "sustain": {
+          "file": "${MUSIC_RENDER_IOWA:-../../external/iowa}/InitialDAW/cello-sustain.sfz"
+        }
+      },
+      "defaultArticulation": "legato",
+      "controllers": {
+        "cc1": "native",
+        "cc11": "engine",
+        "cc21": "native"
+      },
+      "fallback": "cello-solo"
     },
     "vibraphone": {
       "type": "sfz",

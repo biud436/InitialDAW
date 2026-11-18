@@ -96,7 +96,7 @@ SHA-256으로 내려받으며 저장소에는 포함하지 않습니다. PATH에
 | Sonatina Symphonic Orchestra 일부 (현악, 목관, 금관, 합창, 그랜드 피아노) | 560MB | CC Sampling Plus 1.0 |
 | FreePats: 스페인 클래식 기타, MuldjordKit 드럼, 일렉트릭 베이스, 일렉트릭 기타, 테너 색소폰 | 774MB | CC0, MuldjordKit은 CC BY 4.0 |
 | Karoryfer x bigcat 첼로 | 133MB | CC0 |
-| University of Iowa 독주 바이올린 (Musical Instrument Samples) | 244MB | 제한 없이 사용 가능 |
+| University of Iowa 독주 바이올린과 첼로 (Musical Instrument Samples) | 465MB | 제한 없이 사용 가능 |
 | 국립국악원 녹음 (가야금, 해금, 대금, 장구, 아쟁, 징), `--gugak`으로만 | 490MB | 공공누리 제1유형 |
 
 파일 > 새 곡(⌘N)에서 13개 장르 템플릿 중 하나로 곡을 시작하거나, `engine/examples/`의 예제 곡을 엽니다. 화면 구성과 단축키는

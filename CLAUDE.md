@@ -28,7 +28,7 @@
 | `templates/`                             | 새 곡의 장르 템플릿 13개 (음표 없는 곡 JSON). `tools/make-templates.py` 가 곡에서 만든다, 손으로 고치지 않는다 |
 | `docs/manual.md`, `docs/manual.ko.md`    | 사용 설명서 (앱, 명령줄 엔진, Music IR 의 모든 기능, 단축키, 명령) |
 | `docs/plans/`                            | 계획과 진행 (엔진, D1~D32 단계, Music IR, 다음 단계 D33~D48 은 `next-stages.md`)                                                                                                                                                                                                                                                                   |
-| `tools/`                                 | `music-ir.py` 와 `musicir/` (Music IR: 생성기 도우미, 조회, 고칠 범위 검사, 시험), `placement-spec.py` (곡 JSON 과 IR 에서 손으로 찍는 배치 명세: 마디.박.틱, 무늬, 북 그리드, 곡선, 자체 검증), `mix-report.py` (렌더링의 `--measure` 를 표로), `collect-licenses.sh` (릴리스용 라이선스 문서 모으기), `calibrate-keys.py` (건반마다 크기를 재는 보정표), `make-loop.py` (렌더링에서 게임용 반복 파일을 자른다), `make-templates.py` (곡에서 새 곡 템플릿을 만든다), `make-cello-sfz.py` (Karoryfer 첼로 샘플 곁에 우리 SFZ 를 쓴다, build.sh 가 부른다), `make-iowa-violin-sfz.py` (Iowa 독주 바이올린 녹음을 받아 WAV 로 바꾸고 SFZ 를 쓴다)                                                                                          |
+| `tools/`                                 | `music-ir.py` 와 `musicir/` (Music IR: 생성기 도우미, 조회, 고칠 범위 검사, 시험), `placement-spec.py` (곡 JSON 과 IR 에서 손으로 찍는 배치 명세: 마디.박.틱, 무늬, 북 그리드, 곡선, 자체 검증), `mix-report.py` (렌더링의 `--measure` 를 표로), `collect-licenses.sh` (릴리스용 라이선스 문서 모으기), `calibrate-keys.py` (건반마다 크기를 재는 보정표), `make-loop.py` (렌더링에서 게임용 반복 파일을 자른다), `make-templates.py` (곡에서 새 곡 템플릿을 만든다), `make-cello-sfz.py` (Karoryfer 첼로 샘플 곁에 우리 SFZ 를 쓴다, build.sh 가 부른다), `make-iowa-strings-sfz.py` (Iowa 독주 바이올린과 첼로 녹음을 받아 WAV 로 바꾸고 SFZ 를 쓴다)                                                                                          |
 | `external/`                              | JUCE, sfizz, LAME, Signalsmith Stretch 와 Linear, 악보 글꼴 Bravura, libFLAC, libogg, libvorbis, 샘플 라이브러리, 국악기 녹음 (`external/gugak`, SFZ 는 `tools/make-gugak-sfz.py`), 플러그인 (`build.sh` 가 받는다, 커밋 금지)                                                                                                                                                                                                                                                                    |
 | `build/`                                 | 빌드 결과, 렌더링한 곡 `build/songs/` (커밋 금지)                                                                                                                                                                                                                                                                                           |
 
@@ -36,7 +36,7 @@
 
 ```bash
 ./build.sh                    # JUCE 8.0.10, sfizz(고정 커밋), LAME 4.0(SHA-256 고정, MP3 인코더), Bravura 1.482(SHA-256 고정, 악보 글꼴), libFLAC 1.4.3, libogg 1.3.5, libvorbis 1.3.7(SHA-256 고정)을 받고 빌드, CTest (music_ir, unit, cli, app_snapshot, app_score_snapshot, app_mixer_snapshot, app_synth_snapshot, app_plugin, app_plugin_effect, app_export, app_new, app_edit)
-./build.sh --samples          # 샘플 라이브러리(VSCO 2 CE, Sonatina Symphonic Orchestra, FreePats, Karoryfer 첼로, Iowa 바이올린)도 받는다
+./build.sh --samples          # 샘플 라이브러리(VSCO 2 CE, Sonatina Symphonic Orchestra, FreePats, Karoryfer 첼로, Iowa 바이올린과 첼로)도 받는다
 ./build.sh --gugak            # 국악기 녹음도 받는다 (국립국악원 사이트의 사용 목적 양식 값은 받는 사람이 정한다: GUGAK_USE_TYPE, GUGAK_USE_PURPOSE, GUGAK_AFFILIATION, 없으면 묻는다)
 ./build.sh --plugins          # 무료 VSTi Dexed 1.0.1 (SHA-256 고정)을 external/plugins/dexed 에 받는다
 APP=build/app/InitialDAW_artefacts/Release/InitialDAW.app/Contents/MacOS/InitialDAW
@@ -198,9 +198,9 @@ build/engine/music-render video-info promo.mp4; build/engine/music-render video-
 - 악보 글꼴 Bravura(SIL OFL 1.1)는 앱에 바이너리 데이터로 들어간다. 릴리스에는 `OFL.txt` 를 함께 둔다 (`tools/collect-licenses.sh`).
 - 코드와 실행 파일은 AGPLv3 (`LICENSE`, AGPL-3.0-only). 목록은 `THIRD-PARTY.md`.
 - 저장소에 제3자 코드를 넣지 않는다. 새 의존성은 `build.sh` 에서 태그나 커밋으로 고정해 받고, `THIRD-PARTY.md` 와 `tools/collect-licenses.sh` 에 함께 적는다.
-- `external/` 은 커밋하지 않는다 (JUCE, sfizz, LAME, VSCO 2 CE, Sonatina Symphonic Orchestra, FreePats 기타, Karoryfer 첼로, Iowa 바이올린, 플러그인).
+- `external/` 은 커밋하지 않는다 (JUCE, sfizz, LAME, VSCO 2 CE, Sonatina Symphonic Orchestra, FreePats 기타, Karoryfer 첼로, Iowa 바이올린과 첼로, 플러그인).
 - MP3 인코더 LAME 4.0 은 LGPL-2.0 이상이고 실행 파일에 정적으로 링크한다. 릴리스에는 LAME 소스(`external/lame/lame-4.0.tar.gz`)나 그 링크를 함께 둔다 (`THIRD-PARTY.md`).
-- Sonatina Symphonic Orchestra 는 CC Sampling Plus 1.0: 출처 표기, 광고와 홍보 사용 금지(그 샘플로 만든 곡 자체를 알리는 것만 허락). VSCO 2 CE, FreePats 스페인 클래식 기타, Karoryfer x bigcat 첼로는 CC0. University of Iowa 의 바이올린 녹음은 스튜디오가 어떤 목적이든 제한 없이 쓸 수 있다고 밝힌다 (출처를 밝혀 둔다). 국악기 녹음 (국립국악원, 공공누리 제1유형) 은 그 녹음을 쓴 곡에 출처를 밝힌다 (문구는 `THIRD-PARTY.md`). 샘플과 곡은 릴리스에 넣지 않는다.
+- Sonatina Symphonic Orchestra 는 CC Sampling Plus 1.0: 출처 표기, 광고와 홍보 사용 금지(그 샘플로 만든 곡 자체를 알리는 것만 허락). VSCO 2 CE, FreePats 스페인 클래식 기타, Karoryfer x bigcat 첼로는 CC0. University of Iowa 의 바이올린과 첼로 녹음은 스튜디오가 어떤 목적이든 제한 없이 쓸 수 있다고 밝힌다 (출처를 밝혀 둔다). 국악기 녹음 (국립국악원, 공공누리 제1유형) 은 그 녹음을 쓴 곡에 출처를 밝힌다 (문구는 `THIRD-PARTY.md`). 샘플과 곡은 릴리스에 넣지 않는다.
 
 ## 화면 문구
 
