@@ -854,6 +854,24 @@
       },
       "fallback": "sso-cello-solo"
     },
+    "violin-iowa": {
+      "type": "sfz",
+      "file": "${MUSIC_RENDER_IOWA:-../../external/iowa}/InitialDAW/violin-legato.sfz",
+      "description": "Solo violin from the University of Iowa Electronic Music Studios Musical Instrument Samples (arco, played by Josue Jean-Francois, anechoic, free to use without restriction) through our SFZ from tools/make-iowa-violin-sfz.py. Keys 55-99 (G3-D#7), each key from the first-position string, tuned per note (the recordings drift up to 60 cents). Three recorded layers picked by CC1 at the note start (pp up to 50, mf 51-95, ff from 96), all at the same loudness so CC1 = loudness (24 dB) inside the note; looped sustain with slow bow-pressure motion. Vibrato added per note (CC21 = depth, also inside a note, default 64 = 13 cents, 0 = none). legato: overlapping notes skip the recorded attack (one voice); sustain: a new bow per note, double stops allowed",
+      "articulations": {
+        "legato": {},
+        "sustain": {
+          "file": "${MUSIC_RENDER_IOWA:-../../external/iowa}/InitialDAW/violin-sustain.sfz"
+        }
+      },
+      "defaultArticulation": "legato",
+      "controllers": {
+        "cc1": "native",
+        "cc11": "engine",
+        "cc21": "native"
+      },
+      "fallback": "violin-solo"
+    },
     "vibraphone": {
       "type": "sfz",
       "file": "${MUSIC_RENDER_SSO:-../../external/sso/Sonatina Symphonic Orchestra}/Percussion/Vibraphone.sfz",

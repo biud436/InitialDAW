@@ -4,7 +4,7 @@
 #   ./build.sh              # 빌드와 테스트
 #   ./build.sh --no-test    # 빌드만
 #   ./build.sh --fetch      # 의존 소스(JUCE, sfizz, LAME, 악보 글꼴 Bravura, Signalsmith Stretch, FLAC, Ogg Vorbis)만 받는다
-#   ./build.sh --samples    # VSCO 2 CE, Sonatina Symphonic Orchestra 일부, FreePats, Karoryfer 첼로도 받는다
+#   ./build.sh --samples    # VSCO 2 CE, Sonatina Symphonic Orchestra 일부, FreePats, Karoryfer 첼로, Iowa 바이올린도 받는다
 #   ./build.sh --gugak      # 국악기 녹음(국립국악원, 대금)도 받는다. 국립국악원 사이트가 요구하는 사용 목적을 받는 사람이 정한다
 #                           # (GUGAK_USE_TYPE, GUGAK_USE_PURPOSE, GUGAK_AFFILIATION, 없으면 묻는다)
 #   ./build.sh --plugins    # 무료 VSTi Dexed 도 받는다 (macOS, external/plugins/dexed)
@@ -18,8 +18,10 @@
 # 샘플 악기는 --samples 로 받는다: VSCO 2 CE(CC0, 현악, 피아노, 타악기, 일부 목관, 약 2.8GB)와
 # Sonatina Symphonic Orchestra(CC Sampling Plus 1.0, 현악, 합창, 호른, 트롬본, 오보에, 플루트, 클라리넷, 첼레스타, 그랜드 피아노, 약 560MB),
 # FreePats 스페인 클래식 기타(CC0, 나일론 기타, 샘플 5.2MB), 드럼 세트 MuldjordKit(CC BY 4.0, 약 320MB), 일렉트릭 베이스(CC0, 12MB),
-# 클린과 재즈 일렉트릭 기타(CC0, 약 400MB), 테너 색소폰(CC0, 32MB), Karoryfer x bigcat 독주 첼로(CC0, zip 133MB).
-# 첼로는 우리가 쓴 SFZ 로 연주한다: tools/make-cello-sfz.py 가 샘플 곁에 쓴다 (빌드마다 다시 쓰고 내용이 같으면 그대로 둔다).
+# 클린과 재즈 일렉트릭 기타(CC0, 약 400MB), 테너 색소폰(CC0, 32MB), Karoryfer x bigcat 독주 첼로(CC0, zip 133MB),
+# University of Iowa 독주 바이올린 (제한 없이 쓸 수 있는 녹음, arco 35 파일 244MB).
+# 첼로와 바이올린은 우리가 쓴 SFZ 로 연주한다: tools/make-cello-sfz.py, tools/make-iowa-violin-sfz.py 가 샘플 곁에 쓴다
+# (빌드마다 다시 쓰고 내용이 같으면 그대로 둔다).
 # 플러그인은 --plugins 로 받는다: Dexed 1.0.1 (GPL-3.0, DX7 FM 신스, VST3 와 AU). 앱과 링크하지 않고 실행 중에 불러온다.
 # CMake 3.22 이상이 필요하다. PATH 의 cmake 가 낮으면 ~/Library/Python/*/bin/cmake (pip install --user cmake)를 찾는다.
 set -euo pipefail
@@ -240,6 +242,8 @@ if [ "$FETCH_SAMPLES" = 1 ]; then
   fi
   echo "[InitialDAW] Karoryfer x bigcat 첼로를 external/karoryfer 에 받습니다"
   fetch_karoryfer_cello
+  echo "[InitialDAW] University of Iowa 독주 바이올린을 external/iowa 에 받습니다 (파일마다 SHA-256 고정, 244MB)"
+  mkdir -p "$REPO/external/iowa"
 fi
 # 국악기 녹음은 --gugak 으로만 받는다. 국립국악원 사이트가 받을 때마다 요구하는 사용 목적 양식을 받는 사람이 정한다
 GUGAK_FORM=()
@@ -259,6 +263,10 @@ fi
 # 받은 첼로 샘플 곁에 우리 SFZ 를 쓴다 (루프 지점, 조율, 크기 보정은 tools/make-cello-sfz.py 의 표)
 if [ -d "$REPO/external/karoryfer/Karoryfer_Bigcat_cello/Samples/sus" ]; then
   python3 -I "$REPO/tools/make-cello-sfz.py" "$REPO/external/karoryfer/Karoryfer_Bigcat_cello"
+fi
+# Iowa 바이올린 녹음 곁에 우리 SFZ 를 쓴다 (없는 녹음은 받고 WAV 로 바꾼다, 음의 자리, 조율, 크기, 루프는 tools/make-iowa-violin-sfz.py 의 표)
+if [ -d "$REPO/external/iowa" ]; then
+  python3 -I "$REPO/tools/make-iowa-violin-sfz.py" "$REPO/external/iowa"
 fi
 # 국악기 녹음 곁에 우리 SFZ 를 쓴다 (없는 녹음은 받는다, 뜯음과 음의 자리, 조율, 크기는 tools/make-gugak-sfz.py 의 표)
 if [ -d "$REPO/external/gugak" ]; then

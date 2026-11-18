@@ -101,6 +101,7 @@ nothing without them.
 | Sonatina Symphonic Orchestra, part (strings, winds, brass, choir, grand piano) | 560 MB | CC Sampling Plus 1.0 |
 | FreePats: Spanish classical guitar, MuldjordKit drums, electric bass, electric guitars, tenor saxophone | 774 MB | CC0, MuldjordKit CC BY 4.0 |
 | Karoryfer x bigcat cello | 133 MB | CC0 |
+| University of Iowa solo violin (Musical Instrument Samples) | 244 MB | free to use without restriction |
 | National Gugak Center recordings (gayageum, haegeum, daegeum, janggu, ajaeng, jing), `--gugak` only | 490 MB | KOGL Type 1 |
 
 Start a song with File > New song (⌘N), which offers 13 genre templates, or open an example from `engine/examples/`. The
