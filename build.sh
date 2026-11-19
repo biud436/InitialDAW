@@ -7,7 +7,7 @@
 #   ./build.sh --samples    # VSCO 2 CE, Sonatina Symphonic Orchestra 일부, FreePats, Karoryfer 첼로, Iowa 바이올린과 첼로도 받는다
 #   ./build.sh --gugak      # 국악기 녹음(국립국악원, 대금)도 받는다. 국립국악원 사이트가 요구하는 사용 목적을 받는 사람이 정한다
 #                           # (GUGAK_USE_TYPE, GUGAK_USE_PURPOSE, GUGAK_AFFILIATION, 없으면 묻는다)
-#   ./build.sh --plugins    # 무료 VSTi Dexed 도 받는다 (macOS, external/plugins/dexed)
+#   ./build.sh --plugins    # 무료 VSTi Dexed 와 Surge XT 도 받는다 (macOS, external/plugins/dexed, external/plugins/surge-xt)
 #
 # 결과: build/app/InitialDAW_artefacts/Release/InitialDAW.app (DAW), build/engine/music-render (명령행 엔진).
 # JUCE 8.0.10 과 sfizz 가 external/ 에 없으면 받는다. MP3 내보내기에 쓰는 LAME 4.0(LGPL-2.0)은 소스를 받아 SHA-256 을 확인하고
@@ -19,10 +19,12 @@
 # Sonatina Symphonic Orchestra(CC Sampling Plus 1.0, 현악, 합창, 호른, 트롬본, 오보에, 플루트, 클라리넷, 첼레스타, 그랜드 피아노, 약 560MB),
 # FreePats 스페인 클래식 기타(CC0, 나일론 기타, 샘플 5.2MB), 드럼 세트 MuldjordKit(CC BY 4.0, 약 320MB), 일렉트릭 베이스(CC0, 12MB),
 # 클린과 재즈 일렉트릭 기타(CC0, 약 400MB), 테너 색소폰(CC0, 32MB), Karoryfer x bigcat 독주 첼로(CC0, zip 133MB),
-# University of Iowa 독주 바이올린과 첼로 (제한 없이 쓸 수 있는 녹음, arco 35 파일 244MB 와 41 파일 221MB).
+# University of Iowa 독주 바이올린과 첼로 (제한 없이 쓸 수 있는 녹음, arco 35 파일 244MB 와 41 파일 221MB),
+# Accurate-Salamander 그랜드 피아노 (CC-BY 3.0, FLAC 785MB).
 # 첼로와 바이올린은 우리가 쓴 SFZ 로 연주한다: tools/make-cello-sfz.py, tools/make-iowa-strings-sfz.py 가 샘플 곁에 쓴다
 # (빌드마다 다시 쓰고 내용이 같으면 그대로 둔다).
-# 플러그인은 --plugins 로 받는다: Dexed 1.0.1 (GPL-3.0, DX7 FM 신스, VST3 와 AU). 앱과 링크하지 않고 실행 중에 불러온다.
+# 플러그인은 --plugins 로 받는다: Dexed 1.0.1 (GPL-3.0, DX7 FM 신스, VST3 와 AU), Surge XT 1.3.4 (GPL-3.0, 하이브리드 신스, 플러그인 zip 과
+# 같은 판의 소스 tar.gz 에서 공장 패치와 웨이브테이블 SurgeXTData). 앱과 링크하지 않고 실행 중에 불러온다.
 # CMake 3.22 이상이 필요하다. PATH 의 cmake 가 낮으면 ~/Library/Python/*/bin/cmake (pip install --user cmake)를 찾는다.
 set -euo pipefail
 
@@ -59,6 +61,9 @@ VORBIS_VERSION="1.3.7"
 VORBIS_SHA256="b33cc4934322bcbf6efcbacf49e3ca01aadbea4114ec9589d1b1e9d20f72954b"   # downloads.xiph.org 의 libvorbis-1.3.7.tar.xz
 DEXED_VERSION="1.0.1"
 DEXED_SHA256="4269448bc1312424cafd29aff615d891bc5905ebfc54b42ce70c56b9b10dc401"   # 릴리스의 artifact_md5sum.txt 와 맞춰 확인한 macOS zip
+SURGE_VERSION="1.3.4"
+SURGE_SHA256="37d8d809693adc86587b7bc75a2384fc4e905f259aa9b9a21777749d36fbf8aa"        # surge-xt-macos-1.3.4-pluginsonly.zip
+SURGE_DATA_SHA256="38545c4bf290dd96acce587924b9aed62662ffbff33cea1fe907339b5ab15810"   # surge 저장소 release_xt_1.3.4 의 tar.gz (공장 패치와 웨이브테이블)
 RUN_TESTS=1
 FETCH_ONLY=0
 FETCH_SAMPLES=0
@@ -244,6 +249,8 @@ if [ "$FETCH_SAMPLES" = 1 ]; then
   fetch_karoryfer_cello
   echo "[InitialDAW] University of Iowa 독주 바이올린과 첼로를 external/iowa 에 받습니다 (파일마다 SHA-256 고정, 465MB)"
   mkdir -p "$REPO/external/iowa"
+  echo "[InitialDAW] Accurate-Salamander 그랜드 피아노를 external/salamander 에 받습니다 (SHA-256 고정, 785MB)"
+  python3 -I "$REPO/tools/make-salamander-sfz.py" "$REPO/external/salamander"
 fi
 # 국악기 녹음은 --gugak 으로만 받는다. 국립국악원 사이트가 받을 때마다 요구하는 사용 목적 양식을 받는 사람이 정한다
 GUGAK_FORM=()
@@ -263,6 +270,10 @@ fi
 # 받은 첼로 샘플 곁에 우리 SFZ 를 쓴다 (루프 지점, 조율, 크기 보정은 tools/make-cello-sfz.py 의 표)
 if [ -d "$REPO/external/karoryfer/Karoryfer_Bigcat_cello/Samples/sus" ]; then
   python3 -I "$REPO/tools/make-cello-sfz.py" "$REPO/external/karoryfer/Karoryfer_Bigcat_cello"
+fi
+# Accurate-Salamander 곁에 우리 SFZ 를 쓴다 (놓는 소리와 페달 공명을 켠 기본값)
+if [ -f "$REPO/external/salamander/sfz_live/Accurate-SalamanderGrandPiano_flat.Recommended.sfz" ]; then
+  python3 -I "$REPO/tools/make-salamander-sfz.py" "$REPO/external/salamander"
 fi
 # Iowa 바이올린과 첼로 녹음 곁에 우리 SFZ 를 쓴다 (없는 녹음은 받고 WAV 로 바꾼다, 음의 자리, 조율, 크기, 루프는 tools/make-iowa-strings-sfz.py 의 표)
 if [ -d "$REPO/external/iowa" ]; then
@@ -294,10 +305,32 @@ fetch_dexed() {
   rm -rf "$dir"
   unzip -q "$zip" -d "$dir"
 }
+# Surge XT 플러그인 zip 과 공장 데이터 (소스 tar.gz 의 resources/data) 를 받아 체크섬을 확인하고 external/plugins/surge-xt 에 푼다.
+# 플러그인은 레지스트리의 environment 가 주는 SURGE_DATA_HOME 으로 데이터를 찾는다.
+fetch_surge() {
+  local dir="$REPO/external/plugins/surge-xt" zip="$REPO/external/plugins/surge-xt-macos-$SURGE_VERSION-pluginsonly.zip"
+  local tgz="$REPO/external/plugins/surge-release_xt_$SURGE_VERSION.tar.gz"
+  [ -d "$dir/Surge XT.vst3" ] && [ -f "$dir/SurgeXTData/configuration.xml" ] && return 0
+  mkdir -p "$REPO/external/plugins"
+  [ -f "$zip" ] || { curl -fL --retry 3 -o "$zip.part" "https://github.com/surge-synthesizer/releases-xt/releases/download/$SURGE_VERSION/surge-xt-macos-$SURGE_VERSION-pluginsonly.zip" && mv "$zip.part" "$zip"; }
+  [ -f "$tgz" ] || { curl -fL --retry 3 -o "$tgz.part" "https://github.com/surge-synthesizer/surge/archive/refs/tags/release_xt_$SURGE_VERSION.tar.gz" && mv "$tgz.part" "$tgz"; }
+  if ! echo "$SURGE_SHA256  $zip" | shasum -a 256 -c - >/dev/null || ! echo "$SURGE_DATA_SHA256  $tgz" | shasum -a 256 -c - >/dev/null; then
+    echo "[InitialDAW] Surge XT 의 SHA-256 이 맞지 않습니다: $zip 또는 $tgz (지우고 다시 받으십시오)" >&2
+    exit 1
+  fi
+  rm -rf "$dir" && mkdir -p "$dir/tmp"
+  unzip -q "$zip" -d "$dir"
+  tar -xzf "$tgz" -C "$dir/tmp" "surge-release_xt_$SURGE_VERSION/resources/data" "surge-release_xt_$SURGE_VERSION/LICENSE"
+  mv "$dir/tmp/surge-release_xt_$SURGE_VERSION/resources/data" "$dir/SurgeXTData"
+  mv "$dir/tmp/surge-release_xt_$SURGE_VERSION/LICENSE" "$dir/LICENSE"
+  rm -rf "$dir/tmp"
+}
 if [ "$FETCH_PLUGINS" = 1 ]; then
   if [ "$(uname)" = "Darwin" ]; then
     echo "[InitialDAW] Dexed $DEXED_VERSION 을 external/plugins/dexed 에 받습니다"
     fetch_dexed
+    echo "[InitialDAW] Surge XT $SURGE_VERSION 을 external/plugins/surge-xt 에 받습니다 (플러그인 187MB, 공장 데이터를 담은 소스 279MB)"
+    fetch_surge
   else
     echo "[InitialDAW] --plugins 는 지금 macOS 에서만 받습니다" >&2
   fi

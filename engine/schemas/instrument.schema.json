@@ -89,6 +89,11 @@
           "type": "string",
           "description": "vst3: path to the .vst3 bundle; au: JUCE identifier such as AudioUnit:Synths/aumu,dls ,appl"
         },
+        "environment": {
+          "type": "object",
+          "description": "vst3 and au: environment variables set before the plugin is created (values are paths relative to the registry file, ${VAR:-default} allowed; an existing value is kept), e.g. Surge XT's SURGE_DATA_HOME",
+          "additionalProperties": { "type": "string" }
+        },
         "pluginName": {
           "type": "string",
           "description": "pick one plugin in a shell bundle, or look the plugin up in the scan cache when plugin is empty"

@@ -29,6 +29,7 @@ struct InstrumentDef
     std::string plugin;        // vst3: .vst3 경로 (레지스트리 파일 기준), au: JUCE 식별자 ("AudioUnit:Synths/aumu,dls ,appl")
     std::string pluginName;    // 한 파일에 여러 플러그인이 있을 때 고르는 이름. plugin 이 비면 캐시에서 이름으로 찾는다
     PluginSettings pluginSettings;
+    std::map<std::string, juce::File> environment;   // vst3, au: 플러그인을 만들기 전에 두는 환경 변수 (값은 레지스트리 기준 경로, 이미 있으면 그대로)
     std::map<std::string, double> synthParameters;   // synth: 프리셋 위에 덮는 값
     InstrumentProfile profile;
     double gainDb = 0.0;

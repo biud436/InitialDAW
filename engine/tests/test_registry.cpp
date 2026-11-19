@@ -84,6 +84,35 @@ TEST (registry_file_errors_have_paths_and_fallback_works)
     CHECK (! missing.ok());
 }
 
+TEST (registry_environment_is_set_before_a_plugin_is_made)
+{
+    const auto file = mrtest::outputDir().getChildFile ("registry_environment.json");
+    file.replaceWithText (R"({ "instruments": {
+        "plug": { "type": "vst3", "plugin": "missing/Plug.vst3", "environment": { "MR_TEST_PLUGIN_DATA": "data/plug" }, "fallback": "soft" },
+        "soft": { "type": "synth", "preset": "piano" },
+        "wrong": { "type": "synth", "preset": "piano", "environment": { "MR_TEST_X": "x" } } } })");
+    Registry r;
+    Diagnostics d;
+    r.addFile (file, d);
+    const auto* plug = r.find ("plug");
+    REQUIRE (plug != nullptr);
+    REQUIRE (plug->environment.count ("MR_TEST_PLUGIN_DATA") == 1);
+    CHECK_EQ (plug->environment.at ("MR_TEST_PLUGIN_DATA").getFullPathName(), file.getParentDirectory().getChildFile ("data/plug").getFullPathName());
+    CHECK (mrtest::hasError (d, file.getFullPathName().toStdString() + ":$.instruments.wrong.environment", "only for vst3"));
+    CHECK (d.warnings.empty());
+
+    unsetenv ("MR_TEST_PLUGIN_DATA");
+    auto created = createInstrument (r, "plug", { 48000.0, 512, 1 });   // 플러그인이 없어 대체 악기로 가지만 환경 변수는 먼저 둔다
+    REQUIRE (created.instrument != nullptr);
+    const char* now = std::getenv ("MR_TEST_PLUGIN_DATA");
+    REQUIRE (now != nullptr);
+    CHECK_EQ (juce::String (now), file.getParentDirectory().getChildFile ("data/plug").getFullPathName());
+
+    setenv ("MR_TEST_PLUGIN_DATA", "/kept", 1);                       // 이미 있는 값은 그대로 둔다
+    createInstrument (r, "plug", { 48000.0, 512, 1 });
+    CHECK_EQ (std::string (std::getenv ("MR_TEST_PLUGIN_DATA")), std::string ("/kept"));
+}
+
 TEST (registry_keymap_sends_mapped_keys_to_the_instrument)
 {
     const auto file = mrtest::outputDir().getChildFile ("registry_keymap.json");

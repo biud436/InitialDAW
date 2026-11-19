@@ -19,7 +19,7 @@ namespace mr
 namespace
 {
 
-const std::vector<std::string> entryKeys { "type", "preset", "file", "plugin", "pluginName", "parameters", "program", "state", "stateFile",
+const std::vector<std::string> entryKeys { "type", "preset", "file", "plugin", "pluginName", "environment", "parameters", "program", "state", "stateFile",
                                            "articulations", "defaultArticulation", "controllers", "dynamics", "sfzRegionOpcodes",
                                            "gainDb", "transpose", "keymap", "keyNames", "fallback", "description", "comment" };
 const std::vector<std::string> articulationKeys { "keyswitch", "keyswitchVelocity", "file", "program", "cc", "lengthFactor", "velocityOffset", "legato", "comment" };
@@ -365,6 +365,15 @@ void Registry::addRoot (const juce::var& root, const juce::File& file, const std
         if (def.sfzRegionOpcodes.find ('<') != std::string::npos)
             d.error (path + ".sfzRegionOpcodes", "give opcodes only (name=value), not SFZ headers");
         readProfile (r, def, file.getParentDirectory(), d);
+        if (const auto* envTable = r.object ("environment", false))
+        {
+            json::ObjectReader er (*envTable, r.pathOf ("environment"), d);
+            if (def.type != "vst3" && def.type != "au")
+                d.error (r.pathOf ("environment"), "\"environment\" is only for vst3 and au instruments");
+            for (const auto& key : er.keys())
+                if (const auto value = er.string (key, true))
+                    def.environment[key] = resolveRegistryPath (*value, file.getParentDirectory());
+        }
         r.warnUnknown (entryKeys);
 
         if (def.type == "sfz")
@@ -470,6 +479,9 @@ std::unique_ptr<Instrument> instantiate (const InstrumentDef& def, const Instrum
         return makeSimpleSynth (def.preset, ctx.seed, error, &def.synthParameters, ctx.trackSynth, ctx.tempo);
     if (def.type == "vst3" || def.type == "au")
     {
+        for (const auto& [name, value] : def.environment)       // 플러그인이 읽는 데이터 폴더 (예: Surge XT 의 SURGE_DATA_HOME)
+            if (const char* now = std::getenv (name.c_str()); now == nullptr || *now == '\0')
+                setenv (name.c_str(), value.getFullPathName().toRawUTF8(), 0);
         std::string plugin = def.plugin;
         if (plugin.empty())
         {

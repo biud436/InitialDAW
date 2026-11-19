@@ -890,6 +890,15 @@
       },
       "fallback": "cello-solo"
     },
+    "salamander-piano": {
+      "type": "sfz",
+      "file": "${MUSIC_RENDER_SALAMANDER:-../../external/salamander}/InitialDAW/salamander.sfz",
+      "description": "Accurate-Salamander Grand Piano 6.2e (Chisato Yamauchi, from Alexander Holm's Salamander Grand Piano V2, Yamaha C5, CC-BY 3.0: credit it in music made with it). 16 velocity layers, retuned and levelled per key, CC64 with half pedal, sampled release (CC20, default 96), hammer noise (CC21, default 24), pedal resonance (CC23, default 127)",
+      "controllers": {
+        "cc64": "native"
+      },
+      "fallback": "grand-piano"
+    },
     "vibraphone": {
       "type": "sfz",
       "file": "${MUSIC_RENDER_SSO:-../../external/sso/Sonatina Symphonic Orchestra}/Percussion/Vibraphone.sfz",
@@ -1007,6 +1016,15 @@
       },
       "description": "FreePats tenor saxophone (Versilian Community Sample Library, CC0), sounding G2 to F5, two velocity layers (soft up to 89), looped sustain. CC1 = dynamics in the engine (-14 to 0 dB and brightness)",
       "fallback": "synth.lead"
+    },
+    "surge-xt": {
+      "type": "vst3",
+      "plugin": "${MUSIC_RENDER_PLUGINS:-../../external/plugins}/surge-xt/Surge XT.vst3",
+      "environment": {
+        "SURGE_DATA_HOME": "${MUSIC_RENDER_PLUGINS:-../../external/plugins}/surge-xt/SurgeXTData"
+      },
+      "description": "Surge XT 1.3.4, hybrid synth (subtractive, wavetable, FM, physical modelling) with 3000 factory patches (GPL-3.0, build.sh --plugins). Pick a patch with tools/surge-patch-state.py, which writes the track's plugin.state from a factory .fxp",
+      "fallback": "synth.pad"
     },
     "dexed": {
       "type": "vst3",

@@ -81,7 +81,7 @@ cd InitialDAW
 ./build.sh               # fetch the libraries into external/, build the app and the engine, run the tests
 ./build.sh --samples     # also fetch the sample libraries (below)
 ./build.sh --gugak       # also fetch the Korean instrument recordings (asks for the usage purpose the archive requires)
-./build.sh --plugins     # also fetch the free Dexed FM synth (VST3 and AU) for the `dexed` instrument
+./build.sh --plugins     # also fetch the free Dexed FM synth and Surge XT (VST3) for the `dexed` and `surge-xt` instruments
 ./build.sh --no-test     # build only
 open build/app/InitialDAW_artefacts/Release/InitialDAW.app
 ```
@@ -102,6 +102,7 @@ nothing without them.
 | FreePats: Spanish classical guitar, MuldjordKit drums, electric bass, electric guitars, tenor saxophone | 774 MB | CC0, MuldjordKit CC BY 4.0 |
 | Karoryfer x bigcat cello | 133 MB | CC0 |
 | University of Iowa solo violin and cello (Musical Instrument Samples) | 465 MB | free to use without restriction |
+| Accurate-Salamander Grand Piano 6.2e | 785 MB | CC-BY 3.0 |
 | National Gugak Center recordings (gayageum, haegeum, daegeum, janggu, ajaeng, jing), `--gugak` only | 490 MB | KOGL Type 1 |
 
 Start a song with File > New song (⌘N), which offers 13 genre templates, or open an example from `engine/examples/`. The
