@@ -1023,7 +1023,10 @@
       "environment": {
         "SURGE_DATA_HOME": "${MUSIC_RENDER_PLUGINS:-../../external/plugins}/surge-xt/SurgeXTData"
       },
-      "description": "Surge XT 1.3.4, hybrid synth (subtractive, wavetable, FM, physical modelling) with 3000 factory patches (GPL-3.0, build.sh --plugins). Pick a patch with tools/surge-patch-state.py, which writes the track's plugin.state from a factory .fxp",
+      "description": "Surge XT 1.3.4, hybrid synth (subtractive, wavetable, FM, physical modelling) with 3000 factory patches (GPL-3.0, build.sh --plugins). Pick a patch with tools/surge-patch-state.py, which writes the track's plugin.state from a factory .fxp. CC11 is applied by the engine as loudness (Surge does not map it)",
+      "controllers": {
+        "cc11": "engine"
+      },
       "fallback": "synth.pad"
     },
     "dexed": {
