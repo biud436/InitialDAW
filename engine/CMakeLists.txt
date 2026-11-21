@@ -31,6 +31,7 @@ add_library(music_render_core STATIC
   src/analysis/MixMeasure.cpp
   src/io/AudioFile.cpp
   src/io/XmlWriter.cpp
+  src/io/Pdf.cpp
   src/io/Codecs.cpp
   src/midi/MidiExport.cpp
   src/midi/MidiImport.cpp
@@ -170,6 +171,7 @@ endif()
 add_executable(music_render_tests
   tests/TestMain.cpp
   tests/test_composition.cpp
+  tests/test_pdf.cpp
   tests/test_timing.cpp
   tests/test_meters.cpp
   tests/test_performance.cpp

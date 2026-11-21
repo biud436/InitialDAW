@@ -13,6 +13,8 @@
 #include "instruments/Registry.h"
 #include "midi/MidiImport.h"
 #include "notation/MusicXml.h"
+#include "io/Pdf.h"
+#include "NativePrint.h"
 #include "plugins/PluginHost.h"
 #include "rendering/EventBuilder.h"
 #include "rendering/OfflineRenderer.h"
@@ -3666,6 +3668,83 @@ bool MainComponent::exportMusicXml (const juce::File& file, bool selectedOnly, j
     }
 }
 
+namespace
+{
+mr::PdfPage pdfPage (const juce::Image& image, const ScorePanel::PrintSetup& setup)
+{
+    mr::PdfPage p;
+    p.pixelWidth = image.getWidth();
+    p.pixelHeight = image.getHeight();
+    p.widthPoints = setup.pageWidth;
+    p.heightPoints = setup.pageHeight;
+    p.gray.resize ((size_t) p.pixelWidth * (size_t) p.pixelHeight);
+    const juce::Image::BitmapData data (image, juce::Image::BitmapData::readOnly);
+    size_t i = 0;
+    for (int y = 0; y < p.pixelHeight; ++y)
+        for (int x = 0; x < p.pixelWidth; ++x)
+        {
+            const auto c = data.getPixelColour (x, y);
+            p.gray[i++] = (uint8_t) ((c.getRed() * 299 + c.getGreen() * 587 + c.getBlue() * 114) / 1000);
+        }
+    return p;
+}
+} // namespace
+
+bool MainComponent::exportScorePdf (const juce::File& file, bool allTracks, juce::String& error, int* pageCount, std::vector<std::vector<int>>* measures)
+{
+    if (! project_.loaded())
+        return false;
+    if (! ScorePanel::hasMusicFont())
+    {
+        error = juce::String::fromUTF8 ("악보 글꼴(Bravura)이 없어 PDF 를 쓸 수 없습니다. ./build.sh 가 external/bravura 에 받은 뒤 다시 빌드합니다.");
+        return false;
+    }
+    const auto& c = project_.composition();
+    std::vector<int> tracks;
+    if (allTracks)
+    {
+        for (size_t t = 0; t < c.tracks.size(); ++t)
+            if (c.tracks[t].instrument != "audio" && ! c.tracks[t].notes.empty())
+                tracks.push_back ((int) t);
+    }
+    else if (timeline_.selectedTrack() >= 0)
+        tracks.push_back (timeline_.selectedTrack());
+    if (tracks.empty())
+    {
+        error = allTracks ? juce::String::fromUTF8 ("악보로 옮길 음표가 있는 트랙이 없습니다.") : juce::String::fromUTF8 ("트랙을 고르면 그 트랙의 악보를 PDF 로 씁니다.");
+        return false;
+    }
+    ScorePanel::PrintSetup setup;
+    setup.title = c.title.empty() ? project_.file().getFileNameWithoutExtension() : juce::String::fromUTF8 (c.title.c_str());
+    std::vector<mr::PdfPage> pages;
+    for (const int t : tracks)
+        for (const auto& page : score_.printTrack (t, setup))
+        {
+            pages.push_back (pdfPage (page.image, setup));
+            if (measures != nullptr)
+                measures->push_back (page.measures);
+        }
+    if (pages.empty())
+    {
+        error = juce::String::fromUTF8 ("악보로 옮길 음표가 없습니다.");
+        return false;
+    }
+    mr::PdfInfo info;
+    info.title = setup.title.toStdString();
+    info.subject = juce::String::fromUTF8 ("악보").toStdString();
+    std::string reason;
+    if (! mr::writeImagePdf (pages, info, file.getFullPathName().toStdString(), &reason))
+    {
+        error = juce::String::fromUTF8 (reason.c_str());
+        return false;
+    }
+    if (pageCount != nullptr)
+        *pageCount = (int) pages.size();
+    setStatus (juce::String::fromUTF8 ("악보 PDF 를 썼습니다: ") + file.getFileName() + " (" + juce::String ((int) tracks.size()) + juce::String::fromUTF8 ("트랙, ")
+               + juce::String ((int) pages.size()) + juce::String::fromUTF8 ("쪽)"));
+    return true;
+}
+
 void MainComponent::showMixer (bool show)
 {
     if (show == mixerShown_)
@@ -4967,7 +5046,7 @@ void MainComponent::getAllCommands (juce::Array<juce::CommandID>& c)
     c.addArray ({ newFile, openFile, reloadFile, toggleAutoReload, playStop, playSelection, toggleTyping, typingOctaveDown, typingOctaveUp, toStart, zoomIn, zoomOut, zoomFit, audioSettings,
                   selectPrevTrack, selectNextTrack, saveFile, saveFileAs, exportFile, undoEdit, redoEdit, cutNotes, copyNotes, pasteNotes,
                   duplicateNotes, deleteNotes, selectAllNotes, deselectNotes, quantizeNotes, octaveUp, octaveDown, nudgeLeft,
-                  nudgeRight, editTempo, toggleMixer, toggleScore, exportMusicXmlCommand, instrumentWindow, scanPluginsCommand, recordToggle, loopToggle, metronomeToggle,
+                  nudgeRight, editTempo, toggleMixer, toggleScore, exportMusicXmlCommand, exportScorePdfCommand, exportScorePdfAllCommand, printScoreCommand, instrumentWindow, scanPluginsCommand, recordToggle, loopToggle, metronomeToggle,
                   loopFromSelection, clearLoop, playSeam, newTrack, duplicateTrackCommand, deleteTrackCommand, renameTrackCommand, bounceTrackCommand, stepInputCommand, inputMonitorCommand,
                   automationWriteCommand, samplerCommand, midiLearnCommand,
                   moveTrackUp, moveTrackDown, addMarkerCommand, previousMarker, nextMarker, insertTimeCommand, deleteTimeCommand, importMidiCommand,
@@ -5163,6 +5242,20 @@ void MainComponent::getCommandInfo (juce::CommandID id, juce::ApplicationCommand
         case exportMusicXmlCommand:
             info.setInfo (juce::String::fromUTF8 ("MusicXML 내보내기..."), juce::String::fromUTF8 ("악보 프로그램이 읽는 MusicXML 로 곡의 악보를 씁니다"), file, 0);
             info.setActive (loaded);
+            break;
+        case exportScorePdfCommand:
+            info.setInfo (juce::String::fromUTF8 ("악보 PDF 내보내기 (고른 트랙)..."), juce::String::fromUTF8 ("고른 트랙의 악보를 A4 쪽으로 나눠 PDF 로 씁니다"), file, 0);
+            info.setActive (loaded && timeline_.selectedTrack() >= 0);
+            break;
+        case exportScorePdfAllCommand:
+            info.setInfo (juce::String::fromUTF8 ("악보 PDF 내보내기 (모든 트랙)..."),
+                          juce::String::fromUTF8 ("음표가 있는 트랙마다 새 쪽에서 시작하는 파트보를 PDF 하나로 씁니다"), file, 0);
+            info.setActive (loaded);
+            break;
+        case printScoreCommand:
+            info.setInfo (juce::String::fromUTF8 ("악보 인쇄..."), juce::String::fromUTF8 ("고른 트랙의 악보를 인쇄합니다"), file, 0);
+            info.addDefaultKeypress ('p', juce::ModifierKeys::commandModifier);
+            info.setActive (loaded && timeline_.selectedTrack() >= 0);
             break;
         case instrumentWindow:
             info.setInfo (juce::String::fromUTF8 ("악기 창"), juce::String::fromUTF8 ("고른 트랙의 플러그인 악기 화면을 엽니다"),
@@ -5447,6 +5540,32 @@ bool MainComponent::perform (const InvocationInfo& info)
                                   });
             return true;
         }
+        case exportScorePdfCommand:
+        case exportScorePdfAllCommand:
+        {
+            const bool all = info.commandID == exportScorePdfAllCommand;
+            auto chooser = std::make_shared<juce::FileChooser> (juce::String::fromUTF8 ("악보 PDF 내보내기"), project_.file().withFileExtension (".pdf"), "*.pdf");
+            chooser->launchAsync (juce::FileBrowserComponent::saveMode | juce::FileBrowserComponent::canSelectFiles
+                                      | juce::FileBrowserComponent::warnAboutOverwriting,
+                                  [safe = juce::Component::SafePointer<MainComponent> (this), chooser, all] (const juce::FileChooser& fc)
+                                  {
+                                      if (safe == nullptr || fc.getResult() == juce::File())
+                                          return;
+                                      juce::String error;
+                                      if (! safe->exportScorePdf (fc.getResult().withFileExtension (".pdf"), all, error) && error.isNotEmpty())
+                                          safe->setStatus (error.replaceCharacter ('\n', ' '), true);
+                                  });
+            return true;
+        }
+        case printScoreCommand:
+        {
+            const auto pdf = juce::File::getSpecialLocation (juce::File::tempDirectory).getChildFile ("InitialDAW-score.pdf");
+            juce::String error;
+            if (! exportScorePdf (pdf, false, error) || ! printPdfFile (pdf, error))
+                if (error.isNotEmpty())
+                    setStatus (error.replaceCharacter ('\n', ' '), true);
+            return true;
+        }
         case toggleTyping: setTyping (! typing_.isEnabled()); return true;
         case typingOctaveDown:
         case typingOctaveUp:
@@ -5553,6 +5672,9 @@ juce::PopupMenu MainComponent::getMenuForIndex (int index, const juce::String&)
             m.addCommandItem (&commands_, attachVideoCommand);
             m.addCommandItem (&commands_, exportFile);
             m.addCommandItem (&commands_, exportMusicXmlCommand);
+            m.addCommandItem (&commands_, exportScorePdfCommand);
+            m.addCommandItem (&commands_, exportScorePdfAllCommand);
+            m.addCommandItem (&commands_, printScoreCommand);
             m.addSeparator();
             m.addCommandItem (&commands_, reloadFile);
             m.addCommandItem (&commands_, toggleAutoReload);

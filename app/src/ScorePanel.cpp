@@ -72,31 +72,33 @@ void ScorePanel::setStaffSpace (float space)
     repaint();
 }
 
+mr::Score ScorePanel::buildScoreFor (int track) const
+{
+    if (! project_.loaded() || track < 0 || (size_t) track >= project_.trackCount() || project_.composition().tracks[(size_t) track].instrument == "audio")
+        return {};
+    const auto& c = project_.composition();
+    mr::ScoreOptions o;
+    o.tracks = { (size_t) track };
+    o.percussion = percussion;
+    double end = 0.0;   // 곡 전체의 마디 (다른 트랙의 음이 더 늦게 끝나도)
+    for (const auto& t : c.tracks)
+        for (const auto& n : t.notes)
+            end = std::max (end, n.startBeat + n.durationBeat);
+    o.endBeat = std::max (end, 1.0e-3);
+    try
+    {
+        return mr::buildScore (c, o);
+    }
+    catch (const std::exception&)
+    {
+        return {};
+    }
+}
+
 void ScorePanel::refresh()
 {
     track_ = timeline_.selectedTrack();
-    score_ = {};
-    if (project_.loaded() && track_ >= 0 && (size_t) track_ < project_.trackCount()
-        && project_.composition().tracks[(size_t) track_].instrument != "audio")
-    {
-        const auto& c = project_.composition();
-        mr::ScoreOptions o;
-        o.tracks = { (size_t) track_ };
-        o.percussion = percussion;
-        double end = 0.0;   // 곡 전체의 마디 (다른 트랙의 음이 더 늦게 끝나도)
-        for (const auto& t : c.tracks)
-            for (const auto& n : t.notes)
-                end = std::max (end, n.startBeat + n.durationBeat);
-        o.endBeat = std::max (end, 1.0e-3);
-        try
-        {
-            score_ = mr::buildScore (c, o);
-        }
-        catch (const std::exception&)
-        {
-            score_ = {};
-        }
-    }
+    score_ = buildScoreFor (track_);
     layout();
     repaint();
 }
@@ -183,15 +185,21 @@ float ScorePanel::xAt (const MeasureLayout& m, int division) const
 
 void ScorePanel::layout()
 {
+    layoutFor ((float) (getWidth() - scrollBarSize));
+}
+
+void ScorePanel::layoutFor (float width)
+{
     systems_.clear();
     playheadSystem_ = -1;
-    if (score_.parts.empty() || getWidth() < 100)
+    if (score_.parts.empty() || width < 100.0f - scrollBarSize)
     {
-        vertical_.setRangeLimits (0.0, 1.0);
+        if (! printing_)
+            vertical_.setRangeLimits (0.0, 1.0);
         return;
     }
     const auto& part = score_.parts.front();
-    const float left = sp_ * 3.0f, right = (float) getWidth() - scrollBarSize - sp_ * 2.0f;
+    const float left = sp_ * 3.0f, right = width - sp_ * 2.0f;
     const float usable = right - left;
     auto keyWidth = [this] (const mr::KeySignature& k) { return k.fifths == 0 ? 0.0f : sp_ * (1.0f * (float) std::abs (k.fifths) + 0.6f); };
     const float timeWidth = sp_ * 3.0f, clefWidth = sp_ * 3.6f;
@@ -297,6 +305,8 @@ void ScorePanel::layout()
         y += systemHeight();
         i = j;
     }
+    if (printing_)
+        return;
     const float total = y + sp_ * 2.0f;
     vertical_.setRangeLimits (0.0, std::max ((double) total, (double) getHeight()));
     vertical_.setCurrentRange (scroll_, getHeight(), juce::dontSendNotification);
@@ -305,6 +315,13 @@ void ScorePanel::layout()
 
 void ScorePanel::glyph (juce::Graphics& g, juce::juce_wchar code, float x, float y, float scale) const
 {
+    if (printing_)   // 쪽은 크게 키워 그리므로 정수 자리로 반올림하지 않는다
+    {
+        juce::GlyphArrangement glyphs;
+        glyphs.addLineOfText (scale != 1.0f ? music_.withPointHeight (music_.getHeightInPoints() * scale) : music_, juce::String::charToString (code), x, y);
+        glyphs.draw (g);
+        return;
+    }
     if (scale != 1.0f)
     {
         g.setFont (music_.withPointHeight (music_.getHeightInPoints() * scale));
@@ -480,7 +497,7 @@ void ScorePanel::paintSystem (juce::Graphics& g, const SystemLayout& s, size_t s
             paintStaffEvents (g, s, m, st);
         // 재생 위치
         const double start = measure.startBeat, end = start + measure.length / (double) mr::divisionsPerQuarter;
-        if (playhead >= start - 1.0e-9 && playhead < end)
+        if (! printing_ && playhead >= start - 1.0e-9 && playhead < end)
         {
             const float px = xAt (m, (int) std::llround ((playhead - start) * mr::divisionsPerQuarter));
             g.setColour (colours::playhead.withAlpha (0.18f));
@@ -760,6 +777,115 @@ void ScorePanel::mouseDown (const juce::MouseEvent& e)
 {
     if (const auto m = measureAt (e.position); m && onSeek && ! score_.parts.empty())
         onSeek (score_.parts.front().measures[(size_t) *m].startBeat);
+}
+
+std::vector<ScorePanel::PrintedPage> ScorePanel::printTrack (int track, PrintSetup setup)
+{
+    const auto savedScore = score_;
+    const int savedTrack = track_;
+    score_ = buildScoreFor (track);
+    track_ = track;
+    if (setup.subtitle.isEmpty() && ! score_.parts.empty())
+    {
+        const auto& part = score_.parts.front();
+        setup.subtitle = juce::String::fromUTF8 (part.name.c_str())
+                         + (part.percussion ? juce::String::fromUTF8 ("    타악기 보표") : "    " + juce::String (mr::keyName (score_.key)));
+    }
+    auto pages = printPages (setup);
+    score_ = savedScore;
+    track_ = savedTrack;
+    layout();
+    repaint();
+    return pages;
+}
+
+std::vector<ScorePanel::PrintedPage> ScorePanel::printPages (const PrintSetup& setup)
+{
+    std::vector<PrintedPage> pages;
+    auto face = musicTypeface();
+    if (score_.parts.empty() || face == nullptr)
+        return pages;
+    const float savedSp = sp_;
+    const auto savedMusic = music_;
+    printing_ = true;
+    sp_ = setup.staffSpace;
+    music_ = juce::Font (juce::FontOptions (face).withPointHeight (4.0f * sp_));
+    const float contentWidth = setup.pageWidth - 2.0f * setup.margin;
+    layoutFor (contentWidth + 5.0f * sp_);
+    const float shiftX = setup.margin - 3.0f * sp_;
+    const float titleHeight = 58.0f, runningHeight = 22.0f, footerHeight = 20.0f;
+
+    // 쪽 나누기: 줄 하나는 쪽 경계에서 자르지 않는다
+    std::vector<std::vector<size_t>> pageSystems;
+    std::vector<size_t> current;
+    float used = 0.0f;
+    for (size_t s = 0; s < systems_.size(); ++s)
+    {
+        const bool firstPage = pageSystems.empty();
+        const float room = setup.pageHeight - 2.0f * setup.margin - footerHeight - (firstPage ? titleHeight : runningHeight);
+        if (! current.empty() && used + systemHeight() > room)
+        {
+            pageSystems.push_back (current);
+            current.clear();
+            used = 0.0f;
+        }
+        current.push_back (s);
+        used += systemHeight();
+    }
+    if (! current.empty())
+        pageSystems.push_back (current);
+
+    const float scale = setup.dpi / 72.0f;
+    const juce::Colour ink (0xff1d1b18);
+    for (size_t p = 0; p < pageSystems.size(); ++p)
+    {
+        PrintedPage page;
+        page.image = juce::Image (juce::Image::RGB, juce::roundToInt (setup.pageWidth * scale), juce::roundToInt (setup.pageHeight * scale), true,
+                                  juce::SoftwareImageType());
+        juce::Graphics g (page.image);
+        g.addTransform (juce::AffineTransform::scale (scale));
+        g.fillAll (juce::Colours::white);
+        g.setColour (ink);
+        float y = setup.margin;
+        if (p == 0)
+        {
+            g.setFont (uiFont (17.0f, true));
+            g.drawText (setup.title, juce::Rectangle<float> (setup.margin, y, contentWidth, 24.0f), juce::Justification::centred);
+            g.setFont (uiFont (10.5f));
+            g.drawText (setup.subtitle, juce::Rectangle<float> (setup.margin, y + 27.0f, contentWidth, 16.0f), juce::Justification::centred);
+            y += titleHeight;
+        }
+        else
+        {
+            g.setFont (uiFont (8.5f));
+            g.drawText (setup.title + "    " + setup.subtitle, juce::Rectangle<float> (setup.margin, y, contentWidth, 12.0f), juce::Justification::centredLeft);
+            y += runningHeight;
+        }
+        for (const auto s : pageSystems[p])
+        {
+            const auto& system = systems_[s];
+            {
+                juce::Graphics::ScopedSaveState save (g);
+                g.addTransform (juce::AffineTransform::translation (shiftX, y - (system.top - topMargin * sp_)));
+                g.setFont (music_);
+                g.setColour (ink);
+                paintSystem (g, system, s);
+            }
+            for (const auto& m : system.measures)
+                page.measures.push_back ((int) m.index);
+            y += systemHeight();
+        }
+        g.setColour (ink);
+        g.setFont (uiFont (8.5f));
+        g.drawText (juce::String ((int) p + 1) + " / " + juce::String ((int) pageSystems.size()),
+                    juce::Rectangle<float> (setup.margin, setup.pageHeight - setup.margin - 10.0f, contentWidth, 12.0f), juce::Justification::centred);
+        pages.push_back (std::move (page));
+    }
+    printing_ = false;
+    sp_ = savedSp;
+    music_ = savedMusic;
+    layout();
+    return pages;
 }
 
 void ScorePanel::mouseWheelMove (const juce::MouseEvent& e, const juce::MouseWheelDetails& wheel)

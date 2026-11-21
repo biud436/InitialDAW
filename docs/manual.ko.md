@@ -78,6 +78,9 @@
 | ⌘Z, ⌘⇧Z | 실행 취소, 다시 실행 |
 | 보기 > 악보(⌥S) | 아래 패널에 선택한 트랙의 악보 표시(읽기 전용, 마디를 클릭하면 재생 위치가 그 마디로 이동) |
 | 파일 > MusicXML 내보내기 | MuseScore, Finale, Sibelius, Dorico에서 열 수 있는 악보 파일로 내보내기 |
+| 파일 > 악보 PDF 내보내기 (고른 트랙) | 선택한 트랙의 악보를 A4 쪽으로 나눠 PDF로 저장합니다. 300 dpi, 첫 쪽에 곡 제목과 파트 이름과 조, 쪽마다 쪽 번호가 들어가고, 한 줄은 쪽 경계에서 나누지 않습니다 |
+| 파일 > 악보 PDF 내보내기 (모든 트랙) | 음표가 있는 트랙마다 새 쪽에서 시작하는 파트보를 PDF 하나로 저장합니다 |
+| 파일 > 악보 인쇄(⌘P) | 선택한 트랙의 악보를 macOS 인쇄 창으로 보냅니다(용지에 맞춰 크기 조절) |
 | 편집 > 실행 취소 기록 | 처음 상태, 지난 편집(오래된 순, 현재 위치 표시), 다시 실행할 수 있는 편집을 보여 줍니다. 항목을 선택하면 그 상태로 바로 이동합니다 |
 | ⌘S, ⌘⇧S | 저장, 다른 이름으로 저장 |
 
@@ -308,6 +311,7 @@ $APP --plugin-test path/to/Synth.vst3   # 창 없이 플러그인 패널을 만�
 $APP --snapshot synth.png --instrument 8 song.json   # 8번 트랙의 내장 신스 패널을 PNG로 저장합니다
 $APP --snapshot export.png --export song.json        # 내보내기 대화상자를 PNG로 저장합니다
 $APP --snapshot new.png --new --track 4              # 다섯 번째 템플릿을 선택한 새 곡 대화상자를 PNG로 저장합니다
+$APP --score-pdf score.pdf --track 0 song.json      # 0번 트랙의 악보를 A4 쪽의 PDF로 저장합니다 (--all-tracks는 트랙마다 새 쪽)
 $APP --new-test [--png new.png]                      # 창 없이 새 곡 대화상자로 곡을 만들어 열고 템플릿과 같은지 확인합니다 (결과는 JSON 한 줄)
 $APP --export-test [path/to/Synth.vst3] [--png done.png]   # 창 없이 대화상자의 내보내기를 실행해 WAV가 엔진 렌더링과 바이트 단위로 같은지 확인하고, 스템, MIDI, Ogg 반복 구간, MP3 마디 구간, 중지, 플러그인 곡도 확인합니다 (결과는 JSON 한 줄)
 $APP --scan-plugins cache.json [폴더]   # VST3와 AU를 검색해 플러그인 캐시를 저장합니다 (앱의 플러그인 찾기가 이 명령을 별도 프로세스로 실행합니다)

@@ -79,6 +79,8 @@ public:
     ScorePanel& scorePanel() noexcept { return score_; }
     // 파일 > MusicXML 내보내기: 고른 트랙(없으면 오디오 트랙을 뺀 모든 트랙)의 악보. 실패하면 error
     bool exportMusicXml (const juce::File& file, bool selectedOnly, juce::String& error);
+    // 파일 > 악보 PDF 내보내기: 고른 트랙, 또는 음표가 있는 모든 트랙 (트랙마다 새 쪽). 실패하면 error. pages 에 쪽 수, measures 에 쪽마다 실린 마디
+    bool exportScorePdf (const juce::File& file, bool allTracks, juce::String& error, int* pages = nullptr, std::vector<std::vector<int>>* measures = nullptr);
     // 스냅숏용: 오디오 장치 없이 재생기를 만들어 seconds 부터 잠깐 돌리고 그 미터 값을 믹서에 둔다
     void primeMeters (double seconds);
 
@@ -372,6 +374,9 @@ private:
         toggleMixer,
         toggleScore,
         exportMusicXmlCommand,
+        exportScorePdfCommand,
+        exportScorePdfAllCommand,
+        printScoreCommand,
         instrumentWindow,
         scanPluginsCommand,
         recordToggle,

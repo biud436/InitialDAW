@@ -20,7 +20,7 @@ line, which answers in JSON. Every route gives the same sound. The interface is 
 
 - **Piano roll and score.** Velocity and controller lanes, a drum view for kits, chords and scales from the right-click
   menu, note tools (quantize with strength and swing, humanize, legato, scale snap, arpeggios and strums, retrograde,
-  inversion, grooves), step input, several tracks edited at once, and a score view with MusicXML export.
+  inversion, grooves), step input, several tracks edited at once, and a score view with MusicXML and PDF export and printing.
 - **Arrangement.** Tracks, folders and VCAs, markers, a section strip that moves, duplicates and deletes sections, range
   copy and paste across tracks, inserting and deleting time, tempo and meter changes, MIDI import, autosave and an undo
   history.

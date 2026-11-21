@@ -96,6 +96,6 @@ Score buildScore (const Composition& composition, const ScoreOptions& options = 
 
 // 조: 곡의 key 와 keyChanges, 없으면 고른 트랙의 음 길이로 추정한 조
 KeySignature scoreKey (const Composition& composition, const std::vector<size_t>& tracks, bool* estimated = nullptr);
-bool isGrandStaffInstrument (const std::string& instrument);   // grand-piano, piano, harp, celeste, synth.piano, synth.ep ...
+bool isGrandStaffInstrument (const std::string& instrument);   // grand-piano, salamander-piano, piano, harp, celeste, synth.piano, synth.ep ...
 
 } // namespace mr

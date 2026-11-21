@@ -9,6 +9,9 @@
 //     --companions 1,+3 은 피아노 롤에 1번 트랙을 흐리게 함께 보이고 3번 트랙을 함께 고치는 트랙으로 둔다.
 //     --video-window 는 곡의 영상에서 --at 의 곡 위치에 보이는 프레임(영상 창)만, --export-video 는 영상 형식을 고른 내보내기 대화상자만 그린다.
 //     오디오 트랙은 녹음의 음 덩어리를 재서 그린다. --audio-note 0:2 는 0번 클립의 셋째 음을 고른다 (손잡이가 보인다).
+//   InitialDAW --score-pdf 악보.pdf [--track N | --all-tracks] 프로젝트.json
+//     창 없이 악보를 A4 쪽으로 나눠 PDF 로 쓴다 (파일 > 악보 PDF 내보내기와 같은 길). --all-tracks 는 음표가 있는 트랙마다 새 쪽에서 시작한다.
+//     표준 출력에 쪽 수와 실린 마디 수를 적는다.
 //   InitialDAW --edit-test 프로젝트.json
 //     창 없이 프로젝트의 편집 경로를 시험한다: 임시 사본에 음 옮기기, 곡선, 템포를 편집하고, 되돌리고, 다시 실행하고,
 //     저장한 파일을 다시 읽어 맞는지 본다. 피아노 롤과 믹서에는 마우스를 흉내 내 보낸다. 녹음기의 결과 넣기와 눈금자의 반복 구간 끌기도 본다.
@@ -135,6 +138,12 @@ public:
         if (args.contains ("--export-test"))
         {
             exportTest_ = std::make_unique<ExportTest> (args);
+            return;
+        }
+        if (args.contains ("--score-pdf"))
+        {
+            setApplicationReturnValue (runScorePdf (args));
+            quit();
             return;
         }
         if (args.contains ("--snapshot"))
@@ -2686,6 +2695,41 @@ private:
                 parts += p != nullptr ? 1 : 0;
         expect (xml != nullptr && xml->getTagName() == "score-partwise" && parts == 2, "both tracks are parts");
         expect (view.exportMusicXml (out, true, error) && juce::parseXML (out) != nullptr, "the selected track alone");
+        // 악보 PDF: 줄을 쪽 경계에서 자르지 않고 모든 마디가 차례로 한 번씩 실린다. 모든 트랙은 트랙마다 새 쪽에서
+        view.selectTrack (0);
+        const auto pdf = dir.getChildFile ("score.pdf");
+        int pages = 0;
+        std::vector<std::vector<int>> measures;
+        const bool wrote = view.exportScorePdf (pdf, false, error, &pages, &measures);
+        expect (wrote && pages >= 1 && pdf.loadFileAsString().startsWith ("%PDF-1.4"), (juce::String ("the selected track's score is written as a PDF: ") + error).toRawUTF8());
+        std::vector<int> placed, wanted (panel.score().parts.empty() ? 0 : panel.score().parts[0].measures.size());
+        for (const auto& m : measures)
+            placed.insert (placed.end(), m.begin(), m.end());
+        for (size_t k = 0; k < wanted.size(); ++k)
+            wanted[k] = (int) k;
+        expect (! wanted.empty() && placed == wanted, "every bar is on a page once, in order");
+        expect (panel.score().parts.size() == 1 && panel.score().parts[0].name == "Lead" && panel.systemCount() >= 2,
+                "printing leaves the panel's score and layout as they were");
+        const auto first = view.scorePanel().printTrack (0, {});
+        bool white = ! first.empty();
+        if (white)
+        {
+            const auto& im = first.front().image;
+            white = im.getWidth() == juce::roundToInt (595.28f * 300.0f / 72.0f) && im.getPixelAt (5, 5) == juce::Colours::white
+                    && im.getPixelAt (im.getWidth() - 5, im.getHeight() - 5) == juce::Colours::white;
+            int ink = 0;
+            for (int y = 0; y < im.getHeight(); y += 7)
+                for (int x = 0; x < im.getWidth(); x += 7)
+                    ink += im.getPixelAt (x, y).getBrightness() < 0.5f ? 1 : 0;
+            white = white && ink > 200;
+        }
+        expect (white, "an A4 page at 300 dpi: white paper with ink on it");
+        measures.clear();
+        const bool allWrote = view.exportScorePdf (pdf, true, error, &pages, &measures);
+        int starts = 0;
+        for (const auto& m : measures)
+            starts += ! m.empty() && m.front() == 0 ? 1 : 0;
+        expect (allWrote && pages >= 2 && starts == 2, "all tracks: each track starts on a new page");
     }
 
     // 스텝 입력: 화음은 모두 뗄 때 한 칸에, 쉼표, 마지막 칸 지우기, MIDI 입력, 끄면 넣지 않는다
@@ -3833,6 +3877,52 @@ private:
         o->setProperty ("templates", (int) templates.size());
         std::printf ("%s\n", juce::JSON::toString (juce::var (o), true).toRawUTF8());
         return failures.isEmpty() ? 0 : 1;
+    }
+
+    int runScorePdf (const juce::StringArray& args)
+    {
+        juce::File out, project;
+        int track = 0;
+        bool all = false;
+        for (int i = 0; i < args.size(); ++i)
+        {
+            const auto& a = args[i];
+            auto next = [&] { return i + 1 < args.size() ? args[++i] : juce::String(); };
+            if (a == "--score-pdf")
+                out = juce::File::getCurrentWorkingDirectory().getChildFile (next());
+            else if (a == "--track")
+                track = next().getIntValue();
+            else if (a == "--all-tracks")
+                all = true;
+            else if (a.endsWithIgnoreCase (".json"))
+                project = juce::File::getCurrentWorkingDirectory().getChildFile (a);
+        }
+        if (out == juce::File() || project == juce::File())
+        {
+            std::fprintf (stderr, "usage: InitialDAW --score-pdf out.pdf [--track N | --all-tracks] project.json\n");
+            return 2;
+        }
+        MainComponent view (false);
+        view.setSize (1280, 800);
+        if (! view.openProject (project))
+        {
+            std::fprintf (stderr, "cannot open %s\n", project.getFullPathName().toRawUTF8());
+            return 1;
+        }
+        view.selectTrack (track);
+        juce::String error;
+        int pages = 0;
+        std::vector<std::vector<int>> measures;
+        if (! view.exportScorePdf (out, all, error, &pages, &measures))
+        {
+            std::fprintf (stderr, "%s\n", error.toRawUTF8());
+            return 1;
+        }
+        size_t bars = 0;
+        for (const auto& m : measures)
+            bars += m.size();
+        std::printf ("score pdf: %s, pages %d, measures %zu\n", out.getFullPathName().toRawUTF8(), pages, bars);
+        return 0;
     }
 
     int runSnapshot (const juce::StringArray& args)

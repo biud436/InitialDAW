@@ -38,6 +38,21 @@ public:
     std::optional<int> measureAt (juce::Point<float> p) const;   // 그 자리의 마디 번호 (0부터)
     juce::Point<float> measurePoint (int measure) const;          // 마디의 가운데 (시험)
 
+    // 인쇄와 PDF: 쪽 너비로 다시 배치하고 줄이 쪽 경계에서 잘리지 않게 나눠 그린다 (화면의 배치와 고른 트랙은 그대로 둔다)
+    struct PrintSetup
+    {
+        float pageWidth = 595.28f, pageHeight = 841.89f;   // 포인트 (A4)
+        float margin = 42.0f, staffSpace = 6.0f;
+        float dpi = 300.0f;
+        juce::String title, subtitle;                      // 첫 쪽의 머리 (비면 파트 이름과 조)
+    };
+    struct PrintedPage
+    {
+        juce::Image image;
+        std::vector<int> measures;                         // 이 쪽에 실린 마디 (0부터)
+    };
+    std::vector<PrintedPage> printTrack (int track, PrintSetup setup);
+
     void paint (juce::Graphics& g) override;
     void resized() override;
     void mouseDown (const juce::MouseEvent& e) override;
@@ -64,6 +79,9 @@ private:
     void scrollBarMoved (juce::ScrollBar* bar, double newRangeStart) override;
 
     void layout();
+    void layoutFor (float width);                              // width: 마디를 늘어놓는 너비 (왼쪽 3칸과 오른쪽 2칸의 여백 포함)
+    mr::Score buildScoreFor (int track) const;
+    std::vector<PrintedPage> printPages (const PrintSetup& setup);
     float staffTop (const SystemLayout& s, int staff) const;   // 보표의 맨 윗줄
     float systemHeight() const;
     float positionY (float staffTop, int position) const;      // 아래 줄에서 반 칸 단위의 자리
@@ -85,6 +103,7 @@ private:
     juce::ScrollBar vertical_ { true };
     juce::Font music_;
     int playheadSystem_ = -1;
+    bool printing_ = false;               // 쪽에 그리는 동안 (흰 종이, 재생 위치 없음, 소수점 자리의 기호)
 };
 
 } // namespace daw

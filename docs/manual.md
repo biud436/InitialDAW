@@ -81,6 +81,9 @@ the track's transposition and the note's articulation; dragging a note plays its
 | ⌘Z, ⌘⇧Z | undo, redo |
 | View > Score (⌥S) | the selected track as notation in the lower pane (read only; click a bar to move the playhead there) |
 | File > Export MusicXML | the song's score for MuseScore, Finale, Sibelius or Dorico |
+| File > Export Score PDF (selected track) | the selected track's score on A4 pages as a PDF: 300 dpi, the song title with the part name and key on the first page, page numbers, and a line of music is never split across pages |
+| File > Export Score PDF (all tracks) | one PDF of parts, each track with notes starting on a new page |
+| File > Print Score (⌘P) | sends the selected track's score to the macOS print dialog (scaled to the paper) |
 | Edit > Undo history | the start, the past edits (oldest first, the current one ticked) and the edits you can redo; pick one to go straight there |
 | ⌘S, ⌘⇧S | save, save as |
 
@@ -354,6 +357,7 @@ $APP --plugin-test path/to/Synth.vst3   # open a plugin's panel without a window
 $APP --snapshot synth.png --instrument 8 song.json   # draw the built-in synth panel of track 8 to a PNG
 $APP --snapshot export.png --export song.json        # draw the export dialog to a PNG
 $APP --snapshot new.png --new --track 4              # draw the new song dialog with the fifth template selected
+$APP --score-pdf score.pdf --track 0 song.json      # track 0's score as a PDF of A4 pages (--all-tracks: each track on new pages)
 $APP --new-test [--png new.png]                      # make a song through the new song dialog without a window, open it, check it against its template (one line of JSON)
 $APP --export-test [path/to/Synth.vst3] [--png done.png]   # press Export in the dialog without a window: the WAV must equal the engine's render byte for byte; also stems, MIDI, an Ogg loop, an MP3 range, stopping, and a plugin song (one line of JSON)
 $APP --scan-plugins cache.json [folder] # find VST3 and AU plugins and write the plugin cache (the app runs this for Find plugins)

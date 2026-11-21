@@ -40,6 +40,8 @@ target_sources(InitialDAW PRIVATE
 
 if(APPLE)
   target_sources(InitialDAW PRIVATE src/NativeKeys.mm)   # 자판 연주의 자판을 JUCE 보다 먼저 받는다
+  target_sources(InitialDAW PRIVATE src/NativePrint.mm)  # 악보 인쇄 (PDFKit 의 인쇄 창)
+  target_link_libraries(InitialDAW PRIVATE "-framework PDFKit")
 endif()
 
 # 악보 보기의 SMuFL 글꼴 (./build.sh 가 external/bravura 에 받는다). 없으면 악보 보기가 글꼴이 없다고 알린다
@@ -69,6 +71,11 @@ add_test(NAME app_mixer_snapshot
 add_test(NAME app_score_snapshot
          COMMAND InitialDAW --snapshot "${CMAKE_BINARY_DIR}/app-score-snapshot.png" --size 1280x800 --track 0 --score
                  "${CMAKE_SOURCE_DIR}/engine/examples/orchestral_demo.json")
+
+# 악보 PDF: 모든 트랙을 트랙마다 새 쪽에서 시작하는 A4 쪽으로
+add_test(NAME app_score_pdf
+         COMMAND InitialDAW --score-pdf "${CMAKE_BINARY_DIR}/app-score.pdf" --all-tracks "${CMAKE_SOURCE_DIR}/engine/examples/orchestral_demo.json")
+set_tests_properties(app_score_pdf PROPERTIES PASS_REGULAR_EXPRESSION "score pdf: .*, pages [1-9][0-9]*, measures [1-9]")
 
 # 신스 패널 화면 시험: 내장 신스 트랙의 패널을 창 없이 그린다
 add_test(NAME app_synth_snapshot

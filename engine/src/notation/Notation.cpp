@@ -91,7 +91,7 @@ DrumPlace drumPlace (int pitch)
 
 bool isGrandStaffInstrument (const std::string& name)
 {
-    static const std::set<std::string> keys { "grand-piano", "piano", "harp", "celeste", "synth.piano", "synth.ep", "synth.poly-keys", "dexed" };
+    static const std::set<std::string> keys { "grand-piano", "salamander-piano", "piano", "harp", "celeste", "synth.piano", "synth.ep", "synth.poly-keys", "dexed" };
     return keys.count (name) > 0;
 }
 
