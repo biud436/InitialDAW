@@ -244,6 +244,7 @@ struct TrackSpec
     std::string output;      // 페이더 뒤의 소리를 보낼 버스 (비면 마스터): 서브그룹
     std::string vca;      // 속한 VCA 의 이름 (비면 없음)
     std::string folder;      // 트랙 보기의 폴더 이름 (비면 폴더 밖). 소리에는 쓰지 않는다
+    std::string scorePart;   // 악보에서 같은 이름의 트랙을 한 파트로 묶는다 (트랙마다 보표 하나, 피아노의 두 손). 소리에는 쓰지 않는다
     std::string colour;      // 화면의 트랙 색 "#rrggbb" (비면 앱이 순서로 정한다). 소리에는 쓰지 않는다
     PluginSettings plugin;   // 악기가 플러그인이면 레지스트리 설정 뒤에 적용한다
     std::map<std::string, double> synth;   // 악기가 내장 신스면 프리셋 값을 덮는다 (레지스트리의 parameters 뒤에)

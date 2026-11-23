@@ -174,7 +174,7 @@ const std::vector<std::string> rootKeys { "$schema", "title", "comment", "descri
                                           "performance", "instruments", "tracks", "buses", "vcas", "master", "render", "markers", "meterChanges", "key", "keyChanges",
                                           "video" };
 const std::vector<std::string> trackKeys { "name", "instrument", "articulation", "transpose", "notes", "automation",
-                                           "performance", "mixer", "effects", "sends", "plugin", "synth", "color", "clips", "output", "folder", "vca", "comment" };
+                                           "performance", "mixer", "effects", "sends", "plugin", "synth", "color", "clips", "output", "folder", "scorePart", "vca", "comment" };
 const std::vector<std::string> noteKeys { "pitch", "startBeat", "durationBeat", "velocity", "channel", "articulation", "humanize", "lyric",
                                           "comment" };
 const std::vector<std::string> performanceKeys { "timingHumanizeMs", "velocityHumanize", "noteLengthHumanize", "legatoOverlapMs",
@@ -396,6 +396,7 @@ void readTrack (const juce::var& v, const std::string& path, Composition& c, Dia
     t.transpose = (int) r.integer ("transpose", false, -48, 48).value_or (0);
     t.output = r.string ("output", false).value_or ("");
     t.folder = r.string ("folder", false).value_or ("");
+    t.scorePart = r.string ("scorePart", false).value_or ("");
     t.vca = r.string ("vca", false).value_or ("");
     if (auto colour = r.string ("color", false))
     {

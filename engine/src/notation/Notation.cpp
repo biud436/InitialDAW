@@ -138,6 +138,21 @@ Score buildScore (const Composition& c, const ScoreOptions& options)
             if (c.tracks[i].instrument != "audio" && ! c.tracks[i].notes.empty())
                 chosen.push_back (i);
     auto isPercussion = [&] (const TrackSpec& t) { return options.percussion ? options.percussion (t) : false; };
+    // 한 파트로 묶인 트랙들 (scorePart 가 같은 음 있는 트랙, 곡의 순서). 묶이지 않으면 그 트랙 하나
+    auto groupOf = [&] (size_t t)
+    {
+        std::vector<size_t> group;
+        if (t >= c.tracks.size())
+            return group;
+        const auto& name = c.tracks[t].scorePart;
+        if (! name.empty() && ! isPercussion (c.tracks[t]))
+            for (size_t i = 0; i < c.tracks.size(); ++i)
+                if (c.tracks[i].scorePart == name && c.tracks[i].instrument != "audio" && ! isPercussion (c.tracks[i]) && ! c.tracks[i].notes.empty())
+                    group.push_back (i);
+        if (group.size() < 2)
+            group = { t };
+        return group;
+    };
     // 조는 곡의 것이다: 고른 트랙이 아니라 타악기와 오디오를 뺀 모든 트랙의 음으로
     std::vector<size_t> pitched;
     for (size_t t = 0; t < c.tracks.size(); ++t)
@@ -150,8 +165,8 @@ Score buildScore (const Composition& c, const ScoreOptions& options)
     double end = options.endBeat.value_or (0.0);
     if (! options.endBeat)
         for (const size_t t : chosen)
-            if (t < c.tracks.size())
-                for (const auto& n : c.tracks[t].notes)
+            for (const size_t g : groupOf (t))
+                for (const auto& n : c.tracks[g].notes)
                     end = std::max (end, n.startBeat + n.durationBeat);
     std::vector<MeasureFrame> frames;
     for (int bar = 0;; ++bar)
@@ -196,43 +211,66 @@ Score buildScore (const Composition& c, const ScoreOptions& options)
     };
 
     const TempoMap tempoMap (c.tempo);
+    std::set<size_t> emitted;
     for (const size_t t : chosen)
     {
         if (t >= c.tracks.size())
             continue;
         const auto& track = c.tracks[t];
+        const auto group = groupOf (t);
+        if (group.size() > 1 && ! emitted.insert (group.front()).second)
+            continue;
         NotatedPart part;
-        part.name = track.name;
-        part.instrument = track.instrument;
-        part.track = t;
+        part.name = group.size() > 1 ? track.scorePart : track.name;
+        part.instrument = c.tracks[group.front()].instrument;
+        part.track = group.front();
         part.percussion = isPercussion (track);
-        // 큰보표: 건반 악기이고 음이 가운데 C 의 위아래에 고루 있을 때 (선율만 있는 피아노 트랙은 보표 하나)
-        bool grand = ! part.percussion && (options.grandStaff ? options.grandStaff (track) : isGrandStaffInstrument (track.instrument));
-        if (grand && ! options.grandStaff)
-        {
-            size_t low = 0;
-            for (const auto& n : track.notes)
-                low += n.pitch + track.transpose < 60 ? 1 : 0;
-            const size_t total = track.notes.size();
-            grand = total > 0 && low * 10 >= total && (total - low) * 10 >= total;
-        }
-        // 보표와 자리표
-        std::vector<std::vector<const Note*>> staffNotes (grand ? 2 : 1);
-        for (const auto& n : track.notes)
-            staffNotes[grand && n.pitch + track.transpose < 60 ? 1 : 0].push_back (&n);
-        if (part.percussion)
-            part.clefs = { Clef::percussion };
-        else if (grand)
-            part.clefs = { Clef::treble, Clef::bass };
-        else
+        auto clefFor = [] (const std::vector<const Note*>& notes, int transpose)
         {
             double sum = 0.0, weight = 0.0;
-            for (const auto& n : track.notes)
+            for (const auto* n : notes)
             {
-                sum += (n.pitch + track.transpose) * n.durationBeat;
-                weight += n.durationBeat;
+                sum += (n->pitch + transpose) * n->durationBeat;
+                weight += n->durationBeat;
             }
-            part.clefs = { weight > 0.0 && sum / weight < 57.0 ? Clef::bass : Clef::treble };
+            return weight > 0.0 && sum / weight < 57.0 ? Clef::bass : Clef::treble;
+        };
+        std::vector<std::vector<const Note*>> staffNotes;
+        std::vector<int> staffTranspose;
+        if (group.size() > 1)
+        {
+            // 묶인 트랙: 트랙마다 보표 하나 (손을 가르는 것은 음높이가 아니라 트랙이다)
+            for (const size_t g : group)
+            {
+                staffNotes.emplace_back();
+                for (const auto& n : c.tracks[g].notes)
+                    staffNotes.back().push_back (&n);
+                staffTranspose.push_back (c.tracks[g].transpose);
+                part.clefs.push_back (clefFor (staffNotes.back(), c.tracks[g].transpose));
+            }
+        }
+        else
+        {
+            // 큰보표: 건반 악기이고 음이 가운데 C 의 위아래에 고루 있을 때 (선율만 있는 피아노 트랙은 보표 하나)
+            bool grand = ! part.percussion && (options.grandStaff ? options.grandStaff (track) : isGrandStaffInstrument (track.instrument));
+            if (grand && ! options.grandStaff)
+            {
+                size_t low = 0;
+                for (const auto& n : track.notes)
+                    low += n.pitch + track.transpose < 60 ? 1 : 0;
+                const size_t total = track.notes.size();
+                grand = total > 0 && low * 10 >= total && (total - low) * 10 >= total;
+            }
+            staffNotes.resize (grand ? 2 : 1);
+            staffTranspose.assign (staffNotes.size(), track.transpose);
+            for (const auto& n : track.notes)
+                staffNotes[grand && n.pitch + track.transpose < 60 ? 1 : 0].push_back (&n);
+            if (part.percussion)
+                part.clefs = { Clef::percussion };
+            else if (grand)
+                part.clefs = { Clef::treble, Clef::bass };
+            else
+                part.clefs = { clefFor (staffNotes[0], track.transpose) };
         }
 
         part.measures.resize (frames.size());
@@ -378,7 +416,7 @@ Score buildScore (const Composition& c, const ScoreOptions& options)
             for (const auto* n : staffNotes[staff])
             {
                 QNote q;
-                q.pitch = n->pitch + track.transpose;
+                q.pitch = n->pitch + staffTranspose[staff];
                 q.start = std::min (quantize (begins[n]), scoreEnd - 3);
                 q.end = std::min (quantize (ends[n]), scoreEnd);
                 if (q.end <= q.start)

@@ -381,6 +381,7 @@
         },
         "output": { "type": "string", "description": "the bus that receives the track after its fader instead of the master (a subgroup)" },
         "folder": { "type": "string", "description": "the track view folder; never changes the sound" },
+        "scorePart": { "type": "string", "description": "tracks with the same scorePart are notated as one part with one staff per track, in track order (the two hands of a piano); never changes the sound" },
         "vca": { "type": "string", "description": "the VCA whose gain and mute also act on this track (a name in $.vcas)" },
         "color": {
           "type": "string",

@@ -3703,8 +3703,10 @@ bool MainComponent::exportScorePdf (const juce::File& file, bool allTracks, juce
     std::vector<int> tracks;
     if (allTracks)
     {
+        // scorePart 로 묶인 트랙은 한 파트라서 묶음의 첫 트랙만 넣는다
+        std::set<std::string> groups;
         for (size_t t = 0; t < c.tracks.size(); ++t)
-            if (c.tracks[t].instrument != "audio" && ! c.tracks[t].notes.empty())
+            if (c.tracks[t].instrument != "audio" && ! c.tracks[t].notes.empty() && (c.tracks[t].scorePart.empty() || groups.insert (c.tracks[t].scorePart).second))
                 tracks.push_back ((int) t);
     }
     else if (timeline_.selectedTrack() >= 0)

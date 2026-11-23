@@ -145,6 +145,30 @@ TEST (score_meter_and_key_changes_and_grand_staff)
     CHECK (pitches (buildScore (c2).parts[0].measures[0].staves[0][0]) == "Ab4");
 }
 
+TEST (score_part_groups_tracks_as_staves)
+{
+    // scorePart 가 같은 두 트랙은 한 파트의 두 보표: 가운데 C 를 넘는 음도 제 트랙의 보표에 남는다
+    auto r = mrtest::parse (R"({ "tempo": 120, "timeSignature": [4, 4], "tracks": [
+        { "name": "Right", "instrument": "synth.piano", "scorePart": "Piano", "notes": [ )" + n (72, 0, 2) + ", " + n (55, 2, 2) + R"( ] },
+        { "name": "Solo", "instrument": "synth.pluck", "notes": [ )" + n (67, 0, 4) + R"( ] },
+        { "name": "Left", "instrument": "synth.piano", "scorePart": "Piano", "notes": [ )" + n (36, 0, 2) + ", " + n (64, 2, 2) + R"( ] } ] })");
+    REQUIRE (r.composition.has_value());
+    const auto score = buildScore (*r.composition);
+    REQUIRE (score.parts.size() == 2);
+    const auto& piano = score.parts[0];
+    CHECK (piano.name == "Piano" && piano.track == 0 && score.parts[1].name == "Solo");
+    REQUIRE (piano.clefs.size() == 2);
+    CHECK (piano.clefs[0] == Clef::treble && piano.clefs[1] == Clef::bass);
+    CHECK (pitches (piano.measures[0].staves[0][0]) == "C5" && pitches (piano.measures[0].staves[0][1]) == "G3");
+    CHECK (pitches (piano.measures[0].staves[1][0]) == "C2" && pitches (piano.measures[0].staves[1][1]) == "E4");
+    // 묶인 트랙 가운데 하나만 골라도 묶음 전체가 한 파트
+    ScoreOptions one;
+    one.tracks = { 2 };
+    const auto picked = buildScore (*r.composition, one);
+    CHECK (picked.parts.size() == 1 && picked.parts[0].clefs.size() == 2 && picked.parts[0].name == "Piano");
+    CHECK (musicXml (score).find ("<staves>2</staves>") != std::string::npos);
+}
+
 TEST (musicxml_document)
 {
     const auto c = song (n (60, 0, 1.0 / 3) + ", " + n (62, 1.0 / 3, 1.0 / 3) + ", " + n (64, 2.0 / 3, 1.0 / 3) + ", " + n (66, 1, 2) + ", " + n (67, 3, 2),
