@@ -184,6 +184,7 @@ build/engine/music-render video-info promo.mp4; build/engine/music-render video-
 - 피아노 롤의 세로축은 줄 지도다 (`virtualOf`, `pitchOfVirtual`): 피아노 보기는 음높이, 드럼 보기는 이름 있는 건반과 쓴 건반의 줄. 세로 자리를 다루는 새 코드는
   `pitchY`, `pitchAt`, `movedPitch` 를 쓰고 음높이에 직접 더하지 않는다. 스텝 입력은 `MainComponent::stepNote` (자판과 MIDI 입력이 부른다).
 - 트랙의 `scorePart` 가 같은 트랙들은 악보의 한 파트이고 트랙마다 보표 하나다 (피아노의 두 손). 연주 가능성 검사 (`analysis/Playability`) 도 트랙 하나를 손 하나로 본다. 둘 다 소리에 쓰지 않는다.
+- 악보의 연주 기호 (앞꾸밈음, 굴리는 화음, 스타카토, 페달, 셈여림) 는 `buildScore` 가 음표의 시작과 길이, 벨로시티, CC64 곡선에서 읽는다 (`NotatedEvent::grace`, `arpeggio`, `staccato`, `NotatedMeasure::directions`). 곡에 따로 적지 않는다.
 - 조는 곡의 `key` 와 `keyChanges` (마디 줄)이고 소리에 쓰지 않는다 (악보의 조표와 철자, MIDI 조표). 없으면 `scoreKey` 가 추정한다. 악보 모델(`buildScore`)은
   MusicXML 과 앱의 악보 보기가 함께 쓴다. 모델을 고치면 모든 곡을 내보내 마디마다 보표의 길이 합이 마디 길이와 같은지 본다.
 - 박자는 처음 박자 `timeSignature` 와 곡 중간의 `meterChanges` (`[{ "beat", "timeSignature" }]`, 앞 박자의 마디 줄)다. 마디를 세는 곳은 모두 `Composition::meters()`

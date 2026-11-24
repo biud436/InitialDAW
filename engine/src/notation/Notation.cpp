@@ -23,6 +23,8 @@ struct QNote
     int start = 0, end = 0;   // divisions (곡 처음부터)
     int velocity = 0;
     std::string lyric;
+    std::vector<int> grace;   // 앞꾸밈음의 음높이
+    bool rolled = false, staccato = false;
 };
 
 struct MeasureFrame
@@ -237,6 +239,7 @@ Score buildScore (const Composition& c, const ScoreOptions& options)
         };
         std::vector<std::vector<const Note*>> staffNotes;
         std::vector<int> staffTranspose;
+        std::vector<size_t> staffTrack;
         if (group.size() > 1)
         {
             // 묶인 트랙: 트랙마다 보표 하나 (손을 가르는 것은 음높이가 아니라 트랙이다)
@@ -246,6 +249,7 @@ Score buildScore (const Composition& c, const ScoreOptions& options)
                 for (const auto& n : c.tracks[g].notes)
                     staffNotes.back().push_back (&n);
                 staffTranspose.push_back (c.tracks[g].transpose);
+                staffTrack.push_back (g);
                 part.clefs.push_back (clefFor (staffNotes.back(), c.tracks[g].transpose));
             }
         }
@@ -263,6 +267,7 @@ Score buildScore (const Composition& c, const ScoreOptions& options)
             }
             staffNotes.resize (grand ? 2 : 1);
             staffTranspose.assign (staffNotes.size(), track.transpose);
+            staffTrack.assign (staffNotes.size(), t);
             for (const auto& n : track.notes)
                 staffNotes[grand && n.pitch + track.transpose < 60 ? 1 : 0].push_back (&n);
             if (part.percussion)
@@ -272,6 +277,19 @@ Score buildScore (const Composition& c, const ScoreOptions& options)
             else
                 part.clefs = { clefFor (staffNotes[0], track.transpose) };
         }
+
+        constexpr double pedalThreshold = 40.0;   // 반 페달부터 음을 붙든다
+        auto pedalLane = [&] (size_t staff) -> const AutomationLane*
+        {
+            const auto& lanes = c.tracks[staffTrack[staff]].automation;
+            const auto it = lanes.find (64);
+            return it != lanes.end() && ! it->second.empty() ? &it->second : nullptr;
+        };
+        auto pedalDown = [&] (size_t staff, double beat)
+        {
+            const auto* lane = pedalLane (staff);
+            return lane != nullptr && lane->valueAt (beat) >= pedalThreshold;
+        };
 
         part.measures.resize (frames.size());
         for (size_t m = 0; m < frames.size(); ++m)
@@ -311,6 +329,31 @@ Score buildScore (const Composition& c, const ScoreOptions& options)
             // 펼쳐 친 화음(스트럼): 앞 음과 0.05 박 안에 이어 시작한 음은 묶음 전체가 0.2 박 안이면 묶음의 첫 시작으로 읽는다
             std::vector<const Note*> byStart (staffNotes[staff].begin(), staffNotes[staff].end());
             std::stable_sort (byStart.begin(), byStart.end(), [] (const Note* x, const Note* y) { return x->startBeat < y->startBeat; });
+            // 앞꾸밈음: 본 음의 0.15 박 안에 앞선 아주 짧은 음은 음가를 갖지 않고 본 음에 붙는다
+            std::map<const Note*, std::vector<int>> graces;
+            {
+                std::vector<const Note*> kept;
+                std::vector<const Note*> pending;
+                for (size_t i = 0; i < byStart.size(); ++i)
+                {
+                    const auto* n = byStart[i];
+                    const Note* main = nullptr;
+                    if (n->durationBeat <= 0.12)
+                        for (size_t j = i + 1; j < byStart.size() && byStart[j]->startBeat - n->startBeat <= 0.15; ++j)
+                            if (byStart[j]->durationBeat > 0.12 && byStart[j]->startBeat - n->startBeat > 0.03)
+                            {
+                                main = byStart[j];
+                                break;
+                            }
+                    if (main != nullptr)
+                        graces[main].push_back (n->pitch + staffTranspose[staff]);
+                    else
+                        kept.push_back (n);
+                }
+                byStart = kept;
+                staffNotes[staff] = kept;
+            }
+            std::set<const Note*> rolled, staccato;
             std::map<const Note*, double> begins, clusterEnds;
             {
                 double head = -1.0, previous = -1.0;
@@ -318,6 +361,8 @@ Score buildScore (const Composition& c, const ScoreOptions& options)
                 auto close = [&]
                 {
                     // 묶음의 거의 같은 끝(0.06 박 안)은 가장 늦은 끝으로
+                    if (cluster.size() >= 2 && cluster.back()->startBeat - cluster.front()->startBeat >= 0.04)
+                        rolled.insert (cluster.begin(), cluster.end());
                     std::vector<std::pair<double, const Note*>> ends;
                     for (const auto* n : cluster)
                         ends.push_back ({ n->startBeat + n->durationBeat, n });
@@ -358,9 +403,15 @@ Score buildScore (const Composition& c, const ScoreOptions& options)
                 const auto next = std::upper_bound (starts.begin(), starts.end(), begins[n] + 1.0e-6);
                 if (next != starts.end() && end < *next)
                 {
-                    const double gap = *next - end;
-                    if (gap < 0.25 - 1.0e-9 && gap < 0.3 * (*next - begins[n]))
+                    const double gap = *next - end, span = *next - begins[n];
+                    if (gap < 0.25 - 1.0e-9 && gap < 0.3 * span)
                         end = *next;
+                    else if (! part.percussion && span <= 1.0 + 1.0e-9 && end - begins[n] <= 0.65 * span && ! pedalDown (staff, begins[n] + 0.02))
+                    {
+                        // 스타카토: 페달 없이 다음 음까지의 절반 남짓만 울린 음은 온 음가에 점을 찍는다
+                        end = *next;
+                        staccato.insert (n);
+                    }
                 }
                 ends[n] = end;
             }
@@ -430,6 +481,10 @@ Score buildScore (const Composition& c, const ScoreOptions& options)
                 }
                 q.velocity = n->velocity;
                 q.lyric = n->lyric;
+                if (const auto g = graces.find (n); g != graces.end())
+                    q.grace = g->second;
+                q.rolled = rolled.count (n) > 0;
+                q.staccato = staccato.count (n) > 0;
                 notes.push_back (q);
             }
 
@@ -536,6 +591,15 @@ Score buildScore (const Composition& c, const ScoreOptions& options)
                             np.spelling = spellPitch (pitch, part.measures[m].key);
                         if (p == 0 && attack)
                         {
+                            e.arpeggio = e.arpeggio || q->rolled;
+                            e.staccato = e.staccato || (q->staccato && pieces.size() == 1);
+                            for (const int g : q->grace)
+                            {
+                                NotatedPitch gp;
+                                gp.pitch = g;
+                                gp.spelling = spellPitch (g, part.measures[m].key);
+                                e.grace.push_back (gp);
+                            }
                             e.velocity = std::max (e.velocity, q->velocity);
                             if (e.lyric.empty() && ! q->lyric.empty())
                                 e.lyric = q->lyric;
@@ -588,6 +652,97 @@ Score buildScore (const Composition& c, const ScoreOptions& options)
                         state[key] = p.spelling.alter;
                     }
             }
+        }
+        if (! part.percussion)
+        {
+            auto direction = [&] (double beat, const char* kind, const std::string& text)
+            {
+                const size_t m = measureOfBeat (beat);
+                Direction d;
+                d.offset = std::clamp ((int) std::llround ((beat - frames[m].startBeat) * 4.0) * (Q / 4), 0, frames[m].length - 1);
+                d.kind = kind;
+                d.text = text;
+                part.measures[m].directions.push_back (d);
+            };
+            // 페달: 묶인 트랙 가운데 CC64 곡선이 있는 첫 트랙. 떼고 0.3 박 안에 다시 밟으면 갈아 밟기
+            for (size_t staff = 0; staff < staffNotes.size(); ++staff)
+                if (const auto* lane = pedalLane (staff))
+                {
+                    const double last = frames.back().startBeat + frames.back().length / (double) Q;
+                    bool down = false;
+                    double liftedAt = -1.0;
+                    for (const auto& point : lane->points)
+                    {
+                        if (point.beat >= last - 1.0e-9)
+                            break;
+                        const bool now = point.value >= pedalThreshold;
+                        if (now == down)
+                            continue;
+                        if (now)
+                        {
+                            if (liftedAt >= 0.0 && point.beat - liftedAt <= 0.3)
+                                direction (point.beat, "pedal-change", {});
+                            else
+                            {
+                                if (liftedAt >= 0.0)
+                                    direction (liftedAt, "pedal-stop", {});
+                                direction (point.beat, "pedal-start", {});
+                            }
+                            liftedAt = -1.0;
+                        }
+                        else
+                            liftedAt = point.beat;
+                        down = now;
+                    }
+                    if (liftedAt >= 0.0)
+                        direction (liftedAt, "pedal-stop", {});
+                    else if (down)
+                        direction (last - 0.25, "pedal-stop", {});
+                    break;
+                }
+            // 셈여림: 마디마다 친 음의 세기 평균 (맨 위 보표의 음이 있으면 그것으로). 한 마디만 튄 것은 적지 않는다
+            auto levelOf = [] (double v) { return v < 36 ? 0 : v < 50 ? 1 : v < 64 ? 2 : v < 80 ? 3 : v < 96 ? 4 : 5; };
+            static const char* const names[] = { "pp", "p", "mp", "mf", "f", "ff" };
+            std::vector<int> level (part.measures.size(), -1);
+            std::vector<int> firstOffset (part.measures.size(), 0);
+            for (size_t m = 0; m < part.measures.size(); ++m)
+                for (const auto& events : part.measures[m].staves)
+                {
+                    double sum = 0.0;
+                    int count = 0, first = -1;
+                    for (const auto& e : events)
+                        if (e.velocity > 0)
+                        {
+                            sum += e.velocity;
+                            ++count;
+                            first = first < 0 ? e.start : first;
+                        }
+                    if (count > 0)
+                    {
+                        level[m] = levelOf (sum / count);
+                        firstOffset[m] = first;
+                        break;
+                    }
+                }
+            int current = -1;
+            for (size_t m = 0; m < level.size(); ++m)
+            {
+                if (level[m] < 0 || level[m] == current)
+                    continue;
+                size_t next = m + 1;
+                while (next < level.size() && level[next] < 0)
+                    ++next;
+                if (current >= 0 && next < level.size() && level[next] == current)
+                    continue;
+                current = level[m];
+                Direction d;
+                d.offset = firstOffset[m];
+                d.kind = "dynamic";
+                d.text = names[current];
+                part.measures[m].directions.push_back (d);
+            }
+            for (auto& measure : part.measures)
+                std::stable_sort (measure.directions.begin(), measure.directions.end(), [] (const Direction& x, const Direction& y) { return x.offset < y.offset; });
         }
         score.parts.push_back (std::move (part));
     }

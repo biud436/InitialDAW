@@ -56,6 +56,20 @@ void addClef (XmlNode& attributes, Clef clef, int number, bool numbered)
 void addNote (XmlNode& measure, const NotatedEvent& e, int staff, int staffCount, bool percussion)
 {
     const int voice = staff == 0 ? 1 : 5;
+    for (const auto& g : e.grace)
+    {
+        auto& note = measure.add ("note");
+        note.add ("grace").set ("slash", "yes");
+        auto& pitch = note.add ("pitch");
+        pitch.add ("step", stepNames[g.spelling.step]);
+        if (g.spelling.alter != 0)
+            pitch.add ("alter", num (g.spelling.alter));
+        pitch.add ("octave", num (g.spelling.octave));
+        note.add ("voice", num (voice));
+        note.add ("type", "eighth");
+        if (staffCount > 1)
+            note.add ("staff", num (staff + 1));
+    }
     const size_t count = std::max<size_t> (1, e.pitches.size());
     for (size_t i = 0; i < count; ++i)
     {
@@ -110,7 +124,8 @@ void addNote (XmlNode& measure, const NotatedEvent& e, int staff, int staffCount
         if (staffCount > 1)
             note.add ("staff", num (staff + 1));
         const bool tuplet = i == 0 && (e.tupletStart || e.tupletStop);
-        if ((p != nullptr && (p->tieStart || p->tieStop)) || tuplet)
+        const bool attacked = p != nullptr && ! p->tieStop;
+        if ((p != nullptr && (p->tieStart || p->tieStop)) || tuplet || (attacked && (e.arpeggio || e.staccato)))
         {
             auto& notations = note.add ("notations");
             if (p != nullptr && p->tieStop)
@@ -125,6 +140,10 @@ void addNote (XmlNode& measure, const NotatedEvent& e, int staff, int staffCount
             }
             if (i == 0 && e.tupletStop)
                 notations.add ("tuplet").set ("type", "stop");
+            if (attacked && e.staccato)
+                notations.add ("articulations").add ("staccato");
+            if (attacked && e.arpeggio)
+                notations.add ("arpeggiate");
         }
         if (i == 0 && ! e.lyric.empty() && e.lyric != "-")
         {
@@ -223,6 +242,24 @@ std::string musicXml (const Score& score)
                         d.add ("offset", num (t.offset));
                     d.add ("sound").set ("tempo", tempoText (t.bpm));
                 }
+            for (const auto& dir : m.directions)
+            {
+                auto& d = measure.add ("direction");
+                d.set ("placement", "below");
+                auto& type = d.add ("direction-type");
+                if (dir.kind == "dynamic")
+                    type.add ("dynamics").add (dir.text);
+                else
+                {
+                    auto& pedal = type.add ("pedal");
+                    pedal.set ("type", dir.kind == "pedal-start" ? "start" : dir.kind == "pedal-stop" ? "stop" : "change");
+                    pedal.set ("line", "yes");
+                }
+                if (dir.offset > 0)
+                    d.add ("offset", num (dir.offset));
+                if (staves > 1)
+                    d.add ("staff", num (dir.kind == "dynamic" ? 1 : staves));
+            }
             for (int s = 0; s < staves; ++s)
             {
                 if (s > 0)

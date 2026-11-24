@@ -43,6 +43,17 @@ struct NotatedEvent
     std::vector<NotatedPitch> pitches;   // 낮은 음부터 (쉼표는 비었다)
     int velocity = 0;          // 이 음표에서 시작한 음의 가장 큰 세기 (이어진 음만이면 0)
     std::string lyric;         // 이 음표에서 시작한 음의 가사 ("-" 는 앞 음절을 잇는다)
+    std::vector<NotatedPitch> grace;     // 이 음표 앞의 앞꾸밈음 (시작한 차례)
+    bool arpeggio = false;     // 굴려 친 화음 (물결줄)
+    bool staccato = false;     // 음가보다 짧게 끊은 음
+};
+
+// 마디 안의 기호: 셈여림과 페달
+struct Direction
+{
+    int offset = 0;            // 마디 안의 자리 (divisions)
+    std::string kind;          // "dynamic", "pedal-start", "pedal-change", "pedal-stop"
+    std::string text;          // 셈여림 이름 (pp, p, mp, mf, f, ff)
 };
 
 struct TempoMark
@@ -64,6 +75,7 @@ struct NotatedMeasure
     std::vector<TempoMark> tempo;
     std::vector<std::vector<NotatedEvent>> staves;   // 보표마다
     std::vector<std::string> markers;             // 이 마디에서 시작하는 마커 이름
+    std::vector<Direction> directions;            // 셈여림 (보표 사이)과 페달 (맨 아래 보표 아래), 자리의 차례
 };
 
 struct NotatedPart

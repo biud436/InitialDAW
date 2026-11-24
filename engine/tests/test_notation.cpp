@@ -169,6 +169,44 @@ TEST (score_part_groups_tracks_as_staves)
     CHECK (musicXml (score).find ("<staves>2</staves>") != std::string::npos);
 }
 
+TEST (score_performance_marks)
+{
+    // 앞꾸밈음, 굴린 화음, 스타카토 (페달 없이), 페달 (밟기, 갈아 밟기, 떼기), 셈여림 (바뀐 마디에만)
+    auto r = mrtest::parse (R"({ "tempo": 120, "timeSignature": [4, 4], "tracks": [ { "name": "Piano", "instrument": "synth.pluck",
+        "automation": { "cc64": [ { "beat": 0, "value": 0, "curve": "step" }, { "beat": 8, "value": 110, "curve": "step" }, { "beat": 11.97, "value": 0, "curve": "step" },
+                                  { "beat": 12.08, "value": 110, "curve": "step" }, { "beat": 15, "value": 0, "curve": "step" } ] },
+        "notes": [ )" + n (71, 0.91, 0.08, 40) + ", " + n (72, 1, 1, 44) + ", " + n (60, 2, 2, 44) + ", " + n (64, 2.045, 2, 44) + ", " + n (67, 2.09, 2, 44)
+                            + ", " + n (72, 4, 0.25, 44) + ", " + n (74, 4.5, 0.25, 44) + ", " + n (76, 5, 3, 44)
+                            + ", " + n (72, 8, 0.25, 90) + ", " + n (74, 8.5, 3.5, 90) + ", " + n (76, 12, 4, 90) + R"( ] } ] })");
+    REQUIRE (r.composition.has_value());
+    const auto score = buildScore (*r.composition);
+    const auto& m = score.parts[0].measures;
+    REQUIRE (m.size() == 4);
+    const auto& first = m[0].staves[0];
+    REQUIRE (first.size() == 3);
+    CHECK (first[0].rest && first[0].type == "quarter");
+    CHECK (pitches (first[1]) == "C5" && first[1].type == "quarter" && first[1].grace.size() == 1 && spellingName (first[1].grace[0].spelling) == "B4");
+    CHECK (pitches (first[2]) == "C4 E4 G4" && first[2].arpeggio && ! first[1].arpeggio);
+    // 페달 없는 둘째 마디의 끊은 8분음표는 점이 찍힌 8분음표, 페달을 밟은 셋째 마디의 같은 음은 그대로
+    CHECK (m[1].staves[0][0].staccato && m[1].staves[0][0].type == "eighth" && m[1].staves[0][1].staccato && ! m[1].staves[0][2].staccato);
+    CHECK (! m[2].staves[0][0].staccato);
+    auto kinds = [] (const NotatedMeasure& measure)
+    {
+        std::string s;
+        for (const auto& d : measure.directions)
+            s += (s.empty() ? "" : " ") + d.kind + (d.text.empty() ? "" : ":" + d.text) + "@" + std::to_string (d.offset);
+        return s;
+    };
+    CHECK (kinds (m[0]) == "dynamic:p@24");
+    CHECK (kinds (m[1]).empty());
+    CHECK (kinds (m[2]) == "pedal-start@0 dynamic:f@0");
+    CHECK (kinds (m[3]) == "pedal-change@0 pedal-stop@72");
+    const auto xml = musicXml (score);
+    CHECK (xml.find ("<grace slash=\"yes\"/>") != std::string::npos && xml.find ("<arpeggiate/>") != std::string::npos);
+    CHECK (xml.find ("<staccato/>") != std::string::npos && xml.find ("<pedal type=\"change\" line=\"yes\"/>") != std::string::npos);
+    CHECK (xml.find ("<dynamics><f/></dynamics>") != std::string::npos || xml.find ("<f/>") != std::string::npos);
+}
+
 TEST (musicxml_document)
 {
     const auto c = song (n (60, 0, 1.0 / 3) + ", " + n (62, 1.0 / 3, 1.0 / 3) + ", " + n (64, 2.0 / 3, 1.0 / 3) + ", " + n (66, 1, 2) + ", " + n (67, 3, 2),
