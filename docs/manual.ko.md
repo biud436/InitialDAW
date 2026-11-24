@@ -404,6 +404,7 @@ $MR video-pattern --output test.mp4 --fps 29.97 --seconds 10 --scenes 2.5,5 --cl
 $MR inspect out/piano_demo.wav                        # 길이, 피크, 트루 피크, RMS, LUFS, 클리핑 (Ogg와 FLAC은 태그도)
 $MR export-midi song.json --output song.mid [--humanized]   # 음표, 컨트롤러 오토메이션, 템포, 마커, 조표, 음표 가사
 $MR export-musicxml song.json --output song.musicxml [--tracks Lead,Piano]   # MuseScore, Finale, Sibelius, Dorico에서 열 수 있는 악보
+$MR playable song.json [--tracks Right,Left] [--span 14]                    # 두 손이 칠 수 없는 자리 (트랙 하나가 손 하나)
 $MR sampler bell.wav --output samples/bell.sfz [--root C4] [--one-shot]       # 오디오 파일 하나로 SFZ 악기 만들기 (음높이 자동 감지)
 $MR transcribe hum.wav --output melody.json [--bpm 96] [--from 12 --seconds 20]   # 노래하거나 연주한 선율을 음표로 변환
 $MR tempo loop.wav [--from 0 --seconds 8]                                     # 루프나 녹음의 템포와 첫 박 감지
@@ -470,6 +471,7 @@ $MR plugins save-state path/to/Synth.vst3 --set Cutoff=0.4 --output synth.state
 - **가사.** 음표에 그 음에서 부르는 음절을 지정합니다: `"lyric": "늦"`(UTF-8 문자), 앞 음절을 이어 부르는 음표는 `"lyric": "-"`. 가사는 소리에 영향을 주지 않습니다. `export-midi`는 음절마다 노트 온 위치에 가사 메타 이벤트(FF 05, UTF-8)를 기록하고(`-`는 제외), 기록한 개수를 `lyrics`로 출력합니다. 피아노 롤은 음표 안에 음절을 표시하고(짧은 음표는 글자를 줄이고, 그래도 넘치면 공간이 있을 때 음표 바로 아래나 위에 표시), `-`는 음표를 가로지르는 선으로 그립니다. 음표를 옮기고, 늘이고, 복사하고, 붙여 넣어도 가사가 따라가며, 새로 그린 음표에는 가사가 없습니다.
 - **조.** `"key": "Bb minor"`(으뜸음과 major 또는 minor, 샵이나 플랫 일곱 개까지)와 마디줄 위치의 `"keyChanges": [ { "beat": 64, "key": "A major" } ]`로 지정합니다. 조는 소리에 영향을 주지 않습니다. 악보는 조를 조표와 음 이름 철자에 사용하고(Bb단조에서는 C#이 아니라 Db, 이끎음은 제자리표 A), MIDI 내보내기는 조표 이벤트로 기록하며, MIDI 가져오기는 이를 읽어 옵니다. 조가 없으면 악보에서 음표를 분석해 조를 추정합니다(Krumhansl-Kessler 프로필을 사용하고, 나란한조 중에서는 곡 끝의 가장 낮은 음으로 결정).
 - **악보(MusicXML).** `export-musicxml`은 곡을 악보로 변환합니다. 박자와 조가 바뀌는 마디, 보표마다 4분음표 한 박을 16분음표(또는 32분음표)나 셋잇단음표 격자에 맞추기, 음의 시작과 끝에서 나눈 화음과 붙임줄, 박이 드러나는 음가 표기, 마디별 임시표, 가운데 C 위아래를 모두 쓰는 건반 파트의 큰보표, 드럼 세트의 타악기 보표, 템포, 마커, 가사를 지원합니다. 음높이는 실음으로 표기합니다. 트랙에 같은 `"scorePart": "Piano"`를 지정하면 그 트랙들이 한 파트로 묶이고 트랙 순서대로 트랙마다 보표 하나가 됩니다. 오른손 트랙과 왼손 트랙으로 나눈 피아노가 묶인 두 보표에 표시되고, 음표는 음높이와 관계없이 자기 손의 보표에 남습니다(악보 보기와 악보 PDF도 같습니다).
+- **연주 가능성.** `playable song.json [--tracks Right,Left] [--span 14] [--rolled-span 17]`은 트랙 하나를 손 하나로 보고(기본은 `scorePart`가 있는 트랙, 없으면 음표가 있는 모든 트랙) 건반 연주자가 칠 수 없는 자리를 트랙, 마디, 박, 음높이, 측정값, 한계와 함께 출력합니다. 종류는 `span`(함께 치는 음이 장9도보다 넓음, 굴리는 화음은 완전11도), `notes`(한 번에 여섯 음 이상), `shift`(0.09초에 반음마다 0.01초를 더한 시간보다 빠른 자리 이동), `fast`(이어 치는 음 사이가 0.085초 미만), `repeat`(같은 건반을 0.1초 안에 다시 침), `held`(페달 없이 손가락으로 누르고 있는 음과 새 음이 너무 멂), `overlap`(같은 순간에 아래 손이 위 손의 음에 닿음)입니다. 앞꾸밈음은 손의 자리로 보지 않습니다. 문제가 있으면 종료 코드 1을 반환합니다. 손가락 번호는 정하지 않습니다.
 - **박자 변경.** `"timeSignature": [4, 4]`는 처음 박자이고, `"meterChanges": [ { "beat": 64, "timeSignature": [3, 4] } ]`는 이전 박자의 마디줄 위치에서 박자를 바꿉니다(곡을 읽을 때 위치를 검사합니다). 마디 번호를 세는 모든 곳(눈금자, `--bars`, `arrange`, 메트로놈 강박, 내보내기의 마디 구간)이 바뀐 박자를 따릅니다. MIDI 내보내기는 박자 변경을 기록하고 가져오기는 읽어 오며, 마디를 삽입하거나 삭제하면 박자 변경도 음악과 함께 이동합니다.
 - **컨트롤러 오토메이션.** `cc1`, `cc11`, `cc64`, `pitchBend` 같은 오토메이션을 트랙에 포인트로 기록하고, 포인트마다 `curve`(linear, step, exponential, smooth)를 지정합니다.
 - **다이내믹스.** VSCO 현악은 벨로시티 레이어가 두 개뿐입니다. 그래서 트랙에 CC1 오토메이션이 있으면 엔진이 모든 음을 두 레이어로 함께 재생하고 CC1로 크로스페이드합니다. 게인과 밝기도 CC1을 따릅니다.

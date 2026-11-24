@@ -184,6 +184,20 @@ def main():
     bk, _ = run("validate", os.path.join(OUT, "badkey.json"), code=1)
     check("an unknown key is a validation error", any(e.get("path") == "$.key" for e in bk.get("errors", [])), bk)
 
+    # 연주 가능성: 한 음씩의 선율은 통과하고, 함께 치는 12도는 걸린다 (종료 코드 1)
+    pe, _ = run("playable", sung)
+    check("a single line is playable", pe.get("ok") is True and pe.get("issues") == [] and pe.get("hands", [{}])[0].get("track") == "Lead", pe)
+    wide = json.load(open(sung, encoding="utf-8"))
+    first = wide["tracks"][0]["notes"][0]
+    first["pitch"] = 60
+    wide["tracks"][0]["notes"].append(dict(first, pitch=79))
+    wide["tracks"][0]["notes"][-1].pop("lyric", None)
+    json.dump(wide, open(os.path.join(OUT, "wide.json"), "w", encoding="utf-8"), ensure_ascii=False)
+    pw, _ = run("playable", os.path.join(OUT, "wide.json"), code=1)
+    check("a twelfth struck together is reported", [i.get("kind") for i in pw.get("issues", [])] == ["span"] and pw["issues"][0].get("bar") == 1, pw)
+    pw2, _ = run("playable", os.path.join(OUT, "wide.json"), "--span", "19")
+    check("a wider hand span accepts it", pw2.get("ok") is True, pw2)
+
     # 퀵 샘플러: 330 Hz 소리의 높이를 재서 SFZ 를 쓰고, 곡 안의 정의로 렌더링한다
     tone_dir = os.path.join(OUT, "sampler")
     os.makedirs(tone_dir)

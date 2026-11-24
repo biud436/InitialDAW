@@ -57,7 +57,7 @@
 
 ![신스 패널](docs/images/synth.png)
 
-**악보.** 피아노 파트를 큰보표로 표시합니다. 음표로 추정한 조표, 박에 맞춘 빔, 붙임줄이 보입니다.
+**악보.** 피아노 파트를 큰보표로 표시합니다. 음표로 추정한 조표, 박에 맞춘 빔, 붙임줄이 보입니다. 연주 가능성 검사로 두 손이 칠 수 없는 자리를 찾습니다.
 
 ![악보](docs/images/score.png)
 
@@ -142,6 +142,7 @@ $MR inspect song.wav                                     # 길이, 피크, 트�
 $MR arrange song.json insert-bars --at 17 --count 4      # 앱의 편곡 편집을 곡 파일에 적용합니다
 $MR import-midi sketch.mid --output sketch/sketch.json   # 표준 MIDI 파일을 새 곡으로
 $MR export-musicxml song.json --output song.musicxml     # 악보
+$MR playable song.json                                   # 두 손으로 연주할 수 있는지 검사 (트랙 하나가 손 하나)
 $MR new orchestral-battle --output storm/storm.json --title "Storm"   # 템플릿으로 새 곡
 $MR realtime song.json --from 60 --seconds 15            # 실시간 재생기를 돌려 부하를 측정합니다
 ```

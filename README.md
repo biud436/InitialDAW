@@ -61,7 +61,7 @@ response, and the master's spectrum and loudness on the right.
 
 ![Synth panel](docs/images/synth.png)
 
-**Score.** The piano part on a grand staff, with the key signature estimated from the notes, beams by the beat and ties.
+**Score.** The piano part on a grand staff, with the key signature estimated from the notes, beams by the beat and ties. A playability check reports what two hands cannot play.
 
 ![Score](docs/images/score.png)
 
@@ -147,6 +147,7 @@ $MR inspect song.wav                                     # length, peak, true pe
 $MR arrange song.json insert-bars --at 17 --count 4      # the app's arrangement edits on a song file
 $MR import-midi sketch.mid --output sketch/sketch.json   # a standard MIDI file as a new song
 $MR export-musicxml song.json --output song.musicxml     # the score
+$MR playable song.json                                   # can two hands play it (one track is one hand)
 $MR new orchestral-battle --output storm/storm.json --title "Storm"   # a new song from a template
 $MR realtime song.json --from 60 --seconds 15            # run the real-time player and report its load
 ```

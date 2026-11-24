@@ -21,6 +21,7 @@ add_library(music_render_core STATIC
   src/analysis/PitchTrack.cpp
   src/analysis/NoteSegments.cpp
   src/analysis/Onsets.cpp
+  src/analysis/Playability.cpp
   src/notation/MusicXml.cpp
   src/notation/Notation.cpp
   src/notation/Key.cpp
@@ -193,6 +194,7 @@ add_executable(music_render_tests
   tests/test_note_tools.cpp
   tests/test_bounce.cpp
   tests/test_notation.cpp
+  tests/test_playability.cpp
   tests/test_loudness.cpp
   tests/test_measure.cpp
   tests/test_quick_sampler.cpp

@@ -20,6 +20,7 @@
 #include "instruments/QuickSampler.h"
 #include "analysis/NoteSegments.h"
 #include "analysis/PitchTrack.h"
+#include "analysis/Playability.h"
 #include "analysis/Onsets.h"
 #include "instruments/AudioClips.h"
 #include "plugins/PluginHost.h"
@@ -70,6 +71,7 @@ usage:
                 # a test video: each frame shows its number, scenes change at the given seconds, clicks in the sound
   music-render export-midi <song.json> --output <song.mid> [--humanized] [--seed <n>]
   music-render export-musicxml <song.json> --output <song.musicxml> [--tracks <list>]   # score for notation programs
+  music-render playable <song.json> [--tracks <list>] [--span 14] [--rolled-span 17]   # can two hands play it: one track is one hand
   music-render sampler <audio> --output <instrument.sfz> [--root <note>] [--one-shot]   # an SFZ instrument from one sound
   music-render transcribe <audio> --output <song.json> [--bpm 120] [--instrument grand-piano] [--from <s>] [--seconds <s>]   # a sung or played melody as notes
   music-render notes <audio> [--from <s>] [--seconds <s>]                        # the notes of a sung or played line (pitch, drift, vibrato)
@@ -180,7 +182,7 @@ const std::vector<std::string> valueOptions { "--output", "--root", "--sample-ra
                                               "--quality", "--bars", "--beats", "--fade", "--templates", "--title",
                                               "--instrument", "--at", "--to", "--tracks", "--count", "--bpm", "--grid", "--strength", "--swing", "--clip", "--mode", "--speed", "--key", "--scale",
                                               "--groove", "--timing", "--velocity", "--length", "--track", "--template",
-                                              "--video", "--video-offset", "--video-sound", "--width", "--height", "--threshold", "--ratio", "--min-gap",
+                                              "--video", "--video-offset", "--video-sound", "--width", "--height", "--threshold", "--ratio", "--min-gap", "--span", "--rolled-span",
                                               "--song", "--fps", "--size", "--scenes", "--clicks", "--rotate", "--before",
                                               "--note", "--semitones", "--flatten", "--vibrato", "--in", "--out", "--in-shape", "--out-shape", "--ms",
                                               "--noise", "--profile", "--hum" };
@@ -1491,6 +1493,61 @@ int cmdExportMusicXml (const Args& a)
     return exitOk;
 }
 
+int cmdPlayable (const Args& a)
+{
+    if (a.positional.size() != 1)
+        throw UsageError ("playable needs exactly one composition file");
+    const auto c = loadOrThrow (a.positional[0]);
+    PlayabilityOptions options;
+    if (const auto text = a.value ("--tracks"))
+    {
+        juce::StringArray parts;
+        parts.addTokens (juce::String::fromUTF8 (text->c_str()), ",", "");
+        for (const auto& part : parts)
+            options.tracks.push_back (trackArg (c, part.trim().toStdString()));
+    }
+    if (const auto v = a.value ("--span"))
+        options.span = juce::jlimit (7, 24, juce::String (*v).getIntValue());
+    if (const auto v = a.value ("--rolled-span"))
+        options.rolledSpan = juce::jlimit (options.span, 36, juce::String (*v).getIntValue());
+    options.rolledSpan = std::max (options.rolledSpan, options.span);
+    const auto report = checkPlayability (c, options);
+    juce::Array<juce::var> hands, issues;
+    for (const auto& h : report.hands)
+    {
+        auto* o = new juce::DynamicObject();
+        o->setProperty ("track", juce::String::fromUTF8 (c.tracks[h.track].name.c_str()));
+        o->setProperty ("notes", (int) h.notes);
+        o->setProperty ("widestSpan", h.widestSpan);
+        o->setProperty ("fastestSeconds", std::round (h.fastestSeconds * 1000.0) / 1000.0);
+        hands.add (juce::var (o));
+    }
+    for (const auto& i : report.issues)
+    {
+        auto* o = new juce::DynamicObject();
+        o->setProperty ("track", juce::String::fromUTF8 (c.tracks[i.track].name.c_str()));
+        o->setProperty ("bar", i.bar);
+        o->setProperty ("beat", std::round (i.beat * 1000.0) / 1000.0);
+        o->setProperty ("kind", juce::String (i.kind));
+        juce::Array<juce::var> pitches;
+        for (const int p : i.pitches)
+            pitches.add (p);
+        o->setProperty ("pitches", pitches);
+        o->setProperty ("value", std::round (i.value * 1000.0) / 1000.0);
+        o->setProperty ("limit", std::round (i.limit * 1000.0) / 1000.0);
+        if (i.kind == "shift")
+            o->setProperty ("semitones", i.semitones);
+        issues.add (juce::var (o));
+    }
+    auto* o = new juce::DynamicObject();
+    o->setProperty ("ok", report.issues.empty());
+    o->setProperty ("command", "playable");
+    o->setProperty ("hands", hands);
+    o->setProperty ("issues", issues);
+    emit (juce::var (o));
+    return report.issues.empty() ? exitOk : exitFailed;
+}
+
 int cmdImportMidi (const Args& a)
 {
     if (a.positional.size() != 1)
@@ -2703,6 +2760,7 @@ int main (int argc, char** argv)
         if (args.command == "video-pattern") return cmdVideoPattern (args);
         if (args.command == "export-midi") return cmdExportMidi (args);
         if (args.command == "export-musicxml") return cmdExportMusicXml (args);
+        if (args.command == "playable") return cmdPlayable (args);
         if (args.command == "sampler") return cmdSampler (args);
         if (args.command == "transcribe") return cmdTranscribe (args);
         if (args.command == "notes") return cmdNotes (args);
@@ -2721,7 +2779,7 @@ int main (int argc, char** argv)
         if (args.command == "new") return cmdNew (args);
 
         const auto s = closestMatch (args.command, { "validate", "render", "realtime", "inspect", "video-info", "video-frame", "video-scenes",
-                                                     "video-audio", "video-pattern", "export-midi", "export-musicxml", "sampler", "transcribe", "notes", "tempo", "beats", "restore", "slice", "groove", "track-template", "instruments", "templates", "new", "chords", "scales",
+                                                     "video-audio", "video-pattern", "export-midi", "export-musicxml", "playable", "sampler", "transcribe", "notes", "tempo", "beats", "restore", "slice", "groove", "track-template", "instruments", "templates", "new", "chords", "scales",
                                                      "arrange", "import-midi", "format", "plugins", "version", "help" });
         throw UsageError ("unknown command '" + args.command + "'" + (s.empty() ? std::string {} : " (did you mean '" + s + "'?)"));
     }

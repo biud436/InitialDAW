@@ -235,7 +235,7 @@
 
 엔진을 먼저 넓히고 (악보 모델과 검사), 앱의 악보 보기와 PDF, MusicXML 이 따른다. 네 묶음으로 나눠 묶음마다 커밋한다.
 
-1. **연주 가능성 검사를 엔진으로** (`analysis/Playability`, 명령행 `music-render playable song.json [--track ...]`).
+1. **연주 가능성 검사를 엔진으로** (`analysis/Playability`, 명령행 `music-render playable song.json [--tracks ...]`). ✅ 2026-11-24: 종류 일곱 (`span`, `notes`, `shift`, `fast`, `repeat`, `held`, `overlap`), 손 크기 `--span`, `--rolled-span`, 단위 시험 3건과 명령행 시험. 앱의 표시는 묶음 4.
    - 손 하나가 트랙 하나 (`scorePart` 로 묶인 트랙) 라고 보고: 함께 누르는 음의 벌림 (9도, 굴리면 10도와 11도, `--span` 으로 손 크기), 한 손의 음 수,
      자리 옮김의 거리와 시간, 음 사이의 가장 짧은 시간, 두 손의 겹침과 같은 건반.
    - 새로 넣는 것: 페달 (CC64) 없이 손가락으로 붙들어야 하는 음의 벌림 (지금 생성기의 검사는 시작만 본다), 같은 건반을 다시 치는 빠르기, 트릴과 트레몰로의 빠르기.
