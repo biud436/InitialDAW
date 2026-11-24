@@ -21,13 +21,14 @@ constexpr juce::juce_wchar flagUp[] = { 0xE240, 0xE242, 0xE244 }, flagDown[] = {
 constexpr juce::juce_wchar restWhole = 0xE4E3, restHalf = 0xE4E4, restQuarter = 0xE4E5, restEighth = 0xE4E6, rest16 = 0xE4E7, rest32 = 0xE4E8;
 constexpr juce::juce_wchar accidentalGlyph[] = { 0xE264, 0xE260, 0xE261, 0xE262, 0xE263 };   // -2..2
 constexpr juce::juce_wchar timeDigit0 = 0xE080, dotGlyph = 0xE1E7, braceGlyph = 0xE000, metQuarter = 0xE1D5;
+constexpr juce::juce_wchar dynamicP = 0xE520, dynamicM = 0xE521, dynamicF = 0xE522;
 
 constexpr int sharpPositions[] = { 8, 5, 9, 6, 3, 7, 4 };   // 높은음자리표, E4 가 0
 constexpr int flatPositions[] = { 4, 7, 3, 6, 2, 5, 1 };
 
 constexpr float headWidth = 1.18f;   // 칸 단위
 constexpr float staffGap = 7.0f;     // 큰보표 사이
-constexpr float topMargin = 7.0f, bottomMargin = 8.0f;
+constexpr float topMargin = 7.0f, bottomMargin = 9.0f;
 
 int beamLevel (const std::string& type) { return type == "eighth" ? 1 : type == "16th" ? 2 : type == "32nd" ? 3 : 0; }
 
@@ -473,6 +474,55 @@ void ScorePanel::paintSystem (juce::Graphics& g, const SystemLayout& s, size_t s
         g.setFont (music_);
     }
 
+    // 셈여림 (큰보표는 보표 사이, 아니면 보표 아래) 과 페달 줄 (맨 아래 보표 아래)
+    {
+        const float dynamicY = staves > 1 ? staffTop (s, 0) + 4.0f * sp_ + staffGap * sp_ * 0.5f + 0.7f * sp_ : systemBottom + 3.2f * sp_;
+        const float pedalY = systemBottom + 5.4f * sp_, tick = 0.9f * sp_;
+        bool down = false;
+        if (! s.measures.empty())
+            for (size_t k = 0; k < s.measures.front().index; ++k)
+                for (const auto& d : part.measures[k].directions)
+                    down = d.kind == "pedal-start" || d.kind == "pedal-change" ? true : d.kind == "pedal-stop" ? false : down;
+        juce::Path pedal;
+        if (down)
+            pedal.startNewSubPath (left + sp_ * 0.5f, pedalY);
+        for (const auto& m : s.measures)
+            for (const auto& d : part.measures[m.index].directions)
+            {
+                const float dx = xAt (m, d.offset);
+                if (d.kind == "dynamic")
+                {
+                    float tx = dx - 0.4f * sp_;
+                    for (const char ch : d.text)
+                    {
+                        glyph (g, ch == 'p' ? dynamicP : ch == 'm' ? dynamicM : dynamicF, tx, dynamicY);
+                        tx += sp_ * (ch == 'p' ? 1.25f : ch == 'm' ? 1.75f : 1.05f);
+                    }
+                }
+                else if (d.kind == "pedal-start" && ! down)
+                {
+                    pedal.startNewSubPath (dx, pedalY - tick);
+                    pedal.lineTo (dx, pedalY);
+                    down = true;
+                }
+                else if (d.kind == "pedal-change" && down)
+                {
+                    pedal.lineTo (dx - 0.45f * sp_, pedalY);
+                    pedal.lineTo (dx, pedalY - tick);
+                    pedal.lineTo (dx + 0.45f * sp_, pedalY);
+                }
+                else if (d.kind == "pedal-stop" && down)
+                {
+                    pedal.lineTo (dx, pedalY);
+                    pedal.lineTo (dx, pedalY - tick);
+                    down = false;
+                }
+            }
+        if (down)
+            pedal.lineTo (right, pedalY);
+        g.strokePath (pedal, juce::PathStrokeType (0.14f * sp_));
+    }
+
     const double playhead = timeline_.playheadBeat();
     for (const auto& m : s.measures)
     {
@@ -677,6 +727,40 @@ void ScorePanel::paintStaffEvents (juce::Graphics& g, const SystemLayout& s, con
             const int level = beamLevel (e.type);
             if (level > 0 && group[i] < 0)
                 glyph (g, down ? flagDown[level - 1] : flagUp[level - 1], sx - 0.06f * sp_, endY);
+        }
+        // 스타카토: 기둥의 반대쪽 머리 바깥에 점
+        if (e.staccato && ! positions.empty())
+        {
+            const float dy = down ? positionY (top, positions.back()) - 1.1f * sp_ : positionY (top, positions.front()) + 1.1f * sp_;
+            g.fillEllipse (x + head * 0.5f - 0.2f * sp_, dy - 0.2f * sp_, 0.4f * sp_, 0.4f * sp_);
+        }
+        // 굴리는 화음: 머리 왼쪽의 물결줄
+        if (e.arpeggio && positions.size() > 1)
+        {
+            const float ax = x - sp_ * (std::any_of (e.pitches.begin(), e.pitches.end(), [] (const mr::NotatedPitch& p) { return p.accidental.has_value(); }) ? 2.9f : 1.0f);
+            const float y0 = positionY (top, positions.back()) - 0.6f * sp_, y1 = positionY (top, positions.front()) + 0.6f * sp_;
+            juce::Path wave;
+            wave.startNewSubPath (ax, y0);
+            int side = 1;
+            for (float y = y0; y < y1 - 0.01f; y += 0.5f * sp_, side = -side)
+                wave.quadraticTo (ax + (float) side * 0.35f * sp_, std::min (y1, y + 0.25f * sp_), ax, std::min (y1, y + 0.5f * sp_));
+            g.strokePath (wave, juce::PathStrokeType (0.16f * sp_));
+        }
+        // 앞꾸밈음: 본 음 앞의 작은 8분음표 (기둥 위, 빗금)
+        for (size_t k = 0; k < e.grace.size(); ++k)
+        {
+            const int pos = positionOf (e.grace[k], clef);
+            const float gx = x - sp_ * (1.9f + 1.4f * (float) (e.grace.size() - 1 - k)) - (std::any_of (e.pitches.begin(), e.pitches.end(), [] (const mr::NotatedPitch& p) { return p.accidental.has_value(); }) ? 1.6f * sp_ : 0.0f);
+            const float gy = positionY (top, pos), small = 0.62f;
+            for (int q = -2; q >= pos; q -= 2)
+                g.fillRect (juce::Rectangle<float> (gx - 0.3f * sp_, positionY (top, q) - 0.5f, head * small + 0.6f * sp_, 1.0f));
+            for (int q = 10; q <= pos; q += 2)
+                g.fillRect (juce::Rectangle<float> (gx - 0.3f * sp_, positionY (top, q) - 0.5f, head * small + 0.6f * sp_, 1.0f));
+            glyph (g, headBlack, gx, gy, small);
+            const float sx = gx + head * small - 0.05f * sp_, stemTop = gy - 2.3f * sp_;
+            g.fillRect (juce::Rectangle<float> (sx - 0.05f * sp_, stemTop, 0.1f * sp_, gy - stemTop));
+            glyph (g, flagUp[0], sx - 0.05f * sp_, stemTop, small);
+            g.drawLine (sx - 0.7f * sp_, gy - 0.9f * sp_, sx + 0.7f * sp_, gy - 1.9f * sp_, 0.12f * sp_);
         }
         // 가사
         if (! e.lyric.empty() && e.lyric != "-")
