@@ -1017,6 +1017,48 @@
       "description": "FreePats tenor saxophone (Versilian Community Sample Library, CC0), sounding G2 to F5, two velocity layers (soft up to 89), looped sustain. CC1 = dynamics in the engine (-14 to 0 dB and brightness)",
       "fallback": "synth.lead"
     },
+    "harpsichord": {
+      "type": "sfz",
+      "file": "${MUSIC_RENDER_VCSL:-../../external/vcsl}/InitialDAW/harpsichord.sfz",
+      "description": "Italian harpsichord, one stop (Versilian Community Sample Library, CC0), F#1 to C#6, sampled every two or three semitones, key release sounds. Velocity changes loudness only slightly (6 dB): a harpsichord has no dynamics. SFZ written by tools/make-vcsl-sfz.py",
+      "fallback": "synth.pluck"
+    },
+    "recorder-soprano": {
+      "type": "sfz",
+      "file": "${MUSIC_RENDER_VCSL:-../../external/vcsl}/InitialDAW/recorder-soprano.sfz",
+      "articulations": {"sustain": {}, "staccato": {"file": "${MUSIC_RENDER_VCSL:-../../external/vcsl}/InitialDAW/recorder-soprano-staccato.sfz"}},
+      "defaultArticulation": "sustain",
+      "controllers": {"cc11": "engine"},
+      "description": "Baroque soprano recorder (Versilian Community Sample Library, CC0), sounding Bb4 to D7. Articulations sustain (straight tone), staccato. Velocity = loudness (12 dB). Samples end after a few seconds (no loop). SFZ written by tools/make-vcsl-sfz.py",
+      "fallback": "synth.sine"
+    },
+    "recorder-alto": {
+      "type": "sfz",
+      "file": "${MUSIC_RENDER_VCSL:-../../external/vcsl}/InitialDAW/recorder-alto.sfz",
+      "articulations": {"sustain": {}, "vibrato": {"file": "${MUSIC_RENDER_VCSL:-../../external/vcsl}/InitialDAW/recorder-alto-vibrato.sfz"}, "staccato": {"file": "${MUSIC_RENDER_VCSL:-../../external/vcsl}/InitialDAW/recorder-alto-staccato.sfz"}},
+      "defaultArticulation": "sustain",
+      "controllers": {"cc11": "engine"},
+      "description": "Baroque alto recorder (Versilian Community Sample Library, CC0), sounding Eb4 to F#6. Articulations sustain (straight tone), vibrato, staccato. Velocity = loudness (12 dB). Samples end after a few seconds (no loop). SFZ written by tools/make-vcsl-sfz.py",
+      "fallback": "synth.sine"
+    },
+    "recorder-tenor": {
+      "type": "sfz",
+      "file": "${MUSIC_RENDER_VCSL:-../../external/vcsl}/InitialDAW/recorder-tenor.sfz",
+      "articulations": {"sustain": {}, "vibrato": {"file": "${MUSIC_RENDER_VCSL:-../../external/vcsl}/InitialDAW/recorder-tenor-vibrato.sfz"}, "staccato": {"file": "${MUSIC_RENDER_VCSL:-../../external/vcsl}/InitialDAW/recorder-tenor-staccato.sfz"}},
+      "defaultArticulation": "sustain",
+      "controllers": {"cc11": "engine"},
+      "description": "Baroque tenor recorder (Versilian Community Sample Library, CC0), sounding Bb3 to D6. Articulations sustain (straight tone), vibrato, staccato. Velocity = loudness (12 dB). Samples end after a few seconds (no loop). SFZ written by tools/make-vcsl-sfz.py",
+      "fallback": "synth.sine"
+    },
+    "recorder-bass": {
+      "type": "sfz",
+      "file": "${MUSIC_RENDER_VCSL:-../../external/vcsl}/InitialDAW/recorder-bass.sfz",
+      "articulations": {"sustain": {}, "vibrato": {"file": "${MUSIC_RENDER_VCSL:-../../external/vcsl}/InitialDAW/recorder-bass-vibrato.sfz"}, "staccato": {"file": "${MUSIC_RENDER_VCSL:-../../external/vcsl}/InitialDAW/recorder-bass-staccato.sfz"}},
+      "defaultArticulation": "sustain",
+      "controllers": {"cc11": "engine"},
+      "description": "Baroque bass recorder (Versilian Community Sample Library, CC0), sounding Eb3 to G5. Articulations sustain (straight tone), vibrato, staccato. Velocity = loudness (12 dB). Samples end after a few seconds (no loop). SFZ written by tools/make-vcsl-sfz.py",
+      "fallback": "synth.sine"
+    },
     "surge-xt": {
       "type": "vst3",
       "plugin": "${MUSIC_RENDER_PLUGINS:-../../external/plugins}/surge-xt/Surge XT.vst3",

@@ -1,0 +1,1032 @@
+{
+"repository": "https://github.com/sgossner/VCSL",
+"commit": "c1ea7bcc3c7309650ab0da9d15c9cd1fbc4a4c7e",
+"license": "CC0-1.0",
+"files": [
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Alto Recorder/Staccato/AltRecorder_Stac_A#3_rr1_Main.wav",
+"size": 80520,
+"blob": "6d8a7188345fd465933cbe1ab564807939321ca0"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Alto Recorder/Staccato/AltRecorder_Stac_A#4_rr1_Main.wav",
+"size": 96356,
+"blob": "46fc7e3c08576e4e0bfb54b4d7967f31e0260977"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Alto Recorder/Staccato/AltRecorder_Stac_C4_rr1_Main.wav",
+"size": 82104,
+"blob": "db96e84032789b062e96c08a7e616885beacce72"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Alto Recorder/Staccato/AltRecorder_Stac_C5_rr1_Main.wav",
+"size": 94044,
+"blob": "9947788164422a4b89f966f09783abb7cb6d8b32"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Alto Recorder/Staccato/AltRecorder_Stac_D4_rr1_Main.wav",
+"size": 79108,
+"blob": "1a2b8eb3117631eb30ea7abca8b19cbcf3e8c37f"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Alto Recorder/Staccato/AltRecorder_Stac_D5_rr1_Main.wav",
+"size": 90988,
+"blob": "6ea3d968aea1576d2792ebd710af1237e4987f8f"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Alto Recorder/Staccato/AltRecorder_Stac_E4_rr1_Main.wav",
+"size": 76016,
+"blob": "9860093b9546a911cab3ebab2f8c9780f4288ce2"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Alto Recorder/Staccato/AltRecorder_Stac_E5_rr1_Main.wav",
+"size": 83776,
+"blob": "75365d0c9a63b6a3e94eacd129bb996859f77961"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Alto Recorder/Staccato/AltRecorder_Stac_F#3_rr1_Main.wav",
+"size": 76612,
+"blob": "d7cb31098466054d330ecc896a7d3e030ac6e1b0"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Alto Recorder/Staccato/AltRecorder_Stac_F#4_rr1_Main.wav",
+"size": 81528,
+"blob": "7a25fd9cc57e295878344b578c5d76dbd3a8b9d1"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Alto Recorder/Staccato/AltRecorder_Stac_G#3_rr1_Main.wav",
+"size": 81068,
+"blob": "95a26a981c5f74a257a1da142ba41bd8a480615f"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Alto Recorder/Staccato/AltRecorder_Stac_G#4_rr1_Main.wav",
+"size": 94520,
+"blob": "090654907429cef76a299cc89e499ab65ed6382a"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Alto Recorder/SusVib/AltRecorder_SusVib_A#3_rr1_Main.wav",
+"size": 1933336,
+"blob": "b4b4d957b225ecbcc381b6d85d96e0d193c8809f"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Alto Recorder/SusVib/AltRecorder_SusVib_A#4_rr1_Main.wav",
+"size": 2168388,
+"blob": "84509a99fa5746a2633daaf6488adb2e6db9061d"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Alto Recorder/SusVib/AltRecorder_SusVib_C4_rr1_Main.wav",
+"size": 1937020,
+"blob": "8bcb334b5ae365a03beab019345ba2131c50af00"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Alto Recorder/SusVib/AltRecorder_SusVib_C5_rr1_Main.wav",
+"size": 2452944,
+"blob": "040fe69b1e93214076d28c221e65e6bb27f8a243"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Alto Recorder/SusVib/AltRecorder_SusVib_D4_rr1_Main.wav",
+"size": 2412116,
+"blob": "9233521956e07ee420d5d53356865571d9791f58"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Alto Recorder/SusVib/AltRecorder_SusVib_D5_rr1_Main.wav",
+"size": 2104308,
+"blob": "ae5587e0b357aa10b79da2991ad7c406f4a1fd20"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Alto Recorder/SusVib/AltRecorder_SusVib_E4_rr1_Main.wav",
+"size": 2573704,
+"blob": "5fd864c1628b6c7333c1523c0d47986e90b7537c"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Alto Recorder/SusVib/AltRecorder_SusVib_E5_rr1_Main.wav",
+"size": 1953236,
+"blob": "83db862da1d00047787ccc2e5d4e9cb91b56377c"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Alto Recorder/SusVib/AltRecorder_SusVib_F#4_rr1_Main.wav",
+"size": 2189192,
+"blob": "813c069fb582e45b0f974a71f58f0fda8e236852"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Alto Recorder/SusVib/AltRecorder_SusVib_F3_rr1_Main.wav",
+"size": 2059240,
+"blob": "62e60d6ba8abdb8fbca60d14b182201a5589b07d"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Alto Recorder/SusVib/AltRecorder_SusVib_G#3_rr1_Main.wav",
+"size": 1869112,
+"blob": "6483a54147fab2673729a1672869acb912f25217"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Alto Recorder/SusVib/AltRecorder_SusVib_G#4_rr1_Main.wav",
+"size": 2192436,
+"blob": "8ad95a5fa5786798cf959508172f5b0314c8fc6c"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Alto Recorder/Sustain/AltRecorder_Sus_A#3_rr1_Main.wav",
+"size": 3003932,
+"blob": "3acd941e392d3e6a7891c695176e672dc6725c6b"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Alto Recorder/Sustain/AltRecorder_Sus_A#4_rr1_Main.wav",
+"size": 2279160,
+"blob": "5fc13b13089874e826bc1528c643f25ce17aaf3d"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Alto Recorder/Sustain/AltRecorder_Sus_C4_rr1_Main.wav",
+"size": 1574224,
+"blob": "78fe319e7b12f99fd83647332f48ce4adc09ddbe"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Alto Recorder/Sustain/AltRecorder_Sus_C5_rr1_Main.wav",
+"size": 2530036,
+"blob": "e43944e71776896e703067de29d926df08a57392"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Alto Recorder/Sustain/AltRecorder_Sus_D4_rr1_Main.wav",
+"size": 1756616,
+"blob": "fb5d8f274a2363b77164ad1129c629d61a36c1fb"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Alto Recorder/Sustain/AltRecorder_Sus_D5_rr1_Main.wav",
+"size": 2345620,
+"blob": "3bd9927364a7f3b5efb6c847715125f88f6f8e8e"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Alto Recorder/Sustain/AltRecorder_Sus_E4_rr1_Main.wav",
+"size": 2312324,
+"blob": "88da0dcbab8d56db321611a7c3c72ee75a299a51"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Alto Recorder/Sustain/AltRecorder_Sus_E5_rr1_Main.wav",
+"size": 2401644,
+"blob": "07ac69717656225868a4ac40a3c6402934d455bb"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Alto Recorder/Sustain/AltRecorder_Sus_F#4_rr1_Main.wav",
+"size": 3121816,
+"blob": "41e614b557cdc324120c43da17a82ab18b7bdce1"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Alto Recorder/Sustain/AltRecorder_Sus_F3_rr1_Main.wav",
+"size": 3254828,
+"blob": "937d7179bc3c84aed37adfa0923457c702cfe876"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Alto Recorder/Sustain/AltRecorder_Sus_G#3_rr1_Main.wav",
+"size": 2466568,
+"blob": "bdfa82195a1793b5aacc38f866d99eca359249ac"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Alto Recorder/Sustain/AltRecorder_Sus_G#4_rr1_Main.wav",
+"size": 2394072,
+"blob": "b289c2bc5f487c3ad8d9cea08668e076440a2c54"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Bass Recorder/Staccato/BassRecorder_Stac_A#2_rr1_Main.wav",
+"size": 90312,
+"blob": "387e971e575f22ff6769680a02cb9ef2544f9d88"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Bass Recorder/Staccato/BassRecorder_Stac_A2_rr1_Main.wav",
+"size": 84784,
+"blob": "7a7589dbf324c5895712308da7124575b9d7622e"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Bass Recorder/Staccato/BassRecorder_Stac_A3_rr1_Main.wav",
+"size": 91376,
+"blob": "5a78eaf37a8bcc8c8ce9f829170c2cd72999d75a"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Bass Recorder/Staccato/BassRecorder_Stac_B3_rr1_Main.wav",
+"size": 91772,
+"blob": "ccc1af34ee27b244f11f9a96712faa01b14e7078"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Bass Recorder/Staccato/BassRecorder_Stac_C3_rr1_Main.wav",
+"size": 79792,
+"blob": "04a5034a95fb9eaadd1e4b347a9679bc1d98a000"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Bass Recorder/Staccato/BassRecorder_Stac_C4_rr1_Main.wav",
+"size": 85028,
+"blob": "7f3943972247ad7981ddf74946697a820d2444d5"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Bass Recorder/Staccato/BassRecorder_Stac_D3_rr1_Main.wav",
+"size": 88408,
+"blob": "e5dd077a88fb387ce993f9992f8c8fdd43b5e988"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Bass Recorder/Staccato/BassRecorder_Stac_D4_rr1_Main.wav",
+"size": 86292,
+"blob": "48651dde56f72e6efb77c6c6c2a38b8aa45571ae"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Bass Recorder/Staccato/BassRecorder_Stac_E3_rr1_Main.wav",
+"size": 90108,
+"blob": "fde7e32ef30720a6927231569369baa09b5a7da4"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Bass Recorder/Staccato/BassRecorder_Stac_E4_rr1_Main.wav",
+"size": 85828,
+"blob": "aafd4c62c21e74d012d2d9bf551c3662333fecd9"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Bass Recorder/Staccato/BassRecorder_Stac_F2_rr1_Main.wav",
+"size": 86668,
+"blob": "fcaadd8b66747dbcc1ded76bd81d14b295ede07a"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Bass Recorder/Staccato/BassRecorder_Stac_F3_rr1_Main.wav",
+"size": 85528,
+"blob": "406ed6cb3c7a999214c870d27cd8575325e3b02d"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Bass Recorder/Staccato/BassRecorder_Stac_F4_rr1_Main.wav",
+"size": 83644,
+"blob": "1bfa8742ac1341f804865c7a3bc62c8ec166b345"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Bass Recorder/Staccato/BassRecorder_Stac_G2_rr1_Main.wav",
+"size": 83396,
+"blob": "290595b275bbfe13ecc24ea6e43acd984c656068"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Bass Recorder/Staccato/BassRecorder_Stac_G3_rr1_Main.wav",
+"size": 85072,
+"blob": "6b054b13a368dadca8b16666b8663272be90a460"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Bass Recorder/SusVib/BassRecorder_SusVib_A2_rr1_Main.wav",
+"size": 809936,
+"blob": "79065f965ea4fb07253b9d063975d8e45aadf53e"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Bass Recorder/SusVib/BassRecorder_SusVib_A3_rr1_Main.wav",
+"size": 904364,
+"blob": "d154df7802cd88dc7f8ef47428311c6e57d95948"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Bass Recorder/SusVib/BassRecorder_SusVib_B2_rr1_Main.wav",
+"size": 779796,
+"blob": "ca455c2106a3cd9f1847b58dedbbee29082c6e5f"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Bass Recorder/SusVib/BassRecorder_SusVib_B3_rr1_Main.wav",
+"size": 830016,
+"blob": "a02a536fc5e4cb829149afadae967f09d50fbc98"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Bass Recorder/SusVib/BassRecorder_SusVib_C3_rr1_Main.wav",
+"size": 849792,
+"blob": "17cc9b04cf3c4216ac0d1942252127b006efd942"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Bass Recorder/SusVib/BassRecorder_SusVib_C4_rr1_Main.wav",
+"size": 841652,
+"blob": "a5843f4ff212d5509b56e349f7de33e14e4b721f"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Bass Recorder/SusVib/BassRecorder_SusVib_D3_rr1_Main.wav",
+"size": 1050200,
+"blob": "f9016767fbccd994b66833b317d92cfe9e9800df"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Bass Recorder/SusVib/BassRecorder_SusVib_D4_rr1_Main.wav",
+"size": 847248,
+"blob": "cbaa4305486be4a5d9f944b6a33b3e268f175bf6"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Bass Recorder/SusVib/BassRecorder_SusVib_E3_rr1_Main.wav",
+"size": 897304,
+"blob": "58d2d3486b82566542395626aea147c0d5b88ab7"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Bass Recorder/SusVib/BassRecorder_SusVib_E4_rr1_Main.wav",
+"size": 825712,
+"blob": "5c08becd345b7e8b225a7bebe9d48c064b080592"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Bass Recorder/SusVib/BassRecorder_SusVib_F2_rr1_Main.wav",
+"size": 813816,
+"blob": "8e545d7109f6b28db30629f96184ccd32470ab8f"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Bass Recorder/SusVib/BassRecorder_SusVib_F3_rr1_Main.wav",
+"size": 890480,
+"blob": "3f5f1cf874c664894c9303f776f4b3105c24df97"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Bass Recorder/SusVib/BassRecorder_SusVib_G2_rr1_Main.wav",
+"size": 896160,
+"blob": "a46803a9649a5569c8f4061c30cd205e12836a38"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Bass Recorder/SusVib/BassRecorder_SusVib_G3_rr1_Main.wav",
+"size": 915988,
+"blob": "5c9efe1ece790e8552358230610b9ea48cd14f63"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Bass Recorder/Sustain/BassRecorder_Sus_A#2_rr1_Main.wav",
+"size": 1115384,
+"blob": "5d5772c5c586eef2d2d779b3070e0c37b4675260"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Bass Recorder/Sustain/BassRecorder_Sus_A#3_rr1_Main.wav",
+"size": 1302064,
+"blob": "f74607d2c248c3709ddd8b81032548d98a18ee0c"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Bass Recorder/Sustain/BassRecorder_Sus_C3_rr1_Main.wav",
+"size": 1090592,
+"blob": "752b092ab46da330451bc92854340dc9d15088f6"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Bass Recorder/Sustain/BassRecorder_Sus_C4_rr1_Main.wav",
+"size": 1282728,
+"blob": "a952b21a8d36677108ad686d46e5c308803f7578"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Bass Recorder/Sustain/BassRecorder_Sus_D3_rr1_Main.wav",
+"size": 1558252,
+"blob": "0f254212da1ff514631a4af86b65b54f6475ca05"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Bass Recorder/Sustain/BassRecorder_Sus_D4_rr1_Main.wav",
+"size": 1094336,
+"blob": "1a318e0401db5136afcd819382d8386488fde783"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Bass Recorder/Sustain/BassRecorder_Sus_E3_rr1_Main.wav",
+"size": 1222760,
+"blob": "8b84e722d89c5b315e4ef1cb8916ca12ae3b34e2"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Bass Recorder/Sustain/BassRecorder_Sus_E4_rr1_Main.wav",
+"size": 1016344,
+"blob": "ae93fc29416832a006339192c3e156be4645964a"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Bass Recorder/Sustain/BassRecorder_Sus_F#2_rr1_Main.wav",
+"size": 838364,
+"blob": "5bea21ffc449733f1371c39f3bb346a4fc883b50"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Bass Recorder/Sustain/BassRecorder_Sus_F#3_rr1_Main.wav",
+"size": 1431916,
+"blob": "d1e8c378337d341bcb01b92fff1d31422c34c1dd"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Bass Recorder/Sustain/BassRecorder_Sus_G#2_rr1_Main.wav",
+"size": 697008,
+"blob": "c305d744c94b032a88d29d708bce8af407082dd3"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Bass Recorder/Sustain/BassRecorder_Sus_G#3_rr1_Main.wav",
+"size": 1180704,
+"blob": "b677b3bb4ca0f7ef3ea23d34c958295a3964ceca"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Soprano Recorder/Staccato/SopRecorder_Stac_A#4_rr1_Main.wav",
+"size": 92616,
+"blob": "90d5b604e9a4f1e328f58f381bf805fefdb1de12"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Soprano Recorder/Staccato/SopRecorder_Stac_A#5_rr1_Main.wav",
+"size": 91860,
+"blob": "c64221c56217bfee6e091772eaf8a59297d212a5"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Soprano Recorder/Staccato/SopRecorder_Stac_C4_rr1_Main.wav",
+"size": 98312,
+"blob": "c6c25b8d66e9a27a0547b555da07af7c48b7f4d4"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Soprano Recorder/Staccato/SopRecorder_Stac_C5_rr1_Main.wav",
+"size": 90592,
+"blob": "019c4dae56423ec57ae13f10263d4c1901b503f9"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Soprano Recorder/Staccato/SopRecorder_Stac_D4_rr1_Main.wav",
+"size": 80348,
+"blob": "0a0e88566f549bce178790843d8c353b44d911d7"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Soprano Recorder/Staccato/SopRecorder_Stac_D5_rr1_Main.wav",
+"size": 89284,
+"blob": "b338ab9ab8ba4f0b9e22afe57e2765ffd9ceec07"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Soprano Recorder/Staccato/SopRecorder_Stac_E4_rr1_Main.wav",
+"size": 82664,
+"blob": "47ec3c2aa7ab4cc50dfc5a71ae496ff1f05626c1"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Soprano Recorder/Staccato/SopRecorder_Stac_E5_rr1_Main.wav",
+"size": 85044,
+"blob": "8af81cba689721077988903650cd8cb5c356821b"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Soprano Recorder/Staccato/SopRecorder_Stac_F#4_rr1_Main.wav",
+"size": 90224,
+"blob": "a156fd4853465865e2ea693af52b1aea628c71f2"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Soprano Recorder/Staccato/SopRecorder_Stac_F#5_rr1_Main.wav",
+"size": 99280,
+"blob": "a8034e07dfb9c329d5544588fd7552245e176257"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Soprano Recorder/Staccato/SopRecorder_Stac_G#4_rr1_Main.wav",
+"size": 84660,
+"blob": "956bce53639482093d3f78fd28eb221b6da7dd28"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Soprano Recorder/Staccato/SopRecorder_Stac_G5_rr1_Main.wav",
+"size": 99836,
+"blob": "526dbd526b8dfbcd6e5607dc113f5eb477034530"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Soprano Recorder/Sustain/SopRecorder_Sus_A#4_rr1_Main.wav",
+"size": 2148688,
+"blob": "90a2880b8912882b935d94421aa0f48dd71350e7"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Soprano Recorder/Sustain/SopRecorder_Sus_A#5_rr1_Main.wav",
+"size": 2064280,
+"blob": "7e25581c4ad7511c256505f812a0dedb8d863dd3"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Soprano Recorder/Sustain/SopRecorder_Sus_C4_rr1_Main.wav",
+"size": 1992312,
+"blob": "4d30c5fe153106f3940c732e2757c6a676589771"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Soprano Recorder/Sustain/SopRecorder_Sus_C5_rr1_Main.wav",
+"size": 2031908,
+"blob": "43afd8e187695c2f934445b82355f70443332350"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Soprano Recorder/Sustain/SopRecorder_Sus_C6_rr1_Main.wav",
+"size": 1979600,
+"blob": "c8fb629aef5692649814298a8ce2c59e3455b5b2"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Soprano Recorder/Sustain/SopRecorder_Sus_D4_rr1_Main.wav",
+"size": 2696024,
+"blob": "5c38cb69f47422eaaa18dbfe85c07a7dab9ab52a"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Soprano Recorder/Sustain/SopRecorder_Sus_D5_rr1_Main.wav",
+"size": 2393280,
+"blob": "f349850156c23ceb75e14c63cfc19c05b5fa767c"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Soprano Recorder/Sustain/SopRecorder_Sus_E4_rr1_Main.wav",
+"size": 2616636,
+"blob": "8e333e5820a8aa675e4353107f012509150f73ca"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Soprano Recorder/Sustain/SopRecorder_Sus_E5_rr1_Main.wav",
+"size": 2747436,
+"blob": "c4c672c49e706955ab6d82805773f7da79b0fdbc"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Soprano Recorder/Sustain/SopRecorder_Sus_F#4_rr1_Main.wav",
+"size": 2254524,
+"blob": "6158245851da0207b31adf33a7a8fb57213b2463"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Soprano Recorder/Sustain/SopRecorder_Sus_F#5_rr1_Main.wav",
+"size": 2777292,
+"blob": "eb477810787ae08dcd634ad42d220947d7a5d7af"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Soprano Recorder/Sustain/SopRecorder_Sus_G#4_rr1_Main.wav",
+"size": 1727644,
+"blob": "a3d84c99c3de509077989303178f68565c378070"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Soprano Recorder/Sustain/SopRecorder_Sus_G5_rr1_Main.wav",
+"size": 2469240,
+"blob": "986d42b38f84a281c815ecc30d3d5680d2d8f4c8"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Tenor Recorder/Staccato/TenRecorder_Stac_A#3_rr1_Main.wav",
+"size": 99844,
+"blob": "2f44ef71572ad526682180b24dff70dd95030960"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Tenor Recorder/Staccato/TenRecorder_Stac_B4_rr1_Main.wav",
+"size": 101976,
+"blob": "ba462bf4b3341ca3859c1f536219d70c0c0b7300"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Tenor Recorder/Staccato/TenRecorder_Stac_C3_rr1_Main.wav",
+"size": 81944,
+"blob": "82524c6a9979f9c01213707f497d68b398f08044"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Tenor Recorder/Staccato/TenRecorder_Stac_C4_rr1_Main.wav",
+"size": 96960,
+"blob": "118e3a9e73d5ae1ed306f22bf9bc17e9b94d6f01"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Tenor Recorder/Staccato/TenRecorder_Stac_D3_rr1_Main.wav",
+"size": 87292,
+"blob": "599b47ccaa45b402798ee96f78fa53e6091efb9b"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Tenor Recorder/Staccato/TenRecorder_Stac_D4_rr1_Main.wav",
+"size": 99796,
+"blob": "561ab6d0fa95494552a350d1d9766f3b7cefae7b"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Tenor Recorder/Staccato/TenRecorder_Stac_E3_rr1_Main.wav",
+"size": 90744,
+"blob": "044e830b45b13dca4c482b72cad7fb80d646d553"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Tenor Recorder/Staccato/TenRecorder_Stac_E4_rr1_Main.wav",
+"size": 94708,
+"blob": "f301be1f7eac9b63595cfb272c32b4cc741c84a2"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Tenor Recorder/Staccato/TenRecorder_Stac_F#3_rr1_Main.wav",
+"size": 98460,
+"blob": "998d51ab9e372c6b61d71042c86514a19ebfa09d"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Tenor Recorder/Staccato/TenRecorder_Stac_F#4_rr1_Main.wav",
+"size": 91912,
+"blob": "4b4f57b86795888515b6159acf9679e6daf82a4b"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Tenor Recorder/Staccato/TenRecorder_Stac_G#3_rr1_Main.wav",
+"size": 106332,
+"blob": "0f356493a3d96ce7e7ebb3269c513caa6ac97176"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Tenor Recorder/Staccato/TenRecorder_Stac_G#4_rr1_Main.wav",
+"size": 99992,
+"blob": "c52bb020bcff0ca112a81604dc3ec0591c664200"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Tenor Recorder/SusVib/TenRecorder_SusVib_A3_rr1_Main.wav",
+"size": 1131120,
+"blob": "b7838c3b0a1e85db53efe4a44f922dcfb220f5c4"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Tenor Recorder/SusVib/TenRecorder_SusVib_A4_rr1_Main.wav",
+"size": 979848,
+"blob": "3cd5614a5e040de104f00a3b3861fd5f5707c542"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Tenor Recorder/SusVib/TenRecorder_SusVib_B3_rr1_Main.wav",
+"size": 1017168,
+"blob": "1374e617f7f7d5ead3f3dc94232eeb224754f399"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Tenor Recorder/SusVib/TenRecorder_SusVib_B4_rr1_Main.wav",
+"size": 1102564,
+"blob": "da6af39522437816d0ac598f485f26aac942a5cc"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Tenor Recorder/SusVib/TenRecorder_SusVib_C3_rr1_Main.wav",
+"size": 1057852,
+"blob": "317e5e85d6362b9be2f7692a3bbe818e589d4a83"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Tenor Recorder/SusVib/TenRecorder_SusVib_C4_rr1_Main.wav",
+"size": 1007440,
+"blob": "2b1d43e5a3b2ec007bd7b9eb490b2e0c82da1f9d"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Tenor Recorder/SusVib/TenRecorder_SusVib_D3_rr1_Main.wav",
+"size": 1107256,
+"blob": "3b8dd32442ff836805f32c496bc47d69460d4fe3"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Tenor Recorder/SusVib/TenRecorder_SusVib_D4_rr1_Main.wav",
+"size": 1172404,
+"blob": "78aaed5f86aad65aafc50afbfa6f36f9144a2539"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Tenor Recorder/SusVib/TenRecorder_SusVib_E3_rr1_Main.wav",
+"size": 1052596,
+"blob": "45329aa34eb9347bfa5b0dabbf1436958217ca04"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Tenor Recorder/SusVib/TenRecorder_SusVib_E4_rr1_Main.wav",
+"size": 1227336,
+"blob": "f2dfba676b1ef3725e400a8ab83b820dfa1c1c55"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Tenor Recorder/SusVib/TenRecorder_SusVib_F#3_rr1_Main.wav",
+"size": 1005068,
+"blob": "4c8dcf13e723ba433f83aeea1bae43000ec80c91"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Tenor Recorder/SusVib/TenRecorder_SusVib_F#4_rr1_Main.wav",
+"size": 1103504,
+"blob": "155bcf0d2b9cea0f6d36f683385edc1f35c33c59"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Tenor Recorder/SusVib/TenRecorder_SusVib_G3_rr1_Main.wav",
+"size": 853480,
+"blob": "0802a0e44055b64c1137752ed452507c53acde6e"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Tenor Recorder/SusVib/TenRecorder_SusVib_G4_rr1_Main.wav",
+"size": 912676,
+"blob": "dc05e7f3f94361a769690253af919b87dccfdbc5"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Tenor Recorder/Sustain/TenRecorder_Sus_A#3_rr1_Main.wav",
+"size": 1451604,
+"blob": "ab03ac7b0eada17c683ec76ea9298c5cef72c9ae"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Tenor Recorder/Sustain/TenRecorder_Sus_A4_rr1_Main.wav",
+"size": 2184268,
+"blob": "ef9152f90af7828b43b67be26199c7fc4ba75c6a"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Tenor Recorder/Sustain/TenRecorder_Sus_C3_rr1_Main.wav",
+"size": 1438852,
+"blob": "305a6b921ad992295390f773cdf043ca70754bf8"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Tenor Recorder/Sustain/TenRecorder_Sus_C4_rr1_Main.wav",
+"size": 1511232,
+"blob": "3fa1d93fcd2ac71b55cf6d1a292850fa05d9aadd"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Tenor Recorder/Sustain/TenRecorder_Sus_C5_rr1_Main.wav",
+"size": 1244376,
+"blob": "fd3ef79fb329f60293c97fc1cf272d011f189b82"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Tenor Recorder/Sustain/TenRecorder_Sus_D3_rr1_Main.wav",
+"size": 1637428,
+"blob": "61294970755eba33b501c7dd83fed52a3b2d7e0c"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Tenor Recorder/Sustain/TenRecorder_Sus_D4_rr1_Main.wav",
+"size": 1698564,
+"blob": "19b5cab48de71a4b8f141f2217d5d96ec69525d7"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Tenor Recorder/Sustain/TenRecorder_Sus_E3_rr1_Main.wav",
+"size": 1768996,
+"blob": "093442973350f80bcd302612b858ddfacbe589f2"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Tenor Recorder/Sustain/TenRecorder_Sus_E4_rr1_Main.wav",
+"size": 1570944,
+"blob": "7b3dd0794dec42814409d43b9ddad04aa4a4b980"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Tenor Recorder/Sustain/TenRecorder_Sus_F#3_rr1_Main.wav",
+"size": 1396992,
+"blob": "03b2d41e5d887b2f2827ae044c5b19615724c83f"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Tenor Recorder/Sustain/TenRecorder_Sus_F#4_rr1_Main.wav",
+"size": 1726344,
+"blob": "298d7fd0b81a3939192846c158ac395438db476f"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Tenor Recorder/Sustain/TenRecorder_Sus_G#3_rr1_Main.wav",
+"size": 1476900,
+"blob": "03d20ad5059d644b26355dacf213b0bbe7fec8c0"
+},
+{
+"path": "Aerophones/Edge-blown Aerophones/Baroque Tenor Recorder/Sustain/TenRecorder_Sus_G#4_rr1_Main.wav",
+"size": 1555388,
+"blob": "d4083cf60355396c4cc07189273804126bb99fb4"
+},
+{
+"path": "Chordophones/Zithers/Harpsichord, Italian/Releases/stop1/Harpsichord_stop1-rel_A#0_1.wav",
+"size": 848808,
+"blob": "bc41c345648145b2d6bc55ec3cc743c491d744ce"
+},
+{
+"path": "Chordophones/Zithers/Harpsichord, Italian/Releases/stop1/Harpsichord_stop1-rel_A#1_1.wav",
+"size": 383804,
+"blob": "5902a6fd4c1cd62839b41551858882cc56a1a3da"
+},
+{
+"path": "Chordophones/Zithers/Harpsichord, Italian/Releases/stop1/Harpsichord_stop1-rel_A#2_1.wav",
+"size": 301780,
+"blob": "59e3adf667f9271dd1ab58cf080e5b0bd95a5e5f"
+},
+{
+"path": "Chordophones/Zithers/Harpsichord, Italian/Releases/stop1/Harpsichord_stop1-rel_A#3_1.wav",
+"size": 429436,
+"blob": "6b808c565510329ad806bedb98d3c44ef8e7f5a8"
+},
+{
+"path": "Chordophones/Zithers/Harpsichord, Italian/Releases/stop1/Harpsichord_stop1-rel_B0_1.wav",
+"size": 523252,
+"blob": "7ba8d4f18affd16ecd884d71038b8031e263c9f5"
+},
+{
+"path": "Chordophones/Zithers/Harpsichord, Italian/Releases/stop1/Harpsichord_stop1-rel_B1_1.wav",
+"size": 254352,
+"blob": "f5adff7438de4ca5ef6201e4ba0c22a7ff77a307"
+},
+{
+"path": "Chordophones/Zithers/Harpsichord, Italian/Releases/stop1/Harpsichord_stop1-rel_B2_1.wav",
+"size": 370924,
+"blob": "156ba08f1ed0d70fd148d7eb87c2cb58dbb81b0b"
+},
+{
+"path": "Chordophones/Zithers/Harpsichord, Italian/Releases/stop1/Harpsichord_stop1-rel_B3_1.wav",
+"size": 394716,
+"blob": "04a86bd16f7094805770dcc0413ae465b2e7fb2e"
+},
+{
+"path": "Chordophones/Zithers/Harpsichord, Italian/Releases/stop1/Harpsichord_stop1-rel_B4_1.wav",
+"size": 385720,
+"blob": "2c802d96eac5f76f1a31a2a9db81048d87e8b5d9"
+},
+{
+"path": "Chordophones/Zithers/Harpsichord, Italian/Releases/stop1/Harpsichord_stop1-rel_C#1_1.wav",
+"size": 514336,
+"blob": "9171671cc346b0ed202f619abc11c5d3800f2641"
+},
+{
+"path": "Chordophones/Zithers/Harpsichord, Italian/Releases/stop1/Harpsichord_stop1-rel_C#2_1.wav",
+"size": 364572,
+"blob": "db86210c579c24a3fa0f9e5db6f1e7ab86d786c2"
+},
+{
+"path": "Chordophones/Zithers/Harpsichord, Italian/Releases/stop1/Harpsichord_stop1-rel_C#3_1.wav",
+"size": 370728,
+"blob": "5adf0981e4127ab775def1ad8ccf915b0e94e355"
+},
+{
+"path": "Chordophones/Zithers/Harpsichord, Italian/Releases/stop1/Harpsichord_stop1-rel_C#4_1.wav",
+"size": 307072,
+"blob": "71d85dcd2dbce4fcfea2bb661008d8da80c805f0"
+},
+{
+"path": "Chordophones/Zithers/Harpsichord, Italian/Releases/stop1/Harpsichord_stop1-rel_D#1_1.wav",
+"size": 463992,
+"blob": "5c1c6ab016463f51898ec720b98ba7922614ddb9"
+},
+{
+"path": "Chordophones/Zithers/Harpsichord, Italian/Releases/stop1/Harpsichord_stop1-rel_D#2_1.wav",
+"size": 438912,
+"blob": "596a3d210c56c8463446f57877b418f14b090c86"
+},
+{
+"path": "Chordophones/Zithers/Harpsichord, Italian/Releases/stop1/Harpsichord_stop1-rel_D#3_1.wav",
+"size": 261768,
+"blob": "344079c7b660794731357bdef3c1ec08ff01d945"
+},
+{
+"path": "Chordophones/Zithers/Harpsichord, Italian/Releases/stop1/Harpsichord_stop1-rel_D#4_1.wav",
+"size": 362960,
+"blob": "15f6f770d7faf5c32ff6176d8f33fa2279ef03fd"
+},
+{
+"path": "Chordophones/Zithers/Harpsichord, Italian/Releases/stop1/Harpsichord_stop1-rel_E1_1.wav",
+"size": 433056,
+"blob": "edeae08b519b589cbfbfe29cd933eafd92867371"
+},
+{
+"path": "Chordophones/Zithers/Harpsichord, Italian/Releases/stop1/Harpsichord_stop1-rel_E2_1.wav",
+"size": 389016,
+"blob": "cc50702831e08b8c75c85b470cbe48b3800dc1ee"
+},
+{
+"path": "Chordophones/Zithers/Harpsichord, Italian/Releases/stop1/Harpsichord_stop1-rel_E3_1.wav",
+"size": 319376,
+"blob": "b2c549b56b7a90dd9a2c2bd0ced9d0432f613503"
+},
+{
+"path": "Chordophones/Zithers/Harpsichord, Italian/Releases/stop1/Harpsichord_stop1-rel_E4_1.wav",
+"size": 235552,
+"blob": "9f7db2ac51d4fb5dcd9049d19b546e5f04b906b2"
+},
+{
+"path": "Chordophones/Zithers/Harpsichord, Italian/Releases/stop1/Harpsichord_stop1-rel_F#0_1.wav",
+"size": 706840,
+"blob": "9a55870fd6f5c401b090a4f6b9a73e104a0a3496"
+},
+{
+"path": "Chordophones/Zithers/Harpsichord, Italian/Releases/stop1/Harpsichord_stop1-rel_F#1_1.wav",
+"size": 409740,
+"blob": "a2296d76a1ec27080762dacfab1b53766134b577"
+},
+{
+"path": "Chordophones/Zithers/Harpsichord, Italian/Releases/stop1/Harpsichord_stop1-rel_F#2_1.wav",
+"size": 514488,
+"blob": "99a372c9736d3cc3310073c739c1e0079ad1c895"
+},
+{
+"path": "Chordophones/Zithers/Harpsichord, Italian/Releases/stop1/Harpsichord_stop1-rel_F#3_1.wav",
+"size": 111464,
+"blob": "27f0cab7b9f209dfb3f67e4efd4a549c392c5d8e"
+},
+{
+"path": "Chordophones/Zithers/Harpsichord, Italian/Releases/stop1/Harpsichord_stop1-rel_F#4_1.wav",
+"size": 224704,
+"blob": "aef5082880d0fd2bb71bca1afe1801c5c4923eeb"
+},
+{
+"path": "Chordophones/Zithers/Harpsichord, Italian/Releases/stop1/Harpsichord_stop1-rel_G#0_1.wav",
+"size": 706980,
+"blob": "f7caf13b7de16b209d9dd312b7f753454d71a5aa"
+},
+{
+"path": "Chordophones/Zithers/Harpsichord, Italian/Releases/stop1/Harpsichord_stop1-rel_G#1_1.wav",
+"size": 416260,
+"blob": "4c7c3441dfdeced5c4d71e3870a77bafd2f5b18c"
+},
+{
+"path": "Chordophones/Zithers/Harpsichord, Italian/Releases/stop1/Harpsichord_stop1-rel_G#2_1.wav",
+"size": 389012,
+"blob": "712c13cb45fa974123f3372a59b75db1785f6673"
+},
+{
+"path": "Chordophones/Zithers/Harpsichord, Italian/Releases/stop1/Harpsichord_stop1-rel_G#3_1.wav",
+"size": 310888,
+"blob": "165182be422a4e9a532abedb36e71a84e5ee1f10"
+},
+{
+"path": "Chordophones/Zithers/Harpsichord, Italian/Releases/stop1/Harpsichord_stop1-rel_G#4_1.wav",
+"size": 247516,
+"blob": "da42b1420ad1b4b5726b187b36942ee511263c65"
+},
+{
+"path": "Chordophones/Zithers/Harpsichord, Italian/Sustains/stop1/Harpsichord_stop1_A#0_1.wav",
+"size": 3907344,
+"blob": "aed0d5a44d0c9a4dd85f1df8d091c584a5f03fab"
+},
+{
+"path": "Chordophones/Zithers/Harpsichord, Italian/Sustains/stop1/Harpsichord_stop1_A#1_1.wav",
+"size": 2293344,
+"blob": "54a0f9ba463f0dbd2fd97d37156cabba796606d3"
+},
+{
+"path": "Chordophones/Zithers/Harpsichord, Italian/Sustains/stop1/Harpsichord_stop1_A#2_1.wav",
+"size": 1843440,
+"blob": "51094d32a51ea81ee4833fe3efcd2ee602e9cc92"
+},
+{
+"path": "Chordophones/Zithers/Harpsichord, Italian/Sustains/stop1/Harpsichord_stop1_A#3_1.wav",
+"size": 1131404,
+"blob": "47931e4d6b96329430492f24accd06763ca19aeb"
+},
+{
+"path": "Chordophones/Zithers/Harpsichord, Italian/Sustains/stop1/Harpsichord_stop1_A#4_1.wav",
+"size": 684696,
+"blob": "633d46f67d0d3e8ab7853482c17524960780c9ce"
+},
+{
+"path": "Chordophones/Zithers/Harpsichord, Italian/Sustains/stop1/Harpsichord_stop1_B0_1.wav",
+"size": 2874672,
+"blob": "13f3c3de6a3c248a6dca9b450b8191e86a30e72d"
+},
+{
+"path": "Chordophones/Zithers/Harpsichord, Italian/Sustains/stop1/Harpsichord_stop1_B1_1.wav",
+"size": 2446888,
+"blob": "eb0fadc80b22ddb3203987d2383465a7e5a4550c"
+},
+{
+"path": "Chordophones/Zithers/Harpsichord, Italian/Sustains/stop1/Harpsichord_stop1_B2_1.wav",
+"size": 2076324,
+"blob": "0a8ac05563a46e27c66e9e0b47f6bb0a1f8de125"
+},
+{
+"path": "Chordophones/Zithers/Harpsichord, Italian/Sustains/stop1/Harpsichord_stop1_B3_1.wav",
+"size": 1181448,
+"blob": "908f54e120c54fa3ca97aafd3d560a1cbce1a4c9"
+},
+{
+"path": "Chordophones/Zithers/Harpsichord, Italian/Sustains/stop1/Harpsichord_stop1_B4_1.wav",
+"size": 872876,
+"blob": "50389c41f5a217a031291e16f97e512473545bd3"
+},
+{
+"path": "Chordophones/Zithers/Harpsichord, Italian/Sustains/stop1/Harpsichord_stop1_C#1_1.wav",
+"size": 2338256,
+"blob": "ddd91c1b3118b43c48564eefeea34dc4de2171ef"
+},
+{
+"path": "Chordophones/Zithers/Harpsichord, Italian/Sustains/stop1/Harpsichord_stop1_C#2_1.wav",
+"size": 2289208,
+"blob": "bf19caec9954fa1dab05d125798a199230b5c730"
+},
+{
+"path": "Chordophones/Zithers/Harpsichord, Italian/Sustains/stop1/Harpsichord_stop1_C#3_1.wav",
+"size": 1460848,
+"blob": "9a6d3c9bd9926fec4c4a106a29da8f7b0f5b6177"
+},
+{
+"path": "Chordophones/Zithers/Harpsichord, Italian/Sustains/stop1/Harpsichord_stop1_C#4_1.wav",
+"size": 1097756,
+"blob": "7a27e2565d7534570fea1640ac653e9434fa815f"
+},
+{
+"path": "Chordophones/Zithers/Harpsichord, Italian/Sustains/stop1/Harpsichord_stop1_D#1_1.wav",
+"size": 2835772,
+"blob": "13962f0624265831098e755a2fbe6dd0a6b53f6e"
+},
+{
+"path": "Chordophones/Zithers/Harpsichord, Italian/Sustains/stop1/Harpsichord_stop1_D#2_1.wav",
+"size": 2935604,
+"blob": "90e5a1fd96b4bd4fb0ac518894afabf2527a3a47"
+},
+{
+"path": "Chordophones/Zithers/Harpsichord, Italian/Sustains/stop1/Harpsichord_stop1_D#3_1.wav",
+"size": 1545032,
+"blob": "b1a753513b80292f91e8f0b11312607c18c0207c"
+},
+{
+"path": "Chordophones/Zithers/Harpsichord, Italian/Sustains/stop1/Harpsichord_stop1_D#4_1.wav",
+"size": 1433400,
+"blob": "3e47e99a4115b3fcdc73dcfab6f288c56d2d18f1"
+},
+{
+"path": "Chordophones/Zithers/Harpsichord, Italian/Sustains/stop1/Harpsichord_stop1_E1_1.wav",
+"size": 2160792,
+"blob": "aac5c808643f54a0a6a07f1e8179e3eaa307f10f"
+},
+{
+"path": "Chordophones/Zithers/Harpsichord, Italian/Sustains/stop1/Harpsichord_stop1_E2_1.wav",
+"size": 2128740,
+"blob": "61cacd4a9a76281fd8f0ea6a97f90938f62dc8e4"
+},
+{
+"path": "Chordophones/Zithers/Harpsichord, Italian/Sustains/stop1/Harpsichord_stop1_E3_1.wav",
+"size": 1389372,
+"blob": "b39b6058f4d9213896be06ccf0271be98e0a2ca2"
+},
+{
+"path": "Chordophones/Zithers/Harpsichord, Italian/Sustains/stop1/Harpsichord_stop1_E4_1.wav",
+"size": 1297428,
+"blob": "41259e95ecb8a37bae62600083a28bcf678c150d"
+},
+{
+"path": "Chordophones/Zithers/Harpsichord, Italian/Sustains/stop1/Harpsichord_stop1_F#0_1.wav",
+"size": 3264836,
+"blob": "1584eb4075fb5ec91f436b9425c1d362e5c75d64"
+},
+{
+"path": "Chordophones/Zithers/Harpsichord, Italian/Sustains/stop1/Harpsichord_stop1_F#1_1.wav",
+"size": 2266832,
+"blob": "ff80f68a0ec51feb8d234d48f156f4f10e3cfd41"
+},
+{
+"path": "Chordophones/Zithers/Harpsichord, Italian/Sustains/stop1/Harpsichord_stop1_F#2_1.wav",
+"size": 2240580,
+"blob": "0ecfa5564292e863e00016cecf9c337b26332e5c"
+},
+{
+"path": "Chordophones/Zithers/Harpsichord, Italian/Sustains/stop1/Harpsichord_stop1_F#3_1.wav",
+"size": 1557964,
+"blob": "14107e08303a9a886cf1d858a89783697361f112"
+},
+{
+"path": "Chordophones/Zithers/Harpsichord, Italian/Sustains/stop1/Harpsichord_stop1_F#4_1.wav",
+"size": 1059576,
+"blob": "0870af75ee3f64d48da5c53486f245f3d3a5aefc"
+},
+{
+"path": "Chordophones/Zithers/Harpsichord, Italian/Sustains/stop1/Harpsichord_stop1_G#0_1.wav",
+"size": 2926208,
+"blob": "2d0e761caecad76ecfbb37134db30eeb12017690"
+},
+{
+"path": "Chordophones/Zithers/Harpsichord, Italian/Sustains/stop1/Harpsichord_stop1_G#1_1.wav",
+"size": 2210528,
+"blob": "60b32d7629874573cf5dd08e0d36e76e8ce85d96"
+},
+{
+"path": "Chordophones/Zithers/Harpsichord, Italian/Sustains/stop1/Harpsichord_stop1_G#2_1.wav",
+"size": 1897744,
+"blob": "c2835ec09c5119016d0175cf89615e2f54d617bd"
+},
+{
+"path": "Chordophones/Zithers/Harpsichord, Italian/Sustains/stop1/Harpsichord_stop1_G#3_1.wav",
+"size": 1951316,
+"blob": "4fc332d0af32396b84706200c22659e6e1cfce63"
+},
+{
+"path": "Chordophones/Zithers/Harpsichord, Italian/Sustains/stop1/Harpsichord_stop1_G#4_1.wav",
+"size": 947968,
+"blob": "fe70164bff9547dd05ed5595128c0334f29cc31e"
+},
+{
+"path": "LICENSE",
+"size": 7048,
+"blob": "0e259d42c996742e9e3cba14c677129b2c1b6311"
+}
+]
+}

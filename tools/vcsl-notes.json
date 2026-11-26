@@ -1,0 +1,1466 @@
+{
+ "harpsichord": {
+  "sustain": [
+   {
+    "file": "Chordophones/Zithers/Harpsichord, Italian/Sustains/stop1/Harpsichord_stop1_F#0_1.wav",
+    "key": 30,
+    "cents": 4.3,
+    "db": -24.5,
+    "start": 0.0004
+   },
+   {
+    "file": "Chordophones/Zithers/Harpsichord, Italian/Sustains/stop1/Harpsichord_stop1_G#0_1.wav",
+    "key": 32,
+    "cents": 2.4,
+    "db": -26.7,
+    "start": 0.0004
+   },
+   {
+    "file": "Chordophones/Zithers/Harpsichord, Italian/Sustains/stop1/Harpsichord_stop1_A#0_1.wav",
+    "key": 34,
+    "cents": 4.7,
+    "db": -29.6,
+    "start": 0.0003
+   },
+   {
+    "file": "Chordophones/Zithers/Harpsichord, Italian/Sustains/stop1/Harpsichord_stop1_A#1_1.wav",
+    "key": 34,
+    "cents": 7.9,
+    "db": -33.5,
+    "start": 0.0002
+   },
+   {
+    "file": "Chordophones/Zithers/Harpsichord, Italian/Sustains/stop1/Harpsichord_stop1_B0_1.wav",
+    "key": 35,
+    "cents": 6.9,
+    "db": -27.8,
+    "start": 0.0003
+   },
+   {
+    "file": "Chordophones/Zithers/Harpsichord, Italian/Sustains/stop1/Harpsichord_stop1_C#1_1.wav",
+    "key": 37,
+    "cents": 9.4,
+    "db": -29.9,
+    "start": 0.0003
+   },
+   {
+    "file": "Chordophones/Zithers/Harpsichord, Italian/Sustains/stop1/Harpsichord_stop1_D#1_1.wav",
+    "key": 39,
+    "cents": 5.1,
+    "db": -29.7,
+    "start": 0.0002
+   },
+   {
+    "file": "Chordophones/Zithers/Harpsichord, Italian/Sustains/stop1/Harpsichord_stop1_E1_1.wav",
+    "key": 40,
+    "cents": 3.1,
+    "db": -30.4,
+    "start": 0.0003
+   },
+   {
+    "file": "Chordophones/Zithers/Harpsichord, Italian/Sustains/stop1/Harpsichord_stop1_F#1_1.wav",
+    "key": 42,
+    "cents": 3.4,
+    "db": -25.0,
+    "start": 0.0003
+   },
+   {
+    "file": "Chordophones/Zithers/Harpsichord, Italian/Sustains/stop1/Harpsichord_stop1_G#1_1.wav",
+    "key": 44,
+    "cents": 10.2,
+    "db": -29.5,
+    "start": 0.0002
+   },
+   {
+    "file": "Chordophones/Zithers/Harpsichord, Italian/Sustains/stop1/Harpsichord_stop1_B1_1.wav",
+    "key": 47,
+    "cents": 11.4,
+    "db": -30.3,
+    "start": 0.0002
+   },
+   {
+    "file": "Chordophones/Zithers/Harpsichord, Italian/Sustains/stop1/Harpsichord_stop1_C#2_1.wav",
+    "key": 49,
+    "cents": 8.6,
+    "db": -29.9,
+    "start": 0.0002
+   },
+   {
+    "file": "Chordophones/Zithers/Harpsichord, Italian/Sustains/stop1/Harpsichord_stop1_D#2_1.wav",
+    "key": 51,
+    "cents": 13.5,
+    "db": -25.3,
+    "start": 0.0002
+   },
+   {
+    "file": "Chordophones/Zithers/Harpsichord, Italian/Sustains/stop1/Harpsichord_stop1_E2_1.wav",
+    "key": 52,
+    "cents": 16.0,
+    "db": -26.8,
+    "start": 0.0002
+   },
+   {
+    "file": "Chordophones/Zithers/Harpsichord, Italian/Sustains/stop1/Harpsichord_stop1_F#2_1.wav",
+    "key": 54,
+    "cents": 9.6,
+    "db": -24.8,
+    "start": 0.0003
+   },
+   {
+    "file": "Chordophones/Zithers/Harpsichord, Italian/Sustains/stop1/Harpsichord_stop1_G#2_1.wav",
+    "key": 56,
+    "cents": 11.1,
+    "db": -26.3,
+    "start": 0.0005
+   },
+   {
+    "file": "Chordophones/Zithers/Harpsichord, Italian/Sustains/stop1/Harpsichord_stop1_A#2_1.wav",
+    "key": 58,
+    "cents": 15.6,
+    "db": -25.7,
+    "start": 0.0004
+   },
+   {
+    "file": "Chordophones/Zithers/Harpsichord, Italian/Sustains/stop1/Harpsichord_stop1_B2_1.wav",
+    "key": 59,
+    "cents": 11.6,
+    "db": -25.9,
+    "start": 0.0004
+   },
+   {
+    "file": "Chordophones/Zithers/Harpsichord, Italian/Sustains/stop1/Harpsichord_stop1_C#3_1.wav",
+    "key": 62,
+    "cents": -1.3,
+    "db": -22.6,
+    "start": 0.0003
+   },
+   {
+    "file": "Chordophones/Zithers/Harpsichord, Italian/Sustains/stop1/Harpsichord_stop1_D#3_1.wav",
+    "key": 63,
+    "cents": 13.1,
+    "db": -32.1,
+    "start": 0.0004
+   },
+   {
+    "file": "Chordophones/Zithers/Harpsichord, Italian/Sustains/stop1/Harpsichord_stop1_E3_1.wav",
+    "key": 64,
+    "cents": 7.3,
+    "db": -28.7,
+    "start": 0.0002
+   },
+   {
+    "file": "Chordophones/Zithers/Harpsichord, Italian/Sustains/stop1/Harpsichord_stop1_F#3_1.wav",
+    "key": 66,
+    "cents": 7.0,
+    "db": -24.2,
+    "start": 0.0005
+   },
+   {
+    "file": "Chordophones/Zithers/Harpsichord, Italian/Sustains/stop1/Harpsichord_stop1_G#3_1.wav",
+    "key": 68,
+    "cents": 12.7,
+    "db": -23.4,
+    "start": 0.0004
+   },
+   {
+    "file": "Chordophones/Zithers/Harpsichord, Italian/Sustains/stop1/Harpsichord_stop1_A#3_1.wav",
+    "key": 70,
+    "cents": 10.4,
+    "db": -25.2,
+    "start": 0.0003
+   },
+   {
+    "file": "Chordophones/Zithers/Harpsichord, Italian/Sustains/stop1/Harpsichord_stop1_B3_1.wav",
+    "key": 71,
+    "cents": 8.8,
+    "db": -26.6,
+    "start": 0.0004
+   },
+   {
+    "file": "Chordophones/Zithers/Harpsichord, Italian/Sustains/stop1/Harpsichord_stop1_C#4_1.wav",
+    "key": 73,
+    "cents": 10.6,
+    "db": -25.7,
+    "start": 0.0006
+   },
+   {
+    "file": "Chordophones/Zithers/Harpsichord, Italian/Sustains/stop1/Harpsichord_stop1_D#4_1.wav",
+    "key": 75,
+    "cents": 7.9,
+    "db": -21.3,
+    "start": 0.0004
+   },
+   {
+    "file": "Chordophones/Zithers/Harpsichord, Italian/Sustains/stop1/Harpsichord_stop1_E4_1.wav",
+    "key": 76,
+    "cents": 5.7,
+    "db": -23.3,
+    "start": 0.0004
+   },
+   {
+    "file": "Chordophones/Zithers/Harpsichord, Italian/Sustains/stop1/Harpsichord_stop1_F#4_1.wav",
+    "key": 78,
+    "cents": 4.9,
+    "db": -19.0,
+    "start": 0.0004
+   },
+   {
+    "file": "Chordophones/Zithers/Harpsichord, Italian/Sustains/stop1/Harpsichord_stop1_G#4_1.wav",
+    "key": 80,
+    "cents": 0.0,
+    "db": -19.5,
+    "start": 0.0004
+   },
+   {
+    "file": "Chordophones/Zithers/Harpsichord, Italian/Sustains/stop1/Harpsichord_stop1_A#4_1.wav",
+    "key": 82,
+    "cents": 12.3,
+    "db": -29.4,
+    "start": 0.0003
+   },
+   {
+    "file": "Chordophones/Zithers/Harpsichord, Italian/Sustains/stop1/Harpsichord_stop1_B4_1.wav",
+    "key": 83,
+    "cents": 8.0,
+    "db": -25.7,
+    "start": 0.0003
+   }
+  ],
+  "release": [
+   {
+    "file": "Chordophones/Zithers/Harpsichord, Italian/Releases/stop1/Harpsichord_stop1-rel_F#0_1.wav",
+    "key": 30,
+    "cents": 0.0,
+    "db": -35.2,
+    "start": 0.0015
+   },
+   {
+    "file": "Chordophones/Zithers/Harpsichord, Italian/Releases/stop1/Harpsichord_stop1-rel_G#0_1.wav",
+    "key": 32,
+    "cents": 0.0,
+    "db": -38.3,
+    "start": 0.0005
+   },
+   {
+    "file": "Chordophones/Zithers/Harpsichord, Italian/Releases/stop1/Harpsichord_stop1-rel_A#0_1.wav",
+    "key": 34,
+    "cents": 0.0,
+    "db": -41.7,
+    "start": 0.0004
+   },
+   {
+    "file": "Chordophones/Zithers/Harpsichord, Italian/Releases/stop1/Harpsichord_stop1-rel_A#1_1.wav",
+    "key": 34,
+    "cents": 0.0,
+    "db": -45.7,
+    "start": 0.0004
+   },
+   {
+    "file": "Chordophones/Zithers/Harpsichord, Italian/Releases/stop1/Harpsichord_stop1-rel_B0_1.wav",
+    "key": 35,
+    "cents": 0.0,
+    "db": -38.6,
+    "start": 0.0001
+   },
+   {
+    "file": "Chordophones/Zithers/Harpsichord, Italian/Releases/stop1/Harpsichord_stop1-rel_C#1_1.wav",
+    "key": 37,
+    "cents": 0.0,
+    "db": -40.5,
+    "start": 0.0005
+   },
+   {
+    "file": "Chordophones/Zithers/Harpsichord, Italian/Releases/stop1/Harpsichord_stop1-rel_D#1_1.wav",
+    "key": 39,
+    "cents": 0.0,
+    "db": -40.8,
+    "start": 0.0004
+   },
+   {
+    "file": "Chordophones/Zithers/Harpsichord, Italian/Releases/stop1/Harpsichord_stop1-rel_E1_1.wav",
+    "key": 40,
+    "cents": 0.0,
+    "db": -41.8,
+    "start": 0.0003
+   },
+   {
+    "file": "Chordophones/Zithers/Harpsichord, Italian/Releases/stop1/Harpsichord_stop1-rel_F#1_1.wav",
+    "key": 42,
+    "cents": 0.0,
+    "db": -39.5,
+    "start": 0.0002
+   },
+   {
+    "file": "Chordophones/Zithers/Harpsichord, Italian/Releases/stop1/Harpsichord_stop1-rel_G#1_1.wav",
+    "key": 44,
+    "cents": 0.0,
+    "db": -44.0,
+    "start": 0.0002
+   },
+   {
+    "file": "Chordophones/Zithers/Harpsichord, Italian/Releases/stop1/Harpsichord_stop1-rel_B1_1.wav",
+    "key": 47,
+    "cents": 0.0,
+    "db": -46.5,
+    "start": 0.0001
+   },
+   {
+    "file": "Chordophones/Zithers/Harpsichord, Italian/Releases/stop1/Harpsichord_stop1-rel_C#2_1.wav",
+    "key": 49,
+    "cents": 0.0,
+    "db": -40.6,
+    "start": 0.0002
+   },
+   {
+    "file": "Chordophones/Zithers/Harpsichord, Italian/Releases/stop1/Harpsichord_stop1-rel_D#2_1.wav",
+    "key": 51,
+    "cents": 0.0,
+    "db": -42.0,
+    "start": 0.0002
+   },
+   {
+    "file": "Chordophones/Zithers/Harpsichord, Italian/Releases/stop1/Harpsichord_stop1-rel_E2_1.wav",
+    "key": 52,
+    "cents": 0.0,
+    "db": -40.9,
+    "start": 0.0003
+   },
+   {
+    "file": "Chordophones/Zithers/Harpsichord, Italian/Releases/stop1/Harpsichord_stop1-rel_F#2_1.wav",
+    "key": 54,
+    "cents": 0.0,
+    "db": -39.0,
+    "start": 0.0003
+   },
+   {
+    "file": "Chordophones/Zithers/Harpsichord, Italian/Releases/stop1/Harpsichord_stop1-rel_G#2_1.wav",
+    "key": 56,
+    "cents": 0.0,
+    "db": -40.7,
+    "start": 0.0001
+   },
+   {
+    "file": "Chordophones/Zithers/Harpsichord, Italian/Releases/stop1/Harpsichord_stop1-rel_A#2_1.wav",
+    "key": 58,
+    "cents": 0.0,
+    "db": -43.0,
+    "start": 0.0002
+   },
+   {
+    "file": "Chordophones/Zithers/Harpsichord, Italian/Releases/stop1/Harpsichord_stop1-rel_B2_1.wav",
+    "key": 59,
+    "cents": 0.0,
+    "db": -41.4,
+    "start": 0.0003
+   },
+   {
+    "file": "Chordophones/Zithers/Harpsichord, Italian/Releases/stop1/Harpsichord_stop1-rel_C#3_1.wav",
+    "key": 62,
+    "cents": 0.0,
+    "db": -36.6,
+    "start": 0.0001
+   },
+   {
+    "file": "Chordophones/Zithers/Harpsichord, Italian/Releases/stop1/Harpsichord_stop1-rel_D#3_1.wav",
+    "key": 63,
+    "cents": 0.0,
+    "db": -42.2,
+    "start": 0.0002
+   },
+   {
+    "file": "Chordophones/Zithers/Harpsichord, Italian/Releases/stop1/Harpsichord_stop1-rel_E3_1.wav",
+    "key": 64,
+    "cents": 0.0,
+    "db": -41.8,
+    "start": 0.0002
+   },
+   {
+    "file": "Chordophones/Zithers/Harpsichord, Italian/Releases/stop1/Harpsichord_stop1-rel_F#3_1.wav",
+    "key": 66,
+    "cents": 0.0,
+    "db": -41.7,
+    "start": 0.0004
+   },
+   {
+    "file": "Chordophones/Zithers/Harpsichord, Italian/Releases/stop1/Harpsichord_stop1-rel_G#3_1.wav",
+    "key": 68,
+    "cents": 0.0,
+    "db": -42.6,
+    "start": 0.0001
+   },
+   {
+    "file": "Chordophones/Zithers/Harpsichord, Italian/Releases/stop1/Harpsichord_stop1-rel_A#3_1.wav",
+    "key": 70,
+    "cents": 0.0,
+    "db": -39.8,
+    "start": 0.0001
+   },
+   {
+    "file": "Chordophones/Zithers/Harpsichord, Italian/Releases/stop1/Harpsichord_stop1-rel_B3_1.wav",
+    "key": 71,
+    "cents": 0.0,
+    "db": -38.4,
+    "start": 0.0001
+   },
+   {
+    "file": "Chordophones/Zithers/Harpsichord, Italian/Releases/stop1/Harpsichord_stop1-rel_C#4_1.wav",
+    "key": 73,
+    "cents": 0.0,
+    "db": -38.9,
+    "start": 0.0003
+   },
+   {
+    "file": "Chordophones/Zithers/Harpsichord, Italian/Releases/stop1/Harpsichord_stop1-rel_D#4_1.wav",
+    "key": 75,
+    "cents": 0.0,
+    "db": -36.6,
+    "start": 0.0001
+   },
+   {
+    "file": "Chordophones/Zithers/Harpsichord, Italian/Releases/stop1/Harpsichord_stop1-rel_E4_1.wav",
+    "key": 76,
+    "cents": 0.0,
+    "db": -49.4,
+    "start": 0.0001
+   },
+   {
+    "file": "Chordophones/Zithers/Harpsichord, Italian/Releases/stop1/Harpsichord_stop1-rel_F#4_1.wav",
+    "key": 78,
+    "cents": 0.0,
+    "db": -39.2,
+    "start": 0.0002
+   },
+   {
+    "file": "Chordophones/Zithers/Harpsichord, Italian/Releases/stop1/Harpsichord_stop1-rel_G#4_1.wav",
+    "key": 80,
+    "cents": 0.0,
+    "db": -45.3,
+    "start": 0.0002
+   },
+   {
+    "file": "Chordophones/Zithers/Harpsichord, Italian/Releases/stop1/Harpsichord_stop1-rel_B4_1.wav",
+    "key": 83,
+    "cents": 0.0,
+    "db": -44.0,
+    "start": 0.0001
+   }
+  ]
+ },
+ "recorder-soprano": {
+  "sustain": [
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Soprano Recorder/Sustain/SopRecorder_Sus_C4_rr1_Main.wav",
+    "key": 72,
+    "cents": -2.9,
+    "db": -40.3,
+    "start": 0.0374
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Soprano Recorder/Sustain/SopRecorder_Sus_D4_rr1_Main.wav",
+    "key": 74,
+    "cents": 1.5,
+    "db": -38.8,
+    "start": 0.0179
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Soprano Recorder/Sustain/SopRecorder_Sus_E4_rr1_Main.wav",
+    "key": 76,
+    "cents": 3.1,
+    "db": -34.0,
+    "start": 0.0171
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Soprano Recorder/Sustain/SopRecorder_Sus_F#4_rr1_Main.wav",
+    "key": 78,
+    "cents": 5.5,
+    "db": -32.2,
+    "start": 0.0137
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Soprano Recorder/Sustain/SopRecorder_Sus_G#4_rr1_Main.wav",
+    "key": 80,
+    "cents": 3.5,
+    "db": -34.9,
+    "start": 0.0159
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Soprano Recorder/Sustain/SopRecorder_Sus_A#4_rr1_Main.wav",
+    "key": 82,
+    "cents": 5.6,
+    "db": -22.6,
+    "start": 0.0168
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Soprano Recorder/Sustain/SopRecorder_Sus_C5_rr1_Main.wav",
+    "key": 84,
+    "cents": 1.5,
+    "db": -21.5,
+    "start": 0.0115
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Soprano Recorder/Sustain/SopRecorder_Sus_D5_rr1_Main.wav",
+    "key": 86,
+    "cents": 6.7,
+    "db": -19.4,
+    "start": 0.0105
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Soprano Recorder/Sustain/SopRecorder_Sus_E5_rr1_Main.wav",
+    "key": 88,
+    "cents": 0.6,
+    "db": -30.2,
+    "start": 0.015
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Soprano Recorder/Sustain/SopRecorder_Sus_F#5_rr1_Main.wav",
+    "key": 90,
+    "cents": -1.9,
+    "db": -26.8,
+    "start": 0.0191
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Soprano Recorder/Sustain/SopRecorder_Sus_G5_rr1_Main.wav",
+    "key": 91,
+    "cents": 2.3,
+    "db": -22.6,
+    "start": 0.0241
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Soprano Recorder/Sustain/SopRecorder_Sus_A#5_rr1_Main.wav",
+    "key": 94,
+    "cents": 11.0,
+    "db": -21.1,
+    "start": 0.017
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Soprano Recorder/Sustain/SopRecorder_Sus_C6_rr1_Main.wav",
+    "key": 96,
+    "cents": 11.6,
+    "db": -28.0,
+    "start": 0.0216
+   }
+  ],
+  "staccato": [
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Soprano Recorder/Staccato/SopRecorder_Stac_C4_rr1_Main.wav",
+    "key": 72,
+    "cents": -0.7,
+    "db": -46.8,
+    "start": 0.0361
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Soprano Recorder/Staccato/SopRecorder_Stac_D4_rr1_Main.wav",
+    "key": 74,
+    "cents": 4.3,
+    "db": -41.7,
+    "start": 0.0269
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Soprano Recorder/Staccato/SopRecorder_Stac_E4_rr1_Main.wav",
+    "key": 76,
+    "cents": 5.1,
+    "db": -37.6,
+    "start": 0.0159
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Soprano Recorder/Staccato/SopRecorder_Stac_F#4_rr1_Main.wav",
+    "key": 78,
+    "cents": 10.3,
+    "db": -40.4,
+    "start": 0.0132
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Soprano Recorder/Staccato/SopRecorder_Stac_G#4_rr1_Main.wav",
+    "key": 80,
+    "cents": 9.6,
+    "db": -33.0,
+    "start": 0.0171
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Soprano Recorder/Staccato/SopRecorder_Stac_A#4_rr1_Main.wav",
+    "key": 82,
+    "cents": 3.5,
+    "db": -33.8,
+    "start": 0.012
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Soprano Recorder/Staccato/SopRecorder_Stac_C5_rr1_Main.wav",
+    "key": 84,
+    "cents": 3.7,
+    "db": -27.8,
+    "start": 0.0098
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Soprano Recorder/Staccato/SopRecorder_Stac_D5_rr1_Main.wav",
+    "key": 86,
+    "cents": -1.4,
+    "db": -26.1,
+    "start": 0.0102
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Soprano Recorder/Staccato/SopRecorder_Stac_E5_rr1_Main.wav",
+    "key": 88,
+    "cents": -1.5,
+    "db": -30.8,
+    "start": 0.0178
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Soprano Recorder/Staccato/SopRecorder_Stac_F#5_rr1_Main.wav",
+    "key": 90,
+    "cents": 5.6,
+    "db": -26.2,
+    "start": 0.0271
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Soprano Recorder/Staccato/SopRecorder_Stac_G5_rr1_Main.wav",
+    "key": 91,
+    "cents": 4.3,
+    "db": -26.8,
+    "start": 0.0198
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Soprano Recorder/Staccato/SopRecorder_Stac_A#5_rr1_Main.wav",
+    "key": 94,
+    "cents": -0.1,
+    "db": -26.4,
+    "start": 0.008
+   }
+  ]
+ },
+ "recorder-alto": {
+  "sustain": [
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Alto Recorder/Sustain/AltRecorder_Sus_F3_rr1_Main.wav",
+    "key": 65,
+    "cents": 4.4,
+    "db": -44.8,
+    "start": 0.0553
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Alto Recorder/Sustain/AltRecorder_Sus_G#3_rr1_Main.wav",
+    "key": 68,
+    "cents": -0.2,
+    "db": -42.5,
+    "start": 0.036
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Alto Recorder/Sustain/AltRecorder_Sus_A#3_rr1_Main.wav",
+    "key": 70,
+    "cents": -0.3,
+    "db": -34.3,
+    "start": 0.0254
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Alto Recorder/Sustain/AltRecorder_Sus_C4_rr1_Main.wav",
+    "key": 72,
+    "cents": -1.1,
+    "db": -34.9,
+    "start": 0.0255
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Alto Recorder/Sustain/AltRecorder_Sus_D4_rr1_Main.wav",
+    "key": 74,
+    "cents": -6.7,
+    "db": -39.2,
+    "start": 0.0216
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Alto Recorder/Sustain/AltRecorder_Sus_E4_rr1_Main.wav",
+    "key": 76,
+    "cents": 0.6,
+    "db": -28.4,
+    "start": 0.017
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Alto Recorder/Sustain/AltRecorder_Sus_F#4_rr1_Main.wav",
+    "key": 78,
+    "cents": 7.4,
+    "db": -27.4,
+    "start": 0.0141
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Alto Recorder/Sustain/AltRecorder_Sus_G#4_rr1_Main.wav",
+    "key": 80,
+    "cents": 2.3,
+    "db": -34.1,
+    "start": 0.0224
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Alto Recorder/Sustain/AltRecorder_Sus_A#4_rr1_Main.wav",
+    "key": 82,
+    "cents": -1.5,
+    "db": -31.6,
+    "start": 0.0157
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Alto Recorder/Sustain/AltRecorder_Sus_C5_rr1_Main.wav",
+    "key": 84,
+    "cents": 0.1,
+    "db": -27.7,
+    "start": 0.0161
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Alto Recorder/Sustain/AltRecorder_Sus_D5_rr1_Main.wav",
+    "key": 86,
+    "cents": 5.4,
+    "db": -30.3,
+    "start": 0.0191
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Alto Recorder/Sustain/AltRecorder_Sus_E5_rr1_Main.wav",
+    "key": 88,
+    "cents": 4.3,
+    "db": -22.1,
+    "start": 0.021
+   }
+  ],
+  "vibrato": [
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Alto Recorder/SusVib/AltRecorder_SusVib_F3_rr1_Main.wav",
+    "key": 65,
+    "cents": 1.4,
+    "db": -45.0,
+    "start": 0.043
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Alto Recorder/SusVib/AltRecorder_SusVib_G#3_rr1_Main.wav",
+    "key": 68,
+    "cents": 1.1,
+    "db": -42.7,
+    "start": 0.0607
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Alto Recorder/SusVib/AltRecorder_SusVib_A#3_rr1_Main.wav",
+    "key": 70,
+    "cents": -8.8,
+    "db": -36.3,
+    "start": 0.0223
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Alto Recorder/SusVib/AltRecorder_SusVib_C4_rr1_Main.wav",
+    "key": 72,
+    "cents": -3.1,
+    "db": -32.4,
+    "start": 0.0185
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Alto Recorder/SusVib/AltRecorder_SusVib_D4_rr1_Main.wav",
+    "key": 74,
+    "cents": -2.5,
+    "db": -32.6,
+    "start": 0.022
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Alto Recorder/SusVib/AltRecorder_SusVib_E4_rr1_Main.wav",
+    "key": 76,
+    "cents": 6.2,
+    "db": -22.9,
+    "start": 0.0193
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Alto Recorder/SusVib/AltRecorder_SusVib_F#4_rr1_Main.wav",
+    "key": 78,
+    "cents": 9.3,
+    "db": -26.1,
+    "start": 0.0156
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Alto Recorder/SusVib/AltRecorder_SusVib_G#4_rr1_Main.wav",
+    "key": 80,
+    "cents": 2.5,
+    "db": -29.9,
+    "start": 0.0225
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Alto Recorder/SusVib/AltRecorder_SusVib_A#4_rr1_Main.wav",
+    "key": 82,
+    "cents": -2.8,
+    "db": -23.7,
+    "start": 0.0164
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Alto Recorder/SusVib/AltRecorder_SusVib_C5_rr1_Main.wav",
+    "key": 84,
+    "cents": -3.5,
+    "db": -24.3,
+    "start": 0.0203
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Alto Recorder/SusVib/AltRecorder_SusVib_D5_rr1_Main.wav",
+    "key": 86,
+    "cents": 1.8,
+    "db": -23.5,
+    "start": 0.0182
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Alto Recorder/SusVib/AltRecorder_SusVib_E5_rr1_Main.wav",
+    "key": 88,
+    "cents": -2.4,
+    "db": -21.8,
+    "start": 0.0172
+   }
+  ],
+  "staccato": [
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Alto Recorder/Staccato/AltRecorder_Stac_F#3_rr1_Main.wav",
+    "key": 66,
+    "cents": 17.0,
+    "db": -49.8,
+    "start": 0.0362
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Alto Recorder/Staccato/AltRecorder_Stac_G#3_rr1_Main.wav",
+    "key": 68,
+    "cents": 10.4,
+    "db": -48.1,
+    "start": 0.0276
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Alto Recorder/Staccato/AltRecorder_Stac_A#3_rr1_Main.wav",
+    "key": 70,
+    "cents": 3.1,
+    "db": -40.9,
+    "start": 0.0258
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Alto Recorder/Staccato/AltRecorder_Stac_C4_rr1_Main.wav",
+    "key": 72,
+    "cents": 0.8,
+    "db": -36.8,
+    "start": 0.021
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Alto Recorder/Staccato/AltRecorder_Stac_D4_rr1_Main.wav",
+    "key": 74,
+    "cents": 6.9,
+    "db": -30.9,
+    "start": 0.0113
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Alto Recorder/Staccato/AltRecorder_Stac_E4_rr1_Main.wav",
+    "key": 76,
+    "cents": 1.7,
+    "db": -28.1,
+    "start": 0.0114
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Alto Recorder/Staccato/AltRecorder_Stac_F#4_rr1_Main.wav",
+    "key": 78,
+    "cents": 0.2,
+    "db": -30.1,
+    "start": 0.0117
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Alto Recorder/Staccato/AltRecorder_Stac_G#4_rr1_Main.wav",
+    "key": 80,
+    "cents": 2.1,
+    "db": -32.1,
+    "start": 0.0159
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Alto Recorder/Staccato/AltRecorder_Stac_A#4_rr1_Main.wav",
+    "key": 82,
+    "cents": 0.5,
+    "db": -24.8,
+    "start": 0.0183
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Alto Recorder/Staccato/AltRecorder_Stac_C5_rr1_Main.wav",
+    "key": 84,
+    "cents": -0.1,
+    "db": -30.6,
+    "start": 0.0172
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Alto Recorder/Staccato/AltRecorder_Stac_D5_rr1_Main.wav",
+    "key": 86,
+    "cents": 2.2,
+    "db": -25.6,
+    "start": 0.0164
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Alto Recorder/Staccato/AltRecorder_Stac_E5_rr1_Main.wav",
+    "key": 88,
+    "cents": 0.0,
+    "db": -29.2,
+    "start": 0.0174
+   }
+  ]
+ },
+ "recorder-tenor": {
+  "sustain": [
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Tenor Recorder/Sustain/TenRecorder_Sus_C3_rr1_Main.wav",
+    "key": 60,
+    "cents": 4.0,
+    "db": -46.2,
+    "start": 0.1945
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Tenor Recorder/Sustain/TenRecorder_Sus_D3_rr1_Main.wav",
+    "key": 62,
+    "cents": -0.5,
+    "db": -38.8,
+    "start": 0.0574
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Tenor Recorder/Sustain/TenRecorder_Sus_E3_rr1_Main.wav",
+    "key": 64,
+    "cents": -17.7,
+    "db": -46.8,
+    "start": 0.0929
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Tenor Recorder/Sustain/TenRecorder_Sus_F#3_rr1_Main.wav",
+    "key": 66,
+    "cents": -0.3,
+    "db": -35.8,
+    "start": 0.0272
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Tenor Recorder/Sustain/TenRecorder_Sus_G#3_rr1_Main.wav",
+    "key": 68,
+    "cents": 1.1,
+    "db": -32.8,
+    "start": 0.0203
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Tenor Recorder/Sustain/TenRecorder_Sus_A#3_rr1_Main.wav",
+    "key": 70,
+    "cents": 0.1,
+    "db": -30.3,
+    "start": 0.0182
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Tenor Recorder/Sustain/TenRecorder_Sus_C4_rr1_Main.wav",
+    "key": 72,
+    "cents": -5.4,
+    "db": -40.2,
+    "start": 0.0191
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Tenor Recorder/Sustain/TenRecorder_Sus_D4_rr1_Main.wav",
+    "key": 74,
+    "cents": -1.2,
+    "db": -28.1,
+    "start": 0.014
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Tenor Recorder/Sustain/TenRecorder_Sus_E4_rr1_Main.wav",
+    "key": 76,
+    "cents": -0.6,
+    "db": -29.8,
+    "start": 0.0256
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Tenor Recorder/Sustain/TenRecorder_Sus_F#4_rr1_Main.wav",
+    "key": 78,
+    "cents": 1.4,
+    "db": -24.6,
+    "start": 0.0164
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Tenor Recorder/Sustain/TenRecorder_Sus_G#4_rr1_Main.wav",
+    "key": 80,
+    "cents": 2.6,
+    "db": -24.7,
+    "start": 0.0207
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Tenor Recorder/Sustain/TenRecorder_Sus_A4_rr1_Main.wav",
+    "key": 81,
+    "cents": 1.6,
+    "db": -21.5,
+    "start": 0.0211
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Tenor Recorder/Sustain/TenRecorder_Sus_C5_rr1_Main.wav",
+    "key": 84,
+    "cents": 1.7,
+    "db": -16.6,
+    "start": 0.0226
+   }
+  ],
+  "vibrato": [
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Tenor Recorder/SusVib/TenRecorder_SusVib_C3_rr1_Main.wav",
+    "key": 60,
+    "cents": -10.2,
+    "db": -47.8,
+    "start": 0.1339
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Tenor Recorder/SusVib/TenRecorder_SusVib_D3_rr1_Main.wav",
+    "key": 62,
+    "cents": -9.2,
+    "db": -42.7,
+    "start": 0.0461
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Tenor Recorder/SusVib/TenRecorder_SusVib_E3_rr1_Main.wav",
+    "key": 64,
+    "cents": -8.0,
+    "db": -42.4,
+    "start": 0.0401
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Tenor Recorder/SusVib/TenRecorder_SusVib_F#3_rr1_Main.wav",
+    "key": 66,
+    "cents": -9.6,
+    "db": -36.5,
+    "start": 0.0152
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Tenor Recorder/SusVib/TenRecorder_SusVib_G3_rr1_Main.wav",
+    "key": 67,
+    "cents": 5.0,
+    "db": -29.5,
+    "start": 0.0176
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Tenor Recorder/SusVib/TenRecorder_SusVib_A3_rr1_Main.wav",
+    "key": 69,
+    "cents": -7.2,
+    "db": -30.3,
+    "start": 0.0237
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Tenor Recorder/SusVib/TenRecorder_SusVib_B3_rr1_Main.wav",
+    "key": 71,
+    "cents": -10.4,
+    "db": -27.0,
+    "start": 0.0172
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Tenor Recorder/SusVib/TenRecorder_SusVib_C4_rr1_Main.wav",
+    "key": 72,
+    "cents": -8.6,
+    "db": -31.3,
+    "start": 0.0176
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Tenor Recorder/SusVib/TenRecorder_SusVib_D4_rr1_Main.wav",
+    "key": 74,
+    "cents": -15.8,
+    "db": -28.5,
+    "start": 0.013
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Tenor Recorder/SusVib/TenRecorder_SusVib_E4_rr1_Main.wav",
+    "key": 76,
+    "cents": -6.5,
+    "db": -33.7,
+    "start": 0.0215
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Tenor Recorder/SusVib/TenRecorder_SusVib_F#4_rr1_Main.wav",
+    "key": 78,
+    "cents": -11.2,
+    "db": -25.7,
+    "start": 0.0196
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Tenor Recorder/SusVib/TenRecorder_SusVib_G4_rr1_Main.wav",
+    "key": 79,
+    "cents": -8.2,
+    "db": -26.3,
+    "start": 0.0146
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Tenor Recorder/SusVib/TenRecorder_SusVib_A4_rr1_Main.wav",
+    "key": 81,
+    "cents": 1.1,
+    "db": -16.6,
+    "start": 0.0199
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Tenor Recorder/SusVib/TenRecorder_SusVib_B4_rr1_Main.wav",
+    "key": 83,
+    "cents": -8.0,
+    "db": -23.8,
+    "start": 0.0267
+   }
+  ],
+  "staccato": [
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Tenor Recorder/Staccato/TenRecorder_Stac_C3_rr1_Main.wav",
+    "key": 60,
+    "cents": 14.1,
+    "db": -56.3,
+    "start": 0.0505
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Tenor Recorder/Staccato/TenRecorder_Stac_D3_rr1_Main.wav",
+    "key": 62,
+    "cents": 1.4,
+    "db": -52.7,
+    "start": 0.0396
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Tenor Recorder/Staccato/TenRecorder_Stac_E3_rr1_Main.wav",
+    "key": 64,
+    "cents": 3.2,
+    "db": -48.6,
+    "start": 0.0238
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Tenor Recorder/Staccato/TenRecorder_Stac_F#3_rr1_Main.wav",
+    "key": 66,
+    "cents": -11.2,
+    "db": -44.4,
+    "start": 0.0137
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Tenor Recorder/Staccato/TenRecorder_Stac_G#3_rr1_Main.wav",
+    "key": 68,
+    "cents": 1.0,
+    "db": -41.3,
+    "start": 0.0172
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Tenor Recorder/Staccato/TenRecorder_Stac_A#3_rr1_Main.wav",
+    "key": 70,
+    "cents": -5.2,
+    "db": -36.3,
+    "start": 0.0162
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Tenor Recorder/Staccato/TenRecorder_Stac_C4_rr1_Main.wav",
+    "key": 72,
+    "cents": 6.0,
+    "db": -38.9,
+    "start": 0.0116
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Tenor Recorder/Staccato/TenRecorder_Stac_D4_rr1_Main.wav",
+    "key": 74,
+    "cents": -4.5,
+    "db": -37.0,
+    "start": 0.0117
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Tenor Recorder/Staccato/TenRecorder_Stac_E4_rr1_Main.wav",
+    "key": 76,
+    "cents": 0.2,
+    "db": -36.3,
+    "start": 0.0176
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Tenor Recorder/Staccato/TenRecorder_Stac_F#4_rr1_Main.wav",
+    "key": 78,
+    "cents": 0.4,
+    "db": -29.7,
+    "start": 0.0142
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Tenor Recorder/Staccato/TenRecorder_Stac_G#4_rr1_Main.wav",
+    "key": 80,
+    "cents": 6.6,
+    "db": -22.4,
+    "start": 0.0209
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Tenor Recorder/Staccato/TenRecorder_Stac_B4_rr1_Main.wav",
+    "key": 83,
+    "cents": 3.0,
+    "db": -21.9,
+    "start": 0.0171
+   }
+  ]
+ },
+ "recorder-bass": {
+  "sustain": [
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Bass Recorder/Sustain/BassRecorder_Sus_F#2_rr1_Main.wav",
+    "key": 54,
+    "cents": -4.9,
+    "db": -40.0,
+    "start": 0.0474
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Bass Recorder/Sustain/BassRecorder_Sus_G#2_rr1_Main.wav",
+    "key": 56,
+    "cents": 3.3,
+    "db": -44.2,
+    "start": 0.0786
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Bass Recorder/Sustain/BassRecorder_Sus_A#2_rr1_Main.wav",
+    "key": 58,
+    "cents": -1.1,
+    "db": -49.9,
+    "start": 0.0475
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Bass Recorder/Sustain/BassRecorder_Sus_C3_rr1_Main.wav",
+    "key": 60,
+    "cents": 6.1,
+    "db": -46.4,
+    "start": 0.0451
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Bass Recorder/Sustain/BassRecorder_Sus_D3_rr1_Main.wav",
+    "key": 62,
+    "cents": 3.1,
+    "db": -36.9,
+    "start": 0.0123
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Bass Recorder/Sustain/BassRecorder_Sus_E3_rr1_Main.wav",
+    "key": 64,
+    "cents": -2.5,
+    "db": -37.8,
+    "start": 0.0205
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Bass Recorder/Sustain/BassRecorder_Sus_F#3_rr1_Main.wav",
+    "key": 66,
+    "cents": -0.4,
+    "db": -35.8,
+    "start": 0.0192
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Bass Recorder/Sustain/BassRecorder_Sus_G#3_rr1_Main.wav",
+    "key": 68,
+    "cents": -0.6,
+    "db": -29.6,
+    "start": 0.024
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Bass Recorder/Sustain/BassRecorder_Sus_A#3_rr1_Main.wav",
+    "key": 70,
+    "cents": -2.6,
+    "db": -26.2,
+    "start": 0.0183
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Bass Recorder/Sustain/BassRecorder_Sus_C4_rr1_Main.wav",
+    "key": 72,
+    "cents": -4.5,
+    "db": -28.2,
+    "start": 0.023
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Bass Recorder/Sustain/BassRecorder_Sus_D4_rr1_Main.wav",
+    "key": 74,
+    "cents": -3.8,
+    "db": -35.7,
+    "start": 0.0206
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Bass Recorder/Sustain/BassRecorder_Sus_E4_rr1_Main.wav",
+    "key": 76,
+    "cents": -1.4,
+    "db": -28.9,
+    "start": 0.0166
+   }
+  ],
+  "vibrato": [
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Bass Recorder/SusVib/BassRecorder_SusVib_F2_rr1_Main.wav",
+    "key": 53,
+    "cents": -5.8,
+    "db": -57.0,
+    "start": 0.1131
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Bass Recorder/SusVib/BassRecorder_SusVib_G2_rr1_Main.wav",
+    "key": 55,
+    "cents": -11.8,
+    "db": -45.7,
+    "start": 0.0368
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Bass Recorder/SusVib/BassRecorder_SusVib_A2_rr1_Main.wav",
+    "key": 57,
+    "cents": -8.3,
+    "db": -44.2,
+    "start": 0.0487
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Bass Recorder/SusVib/BassRecorder_SusVib_B2_rr1_Main.wav",
+    "key": 57,
+    "cents": -42.1,
+    "db": -44.9,
+    "start": 0.0186
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Bass Recorder/SusVib/BassRecorder_SusVib_C3_rr1_Main.wav",
+    "key": 60,
+    "cents": -2.4,
+    "db": -39.2,
+    "start": 0.0394
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Bass Recorder/SusVib/BassRecorder_SusVib_D3_rr1_Main.wav",
+    "key": 62,
+    "cents": -11.7,
+    "db": -39.6,
+    "start": 0.0714
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Bass Recorder/SusVib/BassRecorder_SusVib_E3_rr1_Main.wav",
+    "key": 64,
+    "cents": -10.7,
+    "db": -38.7,
+    "start": 0.0238
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Bass Recorder/SusVib/BassRecorder_SusVib_F3_rr1_Main.wav",
+    "key": 65,
+    "cents": -2.2,
+    "db": -40.8,
+    "start": 0.0282
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Bass Recorder/SusVib/BassRecorder_SusVib_G3_rr1_Main.wav",
+    "key": 67,
+    "cents": -7.2,
+    "db": -28.7,
+    "start": 0.018
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Bass Recorder/SusVib/BassRecorder_SusVib_A3_rr1_Main.wav",
+    "key": 69,
+    "cents": -6.5,
+    "db": -25.9,
+    "start": 0.0263
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Bass Recorder/SusVib/BassRecorder_SusVib_B3_rr1_Main.wav",
+    "key": 71,
+    "cents": -8.2,
+    "db": -31.6,
+    "start": 0.0153
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Bass Recorder/SusVib/BassRecorder_SusVib_C4_rr1_Main.wav",
+    "key": 72,
+    "cents": -7.8,
+    "db": -26.9,
+    "start": 0.0186
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Bass Recorder/SusVib/BassRecorder_SusVib_D4_rr1_Main.wav",
+    "key": 74,
+    "cents": -4.6,
+    "db": -34.0,
+    "start": 0.0181
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Bass Recorder/SusVib/BassRecorder_SusVib_E4_rr1_Main.wav",
+    "key": 76,
+    "cents": -6.4,
+    "db": -24.9,
+    "start": 0.0261
+   }
+  ],
+  "staccato": [
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Bass Recorder/Staccato/BassRecorder_Stac_F2_rr1_Main.wav",
+    "key": 53,
+    "cents": 1.0,
+    "db": -52.5,
+    "start": 0.0077
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Bass Recorder/Staccato/BassRecorder_Stac_G2_rr1_Main.wav",
+    "key": 55,
+    "cents": 13.6,
+    "db": -48.7,
+    "start": 0.0136
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Bass Recorder/Staccato/BassRecorder_Stac_A2_rr1_Main.wav",
+    "key": 57,
+    "cents": 3.2,
+    "db": -59.5,
+    "start": 0.0081
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Bass Recorder/Staccato/BassRecorder_Stac_A#2_rr1_Main.wav",
+    "key": 58,
+    "cents": 18.4,
+    "db": -53.4,
+    "start": 0.0289
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Bass Recorder/Staccato/BassRecorder_Stac_C3_rr1_Main.wav",
+    "key": 60,
+    "cents": 5.3,
+    "db": -45.5,
+    "start": 0.0153
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Bass Recorder/Staccato/BassRecorder_Stac_D3_rr1_Main.wav",
+    "key": 62,
+    "cents": 8.5,
+    "db": -43.6,
+    "start": 0.0253
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Bass Recorder/Staccato/BassRecorder_Stac_E3_rr1_Main.wav",
+    "key": 64,
+    "cents": -5.3,
+    "db": -42.6,
+    "start": 0.0192
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Bass Recorder/Staccato/BassRecorder_Stac_F3_rr1_Main.wav",
+    "key": 65,
+    "cents": -0.2,
+    "db": -42.5,
+    "start": 0.0201
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Bass Recorder/Staccato/BassRecorder_Stac_G3_rr1_Main.wav",
+    "key": 67,
+    "cents": -13.4,
+    "db": -33.7,
+    "start": 0.0205
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Bass Recorder/Staccato/BassRecorder_Stac_A3_rr1_Main.wav",
+    "key": 69,
+    "cents": -5.2,
+    "db": -33.1,
+    "start": 0.0216
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Bass Recorder/Staccato/BassRecorder_Stac_B3_rr1_Main.wav",
+    "key": 71,
+    "cents": 0.6,
+    "db": -36.3,
+    "start": 0.0182
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Bass Recorder/Staccato/BassRecorder_Stac_C4_rr1_Main.wav",
+    "key": 72,
+    "cents": 1.6,
+    "db": -32.1,
+    "start": 0.0098
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Bass Recorder/Staccato/BassRecorder_Stac_D4_rr1_Main.wav",
+    "key": 74,
+    "cents": 2.4,
+    "db": -40.1,
+    "start": 0.0115
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Bass Recorder/Staccato/BassRecorder_Stac_E4_rr1_Main.wav",
+    "key": 76,
+    "cents": 7.2,
+    "db": -34.0,
+    "start": 0.0146
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Baroque Bass Recorder/Staccato/BassRecorder_Stac_F4_rr1_Main.wav",
+    "key": 77,
+    "cents": -4.7,
+    "db": -34.1,
+    "start": 0.0162
+   }
+  ]
+ }
+}

@@ -103,6 +103,7 @@ nothing without them.
 | Karoryfer x bigcat cello | 133 MB | CC0 |
 | University of Iowa solo violin and cello (Musical Instrument Samples) | 465 MB | free to use without restriction |
 | Accurate-Salamander Grand Piano 6.2e | 785 MB | CC-BY 3.0 |
+| Versilian Community Sample Library, part (Italian harpsichord, four baroque recorders) | 226 MB | CC0 |
 | National Gugak Center recordings (gayageum, haegeum, daegeum, janggu, ajaeng, jing), `--gugak` only | 490 MB | KOGL Type 1 |
 
 Start a song with File > New song (⌘N), which offers 13 genre templates, or open an example from `engine/examples/`. The
