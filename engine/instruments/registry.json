@@ -1059,6 +1059,99 @@
       "description": "Baroque bass recorder (Versilian Community Sample Library, CC0), sounding Eb3 to G5. Articulations sustain (straight tone), vibrato, staccato. Velocity = loudness (12 dB). Samples end after a few seconds (no loop). SFZ written by tools/make-vcsl-sfz.py",
       "fallback": "synth.sine"
     },
+    "mbira": {
+      "type": "sfz",
+      "file": "${MUSIC_RENDER_VCSL:-../../external/vcsl}/InitialDAW/mbira.sfz",
+      "description": "Mbira dzaVadzimu, Nyamaropa tuning (Versilian Community Sample Library, CC0), one recording per tine: the B Mixolydian notes B2 to C#6, other keys borrow the nearest tine. Rings to the end of the recording whatever the note length. The traditional tuning is moved onto equal-tempered keys. Velocity = loudness. SFZ written by tools/make-vcsl-sfz.py",
+      "fallback": "synth.pluck"
+    },
+    "balafon": {
+      "type": "sfz",
+      "file": "${MUSIC_RENDER_VCSL:-../../external/vcsl}/InitialDAW/balafon.sfz",
+      "articulations": {
+        "sustain": {},
+        "hard": {
+          "file": "${MUSIC_RENDER_VCSL:-../../external/vcsl}/InitialDAW/balafon-hard.sfz"
+        },
+        "soft": {
+          "file": "${MUSIC_RENDER_VCSL:-../../external/vcsl}/InitialDAW/balafon-soft.sfz"
+        }
+      },
+      "defaultArticulation": "sustain",
+      "description": "Balafon (Versilian Community Sample Library, CC0), sounding C#4 to F6 from six recorded bars (other keys are transposed), three velocity layers. Articulations sustain (traditional mallet), hard, soft. Rings to the end of the recording. SFZ written by tools/make-vcsl-sfz.py",
+      "fallback": "synth.pluck"
+    },
+    "ocarina": {
+      "type": "sfz",
+      "file": "${MUSIC_RENDER_VCSL:-../../external/vcsl}/InitialDAW/ocarina.sfz",
+      "articulations": {
+        "sustain": {},
+        "vibrato": {
+          "file": "${MUSIC_RENDER_VCSL:-../../external/vcsl}/InitialDAW/ocarina-vibrato.sfz"
+        }
+      },
+      "defaultArticulation": "sustain",
+      "controllers": {
+        "cc11": "engine"
+      },
+      "description": "Ocarina (Versilian Community Sample Library, CC0), sounding A4 to C#6 (keys G4 to D#6). Articulations sustain (straight tone), vibrato. Velocity = loudness (12 dB). Samples end after a few seconds (no loop). SFZ written by tools/make-vcsl-sfz.py",
+      "fallback": "synth.sine"
+    },
+    "ocarina-small": {
+      "type": "sfz",
+      "file": "${MUSIC_RENDER_VCSL:-../../external/vcsl}/InitialDAW/ocarina-small.sfz",
+      "articulations": {
+        "sustain": {},
+        "staccato": {
+          "file": "${MUSIC_RENDER_VCSL:-../../external/vcsl}/InitialDAW/ocarina-small-staccato.sfz"
+        }
+      },
+      "defaultArticulation": "sustain",
+      "controllers": {
+        "cc11": "engine"
+      },
+      "description": "Small ocarina (Versilian Community Sample Library, CC0), sounding A#5 to B6 (staccato A5 to C7). Articulations sustain, staccato. Velocity = loudness (12 dB). Samples end after a few seconds (no loop). SFZ written by tools/make-vcsl-sfz.py",
+      "fallback": "synth.sine"
+    },
+    "hand-percussion": {
+      "type": "sfz",
+      "file": "${MUSIC_RENDER_VCSL:-../../external/vcsl}/InitialDAW/hand-percussion.sfz",
+      "keyNames": {
+        "36": "툼바",
+        "37": "툼바 (막은 소리)",
+        "38": "콩가",
+        "39": "콩가 (막은 소리)",
+        "40": "퀸토",
+        "41": "퀸토 (막은 소리)",
+        "43": "큰 프레임 드럼",
+        "44": "큰 프레임 드럼 (막은 소리)",
+        "45": "큰 프레임 드럼 (손)",
+        "47": "작은 프레임 드럼",
+        "48": "작은 프레임 드럼 (막은 소리)",
+        "49": "작은 프레임 드럼 (손)",
+        "50": "통나무 북 (낮게)",
+        "52": "통나무 북 (높게)",
+        "54": "큰 셰이커 (치기)",
+        "55": "큰 셰이커 (내리기)",
+        "56": "큰 셰이커 (올리기)",
+        "57": "셰이커 겹 (내리기)",
+        "58": "셰이커 겹 (올리기)",
+        "59": "셰이커 높게 (내리기)",
+        "60": "셰이커 높게 (올리기)",
+        "61": "셰이커 낮게 (내리기)",
+        "62": "셰이커 낮게 (올리기)",
+        "63": "셰이커 롤",
+        "64": "셰이커 (치기)",
+        "65": "아고고 (낮게)",
+        "66": "아고고 (높게)",
+        "67": "클라베스",
+        "68": "클라베스 2",
+        "69": "카바사",
+        "70": "카바사 (문지르기)"
+      },
+      "description": "Hand percussion (Versilian Community Sample Library, CC0): 36-41 congas (tumba, conga, quinto: open and muted), 43-45 large frame drum, 47-49 small frame drum, 50 and 52 log drum, 54-56 large shaker (hit, down, up), 57-64 small shaker strokes and roll, 65 and 66 agogo, 67 and 68 claves, 69 and 70 cabasa. Velocity picks the recorded layer and scales loudness. SFZ written by tools/make-vcsl-sfz.py",
+      "fallback": "synth.drums"
+    },
     "surge-xt": {
       "type": "vst3",
       "plugin": "${MUSIC_RENDER_PLUGINS:-../../external/plugins}/surge-xt/Surge XT.vst3",

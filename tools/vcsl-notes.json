@@ -1462,5 +1462,1523 @@
     "start": 0.0162
    }
   ]
+ },
+ "mbira": {
+  "sustain": [
+   {
+    "file": "Idiophones/Plucked Idiophones/Mbira dzaVadzimu Nyamaropa, Zimbabwe, Low B/MBira4_pluck_Main_A#1_14_50_100_rr1.wav",
+    "key": 47,
+    "cents": 17.0,
+    "db": -47.9,
+    "start": 0.1022
+   },
+   {
+    "file": "Idiophones/Plucked Idiophones/Mbira dzaVadzimu Nyamaropa, Zimbabwe, Low B/MBira4_pluck_Main_D#2_12_50_100_rr2.wav",
+    "key": 51,
+    "cents": -20.8,
+    "db": -43.0,
+    "start": 0.1011
+   },
+   {
+    "file": "Idiophones/Plucked Idiophones/Mbira dzaVadzimu Nyamaropa, Zimbabwe, Low B/MBira4_pluck_Main_E2_10_50_100_rr3.wav",
+    "key": 52,
+    "cents": 16.2,
+    "db": -46.1,
+    "start": 0.1031
+   },
+   {
+    "file": "Idiophones/Plucked Idiophones/Mbira dzaVadzimu Nyamaropa, Zimbabwe, Low B/MBira4_pluck_Main_F#2_8_50_100_rr2.wav",
+    "key": 54,
+    "cents": 9.9,
+    "db": -42.1,
+    "start": 0.1014
+   },
+   {
+    "file": "Idiophones/Plucked Idiophones/Mbira dzaVadzimu Nyamaropa, Zimbabwe, Low B/MBira4_pluck_Main_G#2_6_50_100_rr1.wav",
+    "key": 56,
+    "cents": -7.5,
+    "db": -42.6,
+    "start": 0.1016
+   },
+   {
+    "file": "Idiophones/Plucked Idiophones/Mbira dzaVadzimu Nyamaropa, Zimbabwe, Low B/MBira4_pluck_Main_A2_4_50_100_rr2.wav",
+    "key": 57,
+    "cents": 18.9,
+    "db": -47.5,
+    "start": 0.1018
+   },
+   {
+    "file": "Idiophones/Plucked Idiophones/Mbira dzaVadzimu Nyamaropa, Zimbabwe, Low B/MBira4_pluck_Main_B2_13_50_100_rr3.wav",
+    "key": 59,
+    "cents": 30.0,
+    "db": -44.4,
+    "start": 0.1014
+   },
+   {
+    "file": "Idiophones/Plucked Idiophones/Mbira dzaVadzimu Nyamaropa, Zimbabwe, Low B/MBira4_pluck_Main_C#3_2_50_100_rr5.wav",
+    "key": 61,
+    "cents": -7.2,
+    "db": -46.7,
+    "start": 0.1011
+   },
+   {
+    "file": "Idiophones/Plucked Idiophones/Mbira dzaVadzimu Nyamaropa, Zimbabwe, Low B/MBira4_pluck_Main_D#3_15_50_100_rr1.wav",
+    "key": 63,
+    "cents": 8.0,
+    "db": -44.9,
+    "start": 0.101
+   },
+   {
+    "file": "Idiophones/Plucked Idiophones/Mbira dzaVadzimu Nyamaropa, Zimbabwe, Low B/MBira4_pluck_Main_E3_9_50_100_rr4.wav",
+    "key": 64,
+    "cents": 11.1,
+    "db": -42.2,
+    "start": 0.101
+   },
+   {
+    "file": "Idiophones/Plucked Idiophones/Mbira dzaVadzimu Nyamaropa, Zimbabwe, Low B/MBira4_pluck_Main_F#3_11_50_100_rr2.wav",
+    "key": 66,
+    "cents": 14.7,
+    "db": -46.4,
+    "start": 0.1012
+   },
+   {
+    "file": "Idiophones/Plucked Idiophones/Mbira dzaVadzimu Nyamaropa, Zimbabwe, Low B/MBira4_pluck_Main_G#3_7_50_100_rr2.wav",
+    "key": 68,
+    "cents": 11.7,
+    "db": -45.2,
+    "start": 0.1011
+   },
+   {
+    "file": "Idiophones/Plucked Idiophones/Mbira dzaVadzimu Nyamaropa, Zimbabwe, Low B/MBira4_pluck_Main_A3_5_50_100_rr1.wav",
+    "key": 69,
+    "cents": 19.8,
+    "db": -43.3,
+    "start": 0.1011
+   },
+   {
+    "file": "Idiophones/Plucked Idiophones/Mbira dzaVadzimu Nyamaropa, Zimbabwe, Low B/MBira4_pluck_Main_B3_16_50_100_rr2.wav",
+    "key": 71,
+    "cents": 20.7,
+    "db": -44.6,
+    "start": 0.1009
+   },
+   {
+    "file": "Idiophones/Plucked Idiophones/Mbira dzaVadzimu Nyamaropa, Zimbabwe, Low B/MBira4_pluck_Main_B3_3_50_100_rr2.wav",
+    "key": 71,
+    "cents": 12.2,
+    "db": -48.3,
+    "start": 0.1012
+   },
+   {
+    "file": "Idiophones/Plucked Idiophones/Mbira dzaVadzimu Nyamaropa, Zimbabwe, Low B/MBira4_pluck_Main_C#4_17_50_100_rr1.wav",
+    "key": 73,
+    "cents": 2.4,
+    "db": -41.1,
+    "start": 0.101
+   },
+   {
+    "file": "Idiophones/Plucked Idiophones/Mbira dzaVadzimu Nyamaropa, Zimbabwe, Low B/MBira4_pluck_Main_C#4_1_50_100_rr1.wav",
+    "key": 73,
+    "cents": 1.9,
+    "db": -39.7,
+    "start": 0.1012
+   },
+   {
+    "file": "Idiophones/Plucked Idiophones/Mbira dzaVadzimu Nyamaropa, Zimbabwe, Low B/MBira4_pluck_Main_D#4_18_50_100_rr5.wav",
+    "key": 75,
+    "cents": 7.5,
+    "db": -46.3,
+    "start": 0.101
+   },
+   {
+    "file": "Idiophones/Plucked Idiophones/Mbira dzaVadzimu Nyamaropa, Zimbabwe, Low B/MBira4_pluck_Main_E4_19_50_100_rr2.wav",
+    "key": 76,
+    "cents": 10.2,
+    "db": -47.0,
+    "start": 0.1009
+   },
+   {
+    "file": "Idiophones/Plucked Idiophones/Mbira dzaVadzimu Nyamaropa, Zimbabwe, Low B/MBira4_pluck_Main_F#4_20_50_100_rr3.wav",
+    "key": 78,
+    "cents": 4.5,
+    "db": -43.2,
+    "start": 0.1009
+   },
+   {
+    "file": "Idiophones/Plucked Idiophones/Mbira dzaVadzimu Nyamaropa, Zimbabwe, Low B/MBira4_pluck_Main_G#4_21_50_100_rr3.wav",
+    "key": 80,
+    "cents": 53.3,
+    "db": -50.7,
+    "start": 0.1014
+   },
+   {
+    "file": "Idiophones/Plucked Idiophones/Mbira dzaVadzimu Nyamaropa, Zimbabwe, Low B/MBira4_pluck_Main_A4_22_50_100_rr3.wav",
+    "key": 81,
+    "cents": 46.6,
+    "db": -51.1,
+    "start": 0.101
+   },
+   {
+    "file": "Idiophones/Plucked Idiophones/Mbira dzaVadzimu Nyamaropa, Zimbabwe, Low B/MBira4_pluck_Main_B4_23_50_100_rr3.wav",
+    "key": 83,
+    "cents": 30.3,
+    "db": -48.9,
+    "start": 0.1008
+   },
+   {
+    "file": "Idiophones/Plucked Idiophones/Mbira dzaVadzimu Nyamaropa, Zimbabwe, Low B/MBira4_pluck_Main_C#5_24_50_100_rr5.wav",
+    "key": 85,
+    "cents": 51.4,
+    "db": -49.0,
+    "start": 0.1021
+   }
+  ]
+ },
+ "balafon": {
+  "sustain": [
+   {
+    "file": "Idiophones/Struck Idiophones/Balafon/Traditional Mallet/EthnicXylo_tradM_C#3_vl1_rr1_Mid.wav",
+    "key": 61,
+    "cents": 9.3,
+    "db": -57.7,
+    "start": 0.0089,
+    "layer": 1
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Balafon/Traditional Mallet/EthnicXylo_tradM_C#3_vl2_rr1_Mid.wav",
+    "key": 61,
+    "cents": 9.3,
+    "db": -49.1,
+    "start": 0.0089,
+    "layer": 2
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Balafon/Traditional Mallet/EthnicXylo_tradM_C#3_vl3_rr1_Mid.wav",
+    "key": 61,
+    "cents": 9.3,
+    "db": -37.7,
+    "start": 0.0087,
+    "layer": 3
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Balafon/Traditional Mallet/EthnicXylo_tradM_F3_vl1_rr1_Mid.wav",
+    "key": 65,
+    "cents": 16.2,
+    "db": -60.1,
+    "start": 0.0086,
+    "layer": 1
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Balafon/Traditional Mallet/EthnicXylo_tradM_F3_vl2_rr1_Mid.wav",
+    "key": 65,
+    "cents": 16.2,
+    "db": -54.3,
+    "start": 0.0086,
+    "layer": 2
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Balafon/Traditional Mallet/EthnicXylo_tradM_F3_vl3_rr1_Mid.wav",
+    "key": 65,
+    "cents": 16.2,
+    "db": -40.8,
+    "start": 0.0085,
+    "layer": 3
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Balafon/Traditional Mallet/EthnicXylo_tradM_C4_vl1_rr1_Mid.wav",
+    "key": 72,
+    "cents": -3.6,
+    "db": -57.3,
+    "start": 0.0086,
+    "layer": 1
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Balafon/Traditional Mallet/EthnicXylo_tradM_C4_vl2_rr1_Mid.wav",
+    "key": 72,
+    "cents": -3.6,
+    "db": -55.2,
+    "start": 0.0084,
+    "layer": 2
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Balafon/Traditional Mallet/EthnicXylo_tradM_C4_vl3_rr1_Mid.wav",
+    "key": 72,
+    "cents": -3.6,
+    "db": -45.0,
+    "start": 0.0085,
+    "layer": 3
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Balafon/Traditional Mallet/EthnicXylo_tradM_F4_vl1_rr1_Mid.wav",
+    "key": 77,
+    "cents": 1.2,
+    "db": -57.9,
+    "start": 0.009,
+    "layer": 1
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Balafon/Traditional Mallet/EthnicXylo_tradM_F4_vl2_rr1_Mid.wav",
+    "key": 77,
+    "cents": 1.2,
+    "db": -52.3,
+    "start": 0.0086,
+    "layer": 2
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Balafon/Traditional Mallet/EthnicXylo_tradM_F4_vl3_rr1_Mid.wav",
+    "key": 77,
+    "cents": 1.2,
+    "db": -41.7,
+    "start": 0.0086,
+    "layer": 3
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Balafon/Traditional Mallet/EthnicXylo_tradM_C5_vl1_rr1_Mid.wav",
+    "key": 84,
+    "cents": -1.4,
+    "db": -56.3,
+    "start": 0.0088,
+    "layer": 1
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Balafon/Traditional Mallet/EthnicXylo_tradM_C5_vl2_rr1_Mid.wav",
+    "key": 84,
+    "cents": -1.4,
+    "db": -43.5,
+    "start": 0.0088,
+    "layer": 2
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Balafon/Traditional Mallet/EthnicXylo_tradM_C5_vl3_rr1_Mid.wav",
+    "key": 84,
+    "cents": -1.4,
+    "db": -38.3,
+    "start": 0.009,
+    "layer": 3
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Balafon/Traditional Mallet/EthnicXylo_tradM_F5_vl1_rr1_Mid.wav",
+    "key": 89,
+    "cents": -14.6,
+    "db": -52.6,
+    "start": 0.0086,
+    "layer": 1
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Balafon/Traditional Mallet/EthnicXylo_tradM_F5_vl2_rr1_Mid.wav",
+    "key": 89,
+    "cents": -14.6,
+    "db": -44.4,
+    "start": 0.0083,
+    "layer": 2
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Balafon/Traditional Mallet/EthnicXylo_tradM_F5_vl3_rr1_Mid.wav",
+    "key": 89,
+    "cents": -14.6,
+    "db": -38.6,
+    "start": 0.0082,
+    "layer": 3
+   }
+  ],
+  "hard": [
+   {
+    "file": "Idiophones/Struck Idiophones/Balafon/Hard Mallet/EthnicXylo_hardM_C#3_vl1_rr1_Mid.wav",
+    "key": 61,
+    "cents": 9.8,
+    "db": -57.7,
+    "start": 0.0088,
+    "layer": 1
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Balafon/Hard Mallet/EthnicXylo_hardM_C#3_vl2_rr1_Mid.wav",
+    "key": 61,
+    "cents": 9.8,
+    "db": -46.9,
+    "start": 0.0087,
+    "layer": 2
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Balafon/Hard Mallet/EthnicXylo_hardM_C#3_vl3_rr1_Mid.wav",
+    "key": 61,
+    "cents": 9.8,
+    "db": -37.0,
+    "start": 0.0086,
+    "layer": 3
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Balafon/Hard Mallet/EthnicXylo_hardM_F3_vl1_rr1_Mid.wav",
+    "key": 65,
+    "cents": 16.5,
+    "db": -61.6,
+    "start": 0.0085,
+    "layer": 1
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Balafon/Hard Mallet/EthnicXylo_hardM_F3_vl2_rr1_Mid.wav",
+    "key": 65,
+    "cents": 16.5,
+    "db": -48.9,
+    "start": 0.0088,
+    "layer": 2
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Balafon/Hard Mallet/EthnicXylo_hardM_F3_vl3_rr1_Mid.wav",
+    "key": 65,
+    "cents": 16.5,
+    "db": -41.1,
+    "start": 0.0085,
+    "layer": 3
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Balafon/Hard Mallet/EthnicXylo_hardM_C4_vl1_rr1_Mid.wav",
+    "key": 72,
+    "cents": -4.1,
+    "db": -61.4,
+    "start": 0.0085,
+    "layer": 1
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Balafon/Hard Mallet/EthnicXylo_hardM_C4_vl2_rr1_Mid.wav",
+    "key": 72,
+    "cents": -4.1,
+    "db": -54.1,
+    "start": 0.0084,
+    "layer": 2
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Balafon/Hard Mallet/EthnicXylo_hardM_C4_vl3_rr1_Mid.wav",
+    "key": 72,
+    "cents": -4.1,
+    "db": -42.2,
+    "start": 0.0084,
+    "layer": 3
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Balafon/Hard Mallet/EthnicXylo_hardM_F4_vl1_rr1_Mid.wav",
+    "key": 77,
+    "cents": 1.1,
+    "db": -62.3,
+    "start": 0.0086,
+    "layer": 1
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Balafon/Hard Mallet/EthnicXylo_hardM_F4_vl2_rr1_Mid.wav",
+    "key": 77,
+    "cents": 1.1,
+    "db": -51.3,
+    "start": 0.0087,
+    "layer": 2
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Balafon/Hard Mallet/EthnicXylo_hardM_F4_vl3_rr1_Mid.wav",
+    "key": 77,
+    "cents": 1.1,
+    "db": -42.4,
+    "start": 0.0087,
+    "layer": 3
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Balafon/Hard Mallet/EthnicXylo_hardM_C5_vl1_rr1_Mid.wav",
+    "key": 84,
+    "cents": -0.6,
+    "db": -51.7,
+    "start": 0.0087,
+    "layer": 1
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Balafon/Hard Mallet/EthnicXylo_hardM_C5_vl2_rr1_Mid.wav",
+    "key": 84,
+    "cents": -0.6,
+    "db": -43.7,
+    "start": 0.0087,
+    "layer": 2
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Balafon/Hard Mallet/EthnicXylo_hardM_C5_vl3_rr1_Mid.wav",
+    "key": 84,
+    "cents": -0.6,
+    "db": -34.8,
+    "start": 0.0087,
+    "layer": 3
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Balafon/Hard Mallet/EthnicXylo_hardM_F5_vl1_rr1_Mid.wav",
+    "key": 89,
+    "cents": -13.8,
+    "db": -53.6,
+    "start": 0.0086,
+    "layer": 1
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Balafon/Hard Mallet/EthnicXylo_hardM_F5_vl2_rr1_Mid.wav",
+    "key": 89,
+    "cents": -13.8,
+    "db": -39.9,
+    "start": 0.0083,
+    "layer": 2
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Balafon/Hard Mallet/EthnicXylo_hardM_F5_vl3_rr1_Mid.wav",
+    "key": 89,
+    "cents": -13.8,
+    "db": -34.3,
+    "start": 0.0083,
+    "layer": 3
+   }
+  ],
+  "soft": [
+   {
+    "file": "Idiophones/Struck Idiophones/Balafon/Soft Mallet/EthnicXylo_softM_C#3_vl1_rr1_Mid.wav",
+    "key": 61,
+    "cents": 9.5,
+    "db": -58.3,
+    "start": 0.0089,
+    "layer": 1
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Balafon/Soft Mallet/EthnicXylo_softM_C#3_vl2_rr1_Mid.wav",
+    "key": 61,
+    "cents": 9.5,
+    "db": -53.5,
+    "start": 0.0089,
+    "layer": 2
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Balafon/Soft Mallet/EthnicXylo_softM_C#3_vl3_rr1_Mid.wav",
+    "key": 61,
+    "cents": 9.5,
+    "db": -43.6,
+    "start": 0.0088,
+    "layer": 3
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Balafon/Soft Mallet/EthnicXylo_softM_F3_vl1_rr1_Mid.wav",
+    "key": 65,
+    "cents": 15.6,
+    "db": -61.3,
+    "start": 0.0088,
+    "layer": 1
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Balafon/Soft Mallet/EthnicXylo_softM_F3_vl2_rr1_Mid.wav",
+    "key": 65,
+    "cents": 15.6,
+    "db": -52.6,
+    "start": 0.0087,
+    "layer": 2
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Balafon/Soft Mallet/EthnicXylo_softM_F3_vl3_rr1_Mid.wav",
+    "key": 65,
+    "cents": 15.6,
+    "db": -45.7,
+    "start": 0.0087,
+    "layer": 3
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Balafon/Soft Mallet/EthnicXylo_softM_C4_vl1_rr1_Mid.wav",
+    "key": 72,
+    "cents": -4.2,
+    "db": -57.2,
+    "start": 0.0087,
+    "layer": 1
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Balafon/Soft Mallet/EthnicXylo_softM_C4_vl2_rr1_Mid.wav",
+    "key": 72,
+    "cents": -4.2,
+    "db": -49.2,
+    "start": 0.0085,
+    "layer": 2
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Balafon/Soft Mallet/EthnicXylo_softM_C4_vl3_rr2_Mid.wav",
+    "key": 72,
+    "cents": -4.2,
+    "db": -44.2,
+    "start": 0.0085,
+    "layer": 3
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Balafon/Soft Mallet/EthnicXylo_softM_F4_vl1_rr2_Mid.wav",
+    "key": 77,
+    "cents": 1.1,
+    "db": -57.7,
+    "start": 0.0105,
+    "layer": 1
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Balafon/Soft Mallet/EthnicXylo_softM_F4_vl2_rr1_Mid.wav",
+    "key": 77,
+    "cents": 1.1,
+    "db": -51.6,
+    "start": 0.0088,
+    "layer": 2
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Balafon/Soft Mallet/EthnicXylo_softM_F4_vl3_rr1_Mid.wav",
+    "key": 77,
+    "cents": 1.1,
+    "db": -46.7,
+    "start": 0.0087,
+    "layer": 3
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Balafon/Soft Mallet/EthnicXylo_softM_C5_vl1_rr1_Mid.wav",
+    "key": 84,
+    "cents": -0.9,
+    "db": -49.7,
+    "start": 0.0091,
+    "layer": 1
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Balafon/Soft Mallet/EthnicXylo_softM_C5_vl2_rr1_Mid.wav",
+    "key": 84,
+    "cents": -0.9,
+    "db": -40.3,
+    "start": 0.0092,
+    "layer": 2
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Balafon/Soft Mallet/EthnicXylo_softM_C5_vl3_rr1_Mid.wav",
+    "key": 84,
+    "cents": -0.9,
+    "db": -37.2,
+    "start": 0.0088,
+    "layer": 3
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Balafon/Soft Mallet/EthnicXylo_softM_F5_vl1_rr1_Mid.wav",
+    "key": 89,
+    "cents": -14.2,
+    "db": -71.0,
+    "start": 0.0095,
+    "layer": 1
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Balafon/Soft Mallet/EthnicXylo_softM_F5_vl2_rr2_Mid.wav",
+    "key": 89,
+    "cents": -14.2,
+    "db": -49.5,
+    "start": 0.0085,
+    "layer": 2
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Balafon/Soft Mallet/EthnicXylo_softM_F5_vl3_rr1_Mid.wav",
+    "key": 89,
+    "cents": -14.2,
+    "db": -42.1,
+    "start": 0.0083,
+    "layer": 3
+   }
+  ]
+ },
+ "ocarina": {
+  "sustain": [
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Ocarina, Typical/Sustains/Sus/StdOcarina_Sus_A3.wav",
+    "key": 69,
+    "cents": -1.8,
+    "db": -20.3,
+    "start": 0.0026
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Ocarina, Typical/Sustains/Sus/StdOcarina_Sus_B3.wav",
+    "key": 71,
+    "cents": -3.9,
+    "db": -18.4,
+    "start": 0.0021
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Ocarina, Typical/Sustains/Sus/StdOcarina_Sus_C#4.wav",
+    "key": 73,
+    "cents": -2.5,
+    "db": -19.2,
+    "start": 0.0025
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Ocarina, Typical/Sustains/Sus/StdOcarina_Sus_D4.wav",
+    "key": 74,
+    "cents": -0.0,
+    "db": -21.2,
+    "start": 0.0051
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Ocarina, Typical/Sustains/Sus/StdOcarina_Sus_E4.wav",
+    "key": 76,
+    "cents": -3.2,
+    "db": -20.4,
+    "start": 0.0063
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Ocarina, Typical/Sustains/Sus/StdOcarina_Sus_F#4.wav",
+    "key": 78,
+    "cents": 7.3,
+    "db": -14.1,
+    "start": 0.0056
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Ocarina, Typical/Sustains/Sus/StdOcarina_Sus_G#4.wav",
+    "key": 80,
+    "cents": 0.9,
+    "db": -17.1,
+    "start": 0.0116
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Ocarina, Typical/Sustains/Sus/StdOcarina_Sus_A4.wav",
+    "key": 81,
+    "cents": 11.4,
+    "db": -15.3,
+    "start": 0.0107
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Ocarina, Typical/Sustains/Sus/StdOcarina_Sus_A#4.wav",
+    "key": 82,
+    "cents": 6.5,
+    "db": -15.0,
+    "start": 0.0048
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Ocarina, Typical/Sustains/Sus/StdOcarina_Sus_C5.wav",
+    "key": 84,
+    "cents": -12.4,
+    "db": -23.8,
+    "start": 0.0057
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Ocarina, Typical/Sustains/Sus/StdOcarina_Sus_C#5.wav",
+    "key": 85,
+    "cents": 6.7,
+    "db": -16.5,
+    "start": 0.0144
+   }
+  ],
+  "vibrato": [
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Ocarina, Typical/Sustains/SusVib/StdOcarina_SusVib_A3.wav",
+    "key": 69,
+    "cents": -10.2,
+    "db": -20.8,
+    "start": 0.003
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Ocarina, Typical/Sustains/SusVib/StdOcarina_SusVib_C4.wav",
+    "key": 72,
+    "cents": 13.3,
+    "db": -19.0,
+    "start": 0.002
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Ocarina, Typical/Sustains/SusVib/StdOcarina_SusVib_C#4.wav",
+    "key": 73,
+    "cents": 11.3,
+    "db": -17.7,
+    "start": 0.0034
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Ocarina, Typical/Sustains/SusVib/StdOcarina_SusVib_D#4.wav",
+    "key": 75,
+    "cents": -0.7,
+    "db": -21.0,
+    "start": 0.0032
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Ocarina, Typical/Sustains/SusVib/StdOcarina_SusVib_E4.wav",
+    "key": 76,
+    "cents": 0.7,
+    "db": -21.3,
+    "start": 0.0039
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Ocarina, Typical/Sustains/SusVib/StdOcarina_SusVib_F#4.wav",
+    "key": 78,
+    "cents": 1.8,
+    "db": -16.7,
+    "start": 0.0051
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Ocarina, Typical/Sustains/SusVib/StdOcarina_SusVib_G#4.wav",
+    "key": 80,
+    "cents": 12.9,
+    "db": -13.1,
+    "start": 0.0076
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Ocarina, Typical/Sustains/SusVib/StdOcarina_SusVib_A4.wav",
+    "key": 81,
+    "cents": -3.8,
+    "db": -17.7,
+    "start": 0.008
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Ocarina, Typical/Sustains/SusVib/StdOcarina_SusVib_A#4.wav",
+    "key": 82,
+    "cents": 13.1,
+    "db": -15.1,
+    "start": 0.0054
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Ocarina, Typical/Sustains/SusVib/StdOcarina_SusVib_C5.wav",
+    "key": 84,
+    "cents": 22.9,
+    "db": -19.0,
+    "start": 0.0157
+   }
+  ]
+ },
+ "ocarina-small": {
+  "sustain": [
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Ocarina, Small/Sustain/ocarina_A#4_sustain0.wav",
+    "key": 82,
+    "cents": -10.9,
+    "db": -35.4,
+    "start": 0.006
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Ocarina, Small/Sustain/ocarina_C5_sustain0.wav",
+    "key": 84,
+    "cents": -0.6,
+    "db": -29.9,
+    "start": 0.0038
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Ocarina, Small/Sustain/ocarina_D5_sustain0.wav",
+    "key": 86,
+    "cents": -4.8,
+    "db": -22.5,
+    "start": 0.0076
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Ocarina, Small/Sustain/ocarina_E5_sustain0.wav",
+    "key": 88,
+    "cents": 19.1,
+    "db": -24.8,
+    "start": 0.0063
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Ocarina, Small/Sustain/ocarina_F5_sustain0.wav",
+    "key": 89,
+    "cents": -2.0,
+    "db": -27.4,
+    "start": 0.0064
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Ocarina, Small/Sustain/ocarina_G5_sustain0.wav",
+    "key": 91,
+    "cents": -0.6,
+    "db": -22.1,
+    "start": 0.0099
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Ocarina, Small/Sustain/ocarina_G#5_sustain0.wav",
+    "key": 92,
+    "cents": 15.6,
+    "db": -22.6,
+    "start": 0.0092
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Ocarina, Small/Sustain/ocarina_A5_sustain0.wav",
+    "key": 93,
+    "cents": 15.2,
+    "db": -18.1,
+    "start": 0.0177
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Ocarina, Small/Sustain/ocarina_A#5_sustain0.wav",
+    "key": 94,
+    "cents": -14.8,
+    "db": -22.9,
+    "start": 0.0074
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Ocarina, Small/Sustain/ocarina_B5_sustain0.wav",
+    "key": 95,
+    "cents": 9.9,
+    "db": -19.9,
+    "start": 0.0181
+   }
+  ],
+  "staccato": [
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Ocarina, Small/Staccato/ocarina_A4_staccato0.wav",
+    "key": 81,
+    "cents": -2.1,
+    "db": -40.3,
+    "start": 0.0076
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Ocarina, Small/Staccato/ocarina_B4_staccato0.wav",
+    "key": 83,
+    "cents": 9.6,
+    "db": -32.1,
+    "start": 0.0067
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Ocarina, Small/Staccato/ocarina_D5_staccato0.wav",
+    "key": 86,
+    "cents": 0.2,
+    "db": -25.5,
+    "start": 0.0084
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Ocarina, Small/Staccato/ocarina_D#5_staccato0.wav",
+    "key": 87,
+    "cents": 1.3,
+    "db": -28.4,
+    "start": 0.0068
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Ocarina, Small/Staccato/ocarina_E5_staccato0.wav",
+    "key": 88,
+    "cents": 10.4,
+    "db": -27.0,
+    "start": 0.0095
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Ocarina, Small/Staccato/ocarina_F5_staccato0.wav",
+    "key": 89,
+    "cents": -11.3,
+    "db": -27.3,
+    "start": 0.0102
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Ocarina, Small/Staccato/ocarina_F#5_staccato0.wav",
+    "key": 90,
+    "cents": 1.7,
+    "db": -21.0,
+    "start": 0.0121
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Ocarina, Small/Staccato/ocarina_G5_staccato0.wav",
+    "key": 91,
+    "cents": 1.7,
+    "db": -19.5,
+    "start": 0.0056
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Ocarina, Small/Staccato/ocarina_G#5_staccato0.wav",
+    "key": 92,
+    "cents": 1.9,
+    "db": -18.8,
+    "start": 0.0117
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Ocarina, Small/Staccato/ocarina_A5_staccato0.wav",
+    "key": 93,
+    "cents": 3.9,
+    "db": -18.7,
+    "start": 0.0084
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Ocarina, Small/Staccato/ocarina_A#5_staccato0.wav",
+    "key": 94,
+    "cents": 1.6,
+    "db": -20.4,
+    "start": 0.0126
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Ocarina, Small/Staccato/ocarina_B5_staccato0.wav",
+    "key": 95,
+    "cents": 1.2,
+    "db": -20.6,
+    "start": 0.0129
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Ocarina, Small/Staccato/ocarina_C6_staccato0.wav",
+    "key": 96,
+    "cents": -0.1,
+    "db": -28.4,
+    "start": 0.0124
+   }
+  ]
+ },
+ "hand-percussion": {
+  "kit": [
+   {
+    "file": "Membranophones/Struck Membranophones/Conga/Tumba_HitN_v1_rr1_Sum.wav",
+    "key": 36,
+    "layer": 1,
+    "peak": -57.8
+   },
+   {
+    "file": "Membranophones/Struck Membranophones/Conga/Tumba_HitN_v1_rr2_Sum.wav",
+    "key": 36,
+    "layer": 1,
+    "peak": -34.7
+   },
+   {
+    "file": "Membranophones/Struck Membranophones/Conga/Tumba_HitN_v2_rr1_Sum.wav",
+    "key": 36,
+    "layer": 2,
+    "peak": -30.3
+   },
+   {
+    "file": "Membranophones/Struck Membranophones/Conga/Tumba_HitN_v2_rr2_Sum.wav",
+    "key": 36,
+    "layer": 2,
+    "peak": -29.4
+   },
+   {
+    "file": "Membranophones/Struck Membranophones/Conga/Tumba_HitN_v3_rr1_Sum.wav",
+    "key": 36,
+    "layer": 3,
+    "peak": -24.8
+   },
+   {
+    "file": "Membranophones/Struck Membranophones/Conga/Tumba_HitN_v3_rr2_Sum.wav",
+    "key": 36,
+    "layer": 3,
+    "peak": -25.7
+   },
+   {
+    "file": "Membranophones/Struck Membranophones/Conga/Tumba_HitN_v4_rr1_Sum.wav",
+    "key": 36,
+    "layer": 4,
+    "peak": -21.4
+   },
+   {
+    "file": "Membranophones/Struck Membranophones/Conga/Tumba_HitN_v4_rr2_Sum.wav",
+    "key": 36,
+    "layer": 4,
+    "peak": -15.9
+   },
+   {
+    "file": "Membranophones/Struck Membranophones/Conga/Tumba_HitFM_v2_rr1_Sum.wav",
+    "key": 37,
+    "layer": 2,
+    "peak": -35.7
+   },
+   {
+    "file": "Membranophones/Struck Membranophones/Conga/Tumba_HitFM_v2_rr2_Sum.wav",
+    "key": 37,
+    "layer": 2,
+    "peak": -28.4
+   },
+   {
+    "file": "Membranophones/Struck Membranophones/Conga/Tumba_HitFM_v3_rr1_Sum.wav",
+    "key": 37,
+    "layer": 3,
+    "peak": -21.7
+   },
+   {
+    "file": "Membranophones/Struck Membranophones/Conga/Tumba_HitFM_v3_rr2_Sum.wav",
+    "key": 37,
+    "layer": 3,
+    "peak": -21.7
+   },
+   {
+    "file": "Membranophones/Struck Membranophones/Conga/Tumba_HitFM_v4_rr1_Sum.wav",
+    "key": 37,
+    "layer": 4,
+    "peak": -16.2
+   },
+   {
+    "file": "Membranophones/Struck Membranophones/Conga/Tumba_HitFM_v4_rr2_Sum.wav",
+    "key": 37,
+    "layer": 4,
+    "peak": -13.8
+   },
+   {
+    "file": "Membranophones/Struck Membranophones/Conga/Conga_HitN_v1_rr1_Sum.wav",
+    "key": 38,
+    "layer": 1,
+    "peak": -34.2
+   },
+   {
+    "file": "Membranophones/Struck Membranophones/Conga/Conga_HitN_v1_rr2_Sum.wav",
+    "key": 38,
+    "layer": 1,
+    "peak": -29.0
+   },
+   {
+    "file": "Membranophones/Struck Membranophones/Conga/Conga_HitN_v2_rr1_Sum.wav",
+    "key": 38,
+    "layer": 2,
+    "peak": -20.2
+   },
+   {
+    "file": "Membranophones/Struck Membranophones/Conga/Conga_HitN_v2_rr2_Sum.wav",
+    "key": 38,
+    "layer": 2,
+    "peak": -19.1
+   },
+   {
+    "file": "Membranophones/Struck Membranophones/Conga/Conga_HitN_v3_rr1_Sum.wav",
+    "key": 38,
+    "layer": 3,
+    "peak": -16.2
+   },
+   {
+    "file": "Membranophones/Struck Membranophones/Conga/Conga_HitN_v3_rr2_Sum.wav",
+    "key": 38,
+    "layer": 3,
+    "peak": -16.9
+   },
+   {
+    "file": "Membranophones/Struck Membranophones/Conga/Conga_HitFM_v1_rr1_Sum.wav",
+    "key": 39,
+    "layer": 1,
+    "peak": -27.2
+   },
+   {
+    "file": "Membranophones/Struck Membranophones/Conga/Conga_HitFM_v1_rr2_Sum.wav",
+    "key": 39,
+    "layer": 1,
+    "peak": -25.2
+   },
+   {
+    "file": "Membranophones/Struck Membranophones/Conga/Conga_HitFM_v2_rr1_Sum.wav",
+    "key": 39,
+    "layer": 2,
+    "peak": -10.9
+   },
+   {
+    "file": "Membranophones/Struck Membranophones/Conga/Conga_HitFM_v2_rr2_Sum.wav",
+    "key": 39,
+    "layer": 2,
+    "peak": -15.0
+   },
+   {
+    "file": "Membranophones/Struck Membranophones/Conga/Quinto_HitN_v1_rr1_Sum.wav",
+    "key": 40,
+    "layer": 1,
+    "peak": -32.0
+   },
+   {
+    "file": "Membranophones/Struck Membranophones/Conga/Quinto_HitN_v1_rr2_Sum.wav",
+    "key": 40,
+    "layer": 1,
+    "peak": -31.7
+   },
+   {
+    "file": "Membranophones/Struck Membranophones/Conga/Quinto_HitN_v2_rr1_Sum.wav",
+    "key": 40,
+    "layer": 2,
+    "peak": -23.1
+   },
+   {
+    "file": "Membranophones/Struck Membranophones/Conga/Quinto_HitN_v2_rr2_Sum.wav",
+    "key": 40,
+    "layer": 2,
+    "peak": -23.0
+   },
+   {
+    "file": "Membranophones/Struck Membranophones/Conga/Quinto_HitN_v3_rr1_Sum.wav",
+    "key": 40,
+    "layer": 3,
+    "peak": -13.4
+   },
+   {
+    "file": "Membranophones/Struck Membranophones/Conga/Quinto_HitN_v3_rr2_Sum.wav",
+    "key": 40,
+    "layer": 3,
+    "peak": -12.9
+   },
+   {
+    "file": "Membranophones/Struck Membranophones/Conga/Quinto_HitFM1_v1_rr1_Sum.wav",
+    "key": 41,
+    "layer": 1,
+    "peak": -35.8
+   },
+   {
+    "file": "Membranophones/Struck Membranophones/Conga/Quinto_HitFM1_v1_rr2_Sum.wav",
+    "key": 41,
+    "layer": 1,
+    "peak": -36.8
+   },
+   {
+    "file": "Membranophones/Struck Membranophones/Conga/Quinto_HitFM1_v2_rr1_Sum.wav",
+    "key": 41,
+    "layer": 2,
+    "peak": -19.6
+   },
+   {
+    "file": "Membranophones/Struck Membranophones/Conga/Quinto_HitFM1_v2_rr2_Sum.wav",
+    "key": 41,
+    "layer": 2,
+    "peak": -18.2
+   },
+   {
+    "file": "Membranophones/Struck Membranophones/Frame Drum/HDrumL_Hit_v2_rr1_Sum.wav",
+    "key": 43,
+    "layer": 2,
+    "peak": -31.1
+   },
+   {
+    "file": "Membranophones/Struck Membranophones/Frame Drum/HDrumL_Hit_v2_rr2_Sum.wav",
+    "key": 43,
+    "layer": 2,
+    "peak": -28.0
+   },
+   {
+    "file": "Membranophones/Struck Membranophones/Frame Drum/HDrumL_Hit_v3_rr1_Sum.wav",
+    "key": 43,
+    "layer": 3,
+    "peak": -12.8
+   },
+   {
+    "file": "Membranophones/Struck Membranophones/Frame Drum/HDrumL_Hit_v3_rr2_Sum.wav",
+    "key": 43,
+    "layer": 3,
+    "peak": -10.9
+   },
+   {
+    "file": "Membranophones/Struck Membranophones/Frame Drum/HDrumL_HitMuted_v2_rr1_Sum.wav",
+    "key": 44,
+    "layer": 2,
+    "peak": -30.0
+   },
+   {
+    "file": "Membranophones/Struck Membranophones/Frame Drum/HDrumL_HitMuted_v2_rr2_Sum.wav",
+    "key": 44,
+    "layer": 2,
+    "peak": -27.6
+   },
+   {
+    "file": "Membranophones/Struck Membranophones/Frame Drum/HDrumL_HitMuted_v3_rr1_Sum.wav",
+    "key": 44,
+    "layer": 3,
+    "peak": -9.4
+   },
+   {
+    "file": "Membranophones/Struck Membranophones/Frame Drum/HDrumL_HitMuted_v3_rr2_Sum.wav",
+    "key": 44,
+    "layer": 3,
+    "peak": -10.5
+   },
+   {
+    "file": "Membranophones/Struck Membranophones/Frame Drum/HDrumL_Hand_rr1_Sum.wav",
+    "key": 45,
+    "layer": 0,
+    "peak": -56.0
+   },
+   {
+    "file": "Membranophones/Struck Membranophones/Frame Drum/HDrumS_Hit_v2_rr1_Sum.wav",
+    "key": 47,
+    "layer": 2,
+    "peak": -37.8
+   },
+   {
+    "file": "Membranophones/Struck Membranophones/Frame Drum/HDrumS_Hit_v2_rr2_Sum.wav",
+    "key": 47,
+    "layer": 2,
+    "peak": -37.1
+   },
+   {
+    "file": "Membranophones/Struck Membranophones/Frame Drum/HDrumS_Hit_v3_rr1_Sum.wav",
+    "key": 47,
+    "layer": 3,
+    "peak": -18.9
+   },
+   {
+    "file": "Membranophones/Struck Membranophones/Frame Drum/HDrumS_Hit_v3_rr2_Sum.wav",
+    "key": 47,
+    "layer": 3,
+    "peak": -17.5
+   },
+   {
+    "file": "Membranophones/Struck Membranophones/Frame Drum/HDrumS_HitMuted_v2_rr1_Sum.wav",
+    "key": 48,
+    "layer": 2,
+    "peak": -43.8
+   },
+   {
+    "file": "Membranophones/Struck Membranophones/Frame Drum/HDrumS_HitMuted_v2_rr2_Sum.wav",
+    "key": 48,
+    "layer": 2,
+    "peak": -37.0
+   },
+   {
+    "file": "Membranophones/Struck Membranophones/Frame Drum/HDrumS_HitMuted_v3_rr1_Sum.wav",
+    "key": 48,
+    "layer": 3,
+    "peak": -16.7
+   },
+   {
+    "file": "Membranophones/Struck Membranophones/Frame Drum/HDrumS_HitMuted_v3_rr2_Sum.wav",
+    "key": 48,
+    "layer": 3,
+    "peak": -20.8
+   },
+   {
+    "file": "Membranophones/Struck Membranophones/Frame Drum/HDrumS_Hand_v1_rr1_Sum.wav",
+    "key": 49,
+    "layer": 1,
+    "peak": -60.5
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Slit Drum/LogDrumLo_MedM_v1_rr1_Sum.wav",
+    "key": 50,
+    "layer": 1,
+    "peak": -29.0
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Slit Drum/LogDrumLo_MedM_v2_rr1_Sum.wav",
+    "key": 50,
+    "layer": 2,
+    "peak": -21.7
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Slit Drum/LogDrumLo_MedM_v3_rr1_Sum.wav",
+    "key": 50,
+    "layer": 3,
+    "peak": -17.1
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Slit Drum/LogDrumHi_MedM_v1_rr1_Sum.wav",
+    "key": 52,
+    "layer": 1,
+    "peak": -27.6
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Slit Drum/LogDrumHi_MedM_v2_rr1_Sum.wav",
+    "key": 52,
+    "layer": 2,
+    "peak": -22.3
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Slit Drum/LogDrumHi_MedM_v3_rr1_Sum.wav",
+    "key": 52,
+    "layer": 3,
+    "peak": -14.3
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Shaker, Large/LShaker_Hit_rr1_Mid.wav",
+    "key": 54,
+    "layer": 0,
+    "peak": -13.2
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Shaker, Large/LShaker_Hit_rr2_Mid.wav",
+    "key": 54,
+    "layer": 0,
+    "peak": -11.5
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Shaker, Large/LShaker_Shake1D_rr2_Mid.wav",
+    "key": 55,
+    "layer": 0,
+    "peak": -24.1
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Shaker, Large/LShaker_Shake1D_rr3_Mid.wav",
+    "key": 55,
+    "layer": 0,
+    "peak": -21.2
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Shaker, Large/LShaker_Shake1U_rr1_Mid.wav",
+    "key": 56,
+    "layer": 0,
+    "peak": -28.5
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Shaker, Large/LShaker_Shake1U_rr4_Mid.wav",
+    "key": 56,
+    "layer": 0,
+    "peak": -25.9
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Shaker, Small/Mid_ShakerDouble_Down_rr1.wav",
+    "key": 57,
+    "layer": 0,
+    "peak": -29.2
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Shaker, Small/Mid_ShakerDouble_Down_rr2.wav",
+    "key": 57,
+    "layer": 0,
+    "peak": -25.6
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Shaker, Small/Mid_ShakerDouble_Up_rr1.wav",
+    "key": 58,
+    "layer": 0,
+    "peak": -36.0
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Shaker, Small/Mid_ShakerDouble_Up_rr2.wav",
+    "key": 58,
+    "layer": 0,
+    "peak": -35.2
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Shaker, Small/Mid_ShakerHighFaster_Down_rr1.wav",
+    "key": 59,
+    "layer": 0,
+    "peak": -29.2
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Shaker, Small/Mid_ShakerHighFaster_Down_rr2.wav",
+    "key": 59,
+    "layer": 0,
+    "peak": -30.8
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Shaker, Small/Mid_ShakerHighFaster_Up_rr1.wav",
+    "key": 60,
+    "layer": 0,
+    "peak": -21.6
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Shaker, Small/Mid_ShakerHighFaster_Up_rr2.wav",
+    "key": 60,
+    "layer": 0,
+    "peak": -23.1
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Shaker, Small/Mid_ShakerLowFaster_Down_rr1.wav",
+    "key": 61,
+    "layer": 0,
+    "peak": -29.2
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Shaker, Small/Mid_ShakerLowFaster_Down_rr2.wav",
+    "key": 61,
+    "layer": 0,
+    "peak": -25.5
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Shaker, Small/Mid_ShakerLowFaster_Up_rr1.wav",
+    "key": 62,
+    "layer": 0,
+    "peak": -23.7
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Shaker, Small/Mid_ShakerLowFaster_Up_rr2.wav",
+    "key": 62,
+    "layer": 0,
+    "peak": -23.2
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Shaker, Small/Mid_Shaker_Roll_Fast_rr1.wav",
+    "key": 63,
+    "layer": 0,
+    "peak": -23.0
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Shaker, Small/Mid_Shaker_Roll_Fast_rr2.wav",
+    "key": 63,
+    "layer": 0,
+    "peak": -19.1
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Shaker, Small/Mid_Shaker_Slap_rr1.wav",
+    "key": 64,
+    "layer": 0,
+    "peak": -28.2
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Shaker, Small/Mid_Shaker_Slap_rr2.wav",
+    "key": 64,
+    "layer": 0,
+    "peak": -25.4
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Agogo Bells/Agogo_Low_v1_rr1_Mid.wav",
+    "key": 65,
+    "layer": 1,
+    "peak": -35.8
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Agogo Bells/Agogo_Low_v2_rr1_Mid.wav",
+    "key": 65,
+    "layer": 2,
+    "peak": -22.2
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Agogo Bells/Agogo_High_v1_rr1_Mid.wav",
+    "key": 66,
+    "layer": 1,
+    "peak": -37.9
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Agogo Bells/Agogo_High_v2_rr1_Mid.wav",
+    "key": 66,
+    "layer": 2,
+    "peak": -26.2
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Agogo Bells/Agogo_High_v3_rr1_Mid.wav",
+    "key": 66,
+    "layer": 3,
+    "peak": -18.4
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Claves/Claves1_Hit_v1_rr1_Mid.wav",
+    "key": 67,
+    "layer": 1,
+    "peak": -38.6
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Claves/Claves1_Hit_v2_rr1_Mid.wav",
+    "key": 67,
+    "layer": 2,
+    "peak": -24.2
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Claves/Claves1_Hit_v3_rr1_Mid.wav",
+    "key": 67,
+    "layer": 3,
+    "peak": -14.3
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Claves/Claves2_Hit_v1_rr1_Mid.wav",
+    "key": 68,
+    "layer": 1,
+    "peak": -34.8
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Claves/Claves2_Hit_v2_rr1_Mid.wav",
+    "key": 68,
+    "layer": 2,
+    "peak": -21.1
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Claves/Claves2_Hit_v3_rr1_Mid.wav",
+    "key": 68,
+    "layer": 3,
+    "peak": -17.4
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Cabasa/Cabasa1_Hit_rr1_Mid.wav",
+    "key": 69,
+    "layer": 0,
+    "peak": -20.2
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Cabasa/Cabasa1_Hit_rr2_Mid.wav",
+    "key": 69,
+    "layer": 0,
+    "peak": -19.0
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Cabasa/Cabasa1_Rub_v1_rr1_Mid.wav",
+    "key": 70,
+    "layer": 1,
+    "peak": -31.3
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Cabasa/Cabasa1_Rub_v1_rr2_Mid.wav",
+    "key": 70,
+    "layer": 1,
+    "peak": -29.8
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Cabasa/Cabasa1_Rub_v2_rr1_Mid.wav",
+    "key": 70,
+    "layer": 2,
+    "peak": -20.8
+   },
+   {
+    "file": "Idiophones/Struck Idiophones/Cabasa/Cabasa1_Rub_v2_rr2_Mid.wav",
+    "key": 70,
+    "layer": 2,
+    "peak": -20.6
+   }
+  ]
  }
 }
