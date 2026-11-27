@@ -1152,6 +1152,47 @@
       "description": "Hand percussion (Versilian Community Sample Library, CC0): 36-41 congas (tumba, conga, quinto: open and muted), 43-45 large frame drum, 47-49 small frame drum, 50 and 52 log drum, 54-56 large shaker (hit, down, up), 57-64 small shaker strokes and roll, 65 and 66 agogo, 67 and 68 claves, 69 and 70 cabasa. Velocity picks the recorded layer and scales loudness. SFZ written by tools/make-vcsl-sfz.py",
       "fallback": "synth.drums"
     },
+    "pipe-organ": {
+      "type": "sfz",
+      "file": "${MUSIC_RENDER_VCSL:-../../external/vcsl}/InitialDAW/pipe-organ.sfz",
+      "articulations": {
+        "sustain": {},
+        "quiet": {
+          "file": "${MUSIC_RENDER_VCSL:-../../external/vcsl}/InitialDAW/pipe-organ-quiet.sfz"
+        }
+      },
+      "defaultArticulation": "sustain",
+      "controllers": {
+        "cc11": "engine"
+      },
+      "description": "Pipe organ manual (Versilian Community Sample Library, CC0), sounding C2 to C7, sampled every minor third. Articulations sustain (loud registration with reeds) and quiet (a single flute stop). Velocity barely changes loudness (3 dB): an organ has no dynamics. Recordings end after 12 seconds (no loop). Below C3 the loud registration has a weak fundamental. SFZ written by tools/make-vcsl-sfz.py",
+      "fallback": "synth.pad"
+    },
+    "pipe-organ-pedal": {
+      "type": "sfz",
+      "file": "${MUSIC_RENDER_VCSL:-../../external/vcsl}/InitialDAW/pipe-organ-pedal.sfz",
+      "articulations": {
+        "sustain": {},
+        "quiet": {
+          "file": "${MUSIC_RENDER_VCSL:-../../external/vcsl}/InitialDAW/pipe-organ-pedal-quiet.sfz"
+        }
+      },
+      "defaultArticulation": "sustain",
+      "controllers": {
+        "cc11": "engine"
+      },
+      "description": "Pipe organ pedal (Versilian Community Sample Library, CC0). Articulation sustain is the loud 16-foot registration, sounding C1 to F#3; quiet sounds C2 to F#4. Velocity barely changes loudness. Recordings end after 12 seconds (no loop). SFZ written by tools/make-vcsl-sfz.py",
+      "fallback": "synth.bass"
+    },
+    "renaissance-organ": {
+      "type": "sfz",
+      "file": "${MUSIC_RENDER_VCSL:-../../external/vcsl}/InitialDAW/renaissance-organ.sfz",
+      "controllers": {
+        "cc11": "engine"
+      },
+      "description": "Renaissance organ, full registration (Versilian Community Sample Library, CC0), sounding C2 to E6, sampled every whole tone. Velocity barely changes loudness. Recordings end after 5 seconds (no loop). SFZ written by tools/make-vcsl-sfz.py",
+      "fallback": "synth.pad"
+    },
     "surge-xt": {
       "type": "vst3",
       "plugin": "${MUSIC_RENDER_PLUGINS:-../../external/plugins}/surge-xt/Surge XT.vst3",

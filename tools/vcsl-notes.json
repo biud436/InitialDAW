@@ -2228,6 +2228,659 @@
    }
   ]
  },
+ "pipe-organ": {
+  "sustain": [
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Pipe Organ/Loud/Rode_Man3Open_C1.wav",
+    "key": 36,
+    "cents": 0.0,
+    "db": -30.7,
+    "start": 0.0768
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Pipe Organ/Loud/Rode_Man3Open_D#1.wav",
+    "key": 39,
+    "cents": -4.2,
+    "db": -30.0,
+    "start": 0.0532
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Pipe Organ/Loud/Rode_Man3Open_F#1.wav",
+    "key": 42,
+    "cents": -7.2,
+    "db": -30.4,
+    "start": 0.061
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Pipe Organ/Loud/Rode_Man3Open_A1.wav",
+    "key": 45,
+    "cents": 2.1,
+    "db": -32.1,
+    "start": 0.0782
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Pipe Organ/Loud/Rode_Man3Open_C2.wav",
+    "key": 48,
+    "cents": -1.0,
+    "db": -32.6,
+    "start": 0.069
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Pipe Organ/Loud/Rode_Man3Open_D#2.wav",
+    "key": 51,
+    "cents": 0.2,
+    "db": -33.1,
+    "start": 0.07
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Pipe Organ/Loud/Rode_Man3Open_F#2.wav",
+    "key": 54,
+    "cents": 0.0,
+    "db": -33.1,
+    "start": 0.0598
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Pipe Organ/Loud/Rode_Man3Open_A2.wav",
+    "key": 57,
+    "cents": -1.1,
+    "db": -33.9,
+    "start": 0.06
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Pipe Organ/Loud/Rode_Man3Open_C3.wav",
+    "key": 60,
+    "cents": -2.4,
+    "db": -31.6,
+    "start": 0.0767
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Pipe Organ/Loud/Rode_Man3Open_D#3.wav",
+    "key": 63,
+    "cents": -3.8,
+    "db": -35.0,
+    "start": 0.0566
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Pipe Organ/Loud/Rode_Man3Open_F#3.wav",
+    "key": 66,
+    "cents": 0.0,
+    "db": -32.3,
+    "start": 0.0558
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Pipe Organ/Loud/Rode_Man3Open_A3.wav",
+    "key": 69,
+    "cents": -3.4,
+    "db": -34.5,
+    "start": 0.0557
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Pipe Organ/Loud/Rode_Man3Open_C4.wav",
+    "key": 72,
+    "cents": -1.0,
+    "db": -34.6,
+    "start": 0.0654
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Pipe Organ/Loud/Rode_Man3Open_D#4.wav",
+    "key": 75,
+    "cents": -6.8,
+    "db": -38.5,
+    "start": 0.0651
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Pipe Organ/Loud/Rode_Man3Open_F#4.wav",
+    "key": 78,
+    "cents": -0.9,
+    "db": -37.0,
+    "start": 0.0535
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Pipe Organ/Loud/Rode_Man3Open_A4.wav",
+    "key": 81,
+    "cents": 2.4,
+    "db": -39.8,
+    "start": 0.0514
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Pipe Organ/Loud/Rode_Man3Open_C5.wav",
+    "key": 84,
+    "cents": -3.0,
+    "db": -38.3,
+    "start": 0.0523
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Pipe Organ/Loud/Rode_Man3Open_D#5.wav",
+    "key": 87,
+    "cents": -2.1,
+    "db": -36.8,
+    "start": 0.064
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Pipe Organ/Loud/Rode_Man3Open_F#5.wav",
+    "key": 90,
+    "cents": -0.4,
+    "db": -38.7,
+    "start": 0.0554
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Pipe Organ/Loud/Rode_Man3Open_A5.wav",
+    "key": 93,
+    "cents": -2.8,
+    "db": -40.9,
+    "start": 0.0462
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Pipe Organ/Loud/Rode_Man3Open_C6.wav",
+    "key": 96,
+    "cents": -4.0,
+    "db": -41.0,
+    "start": 0.0595
+   }
+  ],
+  "quiet": [
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Pipe Organ/Quiet/NT5_Man3Quiet_C1_rr1.wav",
+    "key": 36,
+    "cents": -11.2,
+    "db": -53.9,
+    "start": 0.1415
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Pipe Organ/Quiet/NT5_Man3Quiet_D#1_rr1.wav",
+    "key": 39,
+    "cents": 6.7,
+    "db": -43.8,
+    "start": 0.076
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Pipe Organ/Quiet/NT5_Man3Quiet_F#1_rr1.wav",
+    "key": 42,
+    "cents": -3.1,
+    "db": -44.6,
+    "start": 0.0803
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Pipe Organ/Quiet/NT5_Man3Quiet_A1_rr1.wav",
+    "key": 45,
+    "cents": -0.1,
+    "db": -32.4,
+    "start": 0.1369
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Pipe Organ/Quiet/NT5_Man3Quiet_C2_rr1.wav",
+    "key": 48,
+    "cents": 0.7,
+    "db": -31.7,
+    "start": 0.0714
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Pipe Organ/Quiet/NT5_Man3Quiet_D#2_rr1.wav",
+    "key": 51,
+    "cents": -2.6,
+    "db": -36.8,
+    "start": 0.1006
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Pipe Organ/Quiet/NT5_Man3Quiet_F#2_rr1.wav",
+    "key": 54,
+    "cents": 6.1,
+    "db": -29.9,
+    "start": 0.0694
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Pipe Organ/Quiet/NT5_Man3Quiet_A2_rr1.wav",
+    "key": 57,
+    "cents": 8.3,
+    "db": -39.8,
+    "start": 0.0568
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Pipe Organ/Quiet/NT5_Man3Quiet_C3_rr1.wav",
+    "key": 60,
+    "cents": -0.4,
+    "db": -39.3,
+    "start": 0.0539
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Pipe Organ/Quiet/NT5_Man3Quiet_D#3_rr1.wav",
+    "key": 63,
+    "cents": 0.6,
+    "db": -35.3,
+    "start": 0.0941
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Pipe Organ/Quiet/NT5_Man3Quiet_F#3_rr1.wav",
+    "key": 66,
+    "cents": 0.1,
+    "db": -32.9,
+    "start": 0.0653
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Pipe Organ/Quiet/NT5_Man3Quiet_A3_rr1.wav",
+    "key": 69,
+    "cents": -5.9,
+    "db": -36.4,
+    "start": 0.0582
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Pipe Organ/Quiet/NT5_Man3Quiet_C4_rr1.wav",
+    "key": 72,
+    "cents": -5.1,
+    "db": -41.2,
+    "start": 0.0524
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Pipe Organ/Quiet/NT5_Man3Quiet_D#4_rr1.wav",
+    "key": 75,
+    "cents": -2.7,
+    "db": -36.3,
+    "start": 0.0655
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Pipe Organ/Quiet/NT5_Man3Quiet_F#4_rr1.wav",
+    "key": 78,
+    "cents": 0.2,
+    "db": -33.9,
+    "start": 0.0476
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Pipe Organ/Quiet/NT5_Man3Quiet_A4_rr1.wav",
+    "key": 81,
+    "cents": 0.3,
+    "db": -35.0,
+    "start": 0.052
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Pipe Organ/Quiet/NT5_Man3Quiet_C5_rr1.wav",
+    "key": 84,
+    "cents": -3.2,
+    "db": -29.2,
+    "start": 0.0529
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Pipe Organ/Quiet/NT5_Man3Quiet_D#5_rr1.wav",
+    "key": 87,
+    "cents": -8.0,
+    "db": -36.3,
+    "start": 0.0683
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Pipe Organ/Quiet/NT5_Man3Quiet_F#5_rr1.wav",
+    "key": 90,
+    "cents": -3.8,
+    "db": -34.2,
+    "start": 0.0515
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Pipe Organ/Quiet/NT5_Man3Quiet_A5_rr1.wav",
+    "key": 93,
+    "cents": -2.6,
+    "db": -38.2,
+    "start": 0.1444
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Pipe Organ/Quiet/NT5_Man3Quiet_C6_rr1.wav",
+    "key": 96,
+    "cents": -0.8,
+    "db": -40.8,
+    "start": 0.047
+   }
+  ]
+ },
+ "pipe-organ-pedal": {
+  "sustain": [
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Pipe Organ/Loud Pedal/Rode_Pedal_C1.wav",
+    "key": 24,
+    "cents": -2.2,
+    "db": -20.4,
+    "start": 0.0878
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Pipe Organ/Loud Pedal/Rode_Pedal_D#1.wav",
+    "key": 27,
+    "cents": 0.0,
+    "db": -19.1,
+    "start": 0.1085
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Pipe Organ/Loud Pedal/Rode_Pedal_F#1.wav",
+    "key": 30,
+    "cents": 3.6,
+    "db": -20.0,
+    "start": 0.0996
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Pipe Organ/Loud Pedal/Rode_Pedal_A1.wav",
+    "key": 33,
+    "cents": 6.7,
+    "db": -21.5,
+    "start": 0.0667
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Pipe Organ/Loud Pedal/Rode_Pedal_C2.wav",
+    "key": 36,
+    "cents": -2.1,
+    "db": -23.4,
+    "start": 0.0763
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Pipe Organ/Loud Pedal/Rode_Pedal_D#2.wav",
+    "key": 39,
+    "cents": 0.0,
+    "db": -21.4,
+    "start": 0.0736
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Pipe Organ/Loud Pedal/Rode_Pedal_F#2.wav",
+    "key": 42,
+    "cents": 0.0,
+    "db": -23.9,
+    "start": 0.0692
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Pipe Organ/Loud Pedal/Rode_Pedal_A2.wav",
+    "key": 45,
+    "cents": -3.4,
+    "db": -22.0,
+    "start": 0.0778
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Pipe Organ/Loud Pedal/Rode_Pedal_C3.wav",
+    "key": 48,
+    "cents": 0.0,
+    "db": -24.8,
+    "start": 0.065
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Pipe Organ/Loud Pedal/Rode_Pedal_D#3.wav",
+    "key": 51,
+    "cents": 3.2,
+    "db": -25.7,
+    "start": 0.0725
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Pipe Organ/Loud Pedal/Rode_Pedal_F#3.wav",
+    "key": 54,
+    "cents": -13.2,
+    "db": -24.9,
+    "start": 0.0712
+   }
+  ],
+  "quiet": [
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Pipe Organ/Quiet Pedal/NT5_PedalQuiet_C1_rr1.wav",
+    "key": 36,
+    "cents": 6.1,
+    "db": -35.6,
+    "start": 0.1204
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Pipe Organ/Quiet Pedal/NT5_PedalQuiet_D#1_rr1.wav",
+    "key": 39,
+    "cents": 0.0,
+    "db": -32.9,
+    "start": 0.072
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Pipe Organ/Quiet Pedal/NT5_PedalQuiet_F#1_rr1.wav",
+    "key": 42,
+    "cents": 8.4,
+    "db": -26.1,
+    "start": 0.1118
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Pipe Organ/Quiet Pedal/NT5_PedalQuiet_A1_rr1.wav",
+    "key": 45,
+    "cents": -7.1,
+    "db": -37.6,
+    "start": 0.0704
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Pipe Organ/Quiet Pedal/NT5_PedalQuiet_C2_rr1.wav",
+    "key": 48,
+    "cents": -5.7,
+    "db": -31.8,
+    "start": 0.0989
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Pipe Organ/Quiet Pedal/NT5_PedalQuiet_D#2_rr1.wav",
+    "key": 51,
+    "cents": -3.9,
+    "db": -35.8,
+    "start": 0.0923
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Pipe Organ/Quiet Pedal/NT5_PedalQuiet_F#2_rr1.wav",
+    "key": 54,
+    "cents": 3.3,
+    "db": -35.5,
+    "start": 0.0673
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Pipe Organ/Quiet Pedal/NT5_PedalQuiet_A2_rr1.wav",
+    "key": 57,
+    "cents": -2.6,
+    "db": -34.5,
+    "start": 0.0665
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Pipe Organ/Quiet Pedal/NT5_PedalQuiet_C3_rr1.wav",
+    "key": 60,
+    "cents": -5.2,
+    "db": -26.8,
+    "start": 0.0747
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Pipe Organ/Quiet Pedal/NT5_PedalQuiet_D#3_rr1.wav",
+    "key": 63,
+    "cents": -0.9,
+    "db": -28.5,
+    "start": 0.0969
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Pipe Organ/Quiet Pedal/NT5_PedalQuiet_F#3_rr1.wav",
+    "key": 66,
+    "cents": -0.5,
+    "db": -34.1,
+    "start": 0.0748
+   }
+  ]
+ },
+ "renaissance-organ": {
+  "sustain": [
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Renaissance Organ/Full/RenOrgan_Full_Room_C1_rr1.wav",
+    "key": 36,
+    "cents": 3.2,
+    "db": -23.2,
+    "start": 0.0239
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Renaissance Organ/Full/RenOrgan_Full_Room_D1_rr1.wav",
+    "key": 38,
+    "cents": -1.8,
+    "db": -24.6,
+    "start": 0.0307
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Renaissance Organ/Full/RenOrgan_Full_Room_E1_rr1.wav",
+    "key": 40,
+    "cents": 11.5,
+    "db": -21.8,
+    "start": 0.0309
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Renaissance Organ/Full/RenOrgan_Full_Room_F#1_rr1.wav",
+    "key": 42,
+    "cents": 12.8,
+    "db": -20.8,
+    "start": 0.018
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Renaissance Organ/Full/RenOrgan_Full_Room_G#1_rr1.wav",
+    "key": 44,
+    "cents": 3.1,
+    "db": -22.4,
+    "start": 0.0077
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Renaissance Organ/Full/RenOrgan_Full_Room_A#1_rr1.wav",
+    "key": 46,
+    "cents": 4.1,
+    "db": -17.6,
+    "start": 0.019
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Renaissance Organ/Full/RenOrgan_Full_Room_C2_rr1.wav",
+    "key": 48,
+    "cents": -2.0,
+    "db": -20.7,
+    "start": 0.0092
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Renaissance Organ/Full/RenOrgan_Full_Room_D2_rr1.wav",
+    "key": 50,
+    "cents": -1.2,
+    "db": -23.5,
+    "start": 0.0089
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Renaissance Organ/Full/RenOrgan_Full_Room_E2_rr1.wav",
+    "key": 52,
+    "cents": -0.5,
+    "db": -21.4,
+    "start": 0.0207
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Renaissance Organ/Full/RenOrgan_Full_Room_F#2_rr1.wav",
+    "key": 54,
+    "cents": -0.6,
+    "db": -23.4,
+    "start": 0.0088
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Renaissance Organ/Full/RenOrgan_Full_Room_G#2_rr1.wav",
+    "key": 56,
+    "cents": -0.6,
+    "db": -25.9,
+    "start": 0.0076
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Renaissance Organ/Full/RenOrgan_Full_Room_A#2_rr1.wav",
+    "key": 58,
+    "cents": -1.6,
+    "db": -25.0,
+    "start": 0.0089
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Renaissance Organ/Full/RenOrgan_Full_Room_C3_rr1.wav",
+    "key": 60,
+    "cents": 0.0,
+    "db": -19.4,
+    "start": 0.0076
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Renaissance Organ/Full/RenOrgan_Full_Room_D3_rr1.wav",
+    "key": 62,
+    "cents": 1.0,
+    "db": -21.0,
+    "start": 0.0079
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Renaissance Organ/Full/RenOrgan_Full_Room_E3_rr1.wav",
+    "key": 64,
+    "cents": -2.9,
+    "db": -23.3,
+    "start": 0.0056
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Renaissance Organ/Full/RenOrgan_Full_Room_F#3_rr1.wav",
+    "key": 66,
+    "cents": -4.4,
+    "db": -23.2,
+    "start": 0.0076
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Renaissance Organ/Full/RenOrgan_Full_Room_G#3_rr1.wav",
+    "key": 68,
+    "cents": 1.3,
+    "db": -26.5,
+    "start": 0.0057
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Renaissance Organ/Full/RenOrgan_Full_Room_A#3_rr1.wav",
+    "key": 70,
+    "cents": 0.3,
+    "db": -24.8,
+    "start": 0.0069
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Renaissance Organ/Full/RenOrgan_Full_Room_C4_rr1.wav",
+    "key": 72,
+    "cents": 0.9,
+    "db": -23.5,
+    "start": 0.0045
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Renaissance Organ/Full/RenOrgan_Full_Room_D4_rr1.wav",
+    "key": 74,
+    "cents": -0.9,
+    "db": -18.9,
+    "start": 0.0046
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Renaissance Organ/Full/RenOrgan_Full_Room_E4_rr1.wav",
+    "key": 76,
+    "cents": 0.3,
+    "db": -22.4,
+    "start": 0.0053
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Renaissance Organ/Full/RenOrgan_Full_Room_F#4_rr1.wav",
+    "key": 78,
+    "cents": -3.6,
+    "db": -25.0,
+    "start": 0.0052
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Renaissance Organ/Full/RenOrgan_Full_Room_G#4_rr1.wav",
+    "key": 80,
+    "cents": -1.4,
+    "db": -25.0,
+    "start": 0.0041
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Renaissance Organ/Full/RenOrgan_Full_Room_A#4_rr1.wav",
+    "key": 82,
+    "cents": -12.7,
+    "db": -25.7,
+    "start": 0.0045
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Renaissance Organ/Full/RenOrgan_Full_Room_C5_rr1.wav",
+    "key": 84,
+    "cents": -1.2,
+    "db": -27.0,
+    "start": 0.0048
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Renaissance Organ/Full/RenOrgan_Full_Room_D5_rr1.wav",
+    "key": 86,
+    "cents": 1.9,
+    "db": -31.7,
+    "start": 0.0038
+   },
+   {
+    "file": "Aerophones/Edge-blown Aerophones/Renaissance Organ/Full/RenOrgan_Full_Room_E5_rr1.wav",
+    "key": 88,
+    "cents": -7.3,
+    "db": -27.7,
+    "start": 0.0047
+   }
+  ]
+ },
  "ocarina-small": {
   "sustain": [
    {

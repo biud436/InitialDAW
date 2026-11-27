@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 """Versilian Community Sample Library (VCSL) 의 녹음으로 InitialDAW 의 SFZ 를 쓴다
-(레지스트리의 harpsichord, recorder-soprano, recorder-alto, recorder-tenor, recorder-bass, mbira, balafon, ocarina, ocarina-small, hand-percussion).
+(레지스트리의 harpsichord, recorder-soprano, recorder-alto, recorder-tenor, recorder-bass, mbira, balafon, ocarina, ocarina-small, hand-percussion,
+pipe-organ, pipe-organ-pedal, renaissance-organ).
 
 받는 곳과 라이선스: https://github.com/sgossner/VCSL (Versilian Studios, CC0 1.0). 커밋 하나로 고정하고 (tools/vcsl-manifest.json 의 commit),
 파일마다 git 의 blob 해시 (SHA-1) 와 크기를 견준다. 받는 것은 이탈리아 하프시코드 (스톱 하나, 단3도마다 녹음, 놓는 소리) 와
 소프라노, 알토, 테너, 베이스 리코더 (지속음, 비브라토 지속음, 스타카토), 음비라 (짐바브웨의 냐마로파 조율), 발라폰 (말렛 셋, 세기 세 층),
-오카리나 둘, 손 타악기 (콩가 셋, 프레임 드럼 둘, 통나무 북, 셰이커 둘, 아고고, 클라베스, 카바사) 의 WAV 424개 (364MB) 다.
+오카리나 둘, 손 타악기 (콩가 셋, 프레임 드럼 둘, 통나무 북, 셰이커 둘, 아고고, 클라베스, 카바사) 파이프 오르간 (손건반과 페달, 큰 소리와 여린 소리), 르네상스 오르간의 WAV 515개 (545MB) 다.
 
 이 도구가 하는 일:
   - 없는 파일을 `external/vcsl/` 아래에 저장소와 같은 경로로 받는다.
@@ -21,6 +22,8 @@ SFZ 가 하는 일:
   - 음비라, 발라폰: 음표 길이와 상관없이 녹음의 끝까지 울린다. 같은 음의 녹음이 둘이면 하나만 쓴다 (칠 때마다 같은 소리). 배음이 고르지 않아 음높이는 파일 이름의 음 (울리는 음은 한 옥타브 위) 둘레에서
     가장 센 스펙트럼 봉우리로 재고, 녹음의 조율 (악기의 전통 조율) 은 그 평균율 건반에 맞춘다.
     발라폰은 벨로시티가 세기 층 (vl1~vl3) 을 고르고 건반마다 가장 센 층의 크기를 맞춘다 (층 사이의 차이는 녹음 그대로).
+  - 오르간: 벨로시티가 크기를 거의 바꾸지 않는다 (3 dB). 여러 파이프가 옥타브로 겹쳐 울려 음높이는 파일 이름의 음 (손건반은 한 옥타브 위,
+    큰 페달은 이름 그대로) 둘레에서 잰다. 녹음은 6~12초 뒤 끝난다 (루프 없음).
   - 손 타악기 (hand-percussion): 소리마다 건반 하나 (KIT 의 표), 가장 센 녹음의 봉우리를 -6 dBFS 에 맞추고 층 사이의 차이는 녹음 그대로.
 
 사용법:
@@ -55,9 +58,14 @@ INSTRUMENTS = [
     ("mbira", "Idiophones/Plucked Idiophones/Mbira dzaVadzimu Nyamaropa, Zimbabwe, Low B", {"sustain": ""}, None, 60, 0.5),
     ("balafon", "Idiophones/Struck Idiophones/Balafon", {"sustain": "Traditional Mallet", "hard": "Hard Mallet", "soft": "Soft Mallet"}, None, 45, 0.5),
     ("ocarina", "Aerophones/Edge-blown Aerophones/Ocarina, Typical", {"sustain": "Sustains/Sus", "vibrato": "Sustains/SusVib"}, None, 55, 0.12),
+    ("pipe-organ", "Aerophones/Edge-blown Aerophones/Pipe Organ", {"sustain": "Loud", "quiet": "Quiet"}, None, 15, 0.3),
+    ("pipe-organ-pedal", "Aerophones/Edge-blown Aerophones/Pipe Organ", {"sustain": "Loud Pedal", "quiet": "Quiet Pedal"}, None, 15, 0.3),
+    ("renaissance-organ", "Aerophones/Edge-blown Aerophones/Renaissance Organ", {"sustain": "Full"}, None, 15, 0.3),
     ("ocarina-small", "Aerophones/Edge-blown Aerophones/Ocarina, Small", {"sustain": "Sustain", "staccato": "Staccato"}, None, 55, 0.12),
 ]
 RING = {"mbira", "balafon"}          # 음표 길이와 상관없이 끝까지 울리는 악기
+LABELLED = RING | {"pipe-organ", "pipe-organ-pedal", "renaissance-organ"}   # 음높이를 파일 이름의 음 둘레에서 재는 악기 (배음이 고르지 않거나 여러 파이프가 겹친다)
+LABEL_SHIFT = {("pipe-organ-pedal", "sustain"): 0}    # 파일 이름의 음에서 울리는 음까지의 반음 (기본 12, 큰 페달은 16 피트라 이름 그대로)
 
 # 손 타악기: 건반마다 (저장소의 폴더, 파일 이름의 머리). 세기 층은 이름의 _vN, 라운드 로빈은 _rrN
 KIT_NAME = "hand-percussion"
@@ -165,11 +173,11 @@ def measure_file(path):
     return 69 + 12 * math.log2(sr / lag / 440.0), level, start / sr
 
 
-def measure_labelled(path):
-    """배음이 고르지 않은 악기: 파일 이름의 음에서 한 옥타브 위 둘레 (±150 센트) 의 가장 센 봉우리. (건반, 센트)"""
+def measure_labelled(path, shift=12):
+    """파일 이름의 음에서 shift 반음 위 둘레 (±150 센트) 의 가장 센 봉우리. (건반, 센트)"""
     import numpy as np
-    m = re.search(r"_([A-G]#?)(-?\d)_", os.path.basename(path))
-    nominal = "C C# D D# E F F# G G# A A# B".split().index(m.group(1)) + 12 * (int(m.group(2)) + 1) + 12
+    m = re.search(r"_([A-G]#?)(-?\d)[_.]", os.path.basename(path))
+    nominal = "C C# D D# E F F# G G# A A# B".split().index(m.group(1)) + 12 * (int(m.group(2)) + 1) + shift
     sr, x = read_wav(path)
     mono = x.mean(axis=1)
     start = int(np.argmax(np.abs(mono) > np.abs(mono).max() * 0.1))
@@ -199,8 +207,10 @@ def measure(root, manifest):
                     continue
                 midi, level, start = measure_file(os.path.join(root, f["path"]))
                 row = {"file": f["path"], "key": int(round(midi)), "cents": round((midi - round(midi)) * 100, 1), "db": round(level, 1), "start": round(start, 4)}
-                if name in RING:
-                    row["key"], row["cents"] = measure_labelled(os.path.join(root, f["path"]))
+                if name in LABELLED:
+                    row["key"], row["cents"] = measure_labelled(os.path.join(root, f["path"]), LABEL_SHIFT.get((name, art), 12))
+                    if name not in RING and abs(row["cents"]) > 15:      # 오르간은 조율돼 있다: 낮은 음에서 흔들린 값은 버린다
+                        row["cents"] = 0.0
                 if layer_of(f["path"]):
                     row["layer"] = layer_of(f["path"])
                 rows.append(row)

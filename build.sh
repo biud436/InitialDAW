@@ -21,7 +21,7 @@
 # 클린과 재즈 일렉트릭 기타(CC0, 약 400MB), 테너 색소폰(CC0, 32MB), Karoryfer x bigcat 독주 첼로(CC0, zip 133MB),
 # University of Iowa 독주 바이올린과 첼로 (제한 없이 쓸 수 있는 녹음, arco 35 파일 244MB 와 41 파일 221MB),
 # Accurate-Salamander 그랜드 피아노 (CC-BY 3.0, FLAC 785MB),
-# Versilian Community Sample Library 의 이탈리아 하프시코드, 바로크 리코더 넷, 음비라, 발라폰, 오카리나 둘, 손 타악기 (CC0, 커밋 고정, WAV 424개 364MB).
+# Versilian Community Sample Library 의 이탈리아 하프시코드, 바로크 리코더 넷, 음비라, 발라폰, 오카리나 둘, 손 타악기, 오르간 둘 (CC0, 커밋 고정, WAV 515개 545MB).
 # 첼로와 바이올린은 우리가 쓴 SFZ 로 연주한다: tools/make-cello-sfz.py, tools/make-iowa-strings-sfz.py 가 샘플 곁에 쓴다
 # (빌드마다 다시 쓰고 내용이 같으면 그대로 둔다).
 # 플러그인은 --plugins 로 받는다: Dexed 1.0.1 (GPL-3.0, DX7 FM 신스, VST3 와 AU), Surge XT 1.3.4 (GPL-3.0, 하이브리드 신스, 플러그인 zip 과
@@ -252,7 +252,7 @@ if [ "$FETCH_SAMPLES" = 1 ]; then
   mkdir -p "$REPO/external/iowa"
   echo "[InitialDAW] Accurate-Salamander 그랜드 피아노를 external/salamander 에 받습니다 (SHA-256 고정, 785MB)"
   python3 -I "$REPO/tools/make-salamander-sfz.py" "$REPO/external/salamander"
-  echo "[InitialDAW] Versilian Community Sample Library 의 하프시코드, 리코더, 음비라, 발라폰, 오카리나, 손 타악기를 external/vcsl 에 받습니다 (커밋과 파일마다 해시 고정, 364MB)"
+  echo "[InitialDAW] Versilian Community Sample Library 의 하프시코드, 리코더, 음비라, 발라폰, 오카리나, 손 타악기, 오르간을 external/vcsl 에 받습니다 (커밋과 파일마다 해시 고정, 545MB)"
   mkdir -p "$REPO/external/vcsl"
 fi
 # 국악기 녹음은 --gugak 으로만 받는다. 국립국악원 사이트가 받을 때마다 요구하는 사용 목적 양식을 받는 사람이 정한다
